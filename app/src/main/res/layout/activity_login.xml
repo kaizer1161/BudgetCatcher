@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#557be2">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:text="Sign In"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="22dp"
+                tools:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:text="Account already exists. Please enter your password to continue"
+                android:textAlignment="center"
+                android:textColor="#b0e0e6"
+                android:textSize="17dp"
+                tools:textColor="#b0e0e6" />
+
+            <EditText
+                android:id="@+id/firstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="#00bfff"
+                android:hint="Email                       abcxxx@domain.com"
+                android:inputType="textEmailAddress"
+                android:maxLength="30"
+                android:selectAllOnFocus="false"
+                android:singleLine="false"
+                android:textColorHint="#b0e0e6"
+                android:textColorLink="#b0e0e6" />
+
+            <EditText
+                android:id="@+id/pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="#00bfff"
+                android:hint="Password                                      *******"
+                android:inputType="textPassword"
+                android:maxLength="40"
+                android:selectAllOnFocus="false"
+                android:singleLine="false"
+                android:textColorHint="#b0e0e6"
+                android:textColorLink="#b0e0e6" />
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="80dp"
+                android:background="@drawable/aquarium_button_background"
+                android:onClick="signin"
+                android:text="Sign In now"
+                android:textAllCaps="false"
+                android:textColor="#557be2"
+                android:textSize="19sp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>
