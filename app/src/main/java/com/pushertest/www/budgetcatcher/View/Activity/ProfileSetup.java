@@ -1,6 +1,5 @@
 package com.pushertest.www.budgetcatcher.View.Activity;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,33 +11,28 @@ import com.pushertest.www.budgetcatcher.R;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SignInSignUp extends AppCompatActivity {
+public class ProfileSetup extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in_up);
+        setContentView(R.layout.activity_profile_setup);
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.signIn, R.id.signUp})
+    @OnClick({R.id.save})
     public void onClick(View view) {
 
         switch (view.getId()) {
 
-            case R.id.signIn: {
+            case R.id.save: {
 
-                startActivity(new Intent(SignInSignUp.this, SignIn.class));
-
-                break;
-            }
-
-            case R.id.signUp: {
-
-                startActivity(new Intent(SignInSignUp.this, SignUp.class));
+                startActivity(new Intent(ProfileSetup.this, MainActivity.class));
+                finish();
 
                 break;
             }
+
         }
 
     }

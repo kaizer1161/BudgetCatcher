@@ -2,17 +2,17 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/aquarium"
     android:layout_height="match_parent">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/aquarium">
+        android:layout_height="match_parent">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_margin="@dimen/gap_of_16dp"
             android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
@@ -107,19 +107,17 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/button1"
-                android:layout_width="250dp"
-                android:layout_height="50dp"
+                android:id="@+id/sign_up_now"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/gap_of_16dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="50dp"
                 android:background="@drawable/light_blue_button_background"
-                android:onClick="signup"
                 android:text="Sign Up now"
-                android:textAllCaps="false"
-                android:textColor="#557be2"
-                android:textSize="19sp" />
-
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/aquarium" />
 
         </LinearLayout>
+
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

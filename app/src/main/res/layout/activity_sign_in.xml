@@ -59,6 +59,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
+                android:id="@+id/signIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/light_blue_button_background"
@@ -72,6 +73,7 @@
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/forgot_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/gap_of_16dp"
