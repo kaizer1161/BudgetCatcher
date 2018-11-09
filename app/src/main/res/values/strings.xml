@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">BudgetCatcher</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_catcher">CATCHER</string>
+    <string name="title_manage">MANAGE</string>
+    <string name="title_advice">ADVCIE</string>
+    <string name="title_reports">REPORTS</string>
 </resources>
