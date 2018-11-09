@@ -30,7 +30,6 @@
                     android:layout_height="wrap_content"
                     android:hint="Email"
                     android:inputType="text"
-                    android:padding="@dimen/gap_of_16dp"
                     android:textColor="@color/white" />
 
             </android.support.design.widget.TextInputLayout>
@@ -47,10 +46,8 @@
                     android:id="@+id/password_login_EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
                     android:hint="Password"
                     android:inputType="textPassword"
-                    android:padding="@dimen/gap_of_16dp"
                     android:textColor="@color/white" />
 
             </android.support.design.widget.TextInputLayout>
