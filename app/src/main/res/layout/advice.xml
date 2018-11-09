@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/gap_of_16dp"
+        android:layout_weight="30"
+        app:cardCornerRadius="@dimen/gap_of_16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/aquarium"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/gap_of_8dp"
+                android:text="COMPARE YOUR FINANCE LEVERAGE"
+                android:textColor="@color/white" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/gap_of_8dp"
+                        android:background="@drawable/light_blue_button_background"
+                        android:padding="@dimen/gap_of_16dp"
+                        android:text="Saving Rate Strength"
+                        android:textColor="@color/aquarium" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/gap_of_8dp"
+                        android:background="@drawable/light_blue_button_background"
+                        android:padding="@dimen/gap_of_16dp"
+                        android:text="Checking Asst fees"
+                        android:textColor="@color/aquarium" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/gap_of_8dp"
+                        android:background="@drawable/light_blue_button_background"
+                        android:padding="@dimen/gap_of_16dp"
+                        android:text="Credit Card Int. Rates"
+                        android:textColor="@color/aquarium" />
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/gap_of_16dp"
+        android:layout_marginRight="@dimen/gap_of_16dp"
+        android:layout_weight="30"
+        app:cardCornerRadius="@dimen/gap_of_16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/aquarium"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/gap_of_8dp"
+                android:text="ADVISORY BOARD"
+                android:textColor="@color/white" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/gap_of_8dp"
+                            android:layout_weight="50"
+                            android:background="@drawable/light_blue_button_background"
+                            android:text="Wall street journal"
+                            android:textColor="@color/aquarium" />
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/gap_of_8dp"
+                            android:layout_weight="50"
+                            android:background="@drawable/light_blue_button_background"
+                            android:text="Nerd wallet"
+                            android:textColor="@color/aquarium" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/gap_of_8dp"
+                            android:layout_weight="50"
+                            android:background="@drawable/light_blue_button_background"
+                            android:text="Market watch"
+                            android:textColor="@color/aquarium" />
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/gap_of_8dp"
+                            android:layout_weight="50"
+                            android:background="@drawable/light_blue_button_background"
+                            android:text="The penny holder"
+                            android:textColor="@color/aquarium" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/gap_of_8dp"
+                            android:layout_weight="50"
+                            android:background="@drawable/light_blue_button_background"
+                            android:text="John hancock"
+                            android:textColor="@color/aquarium" />
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/gap_of_8dp"
+                            android:layout_weight="50"
+                            android:background="@drawable/light_blue_button_background"
+                            android:textColor="@color/aquarium" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/gap_of_16dp"
+        android:layout_weight="30"
+        app:cardCornerRadius="@dimen/gap_of_16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/aquarium"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/gap_of_8dp"
+                android:text="FIND THE PROS"
+                android:textColor="@color/white" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/gap_of_8dp"
+                        android:background="@drawable/light_blue_button_background"
+                        android:padding="@dimen/gap_of_16dp"
+                        android:text="Capital Compass Group"
+                        android:textColor="@color/aquarium" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/gap_of_8dp"
+                        android:background="@drawable/light_blue_button_background"
+                        android:padding="@dimen/gap_of_16dp"
+                        android:text="The Law Crop"
+                        android:textColor="@color/aquarium" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/gap_of_8dp"
+                        android:background="@drawable/light_blue_button_background"
+                        android:padding="@dimen/gap_of_16dp"
+                        android:text="CPA Taxes"
+                        android:textColor="@color/aquarium" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/gap_of_8dp"
+                        android:background="@drawable/light_blue_button_background"
+                        android:padding="@dimen/gap_of_16dp"
+                        android:text="Tax Attorney"
+                        android:textColor="@color/aquarium" />
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <include
-            layout="@layout/activity_profile_setup"
+            layout="@layout/advice"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="56dp" />
