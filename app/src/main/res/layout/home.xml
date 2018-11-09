@@ -124,7 +124,7 @@
                     android:layout_marginLeft="@dimen/gap_of_16dp"
                     android:layout_marginTop="@dimen/gap_of_16dp"
                     android:layout_marginRight="@dimen/gap_of_16dp"
-                    android:background="@drawable/light_blue_button_background">
+                    android:theme="@style/sign_up_edit_text">
 
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
@@ -139,7 +139,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/gap_of_16dp"
-                    android:background="@drawable/light_blue_button_background">
+                    android:theme="@style/sign_up_edit_text">
 
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"

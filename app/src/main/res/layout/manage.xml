@@ -15,6 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/aquarium"
             android:orientation="vertical">
 
             <TextView
@@ -24,17 +25,16 @@
                 android:gravity="center"
                 android:padding="@dimen/gap_of_8dp"
                 android:text="INCOME"
-                android:textColor="@color/black" />
+                android:textColor="@color/white" />
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/aquarium">
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/gap_of_16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/gap_of_16dp"
                     android:orientation="vertical">
 
                     <android.support.design.widget.TextInputLayout
@@ -89,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:background="@drawable/light_blue_button_background"
-                        android:padding="@dimen/gap_of_16dp"
+                        android:layout_margin="@dimen/gap_of_16dp"
                         android:text="Save"
                         android:textColor="@color/aquarium" />
 
