@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/deep_sea_dive">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Add Profile Pic ?"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="22dp"
+                tools:textColor="#ffffff" />
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/doctorImage"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:src="@drawable/propic" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/gap_of_16dp"
+                android:background="@drawable/light_blue_button_background"
+                android:text="Choose from Gallery"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/aquarium" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/gap_of_16dp"
+                android:padding="@dimen/gap_of_16dp">
+
+            </Spinner>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/gap_of_16dp"
+                android:padding="@dimen/gap_of_16dp">
+
+            </Spinner>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/gap_of_16dp"
+                android:padding="@dimen/gap_of_16dp">
+
+            </Spinner>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/gap_of_16dp"
+                android:background="@drawable/light_blue_button_background"
+                android:text="Save"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/aquarium" />
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
