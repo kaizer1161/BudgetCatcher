@@ -46,6 +46,40 @@
                 android:text="BILLS"
                 android:textColor="@color/black" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/deep_sea_dive">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:padding="@dimen/gap_of_8dp"
+                    android:text="Due date"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:padding="@dimen/gap_of_8dp"
+                    android:text="Amount"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/deep_sea_dive"
+                    android:gravity="center"
+                    android:padding="@dimen/gap_of_8dp"
+                    android:text="Bills"
+                    android:textColor="@color/white" />
+
+            </RelativeLayout>
+
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -108,6 +142,40 @@
                 android:padding="@dimen/gap_of_8dp"
                 android:text="INCIDENTAL"
                 android:textColor="@color/black" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/deep_sea_dive">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:padding="@dimen/gap_of_8dp"
+                    android:text="Incedent"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:padding="@dimen/gap_of_8dp"
+                    android:text="Date"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/deep_sea_dive"
+                    android:gravity="center"
+                    android:padding="@dimen/gap_of_8dp"
+                    android:text="Amounts"
+                    android:textColor="@color/white" />
+
+            </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
