@@ -7,4 +7,5 @@ public class Config {
     public static final String TAG_MANAGE_FRAGMENT = "TAG_MANAGE_FRAGMENT";
     public static final String TAG_ADVICE_FRAGMENT = "TAG_ADVICE_FRAGMENT";
 
+    public static final String TAG_LIST_SPENDING_ALLOWANCE = "TAG_LIST_SPENDING_ALLOWANCE";
 }

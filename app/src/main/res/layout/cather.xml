@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include layout="@layout/header_calender_week_view" />
@@ -80,6 +79,7 @@
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/bill_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -110,6 +110,7 @@
                 android:textColor="@color/black" />
 
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/sending_allowance_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -174,6 +175,7 @@
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/incidental_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
