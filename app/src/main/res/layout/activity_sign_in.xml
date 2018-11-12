@@ -17,71 +17,84 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/id_edit_text_input_layout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/gap_of_16dp"
-                android:layout_marginTop="@dimen/gap_of_16dp"
-                android:layout_marginRight="@dimen/gap_of_16dp"
-                android:theme="@style/sign_up_edit_text">
+                android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/id_login_EditText"
-                    android:layout_width="match_parent"
+                <TextView
                     android:layout_margin="@dimen/gap_of_16dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Email"
-                    android:inputType="textWebEmailAddress"
-                    android:textColor="@color/white" />
+                    android:text="Email"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/black"/>
 
-            </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/gap_of_8dp"
+                    android:layout_marginBottom="@dimen/gap_of_8dp"
+                    android:layout_marginLeft="@dimen/gap_of_52dp"
+                    android:layout_marginRight="@dimen/gap_of_16dp"
+                    android:gravity="center"
+                    android:padding="@dimen/gap_of_8dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/light_blue_button_background"
+                    android:inputType="textEmailAddress"/>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/password_edit_text_input_layout"
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/gap_of_16dp"
-                android:layout_marginRight="@dimen/gap_of_16dp"
-                android:layout_marginBottom="@dimen/gap_of_16dp"
-                android:theme="@style/sign_up_edit_text"
-                app:passwordToggleEnabled="true">
+                android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/password_login_EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <TextView
                     android:layout_margin="@dimen/gap_of_16dp"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:textColor="@color/white" />
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Password"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/black"/>
 
-            </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/gap_of_8dp"
+                    android:layout_marginBottom="@dimen/gap_of_8dp"
+                    android:layout_marginLeft="@dimen/gap_of_16dp"
+                    android:layout_marginRight="@dimen/gap_of_16dp"
+                    android:gravity="center"
+                    android:padding="@dimen/gap_of_8dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/light_blue_button_background"
+                    android:inputType="textPassword"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/gap_of_8dp"
+                android:padding="@dimen/gap_of_8dp"
+                android:background="@drawable/light_blue_button_background"
+                android:text="I need help! Forgot login info"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/signIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/light_blue_button_background"
-                android:paddingLeft="@dimen/gap_of_32dp"
-                android:paddingTop="@dimen/gap_of_8dp"
-                android:paddingRight="@dimen/gap_of_32dp"
-                android:paddingBottom="@dimen/gap_of_8dp"
+                android:paddingLeft="@dimen/gap_of_52dp"
+                android:paddingRight="@dimen/gap_of_52dp"
                 android:text="Signin"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/forgot_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/gap_of_16dp"
-                android:padding="@dimen/gap_of_16dp"
-                android:background="@drawable/light_blue_button_background"
-                android:text="I need help! Forgot login info"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/black" />
 
         </LinearLayout>
 
@@ -89,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="30"
-            android:background="@color/light_blue"
+            android:background="@color/aquitant"
             android:gravity="center"
             android:orientation="vertical">
 

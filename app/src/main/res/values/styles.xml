@@ -10,12 +10,12 @@
 
     <style name="sign_up_edit_text" parent="@style/Theme.AppCompat">
         <!-- Hint color and label color in FALSE state -->
-        <item name="android:textColorHint">@color/light_blue</item>
+        <item name="android:textColorHint">@color/aquitant</item>
         <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
-        <item name="colorAccent">@color/light_blue</item>
-        <item name="colorControlNormal">@color/light_blue</item>
-        <item name="colorControlActivated">@color/light_blue</item>
-        <item name="colorControlHighlight">@color/light_blue</item>
+        <item name="colorAccent">@color/aquitant</item>
+        <item name="colorControlNormal">@color/aquitant</item>
+        <item name="colorControlActivated">@color/aquitant</item>
+        <item name="colorControlHighlight">@color/aquitant</item>
     </style>
 
 </resources>

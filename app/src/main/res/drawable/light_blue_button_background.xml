@@ -3,11 +3,11 @@
 
     <item>
         <shape>
-            <solid android:color="@color/light_blue" />
+            <solid android:color="@color/aquitant" />
             <stroke android:width="0dp"
 
                 />
-            <corners android:radius="@dimen/gap_of_16dp" />
+            <corners android:radius="@dimen/gap_of_8dp" />
         </shape>
     </item>
 </selector>
