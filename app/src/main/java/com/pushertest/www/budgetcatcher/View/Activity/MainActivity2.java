@@ -13,7 +13,7 @@ import com.pushertest.www.budgetcatcher.View.Fragment.Catcher;
 import com.pushertest.www.budgetcatcher.View.Fragment.Home;
 import com.pushertest.www.budgetcatcher.View.Fragment.Manage;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
 
         getSupportFragmentManager()
                 .beginTransaction()

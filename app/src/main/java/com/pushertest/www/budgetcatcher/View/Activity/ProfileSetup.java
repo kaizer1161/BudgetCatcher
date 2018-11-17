@@ -91,7 +91,7 @@ public class ProfileSetup extends AppCompatActivity {
 
             case R.id.save: {
 
-                startActivity(new Intent(ProfileSetup.this, MainActivity.class));
+                startActivity(new Intent(ProfileSetup.this, MainActivity2.class));
                 finish();
 
                 break;

@@ -35,9 +35,9 @@ public class Manage extends Fragment {
         ButterKnife.bind(this, rootView);
 
         ArrayList<AccountItem> billsArrayList = new ArrayList<>();
-        billsArrayList.add(new AccountItem("due is 1 day", "40.88", "social security tax"));
-        billsArrayList.add(new AccountItem("due is Jan 15", "80.88", "Accountant"));
-        billsArrayList.add(new AccountItem("due is Jan 20", "50.88", "Gym"));
+        billsArrayList.add(new AccountItem("due is 1 day", "$40.88", "social security tax"));
+        billsArrayList.add(new AccountItem("due is Jan 15", "$80.88", "Accountant"));
+        billsArrayList.add(new AccountItem("due is Jan 20", "$50.88", "Gym"));
 
         showFeedBills(billsArrayList);
         showFeedSpendingAllowance(billsArrayList);
