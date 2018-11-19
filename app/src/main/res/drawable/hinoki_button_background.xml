@@ -3,7 +3,7 @@
 
     <item>
         <shape>
-            <solid android:color="@color/aquarium" />
+            <solid android:color="@color/hinoki" />
             <stroke android:width="0dp"
 
                 />

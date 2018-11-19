@@ -6,6 +6,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="@dimen/gap_of_16dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -18,24 +19,23 @@
 
             <Button
                 android:id="@+id/signIn"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/aquarium_button_background"
-                android:paddingLeft="@dimen/gap_of_52dp"
-                android:paddingTop="@dimen/gap_of_8dp"
-                android:paddingRight="@dimen/gap_of_52dp"
-                android:paddingBottom="@dimen/gap_of_8dp"
+                android:layout_margin="@dimen/gap_of_16dp"
+                android:background="@drawable/hinoki_button_background"
                 android:text="Sign In"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/gap_of_16dp"
+                android:layout_marginLeft="@dimen/gap_of_52dp"
+                android:layout_marginRight="@dimen/gap_of_52dp"
                 android:textAlignment="center"
                 android:text="For those already budgeting for their dreams"
+                android:textStyle="bold"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/black" />
 
@@ -51,13 +51,10 @@
 
             <Button
                 android:id="@+id/signUp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/light_blue_button_background"
-                android:paddingLeft="@dimen/gap_of_52dp"
-                android:paddingTop="@dimen/gap_of_8dp"
-                android:paddingRight="@dimen/gap_of_52dp"
-                android:paddingBottom="@dimen/gap_of_8dp"
+                android:layout_margin="@dimen/gap_of_16dp"
+                android:background="@drawable/hinoki_button_background"
                 android:text="Sign up"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/black"
@@ -66,11 +63,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/gap_of_16dp"
+                android:layout_marginLeft="@dimen/gap_of_52dp"
+                android:layout_marginRight="@dimen/gap_of_52dp"
+                android:textColor="@color/white"
                 android:text="For those eager to create a budget for their dream"
                 android:textAlignment="center"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/black" />
+                android:textStyle="bold" />
 
         </LinearLayout>
 
