@@ -38,8 +38,9 @@ public class Catcher extends Fragment {
         ButterKnife.bind(this, rootView);
 
         ArrayList<AccountItem> billsArrayList = new ArrayList<>();
-        billsArrayList.add(new AccountItem("due is 1 day", "$40.88", "social security tax"));
-        billsArrayList.add(new AccountItem("due is Jan 15", "$80.88", "Accountant"));
+        billsArrayList.add(new AccountItem("Electricity", "Due in 1 day", "$40.88"));
+        billsArrayList.add(new AccountItem("Car payment", "Due in Oct 15", "$80.88"));
+        billsArrayList.add(new AccountItem("Rent", "Due in Oct 15", "$80.88"));
 
         ArrayList<AccountItem> spendingAllowanceArrayList = new ArrayList<>();
         spendingAllowanceArrayList.add(new AccountItem("Gas", "$40.88"));
@@ -47,8 +48,9 @@ public class Catcher extends Fragment {
         spendingAllowanceArrayList.add(new AccountItem("Entertainment", "$30.88"));
 
         ArrayList<AccountItem> incidentalArrayList = new ArrayList<>();
-        incidentalArrayList.add(new AccountItem("Social security tax", "10/08/18", "$40.88"));
-        incidentalArrayList.add(new AccountItem("Social security tax", "10/08/18", "$40.88"));
+        incidentalArrayList.add(new AccountItem("Car repairs", "10/08/18", "$40.88"));
+        incidentalArrayList.add(new AccountItem("Home repairs", "10/08/18", "$40.88"));
+        incidentalArrayList.add(new AccountItem("Room visit", "10/08/18", "$40.88"));
 
         showFeedBills(billsArrayList);
         showFeedSpendingAllowance(spendingAllowanceArrayList);

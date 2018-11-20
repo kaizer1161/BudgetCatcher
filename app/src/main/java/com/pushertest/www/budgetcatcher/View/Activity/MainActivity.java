@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content, new Home(), Config.TAG_HOME_FRAGMENT)
+                    .addToBackStack(null)
                     .commit();
 
         } else if (id == R.id.nav_catcher) {
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content, new Catcher(), Config.TAG_CATCHER_FRAGMENT)
+                    .addToBackStack(null)
                     .commit();
 
         } else if (id == R.id.nav_manage) {
@@ -109,6 +111,7 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content, new Manage(), Config.TAG_MANAGE_FRAGMENT)
+                    .addToBackStack(null)
                     .commit();
 
         } else if (id == R.id.nav_advice) {
@@ -116,6 +119,7 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content, new Advice(), Config.TAG_ADVICE_FRAGMENT)
+                    .addToBackStack(null)
                     .commit();
 
         } else if (id == R.id.nav_report) {

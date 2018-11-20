@@ -33,6 +33,7 @@ public class SignUp extends AppCompatActivity {
             case R.id.sign_up_now: {
 
                 startActivity(new Intent(SignUp.this, ProfileSetup.class));
+                finish();
 
                 break;
             }

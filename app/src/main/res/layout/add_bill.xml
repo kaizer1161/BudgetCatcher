@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_image">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/gap_of_16dp">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/aquarium"
+            android:orientation="vertical"
+            android:padding="@dimen/gap_of_8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/gap_of_16dp"
+
+                android:gravity="center"
+                android:text="New Bill"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:text="Name"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:layout_marginTop="@dimen/gap_of_8dp"
+                android:layout_marginRight="@dimen/gap_of_16dp"
+                android:layout_marginBottom="@dimen/gap_of_16dp"
+                android:background="@drawable/light_blue_button_background"
+                android:hint="Enter name"
+                android:inputType="textPersonName"
+                android:padding="@dimen/gap_of_8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:text="Description"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:layout_marginTop="@dimen/gap_of_8dp"
+                android:layout_marginRight="@dimen/gap_of_16dp"
+                android:layout_marginBottom="@dimen/gap_of_16dp"
+                android:background="@drawable/light_blue_button_background"
+                android:hint="Enter description"
+                android:inputType="phone"
+                android:padding="@dimen/gap_of_8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:text="Amount"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:layout_marginTop="@dimen/gap_of_8dp"
+                android:layout_marginRight="@dimen/gap_of_16dp"
+                android:layout_marginBottom="@dimen/gap_of_16dp"
+                android:background="@drawable/light_blue_button_background"
+                android:hint="Enter amount"
+                android:inputType="textEmailAddress"
+                android:padding="@dimen/gap_of_8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:text="Date &amp; time"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:layout_marginTop="@dimen/gap_of_8dp"
+                android:layout_marginRight="@dimen/gap_of_16dp"
+                android:layout_marginBottom="@dimen/gap_of_16dp"
+                android:background="@drawable/light_blue_button_background"
+                android:hint="Select date and time"
+                android:inputType="textPassword"
+                android:padding="@dimen/gap_of_8dp" />
+
+            <Button
+                android:id="@+id/sign_up_now"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/gap_of_8dp"
+                android:background="@drawable/hinoki_button_background"
+                android:text="Save"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

@@ -57,19 +57,21 @@ public class ProfileSetup extends AppCompatActivity {
     public void skillLevelList() {
 
         financialGoal = new ArrayList<>();
-        financialGoal.add("SET Financial Goals");
-        financialGoal.add("Grow Your Saving");
-        financialGoal.add("Increase Spendable Cash");
-        financialGoal.add("Reduce Your Debt");
+        financialGoal.add("Select your financial skill level");
+        financialGoal.add("1 - Not good at numbers!");
+        financialGoal.add("2 - I can count to 10!");
+        financialGoal.add("3 - I'm as good as the next person");
+        financialGoal.add("4 - I aced collage math");
+        financialGoal.add("5 - Professional");
 
     }
 
     public void financialGoalList() {
 
         riskLevel = new ArrayList<>();
-        riskLevel.add("What is Your Risk Level?");
-        riskLevel.add("Grow Your Saving");
-        riskLevel.add("Increase Spendable Cash");
+        riskLevel.add("Select financial goals");
+        riskLevel.add("Add to Savings");
+        riskLevel.add("Add to Cash");
         riskLevel.add("Reduce Your Debt");
 
     }
@@ -77,10 +79,11 @@ public class ProfileSetup extends AppCompatActivity {
     public void riskLevelList() {
 
         skillLevel = new ArrayList<>();
-        skillLevel.add("What is Your Financial Skill Level");
-        skillLevel.add("Grow Your Saving");
-        skillLevel.add("Increase Spendable Cash");
-        skillLevel.add("Reduce Your Debt");
+        skillLevel.add("Select your risk level");
+        skillLevel.add("Take No Risk");
+        skillLevel.add("Mild Risk is Ok");
+        skillLevel.add("Moderate & Ready to Play");
+        skillLevel.add("All or NOTHING");
 
     }
 
