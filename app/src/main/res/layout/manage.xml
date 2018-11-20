@@ -2,228 +2,260 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_image"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/gap_of_16dp"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/aquarium"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/deep_sea_dive"
-                android:gravity="center"
-                android:padding="@dimen/gap_of_8dp"
-                android:text="INCOME"
-                android:textColor="@color/white" />
+                android:layout_height="match_parent"
+                android:background="@color/aquarium"
+                android:orientation="vertical">
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:background="@color/deep_sea_dive"
+                    android:gravity="center"
+                    android:padding="@dimen/gap_of_8dp"
+                    android:text="Bill Settings"
+                    android:textColor="@color/white" />
 
-                    <EditText
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/gap_of_8dp"
-                        android:layout_marginBottom="@dimen/gap_of_8dp"
-                        android:layout_marginLeft="@dimen/gap_of_52dp"
-                        android:layout_marginRight="@dimen/gap_of_52dp"
-                        android:gravity="center"
-                        android:padding="@dimen/gap_of_8dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/light_blue_button_background"
-                        android:hint="Pay frequency"
-                        android:inputType="text"/>
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_marginLeft="@dimen/gap_of_52dp"
-                        android:layout_marginRight="@dimen/gap_of_52dp"
-                        android:padding="@dimen/gap_of_8dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/light_blue_button_background"
-                        android:hint="Next paydate"
-                        android:inputType="text"/>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_marginTop="@dimen/gap_of_8dp"
-                        android:layout_marginLeft="@dimen/gap_of_52dp"
-                        android:layout_marginRight="@dimen/gap_of_52dp"
-                        android:padding="@dimen/gap_of_8dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/light_blue_button_background"
-                        android:hint="Normal or Est .Net pay"
-                        android:inputType="text"/>
-
-                    <!--<android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/sign_up_edit_text">
-
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/gap_of_52dp"
+                            android:layout_marginTop="@dimen/gap_of_8dp"
+                            android:layout_marginRight="@dimen/gap_of_52dp"
+                            android:layout_marginBottom="@dimen/gap_of_8dp"
+                            android:background="@drawable/light_blue_button_background"
+                            android:gravity="center"
                             android:hint="Pay frequency"
                             android:inputType="text"
-                            android:textColor="@color/aquitant" />
+                            android:padding="@dimen/gap_of_8dp" />
 
-                    </android.support.design.widget.TextInputLayout>
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/sign_up_edit_text">
-
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/gap_of_52dp"
+                            android:layout_marginRight="@dimen/gap_of_52dp"
+                            android:background="@drawable/light_blue_button_background"
+                            android:gravity="center"
                             android:hint="Next paydate"
                             android:inputType="text"
-                            android:textColor="@color/aquitant" />
+                            android:padding="@dimen/gap_of_8dp" />
 
-                    </android.support.design.widget.TextInputLayout>
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/sign_up_edit_text">
-
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/gap_of_52dp"
+                            android:layout_marginTop="@dimen/gap_of_8dp"
+                            android:layout_marginRight="@dimen/gap_of_52dp"
+                            android:background="@drawable/light_blue_button_background"
+                            android:gravity="center"
                             android:hint="Normal or Est .Net pay"
                             android:inputType="text"
-                            android:textColor="@color/aquitant" />
+                            android:padding="@dimen/gap_of_8dp" />
 
-                    </android.support.design.widget.TextInputLayout>-->
+                        <!--<android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:theme="@style/sign_up_edit_text">
 
-                    <Button
+                            <android.support.design.widget.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Pay frequency"
+                                android:inputType="text"
+                                android:textColor="@color/aquitant" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:theme="@style/sign_up_edit_text">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Next paydate"
+                                android:inputType="text"
+                                android:textColor="@color/aquitant" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:theme="@style/sign_up_edit_text">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Normal or Est .Net pay"
+                                android:inputType="text"
+                                android:textColor="@color/aquitant" />
+
+                        </android.support.design.widget.TextInputLayout>-->
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="@dimen/gap_of_8dp"
+                            android:background="@drawable/hinoki_button_background"
+                            android:text="Save"
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
+
+                </ScrollView>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="30">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/deep_sea_dive"
+                    android:drawableEnd="@drawable/ic_add_circle_outline_24dp"
+                    android:gravity="center"
+                    android:padding="@dimen/gap_of_8dp"
+                    android:text="BILLS"
+                    android:textColor="@color/white" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/aquarium">
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="@dimen/gap_of_8dp"
-                        android:background="@drawable/light_blue_button_background"
-                        android:text="Save"
-                        android:textColor="@color/aquarium" />
+                        android:layout_alignParentStart="true"
+                        android:padding="@dimen/gap_of_8dp"
+                        android:text="Bill"
+                        android:textColor="@color/white" />
 
-                </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:padding="@dimen/gap_of_8dp"
+                        android:text="Due/Late"
+                        android:textColor="@color/white" />
 
-            </ScrollView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:gravity="center"
+                        android:padding="@dimen/gap_of_8dp"
+                        android:text="Amount"
+                        android:textColor="@color/white" />
 
-        </LinearLayout>
+                </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/bills"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/gap_of_8dp"
-        android:layout_weight="30">
+                </android.support.v7.widget.RecyclerView>
 
-        <LinearLayout
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="30">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/deep_sea_dive"
-                android:drawableEnd="@drawable/ic_add_circle_outline_24dp"
-                android:gravity="center"
-                android:padding="@dimen/gap_of_8dp"
-                android:text="BILLS"
-                android:textColor="@color/white" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:padding="@dimen/gap_of_8dp"
-                    android:text="Due date"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                    android:background="@color/deep_sea_dive"
+                    android:drawableEnd="@drawable/ic_add_circle_outline_24dp"
                     android:gravity="center"
                     android:padding="@dimen/gap_of_8dp"
-                    android:text="Amount"
-                    android:textColor="@color/black" />
+                    android:text="ALLOWANCE: WEEKLY BUDGET"
+                    android:textColor="@color/white" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:gravity="center"
-                    android:padding="@dimen/gap_of_8dp"
-                    android:text="Bills"
-                    android:textColor="@color/black" />
+                    android:background="@color/aquarium">
 
-            </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:padding="@dimen/gap_of_8dp"
+                        android:text="Allowance"
+                        android:textColor="@color/white" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/bills"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:gravity="center"
+                        android:padding="@dimen/gap_of_8dp"
+                        android:text="Amount"
+                        android:textColor="@color/white" />
 
-            </android.support.v7.widget.RecyclerView>
+                </RelativeLayout>
 
-        </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/allowance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-    </android.support.v7.widget.CardView>
+                </android.support.v7.widget.RecyclerView>
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/gap_of_8dp"
-        android:layout_weight="30">
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        </android.support.v7.widget.CardView>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/deep_sea_dive"
-                android:drawableEnd="@drawable/ic_add_circle_outline_24dp"
-                android:gravity="center"
-                android:padding="@dimen/gap_of_8dp"
-                android:text="ALLOWANCE: WEEKLY BUDGET"
-                android:textColor="@color/white" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/allowance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </android.support.v7.widget.RecyclerView>
-
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
+    </LinearLayout>
 
 </LinearLayout>

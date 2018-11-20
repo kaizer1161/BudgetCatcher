@@ -4,9 +4,7 @@
     <item>
         <shape>
             <solid android:color="@color/hinoki" />
-            <stroke android:width="0dp"
-
-                />
+            <stroke android:width="0dp" />
             <corners android:radius="@dimen/gap_of_8dp" />
         </shape>
     </item>
