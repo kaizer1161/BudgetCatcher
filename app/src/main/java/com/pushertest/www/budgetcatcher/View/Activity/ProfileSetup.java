@@ -56,34 +56,35 @@ public class ProfileSetup extends AppCompatActivity {
 
     public void skillLevelList() {
 
-        financialGoal = new ArrayList<>();
-        financialGoal.add("Select your financial skill level");
-        financialGoal.add("1 - Not good at numbers!");
-        financialGoal.add("2 - I can count to 10!");
-        financialGoal.add("3 - I'm as good as the next person");
-        financialGoal.add("4 - I aced collage math");
-        financialGoal.add("5 - Professional");
+        skillLevel = new ArrayList<>();
+        skillLevel.add("Select your financial skill level");
+        skillLevel.add("1 - Not good at numbers!");
+        skillLevel.add("2 - I can count to 10!");
+        skillLevel.add("3 - I'm as good as the next person");
+        skillLevel.add("4 - I aced collage math");
+        skillLevel.add("5 - Professional");
 
     }
 
     public void financialGoalList() {
 
-        riskLevel = new ArrayList<>();
-        riskLevel.add("Select financial goals");
-        riskLevel.add("Add to Savings");
-        riskLevel.add("Add to Cash");
-        riskLevel.add("Reduce Your Debt");
+        financialGoal = new ArrayList<>();
+        financialGoal.add("Select financial goals");
+        financialGoal.add("Add to Savings");
+        financialGoal.add("Add to Cash");
+        financialGoal.add("Reduce Your Debt");
 
     }
 
     public void riskLevelList() {
 
-        skillLevel = new ArrayList<>();
-        skillLevel.add("Select your risk level");
-        skillLevel.add("Take No Risk");
-        skillLevel.add("Mild Risk is Ok");
-        skillLevel.add("Moderate & Ready to Play");
-        skillLevel.add("All or NOTHING");
+        riskLevel = new ArrayList<>();
+        riskLevel.add("Select your risk level");
+        riskLevel.add("Take No Risk");
+        riskLevel.add("Mild Risk is Ok");
+        riskLevel.add("Moderate & Ready to Play");
+        riskLevel.add("All or NOTHING");
+
 
     }
 
@@ -94,8 +95,7 @@ public class ProfileSetup extends AppCompatActivity {
 
             case R.id.save: {
 
-                startActivity(new Intent(ProfileSetup.this, MainActivity.class));
-                finish();
+                startActivity(new Intent(ProfileSetup.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
 
                 break;
             }

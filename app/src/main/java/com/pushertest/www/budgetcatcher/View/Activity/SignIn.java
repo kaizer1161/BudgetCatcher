@@ -27,8 +27,7 @@ public class SignIn extends AppCompatActivity {
 
             case R.id.signIn: {
 
-                startActivity(new Intent(SignIn.this, MainActivity.class));
-                finish();
+                startActivity(new Intent(SignIn.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
 
                 break;
             }

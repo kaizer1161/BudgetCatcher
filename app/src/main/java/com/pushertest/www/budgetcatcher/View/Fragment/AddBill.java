@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pushertest.www.budgetcatcher.R;
+import com.pushertest.www.budgetcatcher.View.Activity.MainActivity;
+
+import java.util.Objects;
 
 import butterknife.ButterKnife;
 
@@ -19,6 +22,9 @@ public class AddBill extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.add_bill, container, false);
         ButterKnife.bind(this, rootView);
+
+        if (getActivity() != null)
+            Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Add Bill");
 
         return rootView;
     }

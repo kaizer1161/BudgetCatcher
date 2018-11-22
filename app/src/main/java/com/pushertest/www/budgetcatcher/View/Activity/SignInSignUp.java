@@ -19,6 +19,7 @@ public class SignInSignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in_up);
         ButterKnife.bind(this);
+
     }
 
     @OnClick({R.id.signIn, R.id.signUp})
@@ -29,7 +30,6 @@ public class SignInSignUp extends AppCompatActivity {
             case R.id.signIn: {
 
                 startActivity(new Intent(SignInSignUp.this, SignIn.class));
-                finish();
 
                 break;
             }
@@ -37,7 +37,6 @@ public class SignInSignUp extends AppCompatActivity {
             case R.id.signUp: {
 
                 startActivity(new Intent(SignInSignUp.this, SignUp.class));
-                finish();
 
                 break;
             }

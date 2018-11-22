@@ -14,8 +14,10 @@ import com.pushertest.www.budgetcatcher.Adapter.AccountListAdapter;
 import com.pushertest.www.budgetcatcher.Config;
 import com.pushertest.www.budgetcatcher.Model.AccountItem;
 import com.pushertest.www.budgetcatcher.R;
+import com.pushertest.www.budgetcatcher.View.Activity.MainActivity;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +38,9 @@ public class Catcher extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.cather, container, false);
         ButterKnife.bind(this, rootView);
+
+        if (getActivity() != null)
+            Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Catcher");
 
         ArrayList<AccountItem> billsArrayList = new ArrayList<>();
         billsArrayList.add(new AccountItem("Electricity", "Due in 1 day", "$40.88"));
