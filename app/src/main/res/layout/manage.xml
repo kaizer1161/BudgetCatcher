@@ -47,11 +47,12 @@
                             android:layout_marginTop="@dimen/gap_of_8dp"
                             android:layout_marginRight="@dimen/gap_of_52dp"
                             android:layout_marginBottom="@dimen/gap_of_8dp"
-                            android:background="@drawable/light_blue_button_background"
+                            android:background="@drawable/transparent_edit_text_background"
                             android:gravity="center"
                             android:hint="Pay frequency"
                             android:inputType="text"
-                            android:padding="@dimen/gap_of_8dp" />
+                            android:padding="@dimen/gap_of_8dp"
+                            android:textColorHint="@color/white" />
 
                         <EditText
                             android:layout_width="match_parent"
@@ -59,11 +60,12 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="@dimen/gap_of_52dp"
                             android:layout_marginRight="@dimen/gap_of_52dp"
-                            android:background="@drawable/light_blue_button_background"
+                            android:background="@drawable/transparent_edit_text_background"
                             android:gravity="center"
                             android:hint="Next paydate"
                             android:inputType="text"
-                            android:padding="@dimen/gap_of_8dp" />
+                            android:padding="@dimen/gap_of_8dp"
+                            android:textColorHint="@color/white" />
 
                         <EditText
                             android:layout_width="match_parent"
@@ -72,11 +74,12 @@
                             android:layout_marginLeft="@dimen/gap_of_52dp"
                             android:layout_marginTop="@dimen/gap_of_8dp"
                             android:layout_marginRight="@dimen/gap_of_52dp"
-                            android:background="@drawable/light_blue_button_background"
+                            android:background="@drawable/transparent_edit_text_background"
                             android:gravity="center"
                             android:hint="Normal or Est .Net pay"
                             android:inputType="text"
-                            android:padding="@dimen/gap_of_8dp" />
+                            android:padding="@dimen/gap_of_8dp"
+                            android:textColorHint="@color/white" />
 
                         <!--<android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"

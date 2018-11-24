@@ -42,7 +42,7 @@
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
                 android:layout_marginBottom="@dimen/gap_of_16dp"
-                android:background="@drawable/light_blue_button_background"
+                android:background="@drawable/white_button_background"
                 android:hint="Enter name"
                 android:inputType="textPersonName"
                 android:padding="@dimen/gap_of_8dp" />
@@ -62,7 +62,7 @@
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
                 android:layout_marginBottom="@dimen/gap_of_16dp"
-                android:background="@drawable/light_blue_button_background"
+                android:background="@drawable/white_button_background"
                 android:hint="Enter description"
                 android:inputType="phone"
                 android:padding="@dimen/gap_of_8dp" />
@@ -82,7 +82,7 @@
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
                 android:layout_marginBottom="@dimen/gap_of_16dp"
-                android:background="@drawable/light_blue_button_background"
+                android:background="@drawable/white_button_background"
                 android:hint="Enter amount"
                 android:inputType="textEmailAddress"
                 android:padding="@dimen/gap_of_8dp" />
@@ -102,7 +102,7 @@
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
                 android:layout_marginBottom="@dimen/gap_of_16dp"
-                android:background="@drawable/light_blue_button_background"
+                android:background="@drawable/white_button_background"
                 android:hint="Select date and time"
                 android:inputType="textPassword"
                 android:padding="@dimen/gap_of_8dp" />

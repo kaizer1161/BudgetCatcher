@@ -67,7 +67,7 @@
                 android:layout_marginLeft="@dimen/gap_of_52dp"
                 android:layout_marginRight="@dimen/gap_of_52dp"
                 android:textColor="@color/white"
-                android:text="For those eager to create a budget for their dream"
+                android:text="For those eager to budget for their dream"
                 android:textAlignment="center"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textStyle="bold" />

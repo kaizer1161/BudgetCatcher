@@ -199,7 +199,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/gap_of_8dp"
-                            android:background="@drawable/light_blue_button_background"
+                            android:background="@drawable/white_button_background"
                             android:gravity="center"
                             android:hint="Enter amount"
                             android:inputType="number"
@@ -210,7 +210,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/gap_of_8dp"
                             android:layout_marginRight="@dimen/gap_of_8dp"
-                            android:background="@drawable/light_blue_button_background"
+                            android:background="@drawable/white_button_background"
                             android:gravity="center"
                             android:hint="Enter amount"
                             android:inputType="number"
@@ -220,7 +220,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/gap_of_8dp"
-                            android:background="@drawable/light_blue_button_background"
+                            android:background="@drawable/white_button_background"
                             android:text="Calculate"
                             android:textColor="@color/aquarium" />
 

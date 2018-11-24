@@ -16,6 +16,7 @@ import com.pushertest.www.budgetcatcher.View.Fragment.Advice;
 import com.pushertest.www.budgetcatcher.View.Fragment.Catcher;
 import com.pushertest.www.budgetcatcher.View.Fragment.Home;
 import com.pushertest.www.budgetcatcher.View.Fragment.Manage;
+import com.pushertest.www.budgetcatcher.View.Fragment.Report;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -124,6 +125,11 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_report) {
 
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content, new Report(), Config.TAG_REPORT_FRAGMENT)
+                    .addToBackStack(null)
+                    .commit();
 
         } else if (id == R.id.nav_balance_projection) {
 

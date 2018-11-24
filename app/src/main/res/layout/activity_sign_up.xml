@@ -31,7 +31,7 @@
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
                 android:layout_marginBottom="@dimen/gap_of_16dp"
-                android:background="@drawable/light_blue_button_background"
+                android:background="@drawable/white_button_background"
                 android:hint="Enter name"
                 android:inputType="textPersonName"
                 android:padding="@dimen/gap_of_8dp" />
@@ -51,7 +51,7 @@
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
                 android:layout_marginBottom="@dimen/gap_of_16dp"
-                android:background="@drawable/light_blue_button_background"
+                android:background="@drawable/white_button_background"
                 android:hint="Enter phone number"
                 android:inputType="phone"
                 android:padding="@dimen/gap_of_8dp" />
@@ -71,7 +71,7 @@
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
                 android:layout_marginBottom="@dimen/gap_of_16dp"
-                android:background="@drawable/light_blue_button_background"
+                android:background="@drawable/white_button_background"
                 android:hint="Enter email address"
                 android:inputType="textEmailAddress"
                 android:padding="@dimen/gap_of_8dp" />
@@ -91,7 +91,7 @@
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
                 android:layout_marginBottom="@dimen/gap_of_16dp"
-                android:background="@drawable/light_blue_button_background"
+                android:background="@drawable/white_button_background"
                 android:hint="Enter password"
                 android:inputType="textPassword"
                 android:padding="@dimen/gap_of_8dp" />
@@ -111,8 +111,8 @@
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
                 android:layout_marginBottom="@dimen/gap_of_16dp"
-                android:background="@drawable/light_blue_button_background"
-                android:hint="Enter Email Address"
+                android:background="@drawable/white_button_background"
+                android:hint="Select question"
                 android:inputType="textEmailAddress"
                 android:padding="@dimen/gap_of_8dp" />
 
@@ -131,7 +131,7 @@
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
                 android:layout_marginBottom="@dimen/gap_of_16dp"
-                android:background="@drawable/light_blue_button_background"
+                android:background="@drawable/white_button_background"
                 android:hint="Enter security answer"
                 android:inputType="textPassword"
                 android:padding="@dimen/gap_of_8dp" />
@@ -141,6 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/gap_of_8dp"
+                android:textStyle="bold"
                 android:layout_gravity="center"
                 android:background="@drawable/hinoki_button_background"
                 android:text="Sign Up"
