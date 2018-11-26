@@ -1,5 +1,7 @@
 package com.pushertest.www.budgetcatcher;
 
+import java.util.concurrent.TimeUnit;
+
 public class Config {
 
     public static final String TAG_HOME_FRAGMENT = "TAG_HOME_FRAGMENT";
@@ -11,4 +13,12 @@ public class Config {
     public static final String TAG_REPORT_FRAGMENT = "TAG_REPORT_FRAGMENT";
 
     public static final String TAG_LIST_SPENDING_ALLOWANCE = "TAG_LIST_SPENDING_ALLOWANCE";
+
+    /*retrofit okHttp timeout values*/
+    public static final int connectTimeout = 60;
+    public static final int writeTimeout = 60;
+    public static final int readTimeout = 60;
+
+    /*retrofit okHttp timeout unit*/
+    public static final TimeUnit timeOutUnit = TimeUnit.SECONDS;
 }
