@@ -8,7 +8,10 @@ package com.pushertest.www.budgetcatcher.Network;
  * @since may - 2018.
  */
 
+import android.util.Log;
+
 import com.pushertest.www.budgetcatcher.Config;
+import com.pushertest.www.budgetcatcher.Model.SignUp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ApiManager {
@@ -48,6 +52,7 @@ public class ApiManager {
                 .baseUrl(URL.base)
                 .client(okHttpClient)
                 .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .build().create(ApiInterface.class);
 
     }
@@ -59,19 +64,18 @@ public class ApiManager {
         return apiManager;
     }
 
-    public void checkPrice(String weight, String distance, final QueryCallback<String> callback) {
+    public void signUp(SignUp signUp, final QueryCallback<String> callback) {
 
         Map<String, String> headers = new HashMap<String, String>();
 
-        headers.put(URL.API_KEY_WEIGHT, weight);
-        headers.put(URL.API_KEY_DISTANCE, distance);
+        headers.put(URL.key_content_Type, URL.value_Content_Type);
 
-        Call<String> networkCall = apiInterface.checkPrice(headers);
+        Call<String> networkCall = apiInterface.checkPrice(headers, signUp);
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
-                callback.onSuccess(response.body());
+                Log.d(TAG, "onResponse: " + response.code());
 
             }
 

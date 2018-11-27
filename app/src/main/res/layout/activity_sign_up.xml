@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/background_image"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_image">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_margin="@dimen/gap_of_16dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/gap_of_16dp">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/aquarium"
-            android:padding="@dimen/gap_of_8dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/gap_of_8dp">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:text="Name"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white" />
 
             <EditText
+                android:id="@+id/user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/gap_of_16dp"
@@ -38,13 +39,14 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:text="Phone"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white" />
 
             <EditText
+                android:id="@+id/phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/gap_of_16dp"
@@ -58,13 +60,14 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:text="Email"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white" />
 
             <EditText
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/gap_of_16dp"
@@ -78,13 +81,14 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:text="Password"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white" />
 
             <EditText
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/gap_of_16dp"
@@ -98,13 +102,14 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:text="Security Question"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white" />
 
             <EditText
+                android:id="@+id/question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/gap_of_16dp"
@@ -118,13 +123,14 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:text="Security Answer"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white" />
 
             <EditText
+                android:id="@+id/answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/gap_of_16dp"
@@ -140,13 +146,13 @@
                 android:id="@+id/sign_up_now"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/gap_of_8dp"
-                android:textStyle="bold"
                 android:layout_gravity="center"
+                android:layout_margin="@dimen/gap_of_8dp"
                 android:background="@drawable/hinoki_button_background"
                 android:text="Sign Up"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/back_to_sign_in"
