@@ -17,6 +17,7 @@ public class URL {
     public static final String profileSetup = "modifyUser/";
     public static final String signIn = "checkUser/";
     public static final String getAllBill = "getAllBills/";
+    public static final String getAllAllowance = "getAllAllowances/";
 
     /*URL key value*/
     public static final String value_Content_Type = "application/json";

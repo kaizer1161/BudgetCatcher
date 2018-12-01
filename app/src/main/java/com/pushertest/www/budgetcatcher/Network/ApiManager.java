@@ -11,6 +11,8 @@ package com.pushertest.www.budgetcatcher.Network;
 
 import com.google.gson.Gson;
 import com.pushertest.www.budgetcatcher.Config;
+import com.pushertest.www.budgetcatcher.Model.Allowance;
+import com.pushertest.www.budgetcatcher.Model.AllowanceResponse;
 import com.pushertest.www.budgetcatcher.Model.Bill;
 import com.pushertest.www.budgetcatcher.Model.BillResponse;
 import com.pushertest.www.budgetcatcher.Model.ProfileSetupBody;
@@ -179,6 +181,40 @@ public class ApiManager {
                     BillResponse billResponse = gson.fromJson(response.body(), BillResponse.class);
 
                     callback.onSuccess((ArrayList<Bill>) billResponse.getBills());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void getAllowance(String userId, final QueryCallback<ArrayList<Allowance>> callback) {
+
+        String uri = URL.base + URL.getAllAllowance + userId;
+
+        Call<String> networkCall = apiInterface.getAllowance(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    Gson gson = new Gson();
+                    AllowanceResponse allowanceResponse = gson.fromJson(response.body(), AllowanceResponse.class);
+
+                    callback.onSuccess((ArrayList<Allowance>) allowanceResponse.getAllowance());
 
                 } else {
 
