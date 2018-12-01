@@ -133,7 +133,7 @@ public class SignUp extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(String data) {
+            public void onFail() {
 
                 email.setText("");
                 email.setError("Email already exist!");

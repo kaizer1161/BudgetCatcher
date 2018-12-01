@@ -6,13 +6,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.pushertest.www.budgetcatcher.Adapter.AccountListAdapter;
+import com.pushertest.www.budgetcatcher.BudgetCatcher;
 import com.pushertest.www.budgetcatcher.Config;
 import com.pushertest.www.budgetcatcher.Model.AccountItem;
+import com.pushertest.www.budgetcatcher.Model.Bill;
+import com.pushertest.www.budgetcatcher.Network.QueryCallback;
 import com.pushertest.www.budgetcatcher.R;
 import com.pushertest.www.budgetcatcher.View.Activity.MainActivity;
 
@@ -24,14 +28,16 @@ import butterknife.ButterKnife;
 
 public class Catcher extends Fragment {
 
+    private static final String TAG = "Catcher";
+
     @BindView(R.id.bill_recycler_view)
     RecyclerView bills;
     @BindView(R.id.sending_allowance_recycler_view)
-    RecyclerView sendingAllowance;
+    RecyclerView spendingAllowance;
     @BindView(R.id.incidental_recycler_view)
     RecyclerView incidental;
 
-    private AccountListAdapter accountListAdapter;
+    private AccountListAdapter billListAdapter, spendingAllowanceListAdapter, incidentalListAdapter;
 
     @Nullable
     @Override
@@ -39,13 +45,13 @@ public class Catcher extends Fragment {
         View rootView = inflater.inflate(R.layout.cather, container, false);
         ButterKnife.bind(this, rootView);
 
-        if (getActivity() != null)
+        if (getActivity() != null) {
+
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Catcher");
 
-        ArrayList<AccountItem> billsArrayList = new ArrayList<>();
-        billsArrayList.add(new AccountItem("Electricity", "Due in 1 day", "$40.88"));
-        billsArrayList.add(new AccountItem("Car payment", "Due in Oct 15", "$80.88"));
-        billsArrayList.add(new AccountItem("Rent", "Due in Oct 15", "$80.88"));
+            getBillFromServer();
+
+        }
 
         ArrayList<AccountItem> spendingAllowanceArrayList = new ArrayList<>();
         spendingAllowanceArrayList.add(new AccountItem("Gas", "$40.88"));
@@ -57,7 +63,6 @@ public class Catcher extends Fragment {
         incidentalArrayList.add(new AccountItem("Home repairs", "10/08/18", "$40.88"));
         incidentalArrayList.add(new AccountItem("Room visit", "10/08/18", "$40.88"));
 
-        showFeedBills(billsArrayList);
         showFeedSpendingAllowance(spendingAllowanceArrayList);
         showFeedIncidental(incidentalArrayList);
 
@@ -67,24 +72,58 @@ public class Catcher extends Fragment {
     private void showFeedBills(ArrayList<AccountItem> accountItemArrayList) {
 
         bills.setLayoutManager(new LinearLayoutManager(getContext()));
-        accountListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, "null");
-        bills.setAdapter(accountListAdapter);
+        billListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, "null");
+        bills.setAdapter(billListAdapter);
 
     }
 
     private void showFeedSpendingAllowance(ArrayList<AccountItem> accountItemArrayList) {
 
-        sendingAllowance.setLayoutManager(new LinearLayoutManager(getContext()));
-        accountListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_SPENDING_ALLOWANCE);
-        sendingAllowance.setAdapter(accountListAdapter);
+        spendingAllowance.setLayoutManager(new LinearLayoutManager(getContext()));
+        spendingAllowanceListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_SPENDING_ALLOWANCE);
+        spendingAllowance.setAdapter(spendingAllowanceListAdapter);
 
     }
 
     private void showFeedIncidental(ArrayList<AccountItem> accountItemArrayList) {
 
         incidental.setLayoutManager(new LinearLayoutManager(getContext()));
-        accountListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, "null");
-        incidental.setAdapter(accountListAdapter);
+        incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, "null");
+        incidental.setAdapter(incidentalListAdapter);
+
+    }
+
+    private void getBillFromServer() {
+
+        BudgetCatcher.apiManager.getBill("193", new QueryCallback<ArrayList<Bill>>() {
+            @Override
+            public void onSuccess(ArrayList<Bill> billList) {
+
+                Log.d(TAG, "onSuccess: " + billList.size());
+
+                ArrayList<AccountItem> billsArrayList = new ArrayList<>();
+
+                for (int i = 0; i < billList.size(); i++) {
+
+                    Bill bill = billList.get(i);
+                    billsArrayList.add(new AccountItem(bill.getCategoryId(), bill.getDueDate(), bill.getAmount()));
+
+                }
+
+                showFeedBills(billsArrayList);
+
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+
+            @Override
+            public void onError(Throwable th) {
+
+            }
+        });
 
     }
 

@@ -8,7 +8,8 @@ public interface QueryCallback<T> {
     // Callback, Success
     void onSuccess(T data);
 
-    void onFail(T data);
+    // Callback failed
+    void onFail();
 
     // Callback, Error
     void onError(Throwable th);

@@ -201,7 +201,7 @@ public class ProfileSetup extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFail(String data) {
+                            public void onFail() {
 
                             }
 

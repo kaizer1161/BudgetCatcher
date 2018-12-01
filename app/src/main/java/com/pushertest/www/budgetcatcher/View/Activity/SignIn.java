@@ -85,7 +85,7 @@ public class SignIn extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFail(String data) {
+                        public void onFail() {
 
                             email.setText("");
                             password.setText("");

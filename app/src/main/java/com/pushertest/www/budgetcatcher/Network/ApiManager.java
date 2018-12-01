@@ -5,13 +5,18 @@ package com.pushertest.www.budgetcatcher.Network;
  * API manager also manages all APIs like createAccount, login etc.
  *
  * @author Mir Rayan
- * @since may - 2018.
+ * @since Nov - 2018.
  */
 
+
+import com.google.gson.Gson;
 import com.pushertest.www.budgetcatcher.Config;
+import com.pushertest.www.budgetcatcher.Model.Bill;
+import com.pushertest.www.budgetcatcher.Model.BillResponse;
 import com.pushertest.www.budgetcatcher.Model.ProfileSetupBody;
 import com.pushertest.www.budgetcatcher.Model.SignUpBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,7 +87,7 @@ public class ApiManager {
 
                 } else {
 
-                    callback.onFail(response.body());
+                    callback.onFail();
 
                 }
 
@@ -113,7 +118,7 @@ public class ApiManager {
 
                 } else {
 
-                    callback.onFail(response.body());
+                    callback.onFail();
 
                 }
 
@@ -146,6 +151,40 @@ public class ApiManager {
                     callback.onFail(response.body());
 
                 }*/
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void getBill(String userId, final QueryCallback<ArrayList<Bill>> callback) {
+
+        String uri = URL.base + URL.getAllBill + userId;
+
+        Call<String> networkCall = apiInterface.getBill(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    Gson gson = new Gson();
+                    BillResponse billResponse = gson.fromJson(response.body(), BillResponse.class);
+
+                    callback.onSuccess((ArrayList<Bill>) billResponse.getBills());
+
+                } else {
+
+                    callback.onFail();
+
+                }
 
             }
 
