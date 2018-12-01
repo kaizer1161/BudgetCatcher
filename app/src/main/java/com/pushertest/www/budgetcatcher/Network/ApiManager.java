@@ -71,16 +71,43 @@ public class ApiManager {
 
     public void userSignUp(SignUpBody body, final QueryCallback<String> callback) {
 
-        Map<String, String> headers = new HashMap<String, String>();
-
-        headers.put(URL.key_content_Type, URL.value_Content_Type);
-
         Call<String> networkCall = apiInterface.signUp(headers, body);
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
                 if (response.code() == URL.STATUS_SERVER_CREATED) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail(response.body());
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void userSignIn(String email, String password, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.signIn + email + "/" + password;
+
+        Call<String> networkCall = apiInterface.signIn(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
 
                     callback.onSuccess(response.body());
 

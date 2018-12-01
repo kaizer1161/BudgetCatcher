@@ -2,6 +2,7 @@ package com.pushertest.www.budgetcatcher.View.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,7 +17,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.pushertest.www.budgetcatcher.BudgetCatcher;
 import com.pushertest.www.budgetcatcher.Config;
+import com.pushertest.www.budgetcatcher.Model.ProfileSetupBody;
+import com.pushertest.www.budgetcatcher.Network.QueryCallback;
 import com.pushertest.www.budgetcatcher.R;
 
 import java.io.ByteArrayOutputStream;
@@ -177,7 +181,38 @@ public class ProfileSetup extends AppCompatActivity {
 
                     Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
 
-                    getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
+                    String userID = getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
+
+                    ProfileSetupBody profileSetupBody = new ProfileSetupBody(imageString, riskLevel.get(riskLevelSpinner.getSelectedItemPosition()), skillLevel.get(skillLevelSpinner.getSelectedItemPosition()), financialGoal.get(financialGoalSpinner.getSelectedItemPosition()));
+
+                    if (!userID.equals("")) {
+
+                        BudgetCatcher.apiManager.userProfileSetup(userID, profileSetupBody, new QueryCallback<String>() {
+                            @Override
+                            public void onSuccess(String data) {
+
+                                if (storeUserInformationInSharedPreference()) {
+
+                                    Toast.makeText(ProfileSetup.this, "Success", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(ProfileSetup.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                                }
+
+                            }
+
+                            @Override
+                            public void onFail(String data) {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable th) {
+
+                            }
+                        });
+
+                    }
+
 
 
                 } else {
@@ -185,8 +220,6 @@ public class ProfileSetup extends AppCompatActivity {
                     Toast.makeText(this, "Please select all fields", Toast.LENGTH_SHORT).show();
 
                 }
-
-                /*startActivity(new Intent(ProfileSetupBody.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));*/
 
                 break;
             }
@@ -236,6 +269,18 @@ public class ProfileSetup extends AppCompatActivity {
             }
 
         }
+    }
+
+    private boolean storeUserInformationInSharedPreference() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt(Config.SP_USER_CREATED_LEVEL, Config.SP_USER_CREATED_LEVEL_NONE);
+        editor.putBoolean(Config.SP_LOGGED_IN, true);
+        return editor.commit();
+
     }
 
 }

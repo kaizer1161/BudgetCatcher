@@ -19,12 +19,6 @@ public class ProfileSetupBody {
     private String financialGoal;
 
     /**
-     * No args constructor for use in serialization
-     */
-    public ProfileSetupBody() {
-    }
-
-    /**
      * @param skillLevel
      * @param riskLevel
      * @param financialGoal

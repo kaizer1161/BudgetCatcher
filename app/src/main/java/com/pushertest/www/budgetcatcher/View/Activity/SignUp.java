@@ -42,8 +42,6 @@ public class SignUp extends AppCompatActivity {
     @BindView(R.id.answer)
     EditText answer;
 
-    private SharedPreferences sharedPreferences;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,13 +150,12 @@ public class SignUp extends AppCompatActivity {
 
     private boolean storeUserInformationInSharedPreference(String userId) {
 
-        sharedPreferences = getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(Config.SP_USER_ID, userId);
         editor.putInt(Config.SP_USER_CREATED_LEVEL, Config.SP_USER_CREATED_LEVEL_SIGN_UP);
-        editor.putBoolean(Config.SP_LOGGED_IN, true);
         return editor.commit();
 
     }
