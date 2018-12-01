@@ -19,8 +19,8 @@ public class URL {
     public static final String value_Content_Type = "application/json";
 
     /*API key*/
-    public static final String API_KEY_WEIGHT = "weight";
-    public static final String API_KEY_DISTANCE = "distance";
+    public static final String API_KEY_DATA = "data";
+    public static final String API_KEY_USER_ID = "userId";
 
     /*URL key */
     public static final String key_content_Type = "Content_Type";

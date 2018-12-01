@@ -8,8 +8,6 @@ package com.pushertest.www.budgetcatcher.Network;
  * @since may - 2018.
  */
 
-import android.util.Log;
-
 import com.pushertest.www.budgetcatcher.Config;
 import com.pushertest.www.budgetcatcher.Model.SignUp;
 
@@ -75,16 +73,27 @@ public class ApiManager {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
-                Log.d(TAG, "onResponse: " + response.code());
+                if (response.code() == URL.STATUS_SERVER_CREATED) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail(response.body());
+
+                }
 
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
 
+                callback.onError(t);
+
             }
         });
 
     }
+
 
 }

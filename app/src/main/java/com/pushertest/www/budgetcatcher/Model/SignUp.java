@@ -26,21 +26,17 @@ public class SignUp {
     @SerializedName("securityAnswer")
     @Expose
     private String securityAnswer;
-    @SerializedName("profilePicUrl")
-    @Expose
-    private String profilePicUrl;
 
     /**
      * @param username
      * @param userPhoneNo
      * @param userPassword
-     * @param profilePicUrl
      * @param userEmailId
      * @param securityQuestion
      * @param securityAnswer
      * @param loginType
      */
-    public SignUp(String username, String userEmailId, String userPassword, String userPhoneNo, String loginType, String securityQuestion, String securityAnswer, String profilePicUrl) {
+    public SignUp(String username, String userEmailId, String userPassword, String userPhoneNo, String loginType, String securityQuestion, String securityAnswer) {
         super();
         this.userName = username;
         this.userEmailId = userEmailId;
@@ -49,7 +45,6 @@ public class SignUp {
         this.loginType = loginType;
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
-        this.profilePicUrl = profilePicUrl;
     }
 
     public String getUsername() {
@@ -106,14 +101,6 @@ public class SignUp {
 
     public void setSecurityAnswer(String securityAnswer) {
         this.securityAnswer = securityAnswer;
-    }
-
-    public String getProfilePicUrl() {
-        return profilePicUrl;
-    }
-
-    public void setProfilePicUrl(String profilePicUrl) {
-        this.profilePicUrl = profilePicUrl;
     }
 
 }
