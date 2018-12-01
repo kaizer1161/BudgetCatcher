@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.pushertest.www.budgetcatcher.BudgetCatcher;
 import com.pushertest.www.budgetcatcher.Config;
+import com.pushertest.www.budgetcatcher.Model.SignUpBody;
 import com.pushertest.www.budgetcatcher.Network.QueryCallback;
 import com.pushertest.www.budgetcatcher.Network.URL;
 import com.pushertest.www.budgetcatcher.R;
@@ -105,9 +106,9 @@ public class SignUp extends AppCompatActivity {
 
     private void saveDataToServer() {
 
-        com.pushertest.www.budgetcatcher.Model.SignUp signUp = new com.pushertest.www.budgetcatcher.Model.SignUp(userName.getText().toString(), email.getText().toString(), password.getText().toString(), phone.getText().toString(), "general", question.getText().toString(), answer.getText().toString());
+        SignUpBody signUpBody = new SignUpBody(userName.getText().toString(), email.getText().toString(), password.getText().toString(), phone.getText().toString(), "general", question.getText().toString(), answer.getText().toString());
 
-        BudgetCatcher.apiManager.signUp(signUp, new QueryCallback<String>() {
+        BudgetCatcher.apiManager.userSignUp(signUpBody, new QueryCallback<String>() {
             @Override
             public void onSuccess(String response) {
 

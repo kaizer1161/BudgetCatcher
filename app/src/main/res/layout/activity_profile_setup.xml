@@ -28,14 +28,15 @@
 
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/doctorImage"
+                android:id="@+id/profile_image"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
+                android:layout_margin="@dimen/gap_of_16dp"
                 android:src="@drawable/propic" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/choose_from_gallery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/gap_of_16dp"

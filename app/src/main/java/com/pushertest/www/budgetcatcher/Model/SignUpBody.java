@@ -3,7 +3,7 @@ package com.pushertest.www.budgetcatcher.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SignUp {
+public class SignUpBody {
 
     @SerializedName("username")
     @Expose
@@ -36,7 +36,7 @@ public class SignUp {
      * @param securityAnswer
      * @param loginType
      */
-    public SignUp(String username, String userEmailId, String userPassword, String userPhoneNo, String loginType, String securityQuestion, String securityAnswer) {
+    public SignUpBody(String username, String userEmailId, String userPassword, String userPhoneNo, String loginType, String securityQuestion, String securityAnswer) {
         super();
         this.userName = username;
         this.userEmailId = userEmailId;

@@ -1,15 +1,26 @@
 package com.pushertest.www.budgetcatcher.View.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.pushertest.www.budgetcatcher.Config;
 import com.pushertest.www.budgetcatcher.R;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -18,20 +29,29 @@ import butterknife.OnClick;
 
 public class ProfileSetup extends AppCompatActivity {
 
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int SPINNER_INITIAL_POSITION = 0;
+
     @BindView(R.id.financial_goal)
     Spinner financialGoalSpinner;
     @BindView(R.id.risk_level)
     Spinner riskLevelSpinner;
     @BindView(R.id.skill_level)
     Spinner skillLevelSpinner;
+    @BindView(R.id.profile_image)
+    ImageView profileImage;
 
-    ArrayList<String> financialGoal;
-    ArrayList<String> riskLevel;
-    ArrayList<String> skillLevel;
+    private String imageString;
+    private Boolean financialGoalSpinnerSelected = false, riskLevelSpinnerSelected = false,
+            skillLevelSpinnerSelected = false, profileImageSelected = false;
 
-    ArrayAdapter<String> financialGoalAdapter;
-    ArrayAdapter<String> riskLevelAdapter;
-    ArrayAdapter<String> skillLevelAdapter;
+    private ArrayList<String> financialGoal;
+    private ArrayList<String> riskLevel;
+    private ArrayList<String> skillLevel;
+
+    private ArrayAdapter<String> financialGoalAdapter;
+    private ArrayAdapter<String> riskLevelAdapter;
+    private ArrayAdapter<String> skillLevelAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +71,64 @@ public class ProfileSetup extends AppCompatActivity {
 
         skillLevelAdapter = new ArrayAdapter<String>(ProfileSetup.this, R.layout.spinner_item, R.id.spinner_item_text, skillLevel);
         skillLevelSpinner.setAdapter(skillLevelAdapter);
+
+        financialGoalSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                /*
+                 * If position == SPINNER_INITIAL_POSITION,
+                 * then financialGoalSpinnerSelected = false
+                 * else financialGoalSpinnerSelected = true.
+                 */
+                financialGoalSpinnerSelected = position != SPINNER_INITIAL_POSITION;
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        riskLevelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                /*
+                 * If position == SPINNER_INITIAL_POSITION,
+                 * then riskLevelSpinnerSelected = false
+                 * else riskLevelSpinnerSelected = true.
+                 */
+                riskLevelSpinnerSelected = position != SPINNER_INITIAL_POSITION;
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        skillLevelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                /*
+                 * If position == SPINNER_INITIAL_POSITION,
+                 * then skillLevelSpinnerSelected = false
+                 * else skillLevelSpinnerSelected = true.
+                 */
+                skillLevelSpinnerSelected = position != SPINNER_INITIAL_POSITION;
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
 
@@ -88,20 +166,76 @@ public class ProfileSetup extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.save})
+    @OnClick({R.id.save, R.id.choose_from_gallery})
     public void onClick(View view) {
 
         switch (view.getId()) {
 
             case R.id.save: {
 
-                startActivity(new Intent(ProfileSetup.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                if (profileImageSelected && financialGoalSpinnerSelected && riskLevelSpinnerSelected && skillLevelSpinnerSelected) {
+
+                    Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+
+                    getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
+
+
+                } else {
+
+                    Toast.makeText(this, "Please select all fields", Toast.LENGTH_SHORT).show();
+
+                }
+
+                /*startActivity(new Intent(ProfileSetupBody.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));*/
+
+                break;
+            }
+
+            case R.id.choose_from_gallery: {
+
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                // Start the Intent
+                startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST);
 
                 break;
             }
 
         }
 
+    }
+
+    public String getStringImage(Bitmap bmp) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+        profileImage.setImageBitmap(bmp);
+        byte[] imageBytes = baos.toByteArray();
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent resultData) {
+
+        // The ACTION_OPEN_DOCUMENT intent was sent with the request code
+        // READ_REQUEST_CODE. If the request code seen here doesn't match, it's the
+        // response to some other intent, and the code below shouldn't run at all.
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK
+                && null != resultData && resultData.getData() != null) {
+            Uri filePath = resultData.getData();
+            Bitmap bitmap = null;
+            try {
+
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                imageString = getStringImage(bitmap);
+                profileImageSelected = true;
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
 }

@@ -51,7 +51,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/signUp"
+                android:id="@+id/signUpBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/gap_of_16dp"

@@ -9,7 +9,8 @@ package com.pushertest.www.budgetcatcher.Network;
  */
 
 import com.pushertest.www.budgetcatcher.Config;
-import com.pushertest.www.budgetcatcher.Model.SignUp;
+import com.pushertest.www.budgetcatcher.Model.ProfileSetupBody;
+import com.pushertest.www.budgetcatcher.Model.SignUpBody;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,8 @@ public class ApiManager {
     private static final String TAG = "Api Manager";
     private static ApiManager apiManager;
     private static ApiInterface apiInterface;
+
+    private Map<String, String> headers;
 
     private ApiManager() {
 
@@ -53,6 +56,10 @@ public class ApiManager {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(ApiInterface.class);
 
+        headers = new HashMap<>();
+
+        headers.put(URL.key_content_Type, URL.value_Content_Type);
+
     }
 
     public static ApiManager getInstance() {
@@ -62,13 +69,13 @@ public class ApiManager {
         return apiManager;
     }
 
-    public void signUp(SignUp signUp, final QueryCallback<String> callback) {
+    public void userSignUp(SignUpBody body, final QueryCallback<String> callback) {
 
         Map<String, String> headers = new HashMap<String, String>();
 
         headers.put(URL.key_content_Type, URL.value_Content_Type);
 
-        Call<String> networkCall = apiInterface.checkPrice(headers, signUp);
+        Call<String> networkCall = apiInterface.signUp(headers, body);
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -95,5 +102,34 @@ public class ApiManager {
 
     }
 
+    public void userProfileSetup(String userID, ProfileSetupBody profileSetupBody, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.profileSetup + userID;
+        Call<String> networkCall = apiInterface.profileSetup(uri, headers, profileSetupBody);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                /*if (response.code() == URL.STATUS_SERVER_CREATED) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail(response.body());
+
+                }*/
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
 
 }

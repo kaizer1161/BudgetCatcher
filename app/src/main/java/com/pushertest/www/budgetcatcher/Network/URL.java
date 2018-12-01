@@ -14,6 +14,7 @@ public class URL {
 
     /*URL Suffix*/
     public static final String signUp = "insertUser";
+    public static final String profileSetup = "modifyUser/";
 
     /*URL key value*/
     public static final String value_Content_Type = "application/json";

@@ -34,7 +34,7 @@ public class SignIn extends AppCompatActivity {
 
             case R.id.forgot_password: {
 
-                /*startActivity(new Intent(SignIn.this, SignUp.class));*/
+                /*startActivity(new Intent(SignIn.this, SignUpBody.class));*/
 
                 break;
             }
