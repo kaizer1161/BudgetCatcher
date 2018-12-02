@@ -11,8 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pushertest.www.budgetcatcher.Adapter.AccountListAdapter;
+import com.pushertest.www.budgetcatcher.BudgetCatcher;
 import com.pushertest.www.budgetcatcher.Config;
 import com.pushertest.www.budgetcatcher.Model.AccountItem;
+import com.pushertest.www.budgetcatcher.Model.Allowance;
+import com.pushertest.www.budgetcatcher.Model.Bill;
+import com.pushertest.www.budgetcatcher.Network.QueryCallback;
 import com.pushertest.www.budgetcatcher.R;
 import com.pushertest.www.budgetcatcher.View.Activity.MainActivity;
 
@@ -30,7 +34,7 @@ public class Manage extends Fragment {
     @BindView(R.id.allowance)
     RecyclerView allowance;
 
-    private AccountListAdapter accountListAdapter;
+    private AccountListAdapter billsListAdapter, allowanceListAdapter;
 
     @Nullable
     @Override
@@ -38,22 +42,13 @@ public class Manage extends Fragment {
         View rootView = inflater.inflate(R.layout.manage, container, false);
         ButterKnife.bind(this, rootView);
 
-        if (getActivity() != null)
+        if (getActivity() != null) {
+
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Manage");
+            getBillFromServer();
+            getAllowanceFromServer();
 
-        ArrayList<AccountItem> billsArrayList = new ArrayList<>();
-        billsArrayList.add(new AccountItem("Electricity", "due is 1 day", "$40.88"));
-        billsArrayList.add(new AccountItem("Car payment", "due is Jan 15", "$80.88"));
-        billsArrayList.add(new AccountItem("Rent", "due is Jan 20", "$50.88"));
-        billsArrayList.add(new AccountItem("Credit card", "due is Jan 20", "$50.88"));
-
-        ArrayList<AccountItem> spendingAllowanceArrayList = new ArrayList<>();
-        spendingAllowanceArrayList.add(new AccountItem("Gas", "$40.88"));
-        spendingAllowanceArrayList.add(new AccountItem("Groceries", "$80.88"));
-        spendingAllowanceArrayList.add(new AccountItem("Entertainment", "$50.88"));
-
-        showFeedBills(billsArrayList);
-        showFeedSpendingAllowance(spendingAllowanceArrayList);
+        }
 
         return rootView;
     }
@@ -61,16 +56,16 @@ public class Manage extends Fragment {
     private void showFeedBills(ArrayList<AccountItem> accountItemArrayList) {
 
         bills.setLayoutManager(new LinearLayoutManager(getContext()));
-        accountListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, "null");
-        bills.setAdapter(accountListAdapter);
+        billsListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, "null");
+        bills.setAdapter(billsListAdapter);
 
     }
 
     private void showFeedSpendingAllowance(ArrayList<AccountItem> accountItemArrayList) {
 
         allowance.setLayoutManager(new LinearLayoutManager(getContext()));
-        accountListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_SPENDING_ALLOWANCE);
-        allowance.setAdapter(accountListAdapter);
+        allowanceListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_SPENDING_ALLOWANCE);
+        allowance.setAdapter(allowanceListAdapter);
     }
 
     @OnClick({R.id.add_bill, R.id.add_allowance})
@@ -101,6 +96,70 @@ public class Manage extends Fragment {
                 break;
             }
         }
+
+    }
+
+    private void getBillFromServer() {
+
+        BudgetCatcher.apiManager.getBill("193", new QueryCallback<ArrayList<Bill>>() {
+            @Override
+            public void onSuccess(ArrayList<Bill> billList) {
+
+                ArrayList<AccountItem> billsArrayList = new ArrayList<>();
+
+                for (int i = 0; i < billList.size(); i++) {
+
+                    Bill bill = billList.get(i);
+                    billsArrayList.add(new AccountItem(bill.getCategoryId(), bill.getDueDate(), "$" + bill.getAmount()));
+
+                }
+
+                showFeedBills(billsArrayList);
+
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+
+            @Override
+            public void onError(Throwable th) {
+
+            }
+        });
+
+    }
+
+    private void getAllowanceFromServer() {
+
+        BudgetCatcher.apiManager.getAllowance("193", new QueryCallback<ArrayList<Allowance>>() {
+            @Override
+            public void onSuccess(ArrayList<Allowance> allowancesList) {
+
+                ArrayList<AccountItem> spendingAllowanceArrayList = new ArrayList<>();
+
+                for (int i = 0; i < allowancesList.size(); i++) {
+
+                    Allowance allowance = allowancesList.get(i);
+                    spendingAllowanceArrayList.add(new AccountItem(allowance.getAllowanceName(), "$" + allowance.getAllowanceAmount()));
+
+                }
+
+                showFeedSpendingAllowance(spendingAllowanceArrayList);
+
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+
+            @Override
+            public void onError(Throwable th) {
+
+            }
+        });
 
     }
 

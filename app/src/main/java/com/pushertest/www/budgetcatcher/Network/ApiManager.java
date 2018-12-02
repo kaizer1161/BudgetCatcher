@@ -9,6 +9,8 @@ package com.pushertest.www.budgetcatcher.Network;
  */
 
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.pushertest.www.budgetcatcher.Config;
 import com.pushertest.www.budgetcatcher.Model.Allowance;
@@ -143,6 +145,9 @@ public class ApiManager {
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
+
+
+                Log.d(TAG, "onResponse user profile: " + response.code());
 
                 /*if (response.code() == URL.STATUS_SERVER_CREATED) {
 

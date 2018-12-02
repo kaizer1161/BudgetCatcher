@@ -3,11 +3,13 @@ package com.pushertest.www.budgetcatcher.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ProfileSetupBody {
+import java.io.Serializable;
 
-    @SerializedName("base64String")
+public class ProfileSetupBody implements Serializable {
+
+    @SerializedName("profilePicUrl")
     @Expose
-    private String base64String;
+    private String profilePicUrl;
     @SerializedName("riskLevel")
     @Expose
     private String riskLevel;
@@ -19,25 +21,26 @@ public class ProfileSetupBody {
     private String financialGoal;
 
     /**
+     *
      * @param skillLevel
      * @param riskLevel
      * @param financialGoal
-     * @param base64String
+     * @param profilePicUrl
      */
-    public ProfileSetupBody(String base64String, String riskLevel, String skillLevel, String financialGoal) {
+    public ProfileSetupBody(String profilePicUrl, String riskLevel, String skillLevel, String financialGoal) {
         super();
-        this.base64String = base64String;
+        this.profilePicUrl = profilePicUrl;
         this.riskLevel = riskLevel;
         this.skillLevel = skillLevel;
         this.financialGoal = financialGoal;
     }
 
-    public String getBase64String() {
-        return base64String;
+    public String getProfilePicUrl() {
+        return profilePicUrl;
     }
 
-    public void setBase64String(String base64String) {
-        this.base64String = base64String;
+    public void setProfilePicUrl(String profilePicUrl) {
+        this.profilePicUrl = profilePicUrl;
     }
 
     public String getRiskLevel() {

@@ -7,11 +7,17 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.pushertest.www.budgetcatcher.BudgetCatcher;
 import com.pushertest.www.budgetcatcher.Config;
 import com.pushertest.www.budgetcatcher.Network.QueryCallback;
+import com.pushertest.www.budgetcatcher.Network.URL;
 import com.pushertest.www.budgetcatcher.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +67,7 @@ public class SignIn extends AppCompatActivity {
                         @Override
                         public void onSuccess(String response) {
 
-                            /*JSONObject jsonObject = null;
+                            JSONObject jsonObject = null;
                             try {
 
                                 jsonObject = new JSONObject(response);
@@ -78,9 +84,7 @@ public class SignIn extends AppCompatActivity {
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                            }*/
-
-                            startActivity(new Intent(SignIn.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                            }
 
                         }
 

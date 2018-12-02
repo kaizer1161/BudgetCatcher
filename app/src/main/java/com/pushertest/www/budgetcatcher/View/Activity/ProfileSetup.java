@@ -179,15 +179,13 @@ public class ProfileSetup extends AppCompatActivity {
 
                 if (profileImageSelected && financialGoalSpinnerSelected && riskLevelSpinnerSelected && skillLevelSpinnerSelected) {
 
-                    Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-
                     String userID = getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-                    ProfileSetupBody profileSetupBody = new ProfileSetupBody(imageString, riskLevel.get(riskLevelSpinner.getSelectedItemPosition()), skillLevel.get(skillLevelSpinner.getSelectedItemPosition()), financialGoal.get(financialGoalSpinner.getSelectedItemPosition()));
+                    ProfileSetupBody profileSetupBody = new ProfileSetupBody("asd", riskLevel.get(riskLevelSpinner.getSelectedItemPosition()), skillLevel.get(skillLevelSpinner.getSelectedItemPosition()), financialGoal.get(financialGoalSpinner.getSelectedItemPosition()));
 
                     if (!userID.equals("")) {
 
-                        BudgetCatcher.apiManager.userProfileSetup(userID, profileSetupBody, new QueryCallback<String>() {
+                        BudgetCatcher.apiManager.userProfileSetup("193", profileSetupBody, new QueryCallback<String>() {
                             @Override
                             public void onSuccess(String data) {
 
@@ -212,8 +210,6 @@ public class ProfileSetup extends AppCompatActivity {
                         });
 
                     }
-
-
 
                 } else {
 
