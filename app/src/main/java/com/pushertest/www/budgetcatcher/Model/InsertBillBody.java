@@ -3,56 +3,53 @@ package com.pushertest.www.budgetcatcher.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Bill {
+public class InsertBillBody {
 
-    @SerializedName("billId")
-    @Expose
-    private String billId;
     @SerializedName("userId")
     @Expose
     private String userId;
-    @SerializedName("category")
+    @SerializedName("categoryId")
     @Expose
     private String categoryId;
-    @SerializedName("description")
-    @Expose
-    private String description;
     @SerializedName("amount")
     @Expose
     private String amount;
+    @SerializedName("description")
+    @Expose
+    private String description;
     @SerializedName("dueDate")
     @Expose
     private String dueDate;
+    @SerializedName("notes")
+    @Expose
+    private String notes;
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("billName")
+    @Expose
+    private String billName;
 
     /**
      * @param amount
+     * @param billName
      * @param status
      * @param description
      * @param categoryId
      * @param userId
-     * @param billId
+     * @param notes
      * @param dueDate
      */
-    public Bill(String billId, String userId, String categoryId, String description, String amount, String dueDate, String status) {
+    public InsertBillBody(String userId, String categoryId, String amount, String description, String dueDate, String notes, String status, String billName) {
         super();
-        this.billId = billId;
         this.userId = userId;
         this.categoryId = categoryId;
-        this.description = description;
         this.amount = amount;
+        this.description = description;
         this.dueDate = dueDate;
+        this.notes = notes;
         this.status = status;
-    }
-
-    public String getBillId() {
-        return billId;
-    }
-
-    public void setBillId(String billId) {
-        this.billId = billId;
+        this.billName = billName;
     }
 
     public String getUserId() {
@@ -71,20 +68,20 @@ public class Bill {
         this.categoryId = categoryId;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getAmount() {
         return amount;
     }
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDueDate() {
@@ -95,6 +92,14 @@ public class Bill {
         this.dueDate = dueDate;
     }
 
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -102,4 +107,13 @@ public class Bill {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getBillName() {
+        return billName;
+    }
+
+    public void setBillName(String billName) {
+        this.billName = billName;
+    }
+
 }

@@ -17,6 +17,9 @@ import com.pushertest.www.budgetcatcher.Model.Allowance;
 import com.pushertest.www.budgetcatcher.Model.AllowanceResponse;
 import com.pushertest.www.budgetcatcher.Model.Bill;
 import com.pushertest.www.budgetcatcher.Model.BillResponse;
+import com.pushertest.www.budgetcatcher.Model.Category;
+import com.pushertest.www.budgetcatcher.Model.CategoryResponse;
+import com.pushertest.www.budgetcatcher.Model.InsertBillBody;
 import com.pushertest.www.budgetcatcher.Model.ProfileSetupBody;
 import com.pushertest.www.budgetcatcher.Model.SignUpBody;
 
@@ -220,6 +223,67 @@ public class ApiManager {
                     AllowanceResponse allowanceResponse = gson.fromJson(response.body(), AllowanceResponse.class);
 
                     callback.onSuccess((ArrayList<Allowance>) allowanceResponse.getAllowance());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void getCategory(final QueryCallback<ArrayList<Category>> callback) {
+
+        Call<String> networkCall = apiInterface.getCategory();
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    Gson gson = new Gson();
+                    CategoryResponse categoryResponse = gson.fromJson(response.body(), CategoryResponse.class);
+
+                    callback.onSuccess((ArrayList<Category>) categoryResponse.getCategory());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void insertBill(InsertBillBody body, final QueryCallback<String> callback) {
+
+        Call<String> networkCall = apiInterface.insertBill(headers, body);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_CREATED) {
+
+                    callback.onSuccess(response.body());
 
                 } else {
 

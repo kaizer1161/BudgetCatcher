@@ -18,6 +18,8 @@ public class URL {
     public static final String signIn = "checkUser/";
     public static final String getAllBill = "getAllBills/";
     public static final String getAllAllowance = "getAllAllowances/";
+    public static final String getAllCategory = "getAllCategory/";
+    public static final String insertBill = "insertBill";
 
     /*URL key value*/
     public static final String value_Content_Type = "application/json";
