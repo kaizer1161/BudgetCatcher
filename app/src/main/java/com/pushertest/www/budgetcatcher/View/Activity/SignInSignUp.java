@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.pushertest.www.budgetcatcher.Config;
 import com.pushertest.www.budgetcatcher.R;
 
 import butterknife.ButterKnife;
@@ -29,14 +30,30 @@ public class SignInSignUp extends AppCompatActivity {
 
             case R.id.signIn: {
 
-                startActivity(new Intent(SignInSignUp.this, SignIn.class));
+                if (getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getInt(Config.SP_USER_CREATED_LEVEL, Config.SP_USER_CREATED_LEVEL_NONE) == Config.SP_USER_CREATED_LEVEL_SIGN_UP) {
+
+                    startActivity(new Intent(SignInSignUp.this, ProfileSetup.class));
+
+                } else {
+
+                    startActivity(new Intent(SignInSignUp.this, SignIn.class));
+
+                }
 
                 break;
             }
 
             case R.id.signUp: {
 
-                startActivity(new Intent(SignInSignUp.this, SignUp.class));
+                if (getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getInt(Config.SP_USER_CREATED_LEVEL, Config.SP_USER_CREATED_LEVEL_NONE) == Config.SP_USER_CREATED_LEVEL_SIGN_UP) {
+
+                    startActivity(new Intent(SignInSignUp.this, ProfileSetup.class));
+
+                } else {
+
+                    startActivity(new Intent(SignInSignUp.this, SignUp.class));
+
+                }
 
                 break;
             }
