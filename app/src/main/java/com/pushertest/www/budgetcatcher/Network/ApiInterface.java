@@ -16,6 +16,7 @@ import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
@@ -46,6 +47,9 @@ public interface ApiInterface {
 
     @POST(URL.insertAllowances)
     Call<String> insertAllowances(@HeaderMap Map<String, String> headers, @Body InsertAllowanceBody insertAllowanceBody);
+
+    @DELETE
+    Call<String> deleteBill(@Url String url);
 
 
 }

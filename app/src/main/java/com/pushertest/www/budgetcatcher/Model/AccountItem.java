@@ -2,21 +2,35 @@ package com.pushertest.www.budgetcatcher.Model;
 
 public class AccountItem {
 
-    String col1, col2, col3;
+    private String col1;
+    private String col2;
+    private String col3;
 
-    public AccountItem(String col1, String col3) {
+    private String id;
+
+    public AccountItem(String col1, String col3, String id) {
 
         this.col1 = col1;
         this.col3 = col3;
+        this.id = id;
 
     }
 
-    public AccountItem(String col1, String col2, String col3){
+    public AccountItem(String col1, String col2, String col3, String id) {
 
         this.col1 = col1;
         this.col2 = col2;
         this.col3 = col3;
+        this.id = id;
 
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCol1() {

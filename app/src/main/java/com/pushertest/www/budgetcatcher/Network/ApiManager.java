@@ -333,4 +333,35 @@ public class ApiManager {
 
     }
 
+    public void deleteBill(String userId, String billId, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.deleteBills + userId + "/" + billId;
+
+        Call<String> networkCall = apiInterface.deleteBill(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
 }

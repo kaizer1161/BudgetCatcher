@@ -1,14 +1,20 @@
 package com.pushertest.www.budgetcatcher.Adapter;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pushertest.www.budgetcatcher.Config;
 import com.pushertest.www.budgetcatcher.Model.AccountItem;
+import com.pushertest.www.budgetcatcher.Model.Bill;
 import com.pushertest.www.budgetcatcher.R;
 
 import java.util.ArrayList;
@@ -26,6 +32,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
     private LayoutInflater inflater;
     private Activity activity;
     private ArrayList<AccountItem> accountItemArrayList;
+    private ArrayList<Bill> bills;
     private String fragmentTag;
 
     public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag) {
@@ -34,6 +41,16 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         this.activity = activity;
         this.accountItemArrayList = accountItemArrayList;
         this.fragmentTag = fragmentTag;
+
+    }
+
+    public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag, ArrayList<Bill> bills) {
+
+        inflater = LayoutInflater.from(activity);
+        this.activity = activity;
+        this.accountItemArrayList = accountItemArrayList;
+        this.fragmentTag = fragmentTag;
+        this.bills = bills;
 
     }
 
@@ -85,10 +102,86 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         TextView col2;
         @BindView(R.id.col3)
         TextView col3;
+        @BindView(R.id.item_body)
+        RelativeLayout itemBody;
 
         AccountListAdapterHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            itemBody.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    final AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
+                    builder1.setCancelable(false);
+
+                    builder1.setTitle("Please select a action");
+                    builder1.setMessage(col1.getText().toString() + " " + col3.getText().toString());
+
+                    builder1.setPositiveButton(
+                            activity.getResources().getString(R.string.edit),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+
+                                }
+                            }).setNegativeButton(activity.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled the dialog
+                            dialog.cancel();
+                        }
+                    }).setNeutralButton(activity.getResources().getString(R.string.delete), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    final AlertDialog alert11 = builder1.create();
+
+                    alert11.setOnShowListener(new DialogInterface.OnShowListener() {
+                        @Override
+                        public void onShow(DialogInterface dialogInterface) {
+                            alert11.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.RED);
+                            alert11.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(activity.getResources().getColor(R.color.deep_sea_dive));
+                            alert11.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(activity.getResources().getColor(R.color.hinoki));
+                            alert11.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    if (fragmentTag.equals(Config.TAG_LIST_BILL))
+                                        Toast.makeText(activity, "" + bills.get(getAdapterPosition()).getBillId(), Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+
+                            alert11.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+
+                                }
+                            });
+
+                            alert11.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    alert11.dismiss();
+
+                                }
+                            });
+
+                        }
+                    });
+
+                    alert11.show();
+
+                    return false;
+                }
+            });
+
         }
 
     }

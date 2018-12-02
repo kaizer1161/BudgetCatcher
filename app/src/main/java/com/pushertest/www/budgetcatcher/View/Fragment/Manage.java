@@ -110,7 +110,7 @@ public class Manage extends Fragment {
                 for (int i = 0; i < billList.size(); i++) {
 
                     Bill bill = billList.get(i);
-                    billsArrayList.add(new AccountItem(bill.getCategoryId(), bill.getDueDate(), "$" + bill.getAmount()));
+                    billsArrayList.add(new AccountItem(bill.getCategoryId(), bill.getDueDate(), "$" + bill.getAmount(), bill.getBillId()));
 
                 }
 
@@ -142,7 +142,7 @@ public class Manage extends Fragment {
                 for (int i = 0; i < allowancesList.size(); i++) {
 
                     Allowance allowance = allowancesList.get(i);
-                    spendingAllowanceArrayList.add(new AccountItem(allowance.getAllowanceName(), "$" + allowance.getAllowanceAmount()));
+                    spendingAllowanceArrayList.add(new AccountItem(allowance.getAllowanceName(), "$" + allowance.getAllowanceAmount(), allowance.getAllowanceId()));
 
                 }
 

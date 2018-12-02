@@ -21,6 +21,8 @@ public class Config {
     public static final String TAG_REPORT_FRAGMENT = "TAG_REPORT_FRAGMENT";
 
     public static final String TAG_LIST_SPENDING_ALLOWANCE = "TAG_LIST_SPENDING_ALLOWANCE";
+    public static final String TAG_LIST_BILL = "TAG_LIST_BILL";
+    public static final String TAG_LIST_INCIDENTAL = "TAG_LIST_INCIDENTAL";
 
     /*retrofit okHttp timeout values*/
     public static final int connectTimeout = 60;

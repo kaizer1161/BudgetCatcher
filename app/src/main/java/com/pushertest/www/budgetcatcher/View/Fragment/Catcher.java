@@ -56,19 +56,19 @@ public class Catcher extends Fragment {
 
 
         ArrayList<AccountItem> incidentalArrayList = new ArrayList<>();
-        incidentalArrayList.add(new AccountItem("Car repairs", "10/08/18", "$40.88"));
-        incidentalArrayList.add(new AccountItem("Home repairs", "10/08/18", "$40.88"));
-        incidentalArrayList.add(new AccountItem("Room visit", "10/08/18", "$40.88"));
+        incidentalArrayList.add(new AccountItem("Car repairs", "10/08/18", "$40.88", "12"));
+        incidentalArrayList.add(new AccountItem("Home repairs", "10/08/18", "$40.88", "12"));
+        incidentalArrayList.add(new AccountItem("Room visit", "10/08/18", "$40.88", "12"));
 
         showFeedIncidental(incidentalArrayList);
 
         return rootView;
     }
 
-    private void showFeedBills(ArrayList<AccountItem> accountItemArrayList) {
+    private void showFeedBills(ArrayList<AccountItem> accountItemArrayList, ArrayList<Bill> billArrayList) {
 
         bills.setLayoutManager(new LinearLayoutManager(getContext()));
-        billListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, "null");
+        billListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_BILL, billArrayList);
         bills.setAdapter(billListAdapter);
 
     }
@@ -84,7 +84,7 @@ public class Catcher extends Fragment {
     private void showFeedIncidental(ArrayList<AccountItem> accountItemArrayList) {
 
         incidental.setLayoutManager(new LinearLayoutManager(getContext()));
-        incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, "null");
+        incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCIDENTAL);
         incidental.setAdapter(incidentalListAdapter);
 
     }
@@ -100,11 +100,11 @@ public class Catcher extends Fragment {
                 for (int i = 0; i < billList.size(); i++) {
 
                     Bill bill = billList.get(i);
-                    billsArrayList.add(new AccountItem(bill.getCategoryId(), bill.getDueDate(), "$" + bill.getAmount()));
+                    billsArrayList.add(new AccountItem(bill.getCategoryId(), bill.getDueDate(), "$" + bill.getAmount(), bill.getBillId()));
 
                 }
 
-                showFeedBills(billsArrayList);
+                showFeedBills(billsArrayList, billList);
 
             }
 
@@ -132,7 +132,7 @@ public class Catcher extends Fragment {
                 for (int i = 0; i < allowancesList.size(); i++) {
 
                     Allowance allowance = allowancesList.get(i);
-                    spendingAllowanceArrayList.add(new AccountItem(allowance.getAllowanceName(), "$" + allowance.getAllowanceAmount()));
+                    spendingAllowanceArrayList.add(new AccountItem(allowance.getAllowanceName(), "$" + allowance.getAllowanceAmount(), allowance.getAllowanceId()));
 
                 }
 
