@@ -7,6 +7,7 @@ package com.pushertest.www.budgetcatcher.Network;
  * @since june-2018
  */
 
+import com.pushertest.www.budgetcatcher.Model.InsertAllowanceBody;
 import com.pushertest.www.budgetcatcher.Model.InsertBillBody;
 import com.pushertest.www.budgetcatcher.Model.ProfileSetupBody;
 import com.pushertest.www.budgetcatcher.Model.SignUpBody;
@@ -42,6 +43,9 @@ public interface ApiInterface {
 
     @POST(URL.insertBill)
     Call<String> insertBill(@HeaderMap Map<String, String> headers, @Body InsertBillBody insertBillBody);
+
+    @POST(URL.insertAllowances)
+    Call<String> insertAllowances(@HeaderMap Map<String, String> headers, @Body InsertAllowanceBody insertAllowanceBody);
 
 
 }

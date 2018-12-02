@@ -19,6 +19,7 @@ import com.pushertest.www.budgetcatcher.Model.Bill;
 import com.pushertest.www.budgetcatcher.Model.BillResponse;
 import com.pushertest.www.budgetcatcher.Model.Category;
 import com.pushertest.www.budgetcatcher.Model.CategoryResponse;
+import com.pushertest.www.budgetcatcher.Model.InsertAllowanceBody;
 import com.pushertest.www.budgetcatcher.Model.InsertBillBody;
 import com.pushertest.www.budgetcatcher.Model.ProfileSetupBody;
 import com.pushertest.www.budgetcatcher.Model.SignUpBody;
@@ -277,6 +278,35 @@ public class ApiManager {
     public void insertBill(InsertBillBody body, final QueryCallback<String> callback) {
 
         Call<String> networkCall = apiInterface.insertBill(headers, body);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_CREATED) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void insertAllowance(InsertAllowanceBody body, final QueryCallback<String> callback) {
+
+        Call<String> networkCall = apiInterface.insertAllowances(headers, body);
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

@@ -7,13 +7,12 @@
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/aquarium"
         android:layout_margin="@dimen/gap_of_16dp">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/aquarium"
             android:orientation="vertical"
             android:padding="@dimen/gap_of_8dp">
 
@@ -31,11 +30,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/gap_of_16dp"
-                android:text="Category"
+                android:text="Name"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white" />
 
             <EditText
+                android:id="@+id/allowance_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/gap_of_16dp"
@@ -43,8 +43,29 @@
                 android:layout_marginRight="@dimen/gap_of_16dp"
                 android:layout_marginBottom="@dimen/gap_of_16dp"
                 android:background="@drawable/white_button_background"
-                android:hint="Select category"
+                android:hint="Enter name"
                 android:inputType="textPersonName"
+                android:padding="@dimen/gap_of_8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:text="Description"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:layout_marginTop="@dimen/gap_of_8dp"
+                android:layout_marginRight="@dimen/gap_of_16dp"
+                android:layout_marginBottom="@dimen/gap_of_16dp"
+                android:background="@drawable/white_button_background"
+                android:hint="Enter description"
+                android:inputType="textAutoCorrect"
                 android:padding="@dimen/gap_of_8dp" />
 
             <TextView
@@ -56,6 +77,7 @@
                 android:textColor="@color/white" />
 
             <EditText
+                android:id="@+id/amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/gap_of_16dp"
@@ -64,11 +86,29 @@
                 android:layout_marginBottom="@dimen/gap_of_16dp"
                 android:background="@drawable/white_button_background"
                 android:hint="Enter amount"
-                android:inputType="phone"
+                android:inputType="number"
                 android:padding="@dimen/gap_of_8dp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:layout_marginBottom="@dimen/gap_of_8dp"
+                android:text="Category"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/white" />
+
+            <Spinner
+                android:id="@+id/category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/gap_of_16dp"
+                android:paddingRight="@dimen/gap_of_16dp">
+
+            </Spinner>
+
             <Button
-                android:id="@+id/sign_up_now"
+                android:id="@+id/save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
