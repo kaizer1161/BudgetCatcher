@@ -150,18 +150,17 @@ public class ApiManager {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
+                Log.d(TAG, "onResponse: " + response.code());
 
-                Log.d(TAG, "onResponse user profile: " + response.code());
-
-                /*if (response.code() == URL.STATUS_SERVER_CREATED) {
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
 
                     callback.onSuccess(response.body());
 
                 } else {
 
-                    callback.onFail(response.body());
+                    callback.onFail();
 
-                }*/
+                }
 
             }
 

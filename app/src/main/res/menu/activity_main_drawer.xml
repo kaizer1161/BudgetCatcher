@@ -6,29 +6,29 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_home_black_24dp"
+            android:icon="@drawable/ic_action_home"
             android:title="Home" />
         <item
             android:id="@+id/nav_catcher"
-            android:icon="@drawable/ic_account_balance_wallet_black_24dp"
+            android:icon="@drawable/ic_action_wallet"
             android:title="Catcher" />
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_manage_24dp"
+            android:icon="@drawable/ic_action_saving"
             android:title="Manage" />
         <item
             android:id="@+id/nav_advice"
-            android:icon="@drawable/ic_account_balance_wallet_black_24dp"
+            android:icon="@drawable/ic_action_advice"
             android:title="Advice" />
 
         <item
             android:id="@+id/nav_report"
-            android:icon="@drawable/ic_report_24dp"
+            android:icon="@drawable/ic_action_report"
             android:title="Report" />
 
         <item
             android:id="@+id/nav_balance_projection"
-            android:icon="@drawable/ic_report_24dp"
+            android:icon="@drawable/ic_action_projection"
             android:title="Balance projection" />
 
     </group>
@@ -38,12 +38,12 @@
 
             <item
                 android:id="@+id/nav_settings"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/ic_action_setting"
                 android:title="Settings" />
 
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_power"
+                android:icon="@drawable/ic_action_logout"
                 android:title="Logout" />
         </menu>
     </item>

@@ -28,12 +28,12 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="@dimen/gap_of_8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -150,53 +150,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/aquarium"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="50"
-                        android:orientation="vertical">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/gap_of_8dp">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="50"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/gap_of_16dp"
+                            android:gravity="center"
                             android:text="Add to Savings"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                             android:textColor="@color/white" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/gap_of_16dp"
-                            android:paddingTop="@dimen/gap_of_8dp"
-                            android:text="Reduce Debts"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/gap_of_16dp"
-                            android:text="Add to Cash"
-                            android:textAlignment="center"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/white" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="70"
-                        android:orientation="vertical">
-
                         <EditText
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight="50"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/gap_of_8dp"
                             android:background="@drawable/white_button_background"
@@ -205,8 +179,27 @@
                             android:inputType="number"
                             android:padding="@dimen/gap_of_8dp" />
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/gap_of_8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="50"
+                            android:gravity="center"
+                            android:text="Reduce Debts"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/white" />
+
                         <EditText
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight="50"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/gap_of_8dp"
                             android:layout_marginRight="@dimen/gap_of_8dp"
@@ -216,8 +209,27 @@
                             android:inputType="number"
                             android:padding="@dimen/gap_of_8dp" />
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/gap_of_8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="50"
+                            android:text="Add to Cash"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/white" />
+
                         <Button
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight="50"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/gap_of_8dp"
                             android:background="@drawable/white_button_background"
@@ -226,11 +238,12 @@
 
                     </LinearLayout>
 
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@color/white"
                     android:gravity="center"
                     android:orientation="vertical"
