@@ -59,10 +59,10 @@ public class Manage extends Fragment {
         return rootView;
     }
 
-    private void showFeedBills(ArrayList<AccountItem> accountItemArrayList) {
+    private void showFeedBills(ArrayList<AccountItem> accountItemArrayList, ArrayList<Bill> billArrayList) {
 
         bills.setLayoutManager(new LinearLayoutManager(getContext()));
-        billsListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, "null");
+        billsListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_BILL, billArrayList);
         bills.setAdapter(billsListAdapter);
 
     }
@@ -120,7 +120,7 @@ public class Manage extends Fragment {
 
                 }
 
-                showFeedBills(billsArrayList);
+                showFeedBills(billsArrayList, billList);
 
             }
 

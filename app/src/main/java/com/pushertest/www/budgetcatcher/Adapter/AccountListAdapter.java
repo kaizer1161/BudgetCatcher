@@ -12,9 +12,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pushertest.www.budgetcatcher.BudgetCatcher;
 import com.pushertest.www.budgetcatcher.Config;
 import com.pushertest.www.budgetcatcher.Model.AccountItem;
 import com.pushertest.www.budgetcatcher.Model.Bill;
+import com.pushertest.www.budgetcatcher.Network.QueryCallback;
 import com.pushertest.www.budgetcatcher.R;
 
 import java.util.ArrayList;
@@ -22,6 +24,8 @@ import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by User on 11-Dec-17.
@@ -160,7 +164,33 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                                 @Override
                                 public void onClick(View view) {
 
+                                    String userID = activity.getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
+                                    if (fragmentTag.equals(Config.TAG_LIST_BILL)) {
+
+                                        BudgetCatcher.apiManager.deleteBill(userID, bills.get(getAdapterPosition()).getBillId(), new QueryCallback<String>() {
+                                            @Override
+                                            public void onSuccess(String data) {
+
+                                                Toast.makeText(activity, "Successfully deleted", Toast.LENGTH_SHORT).show();
+                                                accountItemArrayList.remove(getAdapterPosition());
+                                                notifyItemRemoved(getAdapterPosition());
+                                                alert11.dismiss();
+
+                                            }
+
+                                            @Override
+                                            public void onFail() {
+
+                                            }
+
+                                            @Override
+                                            public void onError(Throwable th) {
+
+                                            }
+                                        });
+
+                                    }
                                 }
                             });
 
