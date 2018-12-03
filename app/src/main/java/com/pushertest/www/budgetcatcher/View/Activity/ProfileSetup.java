@@ -193,7 +193,7 @@ public class ProfileSetup extends AppCompatActivity {
 
                     if (!userID.equals("")) {
 
-                        BudgetCatcher.apiManager.userProfileSetup("193", profileSetupBody, new QueryCallback<String>() {
+                        BudgetCatcher.apiManager.userProfileSetup(userID, profileSetupBody, new QueryCallback<String>() {
                             @Override
                             public void onSuccess(String data) {
 

@@ -17,19 +17,30 @@ public class InsertAllowanceBody {
     @SerializedName("description")
     @Expose
     private String description;
+    @SerializedName("allowanceName")
+    @Expose
+    private String allowanceName;
+    @SerializedName("status")
+    @Expose
+    private String status;
 
     /**
+     *
+     * @param status
      * @param description
      * @param categoryId
      * @param userId
      * @param allowanceAmount
+     * @param allowanceName
      */
-    public InsertAllowanceBody(String userId, String categoryId, String allowanceAmount, String description) {
+    public InsertAllowanceBody(String userId, String categoryId, String allowanceAmount, String description, String allowanceName, String status) {
         super();
         this.userId = userId;
         this.categoryId = categoryId;
         this.allowanceAmount = allowanceAmount;
         this.description = description;
+        this.allowanceName = allowanceName;
+        this.status = status;
     }
 
     public String getUserId() {
@@ -62,6 +73,22 @@ public class InsertAllowanceBody {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAllowanceName() {
+        return allowanceName;
+    }
+
+    public void setAllowanceName(String allowanceName) {
+        this.allowanceName = allowanceName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

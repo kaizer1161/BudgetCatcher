@@ -26,6 +26,8 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class Catcher extends Fragment {
 
     private static final String TAG = "Catcher";
@@ -38,6 +40,7 @@ public class Catcher extends Fragment {
     RecyclerView incidental;
 
     private AccountListAdapter billListAdapter, spendingAllowanceListAdapter, incidentalListAdapter;
+    private String userID;
 
     @Nullable
     @Override
@@ -48,6 +51,8 @@ public class Catcher extends Fragment {
         if (getActivity() != null) {
 
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Catcher");
+
+            userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
             getBillFromServer();
             getAllowanceFromServer();
@@ -91,7 +96,7 @@ public class Catcher extends Fragment {
 
     private void getBillFromServer() {
 
-        BudgetCatcher.apiManager.getBill("193", new QueryCallback<ArrayList<Bill>>() {
+        BudgetCatcher.apiManager.getBill(userID, new QueryCallback<ArrayList<Bill>>() {
             @Override
             public void onSuccess(ArrayList<Bill> billList) {
 
@@ -123,7 +128,7 @@ public class Catcher extends Fragment {
 
     private void getAllowanceFromServer() {
 
-        BudgetCatcher.apiManager.getAllowance("193", new QueryCallback<ArrayList<Allowance>>() {
+        BudgetCatcher.apiManager.getAllowance(userID, new QueryCallback<ArrayList<Allowance>>() {
             @Override
             public void onSuccess(ArrayList<Allowance> allowancesList) {
 

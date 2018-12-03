@@ -165,7 +165,7 @@ public class AddAllowance extends Fragment {
 
             String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-            InsertAllowanceBody insertBillBody = new InsertAllowanceBody("193", categoryListId.get(categorySpinner.getSelectedItemPosition()), amount.getText().toString(), description.getText().toString());
+            InsertAllowanceBody insertBillBody = new InsertAllowanceBody(userID, categoryListId.get(categorySpinner.getSelectedItemPosition()), amount.getText().toString(), description.getText().toString(), allowanceName.getText().toString(), "null");
 
             BudgetCatcher.apiManager.insertAllowance(insertBillBody, new QueryCallback<String>() {
                 @Override
