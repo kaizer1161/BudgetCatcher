@@ -116,7 +116,7 @@ public class Manage extends Fragment {
                 for (int i = 0; i < billList.size(); i++) {
 
                     Bill bill = billList.get(i);
-                    billsArrayList.add(new AccountItem(bill.getCategoryId(), bill.getDueDate(), "$" + bill.getAmount(), bill.getBillId()));
+                    billsArrayList.add(new AccountItem(bill.getCategoryName(), bill.getDueDate(), "$" + bill.getAmount(), bill.getBillId()));
 
                 }
 

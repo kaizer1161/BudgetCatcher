@@ -3,6 +3,7 @@ package com.pushertest.www.budgetcatcher.Adapter;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,12 +13,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.pushertest.www.budgetcatcher.BudgetCatcher;
 import com.pushertest.www.budgetcatcher.Config;
 import com.pushertest.www.budgetcatcher.Model.AccountItem;
 import com.pushertest.www.budgetcatcher.Model.Bill;
 import com.pushertest.www.budgetcatcher.Network.QueryCallback;
 import com.pushertest.www.budgetcatcher.R;
+import com.pushertest.www.budgetcatcher.View.Activity.MainActivity;
+import com.pushertest.www.budgetcatcher.View.Fragment.EditBill;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -154,8 +158,25 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                                 @Override
                                 public void onClick(View view) {
 
-                                    if (fragmentTag.equals(Config.TAG_LIST_BILL))
-                                        Toast.makeText(activity, "" + bills.get(getAdapterPosition()).getBillId(), Toast.LENGTH_SHORT).show();
+                                    Bundle bundle = new Bundle();
+                                    Gson gson = new Gson();
+
+                                    if (fragmentTag.equals(Config.TAG_LIST_BILL)) {
+
+                                        alert11.dismiss();
+
+                                        bundle.putString(Config.KEY_SERIALIZABLE, gson.toJson(bills.get(getAdapterPosition())));
+
+                                        EditBill editBill = new EditBill();
+                                        editBill.setArguments(bundle);
+
+                                        ((MainActivity) activity).getSupportFragmentManager()
+                                                .beginTransaction()
+                                                .replace(R.id.content, editBill, Config.TAG_EDIT_BILL_FRAGMENT)
+                                                .commit();
+
+                                    }
+
 
                                 }
                             });

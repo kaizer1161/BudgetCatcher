@@ -13,7 +13,7 @@ public class Bill {
     private String userId;
     @SerializedName("category")
     @Expose
-    private String categoryId;
+    private String categoryName;
     @SerializedName("description")
     @Expose
     private String description;
@@ -31,16 +31,16 @@ public class Bill {
      * @param amount
      * @param status
      * @param description
-     * @param categoryId
+     * @param categoryName
      * @param userId
      * @param billId
      * @param dueDate
      */
-    public Bill(String billId, String userId, String categoryId, String description, String amount, String dueDate, String status) {
+    public Bill(String billId, String userId, String categoryName, String description, String amount, String dueDate, String status) {
         super();
         this.billId = billId;
         this.userId = userId;
-        this.categoryId = categoryId;
+        this.categoryName = categoryName;
         this.description = description;
         this.amount = amount;
         this.dueDate = dueDate;
@@ -63,12 +63,12 @@ public class Bill {
         this.userId = userId;
     }
 
-    public String getCategoryId() {
-        return categoryId;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getDescription() {

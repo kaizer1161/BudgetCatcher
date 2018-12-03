@@ -15,8 +15,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.pushertest.www.budgetcatcher.BudgetCatcher;
 import com.pushertest.www.budgetcatcher.Config;
+import com.pushertest.www.budgetcatcher.Model.Bill;
 import com.pushertest.www.budgetcatcher.Model.Category;
 import com.pushertest.www.budgetcatcher.Model.InsertBillBody;
 import com.pushertest.www.budgetcatcher.Network.QueryCallback;
@@ -32,7 +34,7 @@ import butterknife.OnClick;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class AddBill extends Fragment {
+public class EditBill extends Fragment {
 
     private static final int SPINNER_INITIAL_POSITION = 0;
     @BindView(R.id.category)
@@ -44,7 +46,7 @@ public class AddBill extends Fragment {
     @BindView(R.id.description)
     EditText description;
     @BindView(R.id.date_edit_text)
-    TextView dateEditText;
+    TextView dateTextView;
     @BindView(R.id.date_picker)
     CalendarView datePicker;
     @BindView(R.id.amount)
@@ -53,34 +55,59 @@ public class AddBill extends Fragment {
     private ArrayAdapter<String> statusAdapter, categoryAdapter;
     private Boolean statusSelected = false, categoryNameSelected = false;
     private String date = "";
+    private Bill bill;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+
+            Gson gson = new Gson();
+            String json = getArguments().getString(Config.KEY_SERIALIZABLE);
+
+            bill = gson.fromJson(json, Bill.class);
+
+        }
+
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.add_bill, container, false);
+        View rootView = inflater.inflate(R.layout.edit_bill, container, false);
         ButterKnife.bind(this, rootView);
 
         if (getActivity() != null) {
 
-            Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Add Bill");
+            Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Edit Bill");
             statusList();
             fetchCategory();
 
         }
+
+        showAllDataInUI();
 
         datePicker.setVisibility(View.GONE);
         datePicker.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@androidx.annotation.NonNull @NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
-                dateEditText.setVisibility(View.VISIBLE);
+                dateTextView.setVisibility(View.VISIBLE);
                 datePicker.setVisibility(View.GONE);
 
                 date = year + "-" + month + "-" + dayOfMonth;
-                dateEditText.setText(date);
+                dateTextView.setText(date);
 
             }
         });
+
+        initializeAllSpinnerSelectedListener();
+
+        return rootView;
+    }
+
+    private void initializeAllSpinnerSelectedListener() {
 
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -120,7 +147,6 @@ public class AddBill extends Fragment {
             }
         });
 
-        return rootView;
     }
 
     private void fetchCategory() {
@@ -144,6 +170,17 @@ public class AddBill extends Fragment {
 
                 categoryAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, R.id.spinner_item_text, categoryListName);
                 categorySpinner.setAdapter(categoryAdapter);
+
+                for (int i = 0; i < categoryListName.size(); i++) {
+
+                    if (categoryListName.get(i).equals(bill.getCategoryName())) {
+
+                        categorySpinner.setSelection(i, true);
+                        break;
+
+                    }
+
+                }
 
             }
 
@@ -211,7 +248,7 @@ public class AddBill extends Fragment {
 
             case R.id.date_edit_text: {
 
-                dateEditText.setVisibility(View.GONE);
+                dateTextView.setVisibility(View.GONE);
                 datePicker.setVisibility(View.VISIBLE);
 
                 break;
@@ -250,6 +287,25 @@ public class AddBill extends Fragment {
             });
 
         }
+
+    }
+
+    private void showAllDataInUI() {
+
+        description.setText(bill.getDescription());
+        amount.setText(bill.getAmount());
+        dateTextView.setText(bill.getDueDate());
+
+        for (int i = 0; i < status.size(); i++) {
+
+            if (status.get(i).equals(bill.getStatus())) {
+
+                statusSpinner.setSelection(i, true);
+                break;
+            }
+
+        }
+
 
     }
 
