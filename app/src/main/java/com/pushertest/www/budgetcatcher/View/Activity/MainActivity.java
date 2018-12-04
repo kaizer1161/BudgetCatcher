@@ -1,5 +1,7 @@
 package com.pushertest.www.budgetcatcher.View.Activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,6 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.pushertest.www.budgetcatcher.Config;
 import com.pushertest.www.budgetcatcher.R;
 import com.pushertest.www.budgetcatcher.View.Fragment.Advice;
@@ -137,10 +143,45 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_logout) {
 
+            // [START declare_auth]
+            FirebaseAuth mAuth;
+            // [END declare_auth]
+
+            GoogleSignInClient mGoogleSignInClient;
+
+            // [START config_signin]
+            // Configure Google Sign In
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build();
+            // [END config_signin]
+
+            mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+            // [START initialize_auth]
+            // Initialize Firebase Auth
+            mAuth = FirebaseAuth.getInstance();
+
+            // Firebase sign out
+            mAuth.signOut();
+
+            SharedPreferences sharedPreferences = getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+
+            if (editor.commit()) {
+
+                startActivity(new Intent(MainActivity.this, SignInSignUp.class));
+                finish();
+
+            }
+
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

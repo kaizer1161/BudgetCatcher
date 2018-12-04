@@ -128,18 +128,18 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                     builder1.setMessage(col1.getText().toString() + " " + col3.getText().toString());
 
                     builder1.setPositiveButton(
-                            activity.getResources().getString(R.string.edit),
+                            activity.getString(R.string.edit),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
 
 
                                 }
-                            }).setNegativeButton(activity.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                            }).setNegativeButton(activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // User cancelled the dialog
                             dialog.cancel();
                         }
-                    }).setNeutralButton(activity.getResources().getString(R.string.delete), new DialogInterface.OnClickListener() {
+                    }).setNeutralButton(activity.getString(R.string.delete), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
