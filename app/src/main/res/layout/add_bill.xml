@@ -41,7 +41,7 @@
                 android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
-                android:layout_marginBottom="@dimen/gap_of_16dp"
+                android:layout_marginBottom="@dimen/gap_of_8dp"
                 android:background="@drawable/white_button_background"
                 android:hint="Enter name"
                 android:inputType="textPersonName"
@@ -62,7 +62,7 @@
                 android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
-                android:layout_marginBottom="@dimen/gap_of_16dp"
+                android:layout_marginBottom="@dimen/gap_of_8dp"
                 android:background="@drawable/white_button_background"
                 android:hint="Enter description"
                 android:inputType="textAutoCorrect"
@@ -83,7 +83,7 @@
                 android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
-                android:layout_marginBottom="@dimen/gap_of_16dp"
+                android:layout_marginBottom="@dimen/gap_of_8dp"
                 android:background="@drawable/white_button_background"
                 android:hint="Enter amount"
                 android:inputType="number"
@@ -104,7 +104,7 @@
                 android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
-                android:layout_marginBottom="@dimen/gap_of_16dp"
+                android:layout_marginBottom="@dimen/gap_of_8dp"
                 android:background="@drawable/white_button_background"
                 android:hint="Select date"
                 android:padding="@dimen/gap_of_8dp" />
@@ -116,7 +116,7 @@
                 android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
-                android:layout_marginBottom="@dimen/gap_of_16dp"
+                android:layout_marginBottom="@dimen/gap_of_8dp"
                 android:background="@color/hinoki">
 
             </CalendarView>

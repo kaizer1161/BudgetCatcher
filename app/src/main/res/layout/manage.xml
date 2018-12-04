@@ -126,7 +126,7 @@
 
                         <Button
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_margin="@dimen/gap_of_8dp"
                             android:background="@drawable/hinoki_button_background"
