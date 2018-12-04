@@ -76,9 +76,13 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         AccountItem accountItem = accountItemArrayList.get(position);
 
         String temp = accountItem.getCol3();
+        Log.d("TEMP", "saveDataToServer: " + position + " " + temp);
         int dec = temp.indexOf(".");
-        if (dec != -1)
-            temp = temp.substring(0, dec + 3);
+        if (dec != -1) {
+            if (temp.length() > dec + 3)
+                temp = temp.substring(0, dec + 3);
+
+        }
 
         Log.d("TEMP", "saveDataToServer: " + dec);
 
