@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,16 +75,23 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
         AccountItem accountItem = accountItemArrayList.get(position);
 
+        String temp = accountItem.getCol3();
+        int dec = temp.indexOf(".");
+        if (dec != -1)
+            temp = temp.substring(0, dec + 3);
+
+        Log.d("TEMP", "saveDataToServer: " + dec);
+
         if (fragmentTag.equals(Config.TAG_LIST_SPENDING_ALLOWANCE)) {
 
             holder.col1.setText(accountItem.getCol1());
-            holder.col3.setText(accountItem.getCol3());
+            holder.col3.setText(temp);
 
         } else {
 
             holder.col1.setText(accountItem.getCol1());
             holder.col2.setText(accountItem.getCol2());
-            holder.col3.setText(accountItem.getCol3());
+            holder.col3.setText(temp);
 
         }
 
@@ -195,7 +203,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
                                                 Toast.makeText(activity, "Successfully deleted", Toast.LENGTH_SHORT).show();
                                                 accountItemArrayList.remove(getAdapterPosition());
-                                                notifyItemRemoved(getAdapterPosition());
+                                                notifyDataSetChanged();
                                                 alert11.dismiss();
 
                                             }

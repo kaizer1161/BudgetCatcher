@@ -35,8 +35,10 @@ public class Manage extends Fragment {
     RecyclerView bills;
     @BindView(R.id.allowance)
     RecyclerView allowance;
+    @BindView(R.id.incidental_recycler_view)
+    RecyclerView incidental;
 
-    private AccountListAdapter billsListAdapter, allowanceListAdapter;
+    private AccountListAdapter billsListAdapter, allowanceListAdapter, incidentalListAdapter;
     private String userID;
 
     @Nullable
@@ -55,6 +57,13 @@ public class Manage extends Fragment {
             getAllowanceFromServer();
 
         }
+
+        ArrayList<AccountItem> incidentalArrayList = new ArrayList<>();
+        incidentalArrayList.add(new AccountItem("Car repairs", "10/08/18", "$40.88", "12"));
+        incidentalArrayList.add(new AccountItem("Home repairs", "03/01/18", "$56.88", "10"));
+        incidentalArrayList.add(new AccountItem("Room visit", "23/04/18", "$8.88", "13"));
+
+        showFeedIncidental(incidentalArrayList);
 
         return rootView;
     }
@@ -116,7 +125,7 @@ public class Manage extends Fragment {
                 for (int i = 0; i < billList.size(); i++) {
 
                     Bill bill = billList.get(i);
-                    billsArrayList.add(new AccountItem(bill.getCategoryName(), bill.getDueDate(), "$" + bill.getAmount(), bill.getBillId()));
+                    billsArrayList.add(new AccountItem(bill.getDescription(), bill.getDueDate(), "$" + bill.getAmount(), bill.getBillId()));
 
                 }
 
@@ -166,6 +175,14 @@ public class Manage extends Fragment {
 
             }
         });
+
+    }
+
+    private void showFeedIncidental(ArrayList<AccountItem> accountItemArrayList) {
+
+        incidental.setLayoutManager(new LinearLayoutManager(getContext()));
+        incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCIDENTAL);
+        incidental.setAdapter(incidentalListAdapter);
 
     }
 

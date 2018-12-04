@@ -86,7 +86,7 @@
                 android:layout_marginBottom="@dimen/gap_of_16dp"
                 android:background="@drawable/white_button_background"
                 android:hint="Enter amount"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:padding="@dimen/gap_of_8dp" />
 
             <TextView
@@ -139,7 +139,7 @@
 
             </Spinner>
 
-            <TextView
+            <!--<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/gap_of_16dp"
@@ -156,7 +156,7 @@
                 android:paddingLeft="@dimen/gap_of_16dp"
                 android:paddingRight="@dimen/gap_of_16dp">
 
-            </Spinner>
+            </Spinner>-->
 
             <Button
                 android:id="@+id/save"

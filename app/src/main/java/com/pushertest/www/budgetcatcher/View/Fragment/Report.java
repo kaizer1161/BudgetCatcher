@@ -76,25 +76,25 @@ public class Report extends Fragment {
 
         ArrayList<BarEntry> NoOfEmp = new ArrayList<>();
 
-        NoOfEmp.add(new BarEntry(0f, 5));
-        NoOfEmp.add(new BarEntry(1f, 2));
-        NoOfEmp.add(new BarEntry(2f, 5));
+        NoOfEmp.add(new BarEntry(0f, 500));
+        NoOfEmp.add(new BarEntry(1f, 250));
+        NoOfEmp.add(new BarEntry(2f, 125));
         NoOfEmp.add(new BarEntry(3f, 0));
-        NoOfEmp.add(new BarEntry(4f, 7));
-        NoOfEmp.add(new BarEntry(5f, 5));
-        NoOfEmp.add(new BarEntry(6f, 6));
-        NoOfEmp.add(new BarEntry(7f, 5));
-        NoOfEmp.add(new BarEntry(8f, 2));
+        NoOfEmp.add(new BarEntry(4f, 375));
+        NoOfEmp.add(new BarEntry(5f, 500));
+        NoOfEmp.add(new BarEntry(6f, 375));
+        NoOfEmp.add(new BarEntry(7f, 500));
+        NoOfEmp.add(new BarEntry(8f, 250));
         NoOfEmp.add(new BarEntry(9f, 0));
-        NoOfEmp.add(new BarEntry(10f, 6));
-        NoOfEmp.add(new BarEntry(11f, 1));
-        NoOfEmp.add(new BarEntry(12f, 9));
-        NoOfEmp.add(new BarEntry(13f, 7));
-        NoOfEmp.add(new BarEntry(14f, 4));
-        NoOfEmp.add(new BarEntry(15f, 2));
-        NoOfEmp.add(new BarEntry(16f, 3));
-        NoOfEmp.add(new BarEntry(17f, 4));
-        NoOfEmp.add(new BarEntry(18f, 1));
+        NoOfEmp.add(new BarEntry(10f, 375));
+        NoOfEmp.add(new BarEntry(11f, 125));
+        NoOfEmp.add(new BarEntry(12f, 500));
+        NoOfEmp.add(new BarEntry(13f, 375));
+        NoOfEmp.add(new BarEntry(14f, 400));
+        NoOfEmp.add(new BarEntry(15f, 250));
+        NoOfEmp.add(new BarEntry(16f, 300));
+        NoOfEmp.add(new BarEntry(17f, 400));
+        NoOfEmp.add(new BarEntry(18f, 125));
 
         BarDataSet barDataSet = new BarDataSet(NoOfEmp, "");
         barDataSet.setDrawValues(false);
@@ -121,9 +121,9 @@ public class Report extends Fragment {
         entries.add(new PieEntry(7.48f, "7.48% Auto"));
         entries.add(new PieEntry(8.31f, "8.31% Utilities"));
         entries.add(new PieEntry(29.10f, "29.10% Travel"));
-        entries.add(new PieEntry(2.66f, "2.66% Entertainment"));
+        /*entries.add(new PieEntry(2.66f, "2.66% Entertainment"));
         entries.add(new PieEntry(6.68f, "6.68% Personal Items"));
-        entries.add(new PieEntry(4.99f, "4.99% Other"));
+        entries.add(new PieEntry(4.99f, "4.99% Other"));*/
 
         PieDataSet set = new PieDataSet(entries, "");
         set.setSliceSpace(4);
@@ -133,10 +133,10 @@ public class Report extends Fragment {
         colors.add(Color.GRAY);
         colors.add(Color.BLUE);
         colors.add(Color.RED);
-        colors.add(Color.GREEN);
-        colors.add(Color.LTGRAY);
+        /*colors.add(Color.GREEN);
+        colors.add(Color.LTGRAY);*/
         colors.add(Color.CYAN);
-        colors.add(Color.YELLOW);
+        /*colors.add(Color.YELLOW);*/
         colors.add(Color.MAGENTA);
         colors.add(Color.DKGRAY);
 

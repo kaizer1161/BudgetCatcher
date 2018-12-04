@@ -39,8 +39,8 @@ public class EditBill extends Fragment {
     private static final int SPINNER_INITIAL_POSITION = 0;
     @BindView(R.id.category)
     Spinner categorySpinner;
-    @BindView(R.id.status)
-    Spinner statusSpinner;
+    /*@BindView(R.id.status)
+    Spinner statusSpinner;*/
     @BindView(R.id.bill_name)
     EditText billName;
     @BindView(R.id.description)
@@ -52,7 +52,7 @@ public class EditBill extends Fragment {
     @BindView(R.id.amount)
     EditText amount;
     private ArrayList<String> status, categoryListName, categoryListId;
-    private ArrayAdapter<String> statusAdapter, categoryAdapter;
+    private ArrayAdapter<String> /*statusAdapter,*/ categoryAdapter;
     private Boolean statusSelected = false, categoryNameSelected = false;
     private String date = "";
     private Bill bill;
@@ -129,15 +129,15 @@ public class EditBill extends Fragment {
             }
         });
 
-        statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        /*statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                /*
+                *//*
                  * If position == SPINNER_INITIAL_POSITION,
                  * then financialGoalSpinnerSelected = false
                  * else financialGoalSpinnerSelected = true.
-                 */
+         *//*
                 statusSelected = position != SPINNER_INITIAL_POSITION;
 
             }
@@ -146,7 +146,7 @@ public class EditBill extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
 
     }
 
@@ -205,8 +205,8 @@ public class EditBill extends Fragment {
         status.add("Unpaid");
         status.add("Paid");
 
-        statusAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, R.id.spinner_item_text, status);
-        statusSpinner.setAdapter(statusAdapter);
+        /*statusAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, R.id.spinner_item_text, status);
+        statusSpinner.setAdapter(statusAdapter);*/
 
     }
 
@@ -231,7 +231,7 @@ public class EditBill extends Fragment {
                     amount.setError("Empty");
                     hasError = true;
                 }
-                if (!statusSelected || !categoryNameSelected || date.equals("")) {
+                if (/*!statusSelected ||*/ !categoryNameSelected || date.equals("")) {
 
                     Toast.makeText(getActivity(), "Please finish the form and select all menu", Toast.LENGTH_SHORT).show();
 
@@ -265,7 +265,7 @@ public class EditBill extends Fragment {
 
             String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-            InsertBillBody insertBillBody = new InsertBillBody(userID, categoryListId.get(categorySpinner.getSelectedItemPosition()), amount.getText().toString(), description.getText().toString(), date, "null", status.get(statusSpinner.getSelectedItemPosition()), billName.getText().toString());
+            InsertBillBody insertBillBody = new InsertBillBody(userID, categoryListId.get(categorySpinner.getSelectedItemPosition()), amount.getText().toString(), description.getText().toString(), date, "null", /*status.get(statusSpinner.getSelectedItemPosition())*/ "null", billName.getText().toString());
 
             BudgetCatcher.apiManager.insertBill(insertBillBody, new QueryCallback<String>() {
                 @Override
@@ -297,7 +297,7 @@ public class EditBill extends Fragment {
         amount.setText(bill.getAmount());
         dateTextView.setText(bill.getDueDate());
 
-        for (int i = 0; i < status.size(); i++) {
+        /*for (int i = 0; i < status.size(); i++) {
 
             if (status.get(i).equals(bill.getStatus())) {
 
@@ -305,7 +305,7 @@ public class EditBill extends Fragment {
                 break;
             }
 
-        }
+        }*/
 
 
     }

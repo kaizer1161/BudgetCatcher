@@ -6,6 +6,8 @@
     <dimen name="gap_of_52dp">52dp</dimen>
     <dimen name="gap_of_8dp">8dp</dimen>
     <dimen name="gap_of_4dp">4dp</dimen>
+    <dimen name="gap_of_2dp">2dp</dimen>
+    <dimen name="button_height">30dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
