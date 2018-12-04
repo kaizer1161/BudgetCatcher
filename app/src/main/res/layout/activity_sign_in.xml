@@ -152,25 +152,11 @@
                         android:src="@drawable/ic_facebook" />
 
                     <ImageView
-                        android:id="@+id/twitter"
+                        android:id="@+id/google"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/gap_of_8dp"
-                        android:src="@drawable/ic_twitter" />
-
-                    <ImageView
-                        android:id="@+id/instagram"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/gap_of_8dp"
-                        android:src="@drawable/ic_instagram" />
-
-                    <ImageView
-                        android:id="@+id/linkedin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/gap_of_8dp"
-                        android:src="@drawable/ic_linkedin" />
+                        android:src="@drawable/ic_google" />
 
                 </LinearLayout>
 
