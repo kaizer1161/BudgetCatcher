@@ -43,6 +43,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
     private ArrayList<AccountItem> accountItemArrayList;
     private ArrayList<Bill> bills;
     private String fragmentTag;
+    private Boolean hasClickListner;
 
     public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag) {
 
@@ -50,6 +51,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         this.activity = activity;
         this.accountItemArrayList = accountItemArrayList;
         this.fragmentTag = fragmentTag;
+        hasClickListner = false;
 
     }
 
@@ -60,6 +62,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         this.accountItemArrayList = accountItemArrayList;
         this.fragmentTag = fragmentTag;
         this.bills = bills;
+        hasClickListner = true;
 
     }
 
@@ -129,121 +132,125 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            itemBody.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
+            if (hasClickListner) {
 
-                    final AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
-                    builder1.setCancelable(false);
+                itemBody.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
 
-                    builder1.setTitle("Please select a action");
-                    builder1.setMessage(col1.getText().toString() + " " + col3.getText().toString());
+                        final AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
+                        builder1.setCancelable(false);
 
-                    builder1.setPositiveButton(
-                            activity.getString(R.string.edit),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
+                        builder1.setTitle("Please select a action");
+                        builder1.setMessage(col1.getText().toString() + " " + col3.getText().toString());
+
+                        builder1.setPositiveButton(
+                                activity.getString(R.string.edit),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
 
 
-                                }
-                            }).setNegativeButton(activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User cancelled the dialog
-                            dialog.cancel();
-                        }
-                    }).setNeutralButton(activity.getString(R.string.delete), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                }).setNegativeButton(activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User cancelled the dialog
+                                dialog.cancel();
+                            }
+                        }).setNeutralButton(activity.getString(R.string.delete), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    });
+                            }
+                        });
 
-                    final AlertDialog alert11 = builder1.create();
+                        final AlertDialog alert11 = builder1.create();
 
-                    alert11.setOnShowListener(new DialogInterface.OnShowListener() {
-                        @Override
-                        public void onShow(DialogInterface dialogInterface) {
-                            alert11.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.RED);
-                            alert11.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(activity.getResources().getColor(R.color.deep_sea_dive));
-                            alert11.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(activity.getResources().getColor(R.color.hinoki));
-                            alert11.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
+                        alert11.setOnShowListener(new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface dialogInterface) {
+                                alert11.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.RED);
+                                alert11.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(activity.getResources().getColor(R.color.deep_sea_dive));
+                                alert11.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(activity.getResources().getColor(R.color.hinoki));
+                                alert11.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
 
-                                    Bundle bundle = new Bundle();
-                                    Gson gson = new Gson();
+                                        Bundle bundle = new Bundle();
+                                        Gson gson = new Gson();
 
-                                    if (fragmentTag.equals(Config.TAG_LIST_BILL)) {
+                                        if (fragmentTag.equals(Config.TAG_LIST_BILL)) {
+
+                                            alert11.dismiss();
+
+                                            bundle.putString(Config.KEY_SERIALIZABLE, gson.toJson(bills.get(getAdapterPosition())));
+
+                                            EditBill editBill = new EditBill();
+                                            editBill.setArguments(bundle);
+
+                                            ((MainActivity) activity).getSupportFragmentManager()
+                                                    .beginTransaction()
+                                                    .replace(R.id.content, editBill, Config.TAG_EDIT_BILL_FRAGMENT)
+                                                    .commit();
+
+                                        }
+
+
+                                    }
+                                });
+
+                                alert11.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        String userID = activity.getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
+
+                                        if (fragmentTag.equals(Config.TAG_LIST_BILL)) {
+
+                                            BudgetCatcher.apiManager.deleteBill(userID, bills.get(getAdapterPosition()).getBillId(), new QueryCallback<String>() {
+                                                @Override
+                                                public void onSuccess(String data) {
+
+                                                    Toast.makeText(activity, "Successfully deleted", Toast.LENGTH_SHORT).show();
+                                                    accountItemArrayList.remove(getAdapterPosition());
+                                                    notifyDataSetChanged();
+                                                    alert11.dismiss();
+
+                                                }
+
+                                                @Override
+                                                public void onFail() {
+
+                                                }
+
+                                                @Override
+                                                public void onError(Throwable th) {
+
+                                                }
+                                            });
+
+                                        }
+                                    }
+                                });
+
+                                alert11.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
 
                                         alert11.dismiss();
 
-                                        bundle.putString(Config.KEY_SERIALIZABLE, gson.toJson(bills.get(getAdapterPosition())));
-
-                                        EditBill editBill = new EditBill();
-                                        editBill.setArguments(bundle);
-
-                                        ((MainActivity) activity).getSupportFragmentManager()
-                                                .beginTransaction()
-                                                .replace(R.id.content, editBill, Config.TAG_EDIT_BILL_FRAGMENT)
-                                                .commit();
-
                                     }
+                                });
 
+                            }
+                        });
 
-                                }
-                            });
+                        alert11.show();
 
-                            alert11.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
+                        return false;
+                    }
+                });
 
-                                    String userID = activity.getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
-
-                                    if (fragmentTag.equals(Config.TAG_LIST_BILL)) {
-
-                                        BudgetCatcher.apiManager.deleteBill(userID, bills.get(getAdapterPosition()).getBillId(), new QueryCallback<String>() {
-                                            @Override
-                                            public void onSuccess(String data) {
-
-                                                Toast.makeText(activity, "Successfully deleted", Toast.LENGTH_SHORT).show();
-                                                accountItemArrayList.remove(getAdapterPosition());
-                                                notifyDataSetChanged();
-                                                alert11.dismiss();
-
-                                            }
-
-                                            @Override
-                                            public void onFail() {
-
-                                            }
-
-                                            @Override
-                                            public void onError(Throwable th) {
-
-                                            }
-                                        });
-
-                                    }
-                                }
-                            });
-
-                            alert11.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                    alert11.dismiss();
-
-                                }
-                            });
-
-                        }
-                    });
-
-                    alert11.show();
-
-                    return false;
-                }
-            });
+            }
 
         }
 

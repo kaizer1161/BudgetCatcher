@@ -64,10 +64,10 @@ public class Catcher extends Fragment {
         return rootView;
     }
 
-    private void showFeedBills(ArrayList<AccountItem> accountItemArrayList, ArrayList<Bill> billArrayList) {
+    private void showFeedBills(ArrayList<AccountItem> accountItemArrayList) {
 
         bills.setLayoutManager(new LinearLayoutManager(getContext()));
-        billListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_BILL, billArrayList);
+        billListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_BILL);
         bills.setAdapter(billListAdapter);
 
     }
@@ -103,7 +103,7 @@ public class Catcher extends Fragment {
 
                 }
 
-                showFeedBills(billsArrayList, billList);
+                showFeedBills(billsArrayList);
 
             }
 

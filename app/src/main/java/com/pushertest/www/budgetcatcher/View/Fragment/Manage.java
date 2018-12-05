@@ -78,6 +78,14 @@ public class Manage extends Fragment {
         allowance.setAdapter(allowanceListAdapter);
     }
 
+    private void showFeedIncidental(ArrayList<AccountItem> accountItemArrayList) {
+
+        incidental.setLayoutManager(new LinearLayoutManager(getContext()));
+        incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCIDENTAL);
+        incidental.setAdapter(incidentalListAdapter);
+
+    }
+
     @OnClick({R.id.add_bill, R.id.add_allowance})
     public void onClick(View view) {
 
@@ -170,14 +178,6 @@ public class Manage extends Fragment {
 
             }
         });
-
-    }
-
-    private void showFeedIncidental(ArrayList<AccountItem> accountItemArrayList) {
-
-        incidental.setLayoutManager(new LinearLayoutManager(getContext()));
-        incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCIDENTAL);
-        incidental.setAdapter(incidentalListAdapter);
 
     }
 
