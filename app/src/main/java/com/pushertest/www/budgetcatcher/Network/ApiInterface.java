@@ -39,6 +39,9 @@ public interface ApiInterface {
     @GET
     Call<String> getAllowance(@Url String url);
 
+    @GET
+    Call<String> getExpenses(@Url String url);
+
     @GET(URL.getAllCategory)
     Call<String> getCategory();
 
