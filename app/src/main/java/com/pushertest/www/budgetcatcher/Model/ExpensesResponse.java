@@ -38,11 +38,11 @@ public class ExpensesResponse {
         this.status = status;
     }
 
-    public List<Expenses> getData() {
+    public List<Expenses> getExpenses() {
         return expenses;
     }
 
-    public void setData(List<Expenses> expenses) {
+    public void setExpenses(List<Expenses> expenses) {
         this.expenses = expenses;
     }
 

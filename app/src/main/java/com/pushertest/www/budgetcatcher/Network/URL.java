@@ -22,6 +22,7 @@ public class URL {
     public static final String insertBill = "insertBill";
     public static final String insertAllowances = "insertAllowances";
     public static final String deleteBills = "deleteBills/";
+    public static final String getAllExpenses = "getAllExpenses/";
 
     /*URL key value*/
     public static final String value_Content_Type = "application/json";

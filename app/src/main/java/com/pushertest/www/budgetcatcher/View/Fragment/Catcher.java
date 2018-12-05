@@ -16,6 +16,7 @@ import com.pushertest.www.budgetcatcher.Config;
 import com.pushertest.www.budgetcatcher.Model.AccountItem;
 import com.pushertest.www.budgetcatcher.Model.Allowance;
 import com.pushertest.www.budgetcatcher.Model.Bill;
+import com.pushertest.www.budgetcatcher.Model.Expenses;
 import com.pushertest.www.budgetcatcher.Network.QueryCallback;
 import com.pushertest.www.budgetcatcher.R;
 import com.pushertest.www.budgetcatcher.View.Activity.MainActivity;
@@ -56,16 +57,9 @@ public class Catcher extends Fragment {
 
             getBillFromServer();
             getAllowanceFromServer();
+            getExpensesFromServer();
 
         }
-
-
-        ArrayList<AccountItem> incidentalArrayList = new ArrayList<>();
-        incidentalArrayList.add(new AccountItem("Car repairs", "10/08/18", "$40.88", "12"));
-        incidentalArrayList.add(new AccountItem("Home repairs", "03/01/18", "$56.88", "10"));
-        incidentalArrayList.add(new AccountItem("Room visit", "23/04/18", "$8.88", "13"));
-
-        showFeedIncidental(incidentalArrayList);
 
         return rootView;
     }
@@ -142,6 +136,38 @@ public class Catcher extends Fragment {
                 }
 
                 showFeedSpendingAllowance(spendingAllowanceArrayList);
+
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+
+            @Override
+            public void onError(Throwable th) {
+
+            }
+        });
+
+    }
+
+    private void getExpensesFromServer() {
+
+        BudgetCatcher.apiManager.getExpenses(userID, "january", "2018", new QueryCallback<ArrayList<Expenses>>() {
+            @Override
+            public void onSuccess(ArrayList<Expenses> expensesList) {
+
+                ArrayList<AccountItem> expensesArrayList = new ArrayList<>();
+
+                for (int i = 0; i < expensesList.size(); i++) {
+
+                    Expenses expenses = expensesList.get(i);
+                    expensesArrayList.add(new AccountItem(expenses.getExpenseName(), expenses.getMonth() + "/" + expenses.getYear(), "$" + expenses.getAmount(), expenses.getExpenseId()));
+
+                }
+
+                showFeedIncidental(expensesArrayList);
 
             }
 
