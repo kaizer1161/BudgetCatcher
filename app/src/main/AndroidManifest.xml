@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.pushertest.www.budgetcatcher">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:allowBackup="true"
@@ -63,6 +66,20 @@
             </intent-filter>
 
         </activity>
+
+        <!-- Broadcast receiver declaration in manifest file and make sure to enable it -->
+        <receiver
+            android:name=".Network.NetworkChangeReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <!-- Intent filters for broadcast receiver -->
+                <action
+                    android:name="android.net.conn.CONNECTIVITY_CHANGE"
+                    tools:ignore="BatteryLife" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

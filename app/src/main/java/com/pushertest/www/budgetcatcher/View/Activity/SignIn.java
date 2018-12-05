@@ -1,7 +1,11 @@
 package com.pushertest.www.budgetcatcher.View.Activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,6 +31,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.pushertest.www.budgetcatcher.BudgetCatcher;
 import com.pushertest.www.budgetcatcher.Config;
 import com.pushertest.www.budgetcatcher.Model.SignUpBody;
+import com.pushertest.www.budgetcatcher.Network.NetworkChangeReceiver;
 import com.pushertest.www.budgetcatcher.Network.QueryCallback;
 import com.pushertest.www.budgetcatcher.Network.URL;
 import com.pushertest.www.budgetcatcher.R;
@@ -50,6 +55,8 @@ public class SignIn extends AppCompatActivity {
 
     private static final String TAG = "Sign In";
     private static final int RC_SIGN_IN = 9001;
+
+    private BroadcastReceiver mNetworkReceiver;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -82,6 +89,9 @@ public class SignIn extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        mNetworkReceiver = new NetworkChangeReceiver();
+        registerNetworkBroadcastForNougat();
 
         // [START config_signin]
         // Configure Google Sign In
@@ -213,6 +223,12 @@ public class SignIn extends AppCompatActivity {
 
                     email.setError("Wrong email format");
                     hasError = true;
+
+                }
+                if (!BudgetCatcher.getConnectedToInternet()) {
+
+                    hasError = true;
+                    Toast.makeText(SignIn.this, "No internet", Toast.LENGTH_SHORT).show();
 
                 }
                 if (!hasError) {
@@ -349,6 +365,52 @@ public class SignIn extends AppCompatActivity {
         editor.putBoolean(Config.SP_LOGGED_IN, true);
         return editor.commit();
 
+    }
+
+    private void registerNetworkBroadcastForNougat() {
+
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            }
+        } catch (Exception e) {
+            Log.v("Internet Reg : ", " " + e);
+        }
+
+    }
+
+    protected void unregisterNetworkChanges() {
+        try {
+            unregisterReceiver(mNetworkReceiver);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterNetworkChanges();
+    }
+
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+        BudgetCatcher.activityPaused();// On Pause notify the Application
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+        BudgetCatcher.activityResumed();// On Resume notify the Application
     }
 
 }

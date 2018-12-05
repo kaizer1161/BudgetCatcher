@@ -1,7 +1,11 @@
 package com.pushertest.www.budgetcatcher.View.Activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,7 +21,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.pushertest.www.budgetcatcher.BudgetCatcher;
 import com.pushertest.www.budgetcatcher.Config;
+import com.pushertest.www.budgetcatcher.Network.NetworkChangeReceiver;
 import com.pushertest.www.budgetcatcher.R;
 import com.pushertest.www.budgetcatcher.View.Fragment.Advice;
 import com.pushertest.www.budgetcatcher.View.Fragment.Catcher;
@@ -26,6 +33,8 @@ import com.pushertest.www.budgetcatcher.View.Fragment.Report;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private BroadcastReceiver mNetworkReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +60,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mNetworkReceiver = new NetworkChangeReceiver();
+        registerNetworkBroadcastForNougat();
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -182,6 +194,52 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void registerNetworkBroadcastForNougat() {
+
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            }
+        } catch (Exception e) {
+            Log.v("Internet Reg : ", " " + e);
+        }
+
+    }
+
+    protected void unregisterNetworkChanges() {
+        try {
+            unregisterReceiver(mNetworkReceiver);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterNetworkChanges();
+    }
+
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+        BudgetCatcher.activityPaused();// On Pause notify the Application
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+        BudgetCatcher.activityResumed();// On Resume notify the Application
     }
 
 }

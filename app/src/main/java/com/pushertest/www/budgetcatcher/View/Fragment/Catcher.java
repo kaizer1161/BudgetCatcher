@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.pushertest.www.budgetcatcher.Adapter.AccountListAdapter;
 import com.pushertest.www.budgetcatcher.BudgetCatcher;
@@ -55,10 +56,18 @@ public class Catcher extends Fragment {
 
             userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-            getBillFromServer();
-            getAllowanceFromServer();
-            getExpensesFromServer();
+            if (BudgetCatcher.getConnectedToInternet()) {
 
+                getBillFromServer();
+                getAllowanceFromServer();
+                getExpensesFromServer();
+
+
+            } else {
+
+                Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
+
+            }
         }
 
         return rootView;

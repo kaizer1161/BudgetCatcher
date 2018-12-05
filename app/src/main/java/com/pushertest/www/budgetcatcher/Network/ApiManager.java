@@ -204,6 +204,9 @@ public class ApiManager {
             public void onFailure(Call<String> call, Throwable t) {
 
                 callback.onError(t);
+                Log.d(TAG, "onFailure: 1 " + t.getCause());
+                Log.d(TAG, "onFailure: 2 " + t.getLocalizedMessage());
+                Log.d(TAG, "onFailure: 3 " + t.getMessage());
 
             }
         });

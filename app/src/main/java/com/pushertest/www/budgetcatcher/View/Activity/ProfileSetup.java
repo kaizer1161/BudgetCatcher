@@ -1,16 +1,21 @@
 package com.pushertest.www.budgetcatcher.View.Activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,6 +26,7 @@ import android.widget.Toast;
 import com.pushertest.www.budgetcatcher.BudgetCatcher;
 import com.pushertest.www.budgetcatcher.Config;
 import com.pushertest.www.budgetcatcher.Model.ProfileSetupBody;
+import com.pushertest.www.budgetcatcher.Network.NetworkChangeReceiver;
 import com.pushertest.www.budgetcatcher.Network.QueryCallback;
 import com.pushertest.www.budgetcatcher.R;
 
@@ -47,6 +53,8 @@ public class ProfileSetup extends AppCompatActivity {
     @BindView(R.id.profile_image)
     ImageView profileImage;
 
+    private BroadcastReceiver mNetworkReceiver;
+
     private String imageString;
     private Boolean financialGoalSpinnerSelected = false, riskLevelSpinnerSelected = false,
             skillLevelSpinnerSelected = false, profileImageSelected = false;
@@ -70,6 +78,9 @@ public class ProfileSetup extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        mNetworkReceiver = new NetworkChangeReceiver();
+        registerNetworkBroadcastForNougat();
 
         financialGoalList();
         riskLevelList();
@@ -193,30 +204,35 @@ public class ProfileSetup extends AppCompatActivity {
 
                     if (!userID.equals("")) {
 
-                        BudgetCatcher.apiManager.userProfileSetup(userID, profileSetupBody, new QueryCallback<String>() {
-                            @Override
-                            public void onSuccess(String data) {
+                        if (BudgetCatcher.getConnectedToInternet()) {
+                            BudgetCatcher.apiManager.userProfileSetup(userID, profileSetupBody, new QueryCallback<String>() {
+                                @Override
+                                public void onSuccess(String data) {
 
-                                if (storeUserInformationInSharedPreference()) {
+                                    if (storeUserInformationInSharedPreference()) {
 
-                                    Toast.makeText(ProfileSetup.this, "Success", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(ProfileSetup.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                                        Toast.makeText(ProfileSetup.this, "Success", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(ProfileSetup.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                                    }
 
                                 }
 
-                            }
+                                @Override
+                                public void onFail() {
 
-                            @Override
-                            public void onFail() {
+                                }
 
-                            }
+                                @Override
+                                public void onError(Throwable th) {
 
-                            @Override
-                            public void onError(Throwable th) {
+                                }
+                            });
+                        } else {
 
-                            }
-                        });
+                            Toast.makeText(ProfileSetup.this, "No internet", Toast.LENGTH_SHORT).show();
 
+                        }
                     }
 
                 } else {
@@ -285,6 +301,52 @@ public class ProfileSetup extends AppCompatActivity {
         editor.putBoolean(Config.SP_LOGGED_IN, true);
         return editor.commit();
 
+    }
+
+    private void registerNetworkBroadcastForNougat() {
+
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            }
+        } catch (Exception e) {
+            Log.v("Internet Reg : ", " " + e);
+        }
+
+    }
+
+    protected void unregisterNetworkChanges() {
+        try {
+            unregisterReceiver(mNetworkReceiver);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterNetworkChanges();
+    }
+
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+        BudgetCatcher.activityPaused();// On Pause notify the Application
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+        BudgetCatcher.activityResumed();// On Resume notify the Application
     }
 
 }
