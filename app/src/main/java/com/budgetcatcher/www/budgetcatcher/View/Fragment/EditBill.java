@@ -273,6 +273,10 @@ public class EditBill extends Fragment {
 
                     Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.content, new Manage(), Config.TAG_MANAGE_FRAGMENT)
+                            .commit();
 
                 }
 
