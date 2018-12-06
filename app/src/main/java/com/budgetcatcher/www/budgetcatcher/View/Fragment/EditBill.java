@@ -19,7 +19,7 @@ import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
 import com.budgetcatcher.www.budgetcatcher.Model.Bill;
 import com.budgetcatcher.www.budgetcatcher.Model.Category;
-import com.budgetcatcher.www.budgetcatcher.Model.InsertBillBody;
+import com.budgetcatcher.www.budgetcatcher.Model.ModifyBillBody;
 import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
@@ -174,7 +174,7 @@ public class EditBill extends Fragment {
 
                 for (int i = 0; i < categoryListName.size(); i++) {
 
-                    if (categoryListName.get(i).equals(bill.getCategoryName())) {
+                    if (categoryListName.get(i).equals(bill.getCategory())) {
 
                         categorySpinner.setSelection(i, true);
                         break;
@@ -265,9 +265,9 @@ public class EditBill extends Fragment {
 
             String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-            InsertBillBody insertBillBody = new InsertBillBody(userID, categoryListId.get(categorySpinner.getSelectedItemPosition()), amount.getText().toString(), description.getText().toString(), date, "null", /*status.get(statusSpinner.getSelectedItemPosition())*/ "null", billName.getText().toString());
+            ModifyBillBody modifyBillBody = new ModifyBillBody(categoryListId.get(categorySpinner.getSelectedItemPosition()), billName.getText().toString(), amount.getText().toString(), description.getText().toString(), date, "null" /*status.get(statusSpinner.getSelectedItemPosition())*/);
 
-            BudgetCatcher.apiManager.insertBill(insertBillBody, new QueryCallback<String>() {
+            BudgetCatcher.apiManager.modifyBill(userID, bill.getBillId(), modifyBillBody, new QueryCallback<String>() {
                 @Override
                 public void onSuccess(String data) {
 
@@ -293,9 +293,11 @@ public class EditBill extends Fragment {
 
     private void showAllDataInUI() {
 
+        billName.setText(bill.getBillName());
         description.setText(bill.getDescription());
         amount.setText(bill.getAmount());
         dateTextView.setText(bill.getDueDate());
+        date = bill.getDueDate();
 
         /*for (int i = 0; i < status.size(); i++) {
 

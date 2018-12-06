@@ -108,7 +108,7 @@ public class Catcher extends Fragment {
                 for (int i = 0; i < billList.size(); i++) {
 
                     Bill bill = billList.get(i);
-                    billsArrayList.add(new AccountItem(bill.getDescription(), bill.getDueDate(), "$" + bill.getAmount(), bill.getBillId()));
+                    billsArrayList.add(new AccountItem(bill.getBillName(), bill.getDueDate(), "$" + bill.getAmount(), bill.getBillId()));
 
                 }
 

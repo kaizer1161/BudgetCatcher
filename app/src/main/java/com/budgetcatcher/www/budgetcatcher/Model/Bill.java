@@ -8,12 +8,18 @@ public class Bill {
     @SerializedName("billId")
     @Expose
     private String billId;
+    @SerializedName("billName")
+    @Expose
+    private String billName;
     @SerializedName("userId")
     @Expose
     private String userId;
+    @SerializedName("categoryId")
+    @Expose
+    private String categoryId;
     @SerializedName("category")
     @Expose
-    private String categoryName;
+    private String category;
     @SerializedName("description")
     @Expose
     private String description;
@@ -28,19 +34,31 @@ public class Bill {
     private String status;
 
     /**
+     * No args constructor for use in serialization
+     *
+     */
+    public Bill() {
+    }
+
+    /**
+     *
      * @param amount
+     * @param category
+     * @param billName
      * @param status
      * @param description
-     * @param categoryName
+     * @param categoryId
      * @param userId
      * @param billId
      * @param dueDate
      */
-    public Bill(String billId, String userId, String categoryName, String description, String amount, String dueDate, String status) {
+    public Bill(String billId, String billName, String userId, String categoryId, String category, String description, String amount, String dueDate, String status) {
         super();
         this.billId = billId;
+        this.billName = billName;
         this.userId = userId;
-        this.categoryName = categoryName;
+        this.categoryId = categoryId;
+        this.category = category;
         this.description = description;
         this.amount = amount;
         this.dueDate = dueDate;
@@ -55,6 +73,14 @@ public class Bill {
         this.billId = billId;
     }
 
+    public String getBillName() {
+        return billName;
+    }
+
+    public void setBillName(String billName) {
+        this.billName = billName;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -63,12 +89,20 @@ public class Bill {
         this.userId = userId;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getDescription() {
@@ -102,4 +136,5 @@ public class Bill {
     public void setStatus(String status) {
         this.status = status;
     }
+
 }
