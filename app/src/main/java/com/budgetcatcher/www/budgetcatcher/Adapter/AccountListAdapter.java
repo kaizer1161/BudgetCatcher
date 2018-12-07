@@ -24,7 +24,6 @@ import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.EditBill;
 import com.google.gson.Gson;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -96,13 +95,13 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         if (fragmentTag.equals(Config.TAG_LIST_SPENDING_ALLOWANCE)) {
 
             holder.col1.setText(accountItem.getCol1());
-            holder.col3.setText("$"+valStr);
+            holder.col3.setText("$" + valStr);
 
         } else {
 
             holder.col1.setText(accountItem.getCol1());
             holder.col2.setText(accountItem.getCol2());
-            holder.col3.setText("$"+valStr);
+            holder.col3.setText("$" + valStr);
 
         }
 

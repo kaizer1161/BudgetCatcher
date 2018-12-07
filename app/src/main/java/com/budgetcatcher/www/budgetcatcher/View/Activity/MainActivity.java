@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
 
-        }  else if (id == R.id.nav_settings) {
+        } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_logout) {
 

@@ -160,7 +160,7 @@ public class Catcher extends Fragment {
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
                     Date date = null;
                     try {
-                        date = (Date)formatter.parse(dateTime);
+                        date = formatter.parse(dateTime);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
