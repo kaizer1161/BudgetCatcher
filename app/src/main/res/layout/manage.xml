@@ -301,6 +301,7 @@
                         android:background="@color/deep_sea_dive">
 
                         <TextView
+                            android:id="@+id/add_incidentals"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/gap_of_16dp"

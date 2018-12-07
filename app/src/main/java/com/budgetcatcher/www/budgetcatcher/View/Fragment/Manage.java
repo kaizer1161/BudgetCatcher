@@ -99,7 +99,7 @@ public class Manage extends Fragment {
 
     }
 
-    @OnClick({R.id.add_bill, R.id.add_allowance})
+    @OnClick({R.id.add_bill, R.id.add_allowance, R.id.add_incidentals})
     public void onClick(View view) {
 
         switch (view.getId()) {
@@ -121,6 +121,18 @@ public class Manage extends Fragment {
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.content, new AddAllowance(), Config.TAG_ADD_ALLOWANCE_FRAGMENT)
+                            .addToBackStack(null)
+                            .commit();
+
+                break;
+            }
+
+            case (R.id.add_incidentals): {
+
+                if (getActivity() != null)
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.content, new AddIncident(), Config.TAG_ADD_INCIDENTAL_FRAGMENT)
                             .addToBackStack(null)
                             .commit();
 
@@ -196,7 +208,7 @@ public class Manage extends Fragment {
 
     private void getExpensesFromServer() {
 
-        BudgetCatcher.apiManager.getExpenses(userID, "december", "2018", new QueryCallback<ArrayList<Expenses>>() {
+        BudgetCatcher.apiManager.getExpenses(userID, "january", "2018", new QueryCallback<ArrayList<Expenses>>() {
             @Override
             public void onSuccess(ArrayList<Expenses> expensesList) {
 

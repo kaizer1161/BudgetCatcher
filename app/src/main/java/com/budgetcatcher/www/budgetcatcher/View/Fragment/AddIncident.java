@@ -12,14 +12,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
+import com.budgetcatcher.www.budgetcatcher.Config;
+import com.budgetcatcher.www.budgetcatcher.Model.InsertExpensesBody;
+import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
 
+import java.net.SocketTimeoutException;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class AddIncident extends Fragment {
 
@@ -28,8 +35,8 @@ public class AddIncident extends Fragment {
     Spinner categorySpinner;*/
     /*@BindView(R.id.status)
     Spinner statusSpinner;*/
-    @BindView(R.id.bill_name)
-    EditText billName;
+    @BindView(R.id.name)
+    EditText name;
     @BindView(R.id.description)
     EditText description;
     @BindView(R.id.date_edit_text)
@@ -48,7 +55,7 @@ public class AddIncident extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.add_bill, container, false);
+        View rootView = inflater.inflate(R.layout.add_incident, container, false);
         ButterKnife.bind(this, rootView);
 
         if (getActivity() != null) {
@@ -172,8 +179,8 @@ public class AddIncident extends Fragment {
 
                 boolean hasError = false;
 
-                if (billName.getText().toString().equals("")) {
-                    billName.setError("Empty");
+                if (name.getText().toString().equals("")) {
+                    name.setError("Empty");
                     hasError = true;
                 }
                 if (description.getText().toString().equals("")) {
@@ -193,7 +200,7 @@ public class AddIncident extends Fragment {
 
                 if (!hasError) {
 
-                    /*saveDataToServer();*/
+                    saveDataToServer();
 
                 }
 
@@ -212,19 +219,19 @@ public class AddIncident extends Fragment {
 
     }
 
-    /*private void saveDataToServer() {
+    private void saveDataToServer() {
 
         if (getActivity() != null) {
 
             String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-            InsertBillBody insertBillBody = new InsertBillBody(userID, categoryListId.get(categorySpinner.getSelectedItemPosition()), amount.getText().toString(), description.getText().toString(), date, "null", *//*status.get(statusSpinner.getSelectedItemPosition())*//* "null", billName.getText().toString());
+            InsertExpensesBody expensesBody = new InsertExpensesBody(userID, name.getText().toString(), /*categoryListId.get(categorySpinner.getSelectedItemPosition())*/ "4", amount.getText().toString(), description.getText().toString(), date, "january", "2018");
 
-            BudgetCatcher.apiManager.insertBill(insertBillBody, new QueryCallback<String>() {
+            BudgetCatcher.apiManager.insertExpenses(expensesBody, new QueryCallback<String>() {
                 @Override
                 public void onSuccess(String data) {
 
-                    Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Expense successfully added", Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
 
                 }
@@ -237,11 +244,15 @@ public class AddIncident extends Fragment {
                 @Override
                 public void onError(Throwable th) {
 
+                    if (th instanceof SocketTimeoutException) {
+
+                    }
+
                 }
             });
 
         }
 
-    }*/
+    }
 
 }
