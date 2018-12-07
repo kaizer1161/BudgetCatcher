@@ -22,6 +22,7 @@ import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
 
+import java.net.SocketTimeoutException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -169,6 +170,16 @@ public class Manage extends Fragment {
             @Override
             public void onError(Throwable th) {
 
+                if (th instanceof SocketTimeoutException) {
+
+                    if (getActivity() != null) {
+
+                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }
+
             }
         });
 
@@ -200,6 +211,16 @@ public class Manage extends Fragment {
 
             @Override
             public void onError(Throwable th) {
+
+                /*if (th instanceof SocketTimeoutException){
+
+                    if (getActivity() != null){
+
+                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }*/
 
             }
         });
@@ -243,6 +264,16 @@ public class Manage extends Fragment {
 
             @Override
             public void onError(Throwable th) {
+
+                /*if (th instanceof SocketTimeoutException){
+
+                    if (getActivity() != null){
+
+                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }*/
 
             }
         });

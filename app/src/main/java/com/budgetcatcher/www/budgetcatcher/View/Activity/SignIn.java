@@ -48,6 +48,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.SocketTimeoutException;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -356,6 +357,12 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onError(Throwable th) {
 
+                if (th instanceof SocketTimeoutException) {
+
+                    Toast.makeText(SignIn.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
 
@@ -399,6 +406,12 @@ public class SignIn extends AppCompatActivity {
 
             @Override
             public void onError(Throwable th) {
+
+                if (th instanceof SocketTimeoutException) {
+
+                    Toast.makeText(SignIn.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+
+                }
 
             }
         });

@@ -25,6 +25,7 @@ import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
 import com.google.gson.Gson;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -192,6 +193,16 @@ public class EditBill extends Fragment {
 
             @Override
             public void onError(Throwable th) {
+
+                if (th instanceof SocketTimeoutException) {
+
+                    if (getActivity() != null) {
+
+                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }
 
             }
         });

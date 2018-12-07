@@ -9,8 +9,6 @@ package com.budgetcatcher.www.budgetcatcher.Network;
  */
 
 
-import android.util.Log;
-
 import com.budgetcatcher.www.budgetcatcher.Config;
 import com.budgetcatcher.www.budgetcatcher.Model.Allowance;
 import com.budgetcatcher.www.budgetcatcher.Model.AllowanceResponse;
@@ -93,8 +91,6 @@ public class ApiManager {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
-                Log.d(TAG, "onResponse: sign up " + response.code());
-
                 if (response.code() == URL.STATUS_SERVER_CREATED) {
 
                     callback.onSuccess(response.body());
@@ -156,8 +152,6 @@ public class ApiManager {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
-                Log.d(TAG, "onResponse: " + response.code());
-
                 if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
 
                     callback.onSuccess(response.body());
@@ -208,9 +202,6 @@ public class ApiManager {
             public void onFailure(Call<String> call, Throwable t) {
 
                 callback.onError(t);
-                Log.d(TAG, "onFailure: 1 " + t.getCause());
-                Log.d(TAG, "onFailure: 2 " + t.getLocalizedMessage());
-                Log.d(TAG, "onFailure: 3 " + t.getMessage());
 
             }
         });
@@ -319,8 +310,6 @@ public class ApiManager {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
-                Log.d(TAG, "onResponse: " + response.code());
-
                 if (response.code() == URL.STATUS_SERVER_CREATED) {
 
                     callback.onSuccess(response.body());
@@ -411,8 +400,6 @@ public class ApiManager {
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-
-                Log.d(TAG, "onResponse: " + response.code());
 
                 if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
 

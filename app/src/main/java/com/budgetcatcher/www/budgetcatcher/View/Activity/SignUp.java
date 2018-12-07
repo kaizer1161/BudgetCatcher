@@ -28,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.SocketTimeoutException;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -169,6 +170,12 @@ public class SignUp extends AppCompatActivity {
 
             @Override
             public void onError(Throwable th) {
+
+                if (th instanceof SocketTimeoutException) {
+
+                    Toast.makeText(SignUp.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+
+                }
 
             }
         });
