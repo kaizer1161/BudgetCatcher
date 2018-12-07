@@ -32,6 +32,7 @@
                         android:gravity="center"
                         android:padding="@dimen/gap_of_4dp"
                         android:textStyle="bold"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:text="Income Settings"
                         android:textColor="@color/white" />
 
@@ -193,6 +194,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/gap_of_4dp"
                             android:layout_alignParentStart="true"
                             android:padding="@dimen/gap_of_4dp"
                             android:text="Bill"
@@ -213,6 +215,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="@dimen/gap_of_4dp"
                             android:gravity="center"
                             android:padding="@dimen/gap_of_4dp"
                             android:text="Amount"
@@ -272,6 +275,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
+                            android:layout_marginLeft="@dimen/gap_of_4dp"
                             android:padding="@dimen/gap_of_4dp"
                             android:text="Allowance"
                             android:textColor="@color/white"
@@ -281,6 +285,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
+                            android:layout_marginRight="@dimen/gap_of_4dp"
                             android:gravity="center"
                             android:padding="@dimen/gap_of_4dp"
                             android:text="Amount"
@@ -340,8 +345,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
+                            android:layout_marginLeft="@dimen/gap_of_4dp"
                             android:padding="@dimen/gap_of_4dp"
-                            android:text="Incedents"
+                            android:text="Incident"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
 
@@ -361,8 +367,9 @@
                             android:layout_alignParentEnd="true"
                             android:gravity="center"
                             android:padding="@dimen/gap_of_4dp"
-                            android:text="Amounts"
+                            android:layout_marginRight="@dimen/gap_of_4dp"
                             android:textColor="@color/white"
+                            android:text="Amount"
                             android:textStyle="bold" />
 
                     </RelativeLayout>

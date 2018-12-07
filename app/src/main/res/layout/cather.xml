@@ -64,6 +64,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/gap_of_4dp"
                         android:layout_alignParentStart="true"
                         android:padding="@dimen/gap_of_4dp"
                         android:text="Bill"
@@ -83,6 +84,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/gap_of_4dp"
                         android:layout_alignParentEnd="true"
                         android:gravity="center"
                         android:padding="@dimen/gap_of_4dp"
@@ -132,6 +134,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/gap_of_4dp"
                         android:layout_alignParentStart="true"
                         android:padding="@dimen/gap_of_4dp"
                         android:text="Allowance"
@@ -143,6 +146,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:gravity="center"
+                        android:layout_marginRight="@dimen/gap_of_4dp"
                         android:padding="@dimen/gap_of_4dp"
                         android:text="Amount"
                         android:textColor="@color/white"
@@ -190,9 +194,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/gap_of_4dp"
                         android:layout_alignParentStart="true"
                         android:padding="@dimen/gap_of_4dp"
-                        android:text="Incedents"
+                        android:text="Incident"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -210,9 +215,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:layout_marginRight="@dimen/gap_of_4dp"
                         android:gravity="center"
                         android:padding="@dimen/gap_of_4dp"
-                        android:text="Amounts"
+                        android:text="Amount"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
