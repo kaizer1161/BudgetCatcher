@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="@dimen/gap_of_8dp"
-            android:text="TOTAL EXPENSES"
+            android:text="Total Expenses"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/black" />
 
@@ -180,7 +180,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:padding="@dimen/gap_of_8dp"
-                        android:text="Incident"
+                        android:text="Incedents"
                         android:textColor="@color/white" />
 
                     <TextView

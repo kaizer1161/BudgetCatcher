@@ -22,7 +22,11 @@ import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -192,7 +196,7 @@ public class Manage extends Fragment {
 
     private void getExpensesFromServer() {
 
-        BudgetCatcher.apiManager.getExpenses(userID, "january", "2018", new QueryCallback<ArrayList<Expenses>>() {
+        BudgetCatcher.apiManager.getExpenses(userID, "december", "2018", new QueryCallback<ArrayList<Expenses>>() {
             @Override
             public void onSuccess(ArrayList<Expenses> expensesList) {
 
@@ -201,7 +205,18 @@ public class Manage extends Fragment {
                 for (int i = 0; i < expensesList.size(); i++) {
 
                     Expenses expenses = expensesList.get(i);
-                    expensesArrayList.add(new AccountItem(expenses.getExpenseName(), expenses.getMonth() + "/" + expenses.getYear(), "$" + expenses.getAmount(), expenses.getExpenseId()));
+                    String dateTime = expenses.getDateTime();
+                    DateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
+                    Date date = null;
+                    try {
+                        date = (Date)formatter.parse(dateTime);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-DD");
+                    String finalString = newFormat.format(date);
+
+                    expensesArrayList.add(new AccountItem(expenses.getExpenseName(), finalString, "$" + expenses.getAmount(), expenses.getExpenseId()));
 
                 }
 

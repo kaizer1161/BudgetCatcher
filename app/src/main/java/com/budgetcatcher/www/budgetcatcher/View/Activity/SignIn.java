@@ -322,7 +322,7 @@ public class SignIn extends AppCompatActivity {
 
                     if (storeUserInformationInSharedPreference(userID)) {
 
-                        Toast.makeText(SignIn.this, "Success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignIn.this, "Welcome to Budget Catcher", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SignIn.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
 
                     }

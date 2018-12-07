@@ -25,7 +25,7 @@
                 android:layout_weight="60"
                 android:gravity="center"
                 android:maxLines="2"
-                android:text="WEEK OF SEPTEMBER 1-7"
+                android:text="Week of\nSeptember 1-7"
                 android:textColor="@color/white" />
 
             <ImageView

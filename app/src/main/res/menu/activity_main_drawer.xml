@@ -26,11 +26,6 @@
             android:icon="@drawable/ic_action_report"
             android:title="Report" />
 
-        <item
-            android:id="@+id/nav_balance_projection"
-            android:icon="@drawable/ic_action_projection"
-            android:title="Balance projection" />
-
     </group>
 
     <item android:title="">

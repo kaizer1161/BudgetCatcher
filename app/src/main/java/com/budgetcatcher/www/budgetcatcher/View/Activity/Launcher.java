@@ -22,22 +22,14 @@ public class Launcher extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 if (getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getBoolean(Config.SP_LOGGED_IN, false)) {
-
                     startActivity(new Intent(Launcher.this, MainActivity.class));
                     finish();
-
                 } else {
-
                     startActivity(new Intent(Launcher.this, SignInSignUp.class));
                     finish();
-
                 }
-
             }
-        }, 2000);
-
+        }, 1000);
     }
-
 }
