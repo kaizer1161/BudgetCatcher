@@ -18,10 +18,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="@dimen/gap_of_8dp"
-            android:text="Total Expenses"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:textColor="@color/black" />
+            android:paddingLeft="@dimen/gap_of_8dp"
+            android:paddingTop="@dimen/gap_of_8dp"
+            android:paddingRight="@dimen/gap_of_8dp"
+            android:text="TOTAL EXPENSES"
+            android:textColor="@color/black"
+            android:textSize="12dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,12 +31,11 @@
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/gap_of_8dp"
             android:drawableStart="@drawable/ic_attach_money_24dp"
-            android:text="989.00"
+            android:text="1,789.90"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:textColor="@color/black" />
 
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="30">
@@ -49,9 +50,11 @@
                     android:layout_height="wrap_content"
                     android:background="@color/deep_sea_dive"
                     android:gravity="center"
-                    android:padding="@dimen/gap_of_8dp"
+                    android:padding="@dimen/gap_of_4dp"
                     android:text="Bills"
-                    android:textColor="@color/white" />
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -62,27 +65,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:padding="@dimen/gap_of_8dp"
+                        android:padding="@dimen/gap_of_4dp"
                         android:text="Bill"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:gravity="center"
-                        android:padding="@dimen/gap_of_8dp"
+                        android:padding="@dimen/gap_of_4dp"
                         android:text="Due/Late"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:gravity="center"
-                        android:padding="@dimen/gap_of_8dp"
+                        android:padding="@dimen/gap_of_4dp"
                         android:text="Amount"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
@@ -95,9 +101,9 @@
 
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </LinearLayout>
 
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="30">
@@ -112,9 +118,11 @@
                     android:layout_height="wrap_content"
                     android:background="@color/deep_sea_dive"
                     android:gravity="center"
-                    android:padding="@dimen/gap_of_8dp"
+                    android:padding="@dimen/gap_of_4dp"
                     android:text="Spending Allowance"
-                    android:textColor="@color/white" />
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -125,18 +133,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:padding="@dimen/gap_of_8dp"
+                        android:padding="@dimen/gap_of_4dp"
                         android:text="Allowance"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:gravity="center"
-                        android:padding="@dimen/gap_of_8dp"
+                        android:padding="@dimen/gap_of_4dp"
                         android:text="Amount"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
@@ -149,9 +159,9 @@
 
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </LinearLayout>
 
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="30">
@@ -166,9 +176,11 @@
                     android:layout_height="wrap_content"
                     android:background="@color/deep_sea_dive"
                     android:gravity="center"
-                    android:padding="@dimen/gap_of_8dp"
+                    android:padding="@dimen/gap_of_4dp"
                     android:text="Incidentals"
-                    android:textColor="@color/white" />
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -179,27 +191,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:padding="@dimen/gap_of_8dp"
+                        android:padding="@dimen/gap_of_4dp"
                         android:text="Incedents"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:gravity="center"
-                        android:padding="@dimen/gap_of_8dp"
+                        android:padding="@dimen/gap_of_4dp"
                         android:text="Date"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:gravity="center"
-                        android:padding="@dimen/gap_of_8dp"
+                        android:padding="@dimen/gap_of_4dp"
                         android:text="Amounts"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
@@ -212,7 +227,7 @@
 
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </LinearLayout>
 
     </LinearLayout>
 

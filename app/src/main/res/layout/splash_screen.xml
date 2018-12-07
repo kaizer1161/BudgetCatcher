@@ -9,5 +9,4 @@
         android:scaleType="fitXY"
         android:src="@drawable/splash" />
 
-
 </android.support.constraint.ConstraintLayout>

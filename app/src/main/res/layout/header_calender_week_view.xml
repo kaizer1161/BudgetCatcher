@@ -24,6 +24,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="60"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:maxLines="2"
                 android:text="Week of\nSeptember 1-7"
                 android:textColor="@color/white" />

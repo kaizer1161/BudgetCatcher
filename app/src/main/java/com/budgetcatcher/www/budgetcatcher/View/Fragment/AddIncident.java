@@ -256,6 +256,12 @@ if (th instanceof SocketTimeoutException){
 
                     if (th instanceof SocketTimeoutException) {
 
+                        if (getActivity() != null) {
+
+                            Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+
+                        }
+
                     }
 
                 }

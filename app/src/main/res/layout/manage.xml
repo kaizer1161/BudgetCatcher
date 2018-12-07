@@ -30,7 +30,8 @@
                         android:layout_height="wrap_content"
                         android:background="@color/deep_sea_dive"
                         android:gravity="center"
-                        android:padding="@dimen/gap_of_8dp"
+                        android:padding="@dimen/gap_of_4dp"
+                        android:textStyle="bold"
                         android:text="Income Settings"
                         android:textColor="@color/white" />
 
@@ -46,6 +47,7 @@
                             <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:hint="Pay Frequency"
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="@dimen/gap_of_52dp"
                                 android:layout_marginTop="@dimen/gap_of_8dp"
@@ -54,7 +56,7 @@
                                 android:background="@drawable/transparent_edit_text_background"
                                 android:cursorVisible="false"
                                 android:gravity="center"
-                                android:hint="Pay frequency"
+                                android:textStyle="bold"
                                 android:inputType="text"
                                 android:padding="@dimen/gap_of_8dp"
                                 android:textColor="@color/white"
@@ -64,11 +66,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                android:hint="Next Payday"
                                 android:layout_marginLeft="@dimen/gap_of_52dp"
                                 android:layout_marginRight="@dimen/gap_of_52dp"
                                 android:background="@drawable/transparent_edit_text_background"
                                 android:gravity="center"
-                                android:hint="Next paydate"
+                                android:textStyle="bold"
                                 android:inputType="text"
                                 android:padding="@dimen/gap_of_8dp"
                                 android:textColor="@color/white"
@@ -78,12 +81,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                android:hint="Normal or Est .Net Pay"
                                 android:layout_marginLeft="@dimen/gap_of_52dp"
                                 android:layout_marginTop="@dimen/gap_of_8dp"
                                 android:layout_marginRight="@dimen/gap_of_52dp"
                                 android:background="@drawable/transparent_edit_text_background"
                                 android:gravity="center"
-                                android:hint="Normal or Est .Net pay"
+                                android:textStyle="bold"
                                 android:inputType="text"
                                 android:padding="@dimen/gap_of_8dp"
                                 android:textColor="@color/white"
@@ -137,8 +141,10 @@
                                 android:layout_gravity="center"
                                 android:layout_margin="@dimen/gap_of_8dp"
                                 android:background="@drawable/hinoki_button_background"
+                                android:textAllCaps="false"
                                 android:text="Save"
-                                android:textColor="@color/black" />
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 
@@ -169,11 +175,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/gap_of_16dp"
                             android:background="@color/deep_sea_dive"
-                            android:drawableEnd="@drawable/ic_add_circle_outline_24dp"
+                            android:drawableEnd="@drawable/ic_add"
                             android:gravity="center"
-                            android:padding="@dimen/gap_of_8dp"
+                            android:padding="@dimen/gap_of_4dp"
                             android:text="Bills"
-                            android:textColor="@color/white" />
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
 
                     </FrameLayout>
 
@@ -186,27 +194,30 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
-                            android:padding="@dimen/gap_of_8dp"
+                            android:padding="@dimen/gap_of_4dp"
                             android:text="Bill"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:gravity="center"
-                            android:padding="@dimen/gap_of_8dp"
+                            android:padding="@dimen/gap_of_4dp"
                             android:text="Due/Late"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:gravity="center"
-                            android:padding="@dimen/gap_of_8dp"
+                            android:padding="@dimen/gap_of_4dp"
                             android:text="Amount"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
 
                     </RelativeLayout>
 
@@ -242,11 +253,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/gap_of_16dp"
                             android:background="@color/deep_sea_dive"
-                            android:drawableEnd="@drawable/ic_add_circle_outline_24dp"
+                            android:drawableEnd="@drawable/ic_add"
                             android:gravity="center"
-                            android:padding="@dimen/gap_of_8dp"
-                            android:text="Allowance: Weekly Budget"
-                            android:textColor="@color/white" />
+                            android:padding="@dimen/gap_of_4dp"
+                            android:text="Allowance: weekly budget"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
 
                     </FrameLayout>
 
@@ -259,18 +272,20 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
-                            android:padding="@dimen/gap_of_8dp"
+                            android:padding="@dimen/gap_of_4dp"
                             android:text="Allowance"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:gravity="center"
-                            android:padding="@dimen/gap_of_8dp"
+                            android:padding="@dimen/gap_of_4dp"
                             android:text="Amount"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
 
                     </RelativeLayout>
 
@@ -306,12 +321,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/gap_of_16dp"
                             android:background="@color/deep_sea_dive"
-                            android:drawableEnd="@drawable/ic_add_circle_outline_24dp"
-
+                            android:drawableEnd="@drawable/ic_add"
                             android:gravity="center"
-                            android:padding="@dimen/gap_of_8dp"
+                            android:padding="@dimen/gap_of_4dp"
                             android:text="Incidentals"
-                            android:textColor="@color/white" />
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
 
                     </FrameLayout>
 
@@ -324,27 +340,30 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
-                            android:padding="@dimen/gap_of_8dp"
+                            android:padding="@dimen/gap_of_4dp"
                             android:text="Incedents"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:gravity="center"
-                            android:padding="@dimen/gap_of_8dp"
+                            android:padding="@dimen/gap_of_4dp"
                             android:text="Date"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:gravity="center"
-                            android:padding="@dimen/gap_of_8dp"
+                            android:padding="@dimen/gap_of_4dp"
                             android:text="Amounts"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
 
                     </RelativeLayout>
 

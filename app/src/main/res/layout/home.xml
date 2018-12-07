@@ -15,7 +15,7 @@
         android:textOn="Monthly"
         android:textStyle="bold"
         android:thumb="@drawable/thumb"
-        android:thumbTextPadding="@dimen/gap_of_8dp"
+        android:thumbTextPadding="@dimen/gap_of_2dp"
         android:track="@drawable/track" />
 
     <include layout="@layout/header_calender_week_view" />
@@ -26,18 +26,18 @@
         android:gravity="center_vertical"
         android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/gap_of_8dp">
+            android:layout_margin="@dimen/gap_of_16dp">
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -51,15 +51,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Starting Cash Balance"
+                            android:text="Starting cash balance"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_attach_money_24dp"
-                            android:text="1789.90"
+                            android:text="$ 1,789.90"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
@@ -67,8 +67,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="See Outstanding Checks"
+                            android:text="See outstanding checks"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textStyle="bold"
                             android:textColor="@color/black" />
 
                         <LinearLayout
@@ -89,14 +90,15 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Income"
+                                    android:textStyle="bold"
                                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                                     android:textColor="@color/black" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:drawableStart="@drawable/ic_attach_money_24dp"
-                                    android:text="2900.00"
+
+                                    android:text="$ 2,900.00"
                                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                                     android:textColor="@color/black"
                                     android:textStyle="bold" />
@@ -115,14 +117,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Expenses"
+                                    android:textStyle="bold"
                                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                                     android:textColor="@color/black" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:drawableStart="@drawable/ic_attach_money_24dp"
-                                    android:text="900.00"
+                                    android:text="($ 900.00)"
                                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                                     android:textColor="@color/black"
                                     android:textStyle="bold" />
@@ -137,13 +139,13 @@
                             android:paddingTop="@dimen/gap_of_8dp"
                             android:text="Cash Excess/ Deficit "
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textStyle="bold"
                             android:textColor="@color/black" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_attach_money_24dp"
-                            android:text="4789.90"
+                            android:text="$ 2,000.00"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
@@ -169,6 +171,7 @@
                                 android:layout_weight="50"
                                 android:gravity="center"
                                 android:text="Add to Savings"
+                                android:textStyle="bold"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                                 android:textColor="@color/white" />
 
@@ -182,6 +185,7 @@
                                 android:focusable="false"
                                 android:gravity="center"
                                 android:hint="Enter amount"
+                                android:textColorHint="@color/black"
                                 android:inputType="number"
                                 android:padding="@dimen/gap_of_8dp" />
 
@@ -198,6 +202,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_weight="50"
+                                android:textStyle="bold"
                                 android:gravity="center"
                                 android:text="Reduce Debts"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
@@ -213,6 +218,7 @@
                                 android:focusable="false"
                                 android:gravity="center"
                                 android:hint="Enter amount"
+                                android:textColorHint="@color/black"
                                 android:inputType="number"
                                 android:padding="@dimen/gap_of_8dp" />
 
@@ -230,6 +236,7 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="50"
                                 android:text="Add to Cash"
+                                android:textStyle="bold"
                                 android:textAlignment="center"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                                 android:textColor="@color/white" />
@@ -240,8 +247,9 @@
                                 android:layout_margin="@dimen/gap_of_8dp"
                                 android:layout_weight="50"
                                 android:background="@drawable/white_button_background"
-                                android:text="Calculate"
-                                android:textColor="@color/aquarium" />
+                                android:text="{Calculate}"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 
@@ -258,15 +266,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ending Balance"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:text="Ending balance"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textStyle="bold"
                             android:textColor="@color/black" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_attach_money_24dp"
-                            android:text="989.00"
+                            android:text="$ 989.00"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
@@ -274,8 +282,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                             android:text="See projected balances"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textStyle="bold"
                             android:textColor="@color/black" />
 
                     </LinearLayout>
@@ -284,7 +293,7 @@
 
             </ScrollView>
 
-        </android.support.v7.widget.CardView>
+        </LinearLayout>
 
     </LinearLayout>
 

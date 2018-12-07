@@ -257,6 +257,16 @@ public class AddBill extends Fragment {
                 @Override
                 public void onError(Throwable th) {
 
+                    if (th instanceof SocketTimeoutException) {
+
+                        if (getActivity() != null) {
+
+                            Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+
                 }
             });
 

@@ -8,6 +8,6 @@
         android:color="@color/aquarium" />
     <gradient
         android:height="40dp"
-        android:endColor="#dadadada"
-        android:startColor="#dadadada" />
+        android:endColor="@color/white"
+        android:startColor="@color/white" />
 </shape>
