@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="@dimen/gap_of_8dp"
-            android:text="TOTAL EXPENSES"
+            android:text="Total Expenses"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/black" />
 
@@ -167,7 +167,7 @@
                     android:background="@color/deep_sea_dive"
                     android:gravity="center"
                     android:padding="@dimen/gap_of_8dp"
-                    android:text="Incidental"
+                    android:text="Incidentals"
                     android:textColor="@color/white" />
 
                 <RelativeLayout
@@ -180,7 +180,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:padding="@dimen/gap_of_8dp"
-                        android:text="Incedent"
+                        android:text="Incedents"
                         android:textColor="@color/white" />
 
                     <TextView

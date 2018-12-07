@@ -24,6 +24,7 @@ import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.EditBill;
 import com.google.gson.Gson;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -79,26 +80,29 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         AccountItem accountItem = accountItemArrayList.get(position);
 
         String temp = accountItem.getCol3();
-        Log.d("TEMP", "saveDataToServer: " + position + " " + temp);
-        int dec = temp.indexOf(".");
+        Log.i("temp", temp);
+        temp = temp.replace("$", "");
+        Float val = Float.parseFloat(temp);
+        String valStr = String.format("%.2f", val);
+        Log.d("valStr", valStr);
+        /*int dec = temp.indexOf(".");
         if (dec != -1) {
             if (temp.length() > dec + 3)
                 temp = temp.substring(0, dec + 3);
 
-        }
-
-        Log.d("TEMP", "saveDataToServer: " + dec);
+        }*/
+        //Log.d("TEMP", "saveDataToServer: " + dec);
 
         if (fragmentTag.equals(Config.TAG_LIST_SPENDING_ALLOWANCE)) {
 
             holder.col1.setText(accountItem.getCol1());
-            holder.col3.setText(temp);
+            holder.col3.setText("$"+valStr);
 
         } else {
 
             holder.col1.setText(accountItem.getCol1());
             holder.col2.setText(accountItem.getCol2());
-            holder.col3.setText(temp);
+            holder.col3.setText("$"+valStr);
 
         }
 

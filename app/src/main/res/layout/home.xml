@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/gap_of_8dp"
         android:showText="true"
-        android:textOff="Monthly"
-        android:textOn="Weekly"
+        android:textOff="Weekly"
+        android:textOn="Monthly"
         android:textStyle="bold"
         android:thumb="@drawable/thumb"
         android:thumbTextPadding="@dimen/gap_of_8dp"
@@ -51,7 +51,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="STARTING CASH BALANCE"
+                            android:text="Starting Cash Balance"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                             android:textColor="@color/black" />
 
@@ -67,7 +67,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="SEE OUTSTANDING CHECKS"
+                            android:text="See Outstanding Checks"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                             android:textColor="@color/black" />
 
@@ -88,7 +88,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="INCOME"
+                                    android:text="Income"
                                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                                     android:textColor="@color/black" />
 
@@ -114,7 +114,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="EXPENSE"
+                                    android:text="Expenses"
                                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                                     android:textColor="@color/black" />
 
@@ -135,7 +135,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="@dimen/gap_of_8dp"
-                            android:text="CASH EXCESS/ DEFICIT "
+                            android:text="Cash Excess/ Deficit "
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                             android:textColor="@color/black" />
 
@@ -258,7 +258,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="ENDING BALANCE"
+                            android:text="Ending Balance"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                             android:textColor="@color/black" />
 
@@ -274,7 +274,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="See project balance"
+                            android:text="See projected balances"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                             android:textColor="@color/black" />
 

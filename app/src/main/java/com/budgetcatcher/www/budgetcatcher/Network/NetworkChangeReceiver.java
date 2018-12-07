@@ -44,7 +44,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
                 BudgetCatcher.setConnectedToInternet(networkInfo != null && networkInfo.isConnected());
 
                 if (networkInfo != null && networkInfo.isConnected()) {
-                    Toast.makeText(context, "Connected to internet", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "Connected to internet", Toast.LENGTH_SHORT).show();
 
                 } else {
                     Toast.makeText(context, "No internet", Toast.LENGTH_SHORT).show();
