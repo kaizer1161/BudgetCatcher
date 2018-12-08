@@ -171,10 +171,11 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onError(Throwable th) {
 
+                Log.e("SerVerErr", th.toString());
                 if (th instanceof SocketTimeoutException) {
-
                     Toast.makeText(SignUp.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
-
+                } else {
+                    Toast.makeText(SignUp.this, th.toString(), Toast.LENGTH_SHORT).show();
                 }
 
             }

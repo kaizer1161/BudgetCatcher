@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -254,14 +255,13 @@ if (th instanceof SocketTimeoutException){
                 @Override
                 public void onError(Throwable th) {
 
-                    if (th instanceof SocketTimeoutException) {
-
-                        if (getActivity() != null) {
-
+                    if (getActivity() != null) {
+                        Log.e("SerVerErrAddInci", th.toString());
+                        if (th instanceof SocketTimeoutException) {
                             Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
-
+                        } else {
+                            Toast.makeText(getActivity(), th.toString(), Toast.LENGTH_SHORT).show();
                         }
-
                     }
 
                 }

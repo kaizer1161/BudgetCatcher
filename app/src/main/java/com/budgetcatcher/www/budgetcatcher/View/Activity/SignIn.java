@@ -394,10 +394,11 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onError(Throwable th) {
 
+                Log.e("SerVerErr", th.toString());
                 if (th instanceof SocketTimeoutException) {
-
                     Toast.makeText(SignIn.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
-
+                } else {
+                    Toast.makeText(SignIn.this, th.toString(), Toast.LENGTH_SHORT).show();
                 }
 
             }
