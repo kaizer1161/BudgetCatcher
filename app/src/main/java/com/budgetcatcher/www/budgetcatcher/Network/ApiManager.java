@@ -123,15 +123,10 @@ public class ApiManager {
             public void onResponse(Call<String> call, Response<String> response) {
 
                 if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
-
                     callback.onSuccess(response.body());
-
                 } else {
-
                     callback.onFail();
-
                 }
-
             }
 
             @Override

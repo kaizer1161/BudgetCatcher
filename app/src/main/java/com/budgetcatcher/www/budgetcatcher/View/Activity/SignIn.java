@@ -287,24 +287,18 @@ public class SignIn extends AppCompatActivity {
             }
 
             case R.id.google: {
-
                 signIn();
-
                 break;
             }
 
             case R.id.facebook: {
-
                 LoginManager.getInstance().logInWithReadPermissions(
                         this,
                         Arrays.asList("user_photos", "email", "user_birthday", "public_profile")
                 );
-
                 break;
             }
-
         }
-
     }
 
     private void login(String userEmail, String userPassword, final Boolean generalLogin) {
@@ -312,7 +306,6 @@ public class SignIn extends AppCompatActivity {
         BudgetCatcher.apiManager.userSignIn(userEmail, userPassword, new QueryCallback<String>() {
             @Override
             public void onSuccess(String response) {
-
                 JSONObject jsonObject = null;
                 try {
 
@@ -325,11 +318,10 @@ public class SignIn extends AppCompatActivity {
 
                         Toast.makeText(SignIn.this, "Welcome to Budget Catcher", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SignIn.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
-
                     }
 
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.e("JsonError", e.toString());
                 }
 
             }
@@ -346,26 +338,21 @@ public class SignIn extends AppCompatActivity {
                     password.setError("Wrong password");
 
                 } else {
-
                     signUp();
-                    Log.d(TAG, "Log in onFail: Failed");
-
+                    Log.e(TAG, "Log in onFail: Failed");
                 }
-
             }
 
             @Override
             public void onError(Throwable th) {
-
+                Log.e("SerVerErr", th.toString());
                 if (th instanceof SocketTimeoutException) {
-
                     Toast.makeText(SignIn.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
-
+                }else{
+                    Toast.makeText(SignIn.this, th.toString(), Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
     }
 
     private void signUp() {
