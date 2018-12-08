@@ -282,7 +282,7 @@ public class EditBill extends Fragment {
                 @Override
                 public void onSuccess(String data) {
 
-                    Toast.makeText(getActivity(), "Bill successfully edited", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Successfully bill edited", Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()

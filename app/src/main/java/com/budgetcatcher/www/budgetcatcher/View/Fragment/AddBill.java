@@ -244,7 +244,7 @@ public class AddBill extends Fragment {
                 @Override
                 public void onSuccess(String data) {
 
-                    Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Successfully added new bill", Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
 
                 }
