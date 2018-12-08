@@ -26,8 +26,9 @@
                     android:layout_height="wrap_content"
                     android:background="@color/deep_sea_dive"
                     android:gravity="center"
-                    android:padding="@dimen/gap_of_8dp"
+                    android:padding="@dimen/gap_of_4dp"
                     android:text="Compare Your Financial Leverage"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
@@ -84,15 +85,17 @@
                     android:layout_height="wrap_content"
                     android:background="@color/deep_sea_dive"
                     android:gravity="center"
-                    android:padding="@dimen/gap_of_8dp"
+                    android:padding="@dimen/gap_of_4dp"
                     android:text="Advisory Board"
-                    android:textColor="@color/white" />
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/gap_of_8dp"
-                    android:layout_marginRight="@dimen/gap_of_8dp"
+                    android:layout_marginLeft="@dimen/gap_of_16dp"
+                    android:layout_marginRight="@dimen/gap_of_16dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -187,9 +190,11 @@
                     android:layout_height="wrap_content"
                     android:background="@color/deep_sea_dive"
                     android:gravity="center"
-                    android:padding="@dimen/gap_of_8dp"
+                    android:padding="@dimen/gap_of_4dp"
                     android:text="Find The Pros"
-                    android:textColor="@color/white" />
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
