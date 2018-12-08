@@ -23,5 +23,6 @@
 
     <string name="facebook_app_id">2047378708887212</string>
     <string name="fb_login_protocol_scheme">fb2047378708887212</string>
+    <string name="done">Done</string>
 
 </resources>

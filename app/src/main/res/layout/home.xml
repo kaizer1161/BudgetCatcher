@@ -1,300 +1,311 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_image"
-    android:gravity="center"
-    android:orientation="vertical">
-
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/gap_of_8dp"
-        android:showText="true"
-        android:textOff="Weekly"
-        android:textOn="Monthly"
-        android:textStyle="bold"
-        android:thumb="@drawable/thumb"
-        android:thumbTextPadding="@dimen/gap_of_2dp"
-        android:track="@drawable/track" />
-
-    <include layout="@layout/header_calender_week_view" />
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
+        android:background="@drawable/background_image"
+        android:gravity="center"
         android:orientation="vertical">
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/gap_of_8dp"
+            android:showText="true"
+            android:textOff="Weekly"
+            android:textOn="Monthly"
+            android:textStyle="bold"
+            android:thumb="@drawable/thumb"
+            android:thumbTextPadding="@dimen/gap_of_2dp"
+            android:track="@drawable/track" />
+
+        <include layout="@layout/header_calender_week_view" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/gap_of_16dp">
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
-            <ScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/gap_of_16dp">
 
-                <LinearLayout
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="@dimen/gap_of_8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Starting cash balance"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$ 1,789.90"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="See outstanding checks"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                            android:textStyle="bold"
-                            android:textColor="@color/black" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="50"
-                                android:gravity="center_horizontal"
-                                android:orientation="vertical"
-                                android:padding="@dimen/gap_of_8dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Income"
-                                    android:textStyle="bold"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                                    android:textColor="@color/black" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-
-                                    android:text="$ 2,900.00"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                                    android:textColor="@color/black"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="50"
-                                android:gravity="center_horizontal"
-                                android:orientation="vertical"
-                                android:padding="@dimen/gap_of_8dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Expenses"
-                                    android:textStyle="bold"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                                    android:textColor="@color/black" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="($ 900.00)"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                                    android:textColor="@color/black"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingTop="@dimen/gap_of_8dp"
-                            android:text="Cash Excess/ Deficit "
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textStyle="bold"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$ 2,000.00"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/aquarium"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:orientation="vertical"
                             android:padding="@dimen/gap_of_8dp">
 
                             <TextView
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="50"
-                                android:gravity="center"
-                                android:text="Add to Savings"
-                                android:textStyle="bold"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                                android:textColor="@color/white" />
-
-                            <EditText
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/gap_of_8dp"
-                                android:layout_weight="50"
-                                android:background="@drawable/white_button_background"
-                                android:cursorVisible="false"
-                                android:focusable="false"
-                                android:gravity="center"
-                                android:hint="Enter amount"
-                                android:textColorHint="@color/black"
-                                android:inputType="number"
-                                android:padding="@dimen/gap_of_8dp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/gap_of_8dp">
+                                android:text="Starting cash balance"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
 
                             <TextView
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="50"
-                                android:textStyle="bold"
-                                android:gravity="center"
-                                android:text="Reduce Debts"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                                android:textColor="@color/white" />
-
-                            <EditText
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/gap_of_8dp"
-                                android:layout_marginRight="@dimen/gap_of_8dp"
-                                android:layout_weight="50"
-                                android:background="@drawable/white_button_background"
-                                android:focusable="false"
-                                android:gravity="center"
-                                android:hint="Enter amount"
-                                android:textColorHint="@color/black"
-                                android:inputType="number"
-                                android:padding="@dimen/gap_of_8dp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/gap_of_8dp">
+                                android:text="$ 1,789.90"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
 
                             <TextView
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="50"
-                                android:text="Add to Cash"
-                                android:textStyle="bold"
-                                android:textAlignment="center"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                                android:textColor="@color/white" />
+                                android:text="See outstanding checks"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
 
-                            <Button
-                                android:layout_width="0dp"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/gap_of_8dp"
-                                android:layout_weight="50"
-                                android:background="@drawable/white_button_background"
-                                android:text="{Calculate}"
+                                android:gravity="center_horizontal"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="50"
+                                    android:gravity="center_horizontal"
+                                    android:orientation="vertical"
+                                    android:padding="@dimen/gap_of_8dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Income"
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+
+                                        android:text="$ 2,900.00"
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="50"
+                                    android:gravity="center_horizontal"
+                                    android:orientation="vertical"
+                                    android:padding="@dimen/gap_of_8dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Expenses"
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="($ 900.00)"
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="@dimen/gap_of_8dp"
+                                android:text="Cash Excess/ Deficit "
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="$ 2,000.00"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
 
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/aquarium"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="@dimen/gap_of_8dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="50"
+                                    android:gravity="center"
+                                    android:text="Add to Savings"
+                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/gap_of_8dp"
+                                    android:layout_weight="50"
+                                    android:background="@drawable/white_button_background"
+                                    android:cursorVisible="false"
+                                    android:focusable="false"
+                                    android:gravity="center"
+                                    android:hint="Enter amount"
+                                    android:inputType="number"
+                                    android:padding="@dimen/gap_of_8dp"
+                                    android:textColorHint="@color/black" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="@dimen/gap_of_8dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="50"
+                                    android:gravity="center"
+                                    android:text="Reduce Debts"
+                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/gap_of_8dp"
+                                    android:layout_marginRight="@dimen/gap_of_8dp"
+                                    android:layout_weight="50"
+                                    android:background="@drawable/white_button_background"
+                                    android:focusable="false"
+                                    android:gravity="center"
+                                    android:hint="Enter amount"
+                                    android:inputType="number"
+                                    android:padding="@dimen/gap_of_8dp"
+                                    android:textColorHint="@color/black" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="@dimen/gap_of_8dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="50"
+                                    android:text="Add to Cash"
+                                    android:textAlignment="center"
+                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                                <Button
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/gap_of_8dp"
+                                    android:layout_weight="50"
+                                    android:background="@drawable/white_button_background"
+                                    android:text="{Calculate}"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="@dimen/gap_of_8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ending balance"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="$ 989.00"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/projected_balance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="See projected balances"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+
+                        </LinearLayout>
+
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="@dimen/gap_of_8dp">
+                </ScrollView>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ending balance"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                            android:textStyle="bold"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$ 989.00"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                            android:text="See projected balances"
-                            android:textStyle="bold"
-                            android:textColor="@color/black" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </ScrollView>
+            </LinearLayout>
 
         </LinearLayout>
 
+
     </LinearLayout>
 
-</LinearLayout>
+    <include layout="@layout/projected_balance" />
+
+</android.support.design.widget.CoordinatorLayout>
