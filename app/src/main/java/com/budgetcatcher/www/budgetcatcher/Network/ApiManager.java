@@ -9,6 +9,8 @@ package com.budgetcatcher.www.budgetcatcher.Network;
  */
 
 
+import android.util.Log;
+
 import com.budgetcatcher.www.budgetcatcher.Config;
 import com.budgetcatcher.www.budgetcatcher.Model.Allowance;
 import com.budgetcatcher.www.budgetcatcher.Model.AllowanceResponse;
@@ -84,7 +86,7 @@ public class ApiManager {
         return apiManager;
     }
 
-    public void userSignUp(SignUpBody body, final QueryCallback<String> callback) {
+    public void userSignUp(SignUpBody body, final QueryCallback<Response<String>> callback) {
 
         Call<String> networkCall = apiInterface.signUp(headers, body);
         networkCall.enqueue(new Callback<String>() {
@@ -93,7 +95,11 @@ public class ApiManager {
 
                 if (response.code() == URL.STATUS_SERVER_CREATED) {
 
-                    callback.onSuccess(response.body());
+                    callback.onSuccess(response);
+
+                } else if (response.code() == URL.STATUS_BAD_REQUEST) {
+
+                    callback.onSuccess(response);
 
                 } else {
 
@@ -141,11 +147,15 @@ public class ApiManager {
 
     public void userProfileSetup(String userID, ProfileSetupBody profileSetupBody, final QueryCallback<String> callback) {
 
+        Log.d(TAG, "userProfileSetup: here");
+        
         String uri = URL.base + URL.profileSetup + userID;
         Call<String> networkCall = apiInterface.profileSetup(uri, headers, profileSetupBody);
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
+
+                Log.d(TAG, "onResponse: " + response.code());
 
                 if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
 

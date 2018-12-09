@@ -55,6 +55,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Response;
 
 public class SignIn extends AppCompatActivity {
 
@@ -359,35 +360,45 @@ public class SignIn extends AppCompatActivity {
 
         SignUpBody signUpBody = new SignUpBody(user.getDisplayName(), user.getEmail(), user.getUid(), user.getPhoneNumber(), "social", "null", "null");
 
-        BudgetCatcher.apiManager.userSignUp(signUpBody, new QueryCallback<String>() {
+        BudgetCatcher.apiManager.userSignUp(signUpBody, new QueryCallback<Response<String>>() {
             @Override
-            public void onSuccess(String response) {
+            public void onSuccess(Response<String> response) {
 
-                JSONObject jsonObject = null;
-                try {
+                if (response.code() == URL.STATUS_SERVER_CREATED) {
 
-                    jsonObject = new JSONObject(response);
-                    JSONArray data = jsonObject.getJSONArray(URL.API_KEY_DATA);
-                    JSONObject userObject = data.getJSONObject(0);
-                    String userID = userObject.getString(URL.API_KEY_USER_ID);
+                    JSONObject jsonObject = null;
+                    try {
 
-                    if (storeUserInformationInSharedPreference(userID)) {
+                        jsonObject = new JSONObject(response.body());
+                        JSONArray data = jsonObject.getJSONArray(URL.API_KEY_DATA);
+                        JSONObject userObject = data.getJSONObject(0);
+                        String userID = userObject.getString(URL.API_KEY_USER_ID);
 
-                        Toast.makeText(SignIn.this, "Welcome to Budget Catcher", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(SignIn.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        if (storeUserInformationInSharedPreference(userID)) {
 
+                            Toast.makeText(SignIn.this, "Welcome to Budget Catcher", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(SignIn.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                } else if (response.code() == URL.STATUS_BAD_REQUEST) {
+
+                    Toast.makeText(SignIn.this, "Account with this email already exists", Toast.LENGTH_SHORT).show();
+
                 }
+
+
 
             }
 
             @Override
             public void onFail() {
 
-                Toast.makeText(SignIn.this, "Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignIn.this, "Something went wrong: server error", Toast.LENGTH_SHORT).show();
 
             }
 

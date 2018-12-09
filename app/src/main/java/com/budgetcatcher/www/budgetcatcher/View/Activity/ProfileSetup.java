@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
@@ -200,18 +201,18 @@ public class ProfileSetup extends AppCompatActivity {
 
                     String userID = getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-                    ProfileSetupBody profileSetupBody = new ProfileSetupBody("asd", riskLevel.get(riskLevelSpinner.getSelectedItemPosition()), skillLevel.get(skillLevelSpinner.getSelectedItemPosition()), financialGoal.get(financialGoalSpinner.getSelectedItemPosition()));
+                    ProfileSetupBody profileSetupBody = new ProfileSetupBody(imageString, riskLevel.get(riskLevelSpinner.getSelectedItemPosition()), skillLevel.get(skillLevelSpinner.getSelectedItemPosition()), financialGoal.get(financialGoalSpinner.getSelectedItemPosition()));
 
                     if (!userID.equals("")) {
 
                         if (BudgetCatcher.getConnectedToInternet()) {
-                            BudgetCatcher.apiManager.userProfileSetup(userID, profileSetupBody, new QueryCallback<String>() {
+                            BudgetCatcher.apiManager.userProfileSetup("230", profileSetupBody, new QueryCallback<String>() {
                                 @Override
                                 public void onSuccess(String data) {
 
                                     if (storeUserInformationInSharedPreference()) {
 
-                                        Toast.makeText(ProfileSetup.this, "Success", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ProfileSetup.this, "Welcome to Budget Catcher", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(ProfileSetup.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
 
                                     }
@@ -260,9 +261,10 @@ public class ProfileSetup extends AppCompatActivity {
 
     public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-        profileImage.setImageBitmap(bmp);
+        bmp = Bitmap.createScaledBitmap(bmp, 1484, 2914, true);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
+        profileImage.setImageBitmap(BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length));
         return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 

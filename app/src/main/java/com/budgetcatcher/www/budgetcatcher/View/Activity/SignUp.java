@@ -34,6 +34,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Response;
 
 public class SignUp extends AppCompatActivity {
 
@@ -71,7 +72,7 @@ public class SignUp extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.sign_up_now})
+    @OnClick({R.id.sign_up_now, R.id.back_to_sign_in})
     public void onClick(View view) {
 
         switch (view.getId()) {
@@ -126,45 +127,66 @@ public class SignUp extends AppCompatActivity {
                 break;
             }
 
+            case R.id.back_to_sign_in: {
+
+                super.onBackPressed();
+
+                break;
+            }
+
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     private void saveDataToServer() {
 
         SignUpBody signUpBody = new SignUpBody(userName.getText().toString(), email.getText().toString(), password.getText().toString(), phone.getText().toString(), "general", question.getText().toString(), answer.getText().toString());
 
-        BudgetCatcher.apiManager.userSignUp(signUpBody, new QueryCallback<String>() {
+        BudgetCatcher.apiManager.userSignUp(signUpBody, new QueryCallback<Response<String>>() {
             @Override
-            public void onSuccess(String response) {
+            public void onSuccess(Response<String> response) {
 
-                JSONObject jsonObject = null;
-                try {
+                if (response.code() == URL.STATUS_SERVER_CREATED) {
 
-                    jsonObject = new JSONObject(response);
-                    JSONArray data = jsonObject.getJSONArray(URL.API_KEY_DATA);
-                    JSONObject userObject = data.getJSONObject(0);
-                    String userID = userObject.getString(URL.API_KEY_USER_ID);
+                    JSONObject jsonObject = null;
+                    try {
 
-                    if (storeUserInformationInSharedPreference(userID)) {
+                        jsonObject = new JSONObject(response.body());
+                        JSONArray data = jsonObject.getJSONArray(URL.API_KEY_DATA);
+                        JSONObject userObject = data.getJSONObject(0);
+                        String userID = userObject.getString(URL.API_KEY_USER_ID);
 
-                        Toast.makeText(SignUp.this, "Success", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(SignUp.this, ProfileSetup.class));
-                        finish();
+                        if (storeUserInformationInSharedPreference(userID)) {
 
+                            Toast.makeText(SignUp.this, "Successfully account created", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(SignUp.this, ProfileSetup.class));
+                            finish();
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                } else if (response.code() == URL.STATUS_BAD_REQUEST) {
+
+                    email.setText("");
+                    email.setError("Email already exist!");
+
                 }
+
 
             }
 
             @Override
             public void onFail() {
 
-                email.setText("");
-                email.setError("Email already exist!");
+                Toast.makeText(SignUp.this, "Something went wrong: server error", Toast.LENGTH_SHORT).show();
 
             }
 

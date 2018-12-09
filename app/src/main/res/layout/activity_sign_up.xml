@@ -51,10 +51,9 @@
                 android:layout_marginLeft="@dimen/gap_of_16dp"
                 android:layout_marginTop="@dimen/gap_of_8dp"
                 android:layout_marginRight="@dimen/gap_of_16dp"
-                android:cursorVisible="false"
                 android:background="@drawable/white_button_background"
                 android:hint="Enter name"
-                android:inputType="textPersonName"
+                android:inputType="textCapSentences|textAutoCorrect"
                 android:padding="@dimen/gap_of_8dp" />
 
             <TextView
@@ -138,7 +137,7 @@
                 android:layout_marginBottom="@dimen/gap_of_8dp"
                 android:background="@drawable/white_button_background"
                 android:hint="Select question"
-                android:inputType="textEmailAddress"
+                android:inputType="textCapSentences|textAutoCorrect"
                 android:padding="@dimen/gap_of_8dp" />
 
             <TextView
