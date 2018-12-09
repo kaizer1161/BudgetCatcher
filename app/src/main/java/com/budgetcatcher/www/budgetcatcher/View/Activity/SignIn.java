@@ -295,7 +295,7 @@ public class SignIn extends AppCompatActivity {
             case R.id.facebook: {
                 LoginManager.getInstance().logInWithReadPermissions(
                         this,
-                        Arrays.asList("user_photos", "email", "user_birthday", "public_profile")
+                        Arrays.asList(/*"user_photos",*/ "email", /*"user_birthday",*/ "public_profile")
                 );
                 break;
             }
@@ -387,6 +387,7 @@ public class SignIn extends AppCompatActivity {
 
                 } else if (response.code() == URL.STATUS_BAD_REQUEST) {
 
+                    Log.d(TAG, "onSuccess: " + response.code());
                     Toast.makeText(SignIn.this, "Account with this email already exists", Toast.LENGTH_SHORT).show();
 
                 }

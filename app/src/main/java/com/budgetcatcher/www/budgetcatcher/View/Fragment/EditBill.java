@@ -99,7 +99,7 @@ public class EditBill extends Fragment {
                 dateTextView.setVisibility(View.VISIBLE);
                 datePicker.setVisibility(View.GONE);
 
-                date = year + "-" + month + "-" + dayOfMonth;
+                date = year + "-" + (month + 1) + "-" + dayOfMonth;
                 dateTextView.setText(date);
 
             }
@@ -284,10 +284,6 @@ public class EditBill extends Fragment {
 
                     Toast.makeText(getActivity(), "Successfully bill edited", Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.content, new Manage(), Config.TAG_MANAGE_FRAGMENT)
-                            .commit();
 
                 }
 

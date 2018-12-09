@@ -11,7 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -24,14 +24,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.content.Context.INPUT_METHOD_SERVICE;
-
 public class Home extends Fragment {
 
     @BindView(R.id.projected_balance_layout)
     CoordinatorLayout projectedBalanceLayoutBottomSheet;
     @BindView(R.id.picker)
     NumberPicker picker;
+    @BindView(R.id.add_to_saving)
+    EditText addToBill;
+    @BindView(R.id.reduce_debts)
+    EditText reduceDebts;
 
     private BottomSheetBehavior projectedBalanceBottomSheetBehavior;
     private String[] date = {"8/13/18 - 8/19/18", "8/20/18 - 8/26/18", "8/27/17 - 9/2/18", "9/3/18 - 9/9/19", "9/10/18 - 9/16/18", "9/17/18 - 9/23/18", "9/24/19 - 9/30/18"};
@@ -45,7 +47,6 @@ public class Home extends Fragment {
         if (getActivity() != null)
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Home");
 
-        hideSoftKeyboard();
         projectedBalanceBottomSheetBehavior = BottomSheetBehavior.from(projectedBalanceLayoutBottomSheet);
         projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
@@ -53,10 +54,19 @@ public class Home extends Fragment {
         picker.setMaxValue(date.length - 1);
         picker.setDisplayedValues(date);
 
+        editTextCursorVisibility(false);
+
         return rootView;
     }
 
-    @OnClick({R.id.projected_balance, R.id.done_bottom_sheet})
+    private void editTextCursorVisibility(boolean visibility) {
+
+        addToBill.setCursorVisible(visibility);
+        reduceDebts.setCursorVisible(visibility);
+
+    }
+
+    @OnClick({R.id.projected_balance, R.id.done_bottom_sheet, R.id.add_to_saving, R.id.reduce_debts})
     public void onClick(View view) {
 
         switch (view.getId()) {
@@ -91,21 +101,21 @@ public class Home extends Fragment {
                 break;
             }
 
-        }
+            case R.id.add_to_saving: {
 
-    }
+                editTextCursorVisibility(true);
 
-    /**
-     * Hides the soft keyboard
-     */
-    public void hideSoftKeyboard() {
-        if (getActivity() != null) {
-            if (getActivity().getCurrentFocus() != null) {
-                InputMethodManager inputMethodManager = (InputMethodManager) (getActivity()).getSystemService(INPUT_METHOD_SERVICE);
-                if (inputMethodManager != null)
-                    inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                break;
             }
+            case R.id.reduce_debts: {
+
+                editTextCursorVisibility(true);
+
+                break;
+            }
+
         }
 
     }
+
 }

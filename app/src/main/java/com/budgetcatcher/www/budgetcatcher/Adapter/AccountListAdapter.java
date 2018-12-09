@@ -193,6 +193,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                                             ((MainActivity) activity).getSupportFragmentManager()
                                                     .beginTransaction()
                                                     .replace(R.id.content, editBill, Config.TAG_EDIT_BILL_FRAGMENT)
+                                                    .addToBackStack(null)
                                                     .commit();
 
                                         }

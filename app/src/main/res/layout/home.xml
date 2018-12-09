@@ -180,13 +180,12 @@
                                     android:textStyle="bold" />
 
                                 <EditText
+                                    android:id="@+id/add_to_saving"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="@dimen/gap_of_8dp"
                                     android:layout_weight="50"
                                     android:background="@drawable/white_button_background"
-                                    android:cursorVisible="false"
-                                    android:focusable="false"
                                     android:gravity="center"
                                     android:hint="Enter amount"
                                     android:inputType="number"
@@ -213,13 +212,13 @@
                                     android:textStyle="bold" />
 
                                 <EditText
+                                    android:id="@+id/reduce_debts"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/gap_of_8dp"
                                     android:layout_marginRight="@dimen/gap_of_8dp"
                                     android:layout_weight="50"
                                     android:background="@drawable/white_button_background"
-                                    android:focusable="false"
                                     android:gravity="center"
                                     android:hint="Enter amount"
                                     android:inputType="number"
@@ -289,6 +288,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="See projected balances"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                android:padding="@dimen/gap_of_8dp"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
 
@@ -306,6 +306,5 @@
 
     </LinearLayout>
 
-    <include layout="@layout/projected_balance" />
 
 </android.support.design.widget.CoordinatorLayout>

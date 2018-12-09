@@ -75,7 +75,7 @@ public class AddIncident extends Fragment {
                 dateEditText.setVisibility(View.VISIBLE);
                 datePicker.setVisibility(View.GONE);
 
-                date = year + "-" + month + "-" + dayOfMonth;
+                date = year + "-" + (month + 1) + "-" + dayOfMonth;
                 dateEditText.setText(date);
 
             }

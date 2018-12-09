@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/background_image"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_image"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -43,9 +43,9 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginLeft="@dimen/gap_of_16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/gap_of_16dp"
                     android:text="Email"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/white" />
@@ -53,20 +53,20 @@
                 <EditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="@dimen/gap_of_16dp"
-                    android:layout_marginRight="@dimen/gap_of_16dp"
-                    android:layout_marginTop="@dimen/gap_of_8dp"
-                    android:layout_marginBottom="@dimen/gap_of_16dp"
-                    android:padding="@dimen/gap_of_8dp"
-                    android:hint="Enter email address"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/gap_of_16dp"
+                    android:layout_marginTop="@dimen/gap_of_8dp"
+                    android:layout_marginRight="@dimen/gap_of_16dp"
+                    android:layout_marginBottom="@dimen/gap_of_16dp"
                     android:background="@drawable/white_button_background"
-                    android:inputType="textEmailAddress"/>
+                    android:hint="Enter email address"
+                    android:inputType="textEmailAddress"
+                    android:padding="@dimen/gap_of_8dp" />
 
                 <TextView
-                    android:layout_marginLeft="@dimen/gap_of_16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/gap_of_16dp"
                     android:text="Password"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/white" />
@@ -74,15 +74,15 @@
                 <EditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="@dimen/gap_of_16dp"
-                    android:layout_marginRight="@dimen/gap_of_16dp"
-                    android:layout_marginTop="@dimen/gap_of_8dp"
-                    android:layout_marginBottom="@dimen/gap_of_16dp"
-                    android:hint="Enter password"
-                    android:padding="@dimen/gap_of_8dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/gap_of_16dp"
+                    android:layout_marginTop="@dimen/gap_of_8dp"
+                    android:layout_marginRight="@dimen/gap_of_16dp"
+                    android:layout_marginBottom="@dimen/gap_of_16dp"
                     android:background="@drawable/white_button_background"
-                    android:inputType="textPassword"/>
+                    android:hint="Enter password"
+                    android:inputType="textPassword"
+                    android:padding="@dimen/gap_of_8dp" />
 
             </LinearLayout>
 
@@ -103,11 +103,11 @@
                 android:id="@+id/forgot_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_margin="@dimen/gap_of_8dp"
                 android:padding="@dimen/gap_of_8dp"
                 android:text="I need help! Forgot login info"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:layout_gravity="center"
                 android:textColor="@color/white" />
 
         </LinearLayout>
@@ -130,12 +130,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/gap_of_8dp"
                     android:gravity="center"
                     android:text="Sign in with social media"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="@dimen/gap_of_8dp"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

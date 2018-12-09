@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.budgetcatcher.www.budgetcatcher.Adapter.AccountListAdapter;
@@ -45,9 +47,13 @@ public class Manage extends Fragment {
     RecyclerView allowance;
     @BindView(R.id.incidental_recycler_view)
     RecyclerView incidental;
+    @BindView(R.id.next_pay_day)
+    TextView nextPayDay;
+    @BindView(R.id.date_picker)
+    CalendarView datePicker;
 
     private AccountListAdapter billsListAdapter, allowanceListAdapter, incidentalListAdapter;
-    private String userID;
+    private String userID, date = null;
 
     @Nullable
     @Override
@@ -75,6 +81,20 @@ public class Manage extends Fragment {
 
         }
 
+        datePicker.setVisibility(View.GONE);
+        datePicker.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@androidx.annotation.NonNull @NonNull CalendarView view, int year, int month, int dayOfMonth) {
+
+                nextPayDay.setVisibility(View.VISIBLE);
+                datePicker.setVisibility(View.GONE);
+
+                date = year + "-" + (month + 1) + "-" + dayOfMonth;
+                nextPayDay.setText(date);
+
+            }
+        });
+
         return rootView;
     }
 
@@ -101,7 +121,7 @@ public class Manage extends Fragment {
 
     }
 
-    @OnClick({R.id.add_bill, R.id.add_allowance, R.id.add_incidentals})
+    @OnClick({R.id.add_bill, R.id.add_allowance, R.id.add_incidentals, R.id.next_pay_day})
     public void onClick(View view) {
 
         switch (view.getId()) {
@@ -137,6 +157,13 @@ public class Manage extends Fragment {
                             .replace(R.id.content, new AddIncident(), Config.TAG_ADD_INCIDENTAL_FRAGMENT)
                             .addToBackStack(null)
                             .commit();
+
+                break;
+            }
+            case R.id.next_pay_day: {
+
+                nextPayDay.setVisibility(View.GONE);
+                datePicker.setVisibility(View.VISIBLE);
 
                 break;
             }
