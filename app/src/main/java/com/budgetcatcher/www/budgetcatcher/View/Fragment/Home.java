@@ -35,7 +35,7 @@ public class Home extends Fragment {
     @BindView(R.id.reduce_debts)
     EditText reduceDebts;
 
-    private BottomSheetBehavior projectedBalanceBottomSheetBehavior;
+
     private String[] date = {"8/13/18 - 8/19/18", "8/20/18 - 8/26/18", "8/27/17 - 9/2/18", "9/3/18 - 9/9/19", "9/10/18 - 9/16/18", "9/17/18 - 9/23/18", "9/24/19 - 9/30/18"};
 
     @Nullable
@@ -44,11 +44,14 @@ public class Home extends Fragment {
         View rootView = inflater.inflate(R.layout.home, container, false);
         ButterKnife.bind(this, rootView);
 
-        if (getActivity() != null)
+        if (getActivity() != null) {
+
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Home");
 
-        projectedBalanceBottomSheetBehavior = BottomSheetBehavior.from(projectedBalanceLayoutBottomSheet);
-        projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior = BottomSheetBehavior.from(projectedBalanceLayoutBottomSheet);
+            ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+        }
 
         picker.setMinValue(0);
         picker.setMaxValue(date.length - 1);
@@ -73,7 +76,8 @@ public class Home extends Fragment {
 
             case R.id.projected_balance: {
 
-                projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                if (getActivity() != null)
+                    ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
                 break;
             }

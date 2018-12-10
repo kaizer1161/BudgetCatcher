@@ -23,8 +23,6 @@
 
     <include layout="@layout/content_main" />
 
-    <include layout="@layout/projected_balance" />
-
     <!--<android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

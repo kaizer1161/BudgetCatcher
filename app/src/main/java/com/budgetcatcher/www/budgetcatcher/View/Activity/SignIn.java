@@ -471,9 +471,9 @@ public class SignIn extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-            }
+            }*/
         } catch (Exception e) {
             Log.v("Internet Reg : ", " " + e);
         }

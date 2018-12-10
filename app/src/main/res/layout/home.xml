@@ -303,8 +303,8 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
 
+    <include layout="@layout/projected_balance" />
 
 </android.support.design.widget.CoordinatorLayout>

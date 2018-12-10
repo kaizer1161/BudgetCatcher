@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private BroadcastReceiver mNetworkReceiver;
+    public BottomSheetBehavior projectedBalanceBottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +79,16 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+
+            if (projectedBalanceBottomSheetBehavior != null && projectedBalanceBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+
+                projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+            } else {
+
+                super.onBackPressed();
+
+            }
         }
     }
 
