@@ -3,8 +3,8 @@ package com.budgetcatcher.www.budgetcatcher.Network;
 public class URL {
 
     /*Api base url*/
-    //public static final String base = "http://www.budget-catcher.com/api/";
-    public static final String base = "http://bc.biniyogbondhu.com/api/";
+    public static final String base = "http://www.budget-catcher.com/api/";
+    //public static final String base = "http://bc.biniyogbondhu.com/api/";
 
     /*URL status code*/
     public static final int STATUS_BAD_REQUEST = 400;

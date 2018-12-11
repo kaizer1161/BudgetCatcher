@@ -144,7 +144,10 @@ public class SignIn extends AppCompatActivity {
             public void onError(FacebookException error) {
                 Log.d(TAG, "facebook:onError", error);
                 // [START_EXCLUDE]
-                updateUI(null);
+                startActivity(new Intent(SignIn.this, SignIn.class));
+                finish();
+
+                Toast.makeText(SignIn.this, "Sign in error: " + error, Toast.LENGTH_LONG).show();
                 // [END_EXCLUDE]
             }
         });
@@ -167,7 +170,10 @@ public class SignIn extends AppCompatActivity {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
                 // [START_EXCLUDE]
-                updateUI(null);
+                startActivity(new Intent(SignIn.this, SignIn.class));
+                finish();
+
+                Toast.makeText(SignIn.this, "Sign in failed " + e, Toast.LENGTH_LONG).show();
                 // [END_EXCLUDE]
             }
         } else {
@@ -201,8 +207,11 @@ public class SignIn extends AppCompatActivity {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Log.d(TAG, "signInWithCredential: Authentication Failed.", task.getException());
-                            //Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                            updateUI(null);
+
+                            startActivity(new Intent(SignIn.this, SignIn.class));
+                            finish();
+
+                            Toast.makeText(SignIn.this, "An account already exists with the same email address", Toast.LENGTH_LONG).show();
                         }
 
                         // [START_EXCLUDE]
@@ -243,7 +252,7 @@ public class SignIn extends AppCompatActivity {
 
         } else {
 
-            //Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Social login failed", Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -347,6 +356,10 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onError(Throwable th) {
                 Log.e("SerVerErr", th.toString());
+
+                startActivity(new Intent(SignIn.this, SignIn.class));
+                finish();
+
                 if (th instanceof SocketTimeoutException) {
                     Toast.makeText(SignIn.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                 }else{
@@ -387,18 +400,19 @@ public class SignIn extends AppCompatActivity {
 
                 } else if (response.code() == URL.STATUS_BAD_REQUEST) {
 
-                    Log.d(TAG, "onSuccess: " + response.code());
-                    Toast.makeText(SignIn.this, "Account with this email already exists", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(SignIn.this, SignIn.class));
+                    finish();
+                    Toast.makeText(SignIn.this, "An account already exists with the same email address", Toast.LENGTH_LONG).show();
 
                 }
-
-
 
             }
 
             @Override
             public void onFail() {
 
+                startActivity(new Intent(SignIn.this, SignIn.class));
+                finish();
                 Toast.makeText(SignIn.this, "Something went wrong: server error", Toast.LENGTH_SHORT).show();
 
             }
@@ -407,6 +421,8 @@ public class SignIn extends AppCompatActivity {
             public void onError(Throwable th) {
 
                 Log.e("SerVerErr", th.toString());
+                startActivity(new Intent(SignIn.this, SignIn.class));
+                finish();
                 if (th instanceof SocketTimeoutException) {
                     Toast.makeText(SignIn.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                 } else {
@@ -450,9 +466,12 @@ public class SignIn extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(SignIn.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+
+                            startActivity(new Intent(SignIn.this, SignIn.class));
+                            finish();
+
+                            Toast.makeText(SignIn.this, "An account already exists with the same email address", Toast.LENGTH_LONG).show();
+
                         }
 
                         // [START_EXCLUDE]
