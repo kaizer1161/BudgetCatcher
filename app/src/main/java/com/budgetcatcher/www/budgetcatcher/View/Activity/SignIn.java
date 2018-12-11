@@ -248,7 +248,16 @@ public class SignIn extends AppCompatActivity {
         if (user != null) {
 
             this.user = user;
-            login(user.getEmail(), user.getUid(), false);
+            Log.d(TAG, "updateUI: " + user.getEmail());
+            if (user.getEmail() != null)
+                login(user.getEmail(), user.getUid(), false);
+            else {
+
+                startActivity(new Intent(SignIn.this, SignIn.class));
+                finish();
+
+                Toast.makeText(this, "Cannot login: No email address provided", Toast.LENGTH_SHORT).show();
+            }
 
         } else {
 
@@ -362,7 +371,7 @@ public class SignIn extends AppCompatActivity {
 
                 if (th instanceof SocketTimeoutException) {
                     Toast.makeText(SignIn.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(SignIn.this, th.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
