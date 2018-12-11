@@ -136,7 +136,10 @@ public class SignIn extends AppCompatActivity {
             public void onCancel() {
                 Log.d(TAG, "facebook:onCancel");
                 // [START_EXCLUDE]
-                updateUI(null);
+                startActivity(new Intent(SignIn.this, SignIn.class));
+                finish();
+
+                Toast.makeText(SignIn.this, "Facebook: canceled", Toast.LENGTH_LONG).show();
                 // [END_EXCLUDE]
             }
 
@@ -229,7 +232,7 @@ public class SignIn extends AppCompatActivity {
     }
     // [END signin]
 
-    private void revokeAccess() {
+    /*private void revokeAccess() {
         // Firebase sign out
         mAuth.signOut();
 
@@ -241,7 +244,7 @@ public class SignIn extends AppCompatActivity {
                         updateUI(null);
                     }
                 });
-    }
+    }*/
 
     private void updateUI(FirebaseUser user) {
         //hideProgressDialog();
@@ -258,10 +261,6 @@ public class SignIn extends AppCompatActivity {
 
                 Toast.makeText(this, "Cannot login: No email address provided", Toast.LENGTH_SHORT).show();
             }
-
-        } else {
-
-            //Toast.makeText(this, "Social login failed", Toast.LENGTH_SHORT).show();
 
         }
     }
