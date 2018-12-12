@@ -1,6 +1,7 @@
 package com.budgetcatcher.www.budgetcatcher.Adapter;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.EditBill;
 import com.google.gson.Gson;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -141,6 +143,10 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                     @Override
                     public boolean onLongClick(View v) {
 
+                        final ProgressDialog dialog = ProgressDialog.show(activity, "",
+                                activity.getResources().getString(R.string.loading), true);
+                        dialog.dismiss();
+
                         final AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
                         builder1.setCancelable(false);
 
@@ -210,10 +216,13 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
                                         if (fragmentTag.equals(Config.TAG_LIST_BILL)) {
 
+                                            dialog.show();
+
                                             BudgetCatcher.apiManager.deleteBill(userID, bills.get(getAdapterPosition()).getBillId(), new QueryCallback<String>() {
                                                 @Override
                                                 public void onSuccess(String data) {
 
+                                                    dialog.dismiss();
                                                     Toast.makeText(activity, "Successfully deleted", Toast.LENGTH_SHORT).show();
                                                     accountItemArrayList.remove(getAdapterPosition());
                                                     notifyDataSetChanged();
@@ -223,11 +232,22 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
                                                 @Override
                                                 public void onFail() {
-
+                                                    dialog.dismiss();
+                                                    Toast.makeText(activity, "Delete item failed", Toast.LENGTH_SHORT).show();
                                                 }
 
                                                 @Override
                                                 public void onError(Throwable th) {
+
+                                                    dialog.dismiss();
+                                                    if (activity != null) {
+                                                        Log.e("SerVerErrAddBill", th.toString());
+                                                        if (th instanceof SocketTimeoutException) {
+                                                            Toast.makeText(activity, activity.getResources().getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            Toast.makeText(activity, th.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
 
                                                 }
                                             });
