@@ -1,5 +1,6 @@
 package com.budgetcatcher.www.budgetcatcher.View.Fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -58,6 +59,7 @@ public class EditBill extends Fragment {
     private Boolean statusSelected = false, categoryNameSelected = false;
     private String date = "";
     private Bill bill;
+    private ProgressDialog dialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,6 +83,10 @@ public class EditBill extends Fragment {
         ButterKnife.bind(this, rootView);
 
         if (getActivity() != null) {
+
+            dialog = ProgressDialog.show(getActivity(), "",
+                    getString(R.string.loading), true);
+            dialog.dismiss();
 
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Edit Bill");
             statusList();
@@ -154,10 +160,13 @@ public class EditBill extends Fragment {
 
     private void fetchCategory() {
 
+        dialog.show();
+
         BudgetCatcher.apiManager.getCategory(new QueryCallback<ArrayList<Category>>() {
             @Override
             public void onSuccess(ArrayList<Category> data) {
 
+                dialog.dismiss();
                 categoryListId = new ArrayList<>();
                 categoryListName = new ArrayList<>();
 
@@ -190,11 +199,15 @@ public class EditBill extends Fragment {
             @Override
             public void onFail() {
 
+                dialog.dismiss();
+                Toast.makeText(getActivity(), "Failed to fetch Category", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onError(Throwable th) {
 
+                dialog.dismiss();
                 if (getActivity() != null) {
                     Log.e("SerVerErrEditBill", th.toString());
                     if (th instanceof SocketTimeoutException) {
@@ -272,6 +285,8 @@ public class EditBill extends Fragment {
 
     private void saveDataToServer() {
 
+        dialog.show();
+
         if (getActivity() != null) {
 
             String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
@@ -282,6 +297,7 @@ public class EditBill extends Fragment {
                 @Override
                 public void onSuccess(String data) {
 
+                    dialog.dismiss();
                     Toast.makeText(getActivity(), "Successfully bill edited", Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
 
@@ -290,19 +306,22 @@ public class EditBill extends Fragment {
                 @Override
                 public void onFail() {
 
+                    dialog.dismiss();
+                    Toast.makeText(getActivity(), "Failed to edit bill", Toast.LENGTH_SHORT).show();
+
                 }
 
                 @Override
                 public void onError(Throwable th) {
 
-                    if (th instanceof SocketTimeoutException) {
-
-                        if (getActivity() != null) {
-
+                    dialog.dismiss();
+                    if (getActivity() != null) {
+                        Log.e("SerVerErrAddBill", th.toString());
+                        if (th instanceof SocketTimeoutException) {
                             Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
-
+                        } else {
+                            Toast.makeText(getActivity(), th.toString(), Toast.LENGTH_SHORT).show();
                         }
-
                     }
 
                 }

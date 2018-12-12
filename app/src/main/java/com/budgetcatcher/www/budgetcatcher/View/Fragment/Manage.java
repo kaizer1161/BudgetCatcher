@@ -10,7 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,9 +55,17 @@ public class Manage extends Fragment {
     TextView nextPayDay;
     @BindView(R.id.date_picker)
     CalendarView datePicker;
+    @BindView(R.id.pay_frequency)
+    Spinner payFrequency;
+    @BindView(R.id.net_pay)
+    EditText netPay;
 
     private AccountListAdapter billsListAdapter, allowanceListAdapter, incidentalListAdapter;
+    private Boolean payFrequencySpinnerSelected = false;
     private String userID, date = null;
+
+    private ArrayList<String> payFrequencyList;
+    private ArrayAdapter<String> payFrequencyListAdapter;
 
     @Nullable
     @Override
@@ -66,6 +78,11 @@ public class Manage extends Fragment {
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Manage");
 
             userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
+            setPayFrequencyListist();
+            editTextCursorVisibility(false);
+
+            payFrequencyListAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item_manage, R.id.spinner_item_text, payFrequencyList);
+            payFrequency.setAdapter(payFrequencyListAdapter);
 
             if (BudgetCatcher.getConnectedToInternet()) {
 
@@ -98,6 +115,12 @@ public class Manage extends Fragment {
         return rootView;
     }
 
+    private void editTextCursorVisibility(boolean visibility) {
+
+        netPay.setCursorVisible(visibility);
+
+    }
+
     private void showFeedBills(ArrayList<AccountItem> accountItemArrayList, ArrayList<Bill> billArrayList) {
 
         bills.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -121,7 +144,7 @@ public class Manage extends Fragment {
 
     }
 
-    @OnClick({R.id.add_bill, R.id.add_allowance, R.id.add_incidentals, R.id.next_pay_day})
+    @OnClick({R.id.add_bill, R.id.add_allowance, R.id.add_incidentals, R.id.next_pay_day, R.id.net_pay})
     public void onClick(View view) {
 
         switch (view.getId()) {
@@ -167,6 +190,15 @@ public class Manage extends Fragment {
 
                 break;
             }
+
+            case R.id.net_pay: {
+
+                editTextCursorVisibility(true);
+                netPay.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+                break;
+            }
+
         }
 
     }
@@ -304,6 +336,17 @@ public class Manage extends Fragment {
 
             }
         });
+
+    }
+
+    public void setPayFrequencyListist() {
+
+        payFrequencyList = new ArrayList<>();
+        payFrequencyList.add("Pay Frequency");
+        payFrequencyList.add("Weekly");
+        payFrequencyList.add("Bi weekly");
+        payFrequencyList.add("Monthly");
+        payFrequencyList.add("Bi monthly");
 
     }
 

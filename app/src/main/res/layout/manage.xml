@@ -45,7 +45,8 @@
                             android:layout_height="match_parent"
                             android:orientation="vertical">
 
-                            <EditText
+                            <Spinner
+                                android:id="@+id/pay_frequency"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -54,13 +55,7 @@
                                 android:layout_marginRight="@dimen/gap_of_52dp"
                                 android:layout_marginBottom="@dimen/gap_of_8dp"
                                 android:background="@drawable/transparent_edit_text_background"
-                                android:gravity="center"
-                                android:hint="Pay Frequency"
-                                android:inputType="text"
-                                android:padding="@dimen/gap_of_8dp"
-                                android:textColor="@color/white"
-                                android:textColorHint="@color/white"
-                                android:textStyle="bold" />
+                                android:popupBackground="@color/aquarium" />
 
                             <TextView
                                 android:id="@+id/next_pay_day"
@@ -91,6 +86,7 @@
                             </CalendarView>
 
                             <EditText
+                                android:id="@+id/net_pay"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"

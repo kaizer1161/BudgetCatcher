@@ -1,6 +1,7 @@
 package com.budgetcatcher.www.budgetcatcher.View.Activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -33,6 +34,7 @@ import com.budgetcatcher.www.budgetcatcher.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -53,6 +55,8 @@ public class ProfileSetup extends AppCompatActivity {
     Spinner skillLevelSpinner;
     @BindView(R.id.profile_image)
     ImageView profileImage;
+
+    ProgressDialog dialog;
 
     private BroadcastReceiver mNetworkReceiver;
 
@@ -79,6 +83,10 @@ public class ProfileSetup extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        dialog = ProgressDialog.show(ProfileSetup.this, "",
+                getString(R.string.loading), true);
+        dialog.dismiss();
 
         mNetworkReceiver = new NetworkChangeReceiver();
         registerNetworkBroadcastForNougat();
@@ -197,6 +205,8 @@ public class ProfileSetup extends AppCompatActivity {
 
             case R.id.save: {
 
+                dialog.show();
+
                 if (profileImageSelected && financialGoalSpinnerSelected && riskLevelSpinnerSelected && skillLevelSpinnerSelected) {
 
                     String userID = getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
@@ -206,9 +216,11 @@ public class ProfileSetup extends AppCompatActivity {
                     if (!userID.equals("")) {
 
                         if (BudgetCatcher.getConnectedToInternet()) {
-                            BudgetCatcher.apiManager.userProfileSetup("230", profileSetupBody, new QueryCallback<String>() {
+                            BudgetCatcher.apiManager.userProfileSetup(userID, profileSetupBody, new QueryCallback<String>() {
                                 @Override
                                 public void onSuccess(String data) {
+
+                                    dialog.dismiss();
 
                                     if (storeUserInformationInSharedPreference()) {
 
@@ -222,10 +234,21 @@ public class ProfileSetup extends AppCompatActivity {
                                 @Override
                                 public void onFail() {
 
+                                    dialog.dismiss();
+                                    Toast.makeText(ProfileSetup.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
+
                                 }
 
                                 @Override
                                 public void onError(Throwable th) {
+
+                                    dialog.dismiss();
+                                    Log.e("SerVerErr", th.toString());
+                                    if (th instanceof SocketTimeoutException) {
+                                        Toast.makeText(ProfileSetup.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(ProfileSetup.this, th.toString(), Toast.LENGTH_SHORT).show();
+                                    }
 
                                 }
                             });

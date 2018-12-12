@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -66,6 +67,9 @@ public class Home extends Fragment {
 
         addToBill.setCursorVisible(visibility);
         reduceDebts.setCursorVisible(visibility);
+
+        addToBill.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        reduceDebts.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
     }
 

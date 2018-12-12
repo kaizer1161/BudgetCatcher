@@ -93,11 +93,7 @@ public class ApiManager {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
-                if (response.code() == URL.STATUS_SERVER_CREATED) {
-
-                    callback.onSuccess(response);
-
-                } else if (response.code() == URL.STATUS_BAD_REQUEST) {
+                if (response.code() == URL.STATUS_SERVER_CREATED || response.code() == URL.STATUS_BAD_REQUEST) {
 
                     callback.onSuccess(response);
 

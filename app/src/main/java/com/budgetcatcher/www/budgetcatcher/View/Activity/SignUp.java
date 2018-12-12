@@ -1,5 +1,6 @@
 package com.budgetcatcher.www.budgetcatcher.View.Activity;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -54,6 +55,7 @@ public class SignUp extends AppCompatActivity {
     EditText answer;
 
     private BroadcastReceiver mNetworkReceiver;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +71,10 @@ public class SignUp extends AppCompatActivity {
 
         mNetworkReceiver = new NetworkChangeReceiver();
         registerNetworkBroadcastForNougat();
+
+        dialog = ProgressDialog.show(SignUp.this, "",
+                getString(R.string.loading), true);
+        dialog.dismiss();
 
     }
 
@@ -145,11 +151,15 @@ public class SignUp extends AppCompatActivity {
 
     private void saveDataToServer() {
 
+        dialog.show();
+
         SignUpBody signUpBody = new SignUpBody(userName.getText().toString(), email.getText().toString(), password.getText().toString(), phone.getText().toString(), "general", question.getText().toString(), answer.getText().toString());
 
         BudgetCatcher.apiManager.userSignUp(signUpBody, new QueryCallback<Response<String>>() {
             @Override
             public void onSuccess(Response<String> response) {
+
+                dialog.dismiss();
 
                 if (response.code() == URL.STATUS_SERVER_CREATED) {
 
@@ -186,6 +196,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onFail() {
 
+                dialog.dismiss();
                 Toast.makeText(SignUp.this, "Something went wrong: server error", Toast.LENGTH_SHORT).show();
 
             }
@@ -193,6 +204,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onError(Throwable th) {
 
+                dialog.dismiss();
                 Log.e("SerVerErr", th.toString());
                 if (th instanceof SocketTimeoutException) {
                     Toast.makeText(SignUp.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();

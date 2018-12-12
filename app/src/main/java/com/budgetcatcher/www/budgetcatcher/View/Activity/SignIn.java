@@ -1,5 +1,6 @@
 package com.budgetcatcher.www.budgetcatcher.View.Activity;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -68,6 +69,7 @@ public class SignIn extends AppCompatActivity {
 
     private static final String TAG = "Sign In";
     private static final int RC_SIGN_IN = 9001;
+    private ProgressDialog dialog;
 
     private BroadcastReceiver mNetworkReceiver;
 
@@ -106,6 +108,11 @@ public class SignIn extends AppCompatActivity {
 
         mNetworkReceiver = new NetworkChangeReceiver();
         registerNetworkBroadcastForNougat();
+
+        dialog = ProgressDialog.show(SignIn.this, "",
+                getString(R.string.loading), true);
+        dialog.dismiss();
+
 
         // [START config_signin]
         // Configure Google Sign In
@@ -259,7 +266,7 @@ public class SignIn extends AppCompatActivity {
                 startActivity(new Intent(SignIn.this, SignIn.class));
                 finish();
 
-                Toast.makeText(this, "Cannot login: No email address provided", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Cannot login: No email address provided by facebook", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -297,6 +304,7 @@ public class SignIn extends AppCompatActivity {
                 }
                 if (!hasError) {
 
+                    dialog.show();
                     login(email.getText().toString(), password.getText().toString(), true);
 
                 }
@@ -305,11 +313,15 @@ public class SignIn extends AppCompatActivity {
             }
 
             case R.id.google: {
+
+                dialog.show();
                 signIn();
                 break;
             }
 
             case R.id.facebook: {
+
+                dialog.show();
                 LoginManager.getInstance().logInWithReadPermissions(
                         this,
                         Arrays.asList(/*"user_photos",*/ "email", /*"user_birthday",*/ "public_profile")
@@ -324,6 +336,8 @@ public class SignIn extends AppCompatActivity {
         BudgetCatcher.apiManager.userSignIn(userEmail, userPassword, new QueryCallback<String>() {
             @Override
             public void onSuccess(String response) {
+
+                dialog.dismiss();
                 JSONObject jsonObject = null;
                 try {
 
@@ -349,6 +363,7 @@ public class SignIn extends AppCompatActivity {
 
                 if (generalLogin) {
 
+                    dialog.dismiss();
                     email.setText("");
                     password.setText("");
 
@@ -363,6 +378,8 @@ public class SignIn extends AppCompatActivity {
 
             @Override
             public void onError(Throwable th) {
+
+                dialog.dismiss();
                 Log.e("SerVerErr", th.toString());
 
                 startActivity(new Intent(SignIn.this, SignIn.class));
@@ -385,6 +402,7 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onSuccess(Response<String> response) {
 
+                dialog.dismiss();
                 if (response.code() == URL.STATUS_SERVER_CREATED) {
 
                     JSONObject jsonObject = null;
@@ -419,6 +437,7 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onFail() {
 
+                dialog.dismiss();
                 startActivity(new Intent(SignIn.this, SignIn.class));
                 finish();
                 Toast.makeText(SignIn.this, "Something went wrong: server error", Toast.LENGTH_SHORT).show();
@@ -428,6 +447,7 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onError(Throwable th) {
 
+                dialog.dismiss();
                 Log.e("SerVerErr", th.toString());
                 startActivity(new Intent(SignIn.this, SignIn.class));
                 finish();
