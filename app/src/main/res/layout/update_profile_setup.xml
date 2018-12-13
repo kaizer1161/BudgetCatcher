@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_image"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:titleTextColor="@color/deep_sea_dive">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_setup"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/gap_of_16dp"
+        android:background="@color/deep_sea_dive">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_of_16dp"
+                android:text="Add Profile Pic"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="22dp" />
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/gap_of_16dp"
+                android:src="@drawable/propic" />
+
+            <Button
+                android:id="@+id/choose_from_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:layout_marginRight="@dimen/gap_of_16dp"
+                android:background="@drawable/hinoki_button_background"
+                android:text="Choose from Gallery"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:layout_marginTop="@dimen/gap_of_8dp"
+                android:layout_marginBottom="@dimen/gap_of_8dp"
+                android:text="Financial Goals"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/white" />
+
+            <Spinner
+                android:id="@+id/financial_goal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/gap_of_16dp"
+                android:paddingRight="@dimen/gap_of_16dp">
+
+            </Spinner>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:layout_marginTop="@dimen/gap_of_8dp"
+                android:layout_marginBottom="@dimen/gap_of_8dp"
+                android:text="Risk Level"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/white" />
+
+            <Spinner
+                android:id="@+id/risk_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/gap_of_16dp"
+                android:paddingRight="@dimen/gap_of_16dp">
+
+            </Spinner>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:layout_marginTop="@dimen/gap_of_8dp"
+                android:layout_marginBottom="@dimen/gap_of_8dp"
+                android:text="Financial Skill Level"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/white" />
+
+            <Spinner
+                android:id="@+id/skill_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/gap_of_16dp"
+                android:paddingRight="@dimen/gap_of_16dp">
+
+            </Spinner>
+
+            <Button
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/gap_of_16dp"
+                android:background="@drawable/hinoki_button_background"
+                android:text="Update"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black" />
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -23,6 +23,7 @@ import com.budgetcatcher.www.budgetcatcher.Config;
 import com.budgetcatcher.www.budgetcatcher.Network.NetworkChangeReceiver;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Advice;
+import com.budgetcatcher.www.budgetcatcher.View.Fragment.BasicInfo;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Catcher;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Home;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Manage;
@@ -161,6 +162,12 @@ public class MainActivity extends AppCompatActivity
                     .commit();
 
         } else if (id == R.id.nav_settings) {
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content, new BasicInfo(), Config.TAG_BASIC_INFO_FRAGMENT)
+                    .addToBackStack(null)
+                    .commit();
 
         } else if (id == R.id.nav_logout) {
 

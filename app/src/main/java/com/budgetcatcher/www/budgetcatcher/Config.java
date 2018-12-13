@@ -22,6 +22,8 @@ public class Config {
     public static final String TAG_CATCHER_FRAGMENT = "TAG_CATCHER_FRAGMENT";
     public static final String TAG_ADD_BILL_FRAGMENT = "TAG_ADD_BILL_FRAGMENT";
     public static final String TAG_EDIT_BILL_FRAGMENT = "TAG_EDIT_BILL_FRAGMENT";
+    public static final String TAG_BASIC_INFO_FRAGMENT = "TAG_BASIC_INFO_FRAGMENT";
+    public static final String TAG_PROFILE_INFO_FRAGMENT = "TAG_PROFILE_INFO_FRAGMENT";
     public static final String TAG_ADD_ALLOWANCE_FRAGMENT = "TAG_ADD_ALLOWANCE_FRAGMENT";
     public static final String TAG_ADD_INCIDENTAL_FRAGMENT = "TAG_ADD_INCIDENTAL_FRAGMENT";
     public static final String TAG_LIST_SPENDING_ALLOWANCE = "TAG_LIST_SPENDING_ALLOWANCE";
