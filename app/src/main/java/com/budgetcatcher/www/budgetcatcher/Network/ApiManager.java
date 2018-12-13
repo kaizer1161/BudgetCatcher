@@ -143,8 +143,6 @@ public class ApiManager {
 
     public void userProfileSetup(String userID, ProfileSetupBody profileSetupBody, final QueryCallback<String> callback) {
 
-        Log.d(TAG, "userProfileSetup: here");
-        
         String uri = URL.base + URL.profileSetup + userID;
         Call<String> networkCall = apiInterface.profileSetup(uri, headers, profileSetupBody);
         networkCall.enqueue(new Callback<String>() {

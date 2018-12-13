@@ -23,11 +23,11 @@ import com.budgetcatcher.www.budgetcatcher.Config;
 import com.budgetcatcher.www.budgetcatcher.Network.NetworkChangeReceiver;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Advice;
-import com.budgetcatcher.www.budgetcatcher.View.Fragment.BasicInfo;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Catcher;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Home;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Manage;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Report;
+import com.budgetcatcher.www.budgetcatcher.View.Fragment.Settings;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity
 
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.content, new BasicInfo(), Config.TAG_BASIC_INFO_FRAGMENT)
+                    .replace(R.id.content, new Settings(), Config.TAG_SETTINGS_FRAGMENT)
                     .addToBackStack(null)
                     .commit();
 

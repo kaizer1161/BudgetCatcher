@@ -20,6 +20,7 @@ public class Config {
     public static final String TAG_LIST_INCIDENTAL = "TAG_LIST_INCIDENTAL";
     public static final String TAG_ADVICE_FRAGMENT = "TAG_ADVICE_FRAGMENT";
     public static final String TAG_CATCHER_FRAGMENT = "TAG_CATCHER_FRAGMENT";
+    public static final String TAG_SETTINGS_FRAGMENT = "TAG_SETTINGS_FRAGMENT";
     public static final String TAG_ADD_BILL_FRAGMENT = "TAG_ADD_BILL_FRAGMENT";
     public static final String TAG_EDIT_BILL_FRAGMENT = "TAG_EDIT_BILL_FRAGMENT";
     public static final String TAG_BASIC_INFO_FRAGMENT = "TAG_BASIC_INFO_FRAGMENT";

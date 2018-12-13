@@ -187,6 +187,7 @@ public class SignUp extends AppCompatActivity {
 
                     email.setText("");
                     email.setError("Email already exist!");
+                    password.setText("");
 
                 }
 

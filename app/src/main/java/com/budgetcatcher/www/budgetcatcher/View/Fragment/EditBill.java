@@ -285,10 +285,9 @@ public class EditBill extends Fragment {
 
     private void saveDataToServer() {
 
-        dialog.show();
-
         if (getActivity() != null) {
 
+            dialog.show();
             String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
             ModifyBillBody modifyBillBody = new ModifyBillBody(categoryListId.get(categorySpinner.getSelectedItemPosition()), billName.getText().toString(), amount.getText().toString(), description.getText().toString(), date, "null" /*status.get(statusSpinner.getSelectedItemPosition())*/);

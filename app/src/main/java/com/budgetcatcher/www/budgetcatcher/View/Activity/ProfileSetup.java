@@ -205,8 +205,6 @@ public class ProfileSetup extends AppCompatActivity {
 
             case R.id.save: {
 
-                dialog.show();
-
                 if (profileImageSelected && financialGoalSpinnerSelected && riskLevelSpinnerSelected && skillLevelSpinnerSelected) {
 
                     String userID = getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
@@ -216,6 +214,7 @@ public class ProfileSetup extends AppCompatActivity {
                     if (!userID.equals("")) {
 
                         if (BudgetCatcher.getConnectedToInternet()) {
+                            dialog.show();
                             BudgetCatcher.apiManager.userProfileSetup(userID, profileSetupBody, new QueryCallback<String>() {
                                 @Override
                                 public void onSuccess(String data) {
