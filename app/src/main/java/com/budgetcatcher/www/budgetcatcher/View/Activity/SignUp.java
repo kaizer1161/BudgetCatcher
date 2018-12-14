@@ -186,7 +186,7 @@ public class SignUp extends AppCompatActivity {
                 } else if (response.code() == URL.STATUS_BAD_REQUEST) {
 
                     email.setText("");
-                    email.setError("Email already exist!");
+                    email.setError("Email already exists!");
                     password.setText("");
 
                 }
