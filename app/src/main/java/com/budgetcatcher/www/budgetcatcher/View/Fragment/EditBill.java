@@ -162,63 +162,69 @@ public class EditBill extends Fragment {
 
         dialog.show();
 
-        BudgetCatcher.apiManager.getCategory(new QueryCallback<ArrayList<Category>>() {
-            @Override
-            public void onSuccess(ArrayList<Category> data) {
+        if (getActivity() != null) {
 
-                dialog.dismiss();
-                categoryListId = new ArrayList<>();
-                categoryListName = new ArrayList<>();
+            String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-                categoryListId.add("");
-                categoryListName.add("Select category");
+            BudgetCatcher.apiManager.getCategory(Config.CATEGORY_BILL_TAG_ID, userID, new QueryCallback<ArrayList<Category>>() {
+                @Override
+                public void onSuccess(ArrayList<Category> data) {
 
-                for (int i = 0; i < data.size(); i++) {
+                    dialog.dismiss();
+                    categoryListId = new ArrayList<>();
+                    categoryListName = new ArrayList<>();
 
-                    categoryListId.add(data.get(i).getCategoryId());
-                    categoryListName.add(data.get(i).getCategoryName());
+                    categoryListId.add("");
+                    categoryListName.add("Select category");
 
-                }
+                    for (int i = 0; i < data.size(); i++) {
 
-                categoryAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, R.id.spinner_item_text, categoryListName);
-                categorySpinner.setAdapter(categoryAdapter);
+                        categoryListId.add(data.get(i).getCategoryId());
+                        categoryListName.add(data.get(i).getCategoryName());
 
-                for (int i = 0; i < categoryListName.size(); i++) {
+                    }
 
-                    if (categoryListName.get(i).equals(bill.getCategory())) {
+                    categoryAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, R.id.spinner_item_text, categoryListName);
+                    categorySpinner.setAdapter(categoryAdapter);
 
-                        categorySpinner.setSelection(i, true);
-                        break;
+                    for (int i = 0; i < categoryListName.size(); i++) {
+
+                        if (categoryListName.get(i).equals(bill.getCategory())) {
+
+                            categorySpinner.setSelection(i, true);
+                            break;
+
+                        }
 
                     }
 
                 }
 
-            }
+                @Override
+                public void onFail() {
 
-            @Override
-            public void onFail() {
+                    dialog.dismiss();
+                    Toast.makeText(getActivity(), "Failed to fetch Category", Toast.LENGTH_SHORT).show();
 
-                dialog.dismiss();
-                Toast.makeText(getActivity(), "Failed to fetch Category", Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onError(Throwable th) {
-
-                dialog.dismiss();
-                if (getActivity() != null) {
-                    Log.e("SerVerErrEditBill", th.toString());
-                    if (th instanceof SocketTimeoutException) {
-                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity(), th.toString(), Toast.LENGTH_SHORT).show();
-                    }
                 }
 
-            }
-        });
+                @Override
+                public void onError(Throwable th) {
+
+                    dialog.dismiss();
+                    if (getActivity() != null) {
+                        Log.e("SerVerErrEditBill", th.toString());
+                        if (th instanceof SocketTimeoutException) {
+                            Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), th.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                }
+            });
+
+        }
 
     }
 
@@ -261,7 +267,12 @@ public class EditBill extends Fragment {
 
                     hasError = true;
                 }
+                if (!BudgetCatcher.getConnectedToInternet()) {
 
+                    hasError = true;
+                    Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
+
+                }
                 if (!hasError) {
 
                     saveDataToServer();

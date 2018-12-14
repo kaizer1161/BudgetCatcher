@@ -1,5 +1,6 @@
 package com.budgetcatcher.www.budgetcatcher.View.Fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -47,6 +48,9 @@ public class AddAllowance extends Fragment {
     private ArrayList<String> categoryListName, categoryListId;
     private ArrayAdapter<String> categoryAdapter;
     private Boolean categoryNameSelected = false;
+    private String userID;
+
+    private ProgressDialog dialog;
 
     @Nullable
     @Override
@@ -55,6 +59,12 @@ public class AddAllowance extends Fragment {
         ButterKnife.bind(this, rootView);
 
         if (getActivity() != null) {
+
+            userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
+
+            dialog = ProgressDialog.show(getActivity(), "",
+                    getString(R.string.loading), true);
+            dialog.dismiss();
 
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Add Allowance");
             fetchCategory();
@@ -85,9 +95,13 @@ public class AddAllowance extends Fragment {
 
     private void fetchCategory() {
 
-        BudgetCatcher.apiManager.getCategory(new QueryCallback<ArrayList<Category>>() {
+        dialog.show();
+
+        BudgetCatcher.apiManager.getCategory(Config.CATEGORY_ALLOWANCE_TAG_ID, userID, new QueryCallback<ArrayList<Category>>() {
             @Override
             public void onSuccess(ArrayList<Category> data) {
+
+                dialog.dismiss();
 
                 categoryListId = new ArrayList<>();
                 categoryListName = new ArrayList<>();
@@ -110,11 +124,15 @@ public class AddAllowance extends Fragment {
             @Override
             public void onFail() {
 
+                dialog.dismiss();
+                Toast.makeText(getActivity(), "Failed to fetch Category", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onError(Throwable th) {
 
+                dialog.dismiss();
                 if (getActivity() != null) {
                     Log.e("SerVerErrAddAllow", th.toString());
                     if (th instanceof SocketTimeoutException) {
@@ -156,7 +174,12 @@ public class AddAllowance extends Fragment {
 
                     hasError = true;
                 }
+                if (!BudgetCatcher.getConnectedToInternet()) {
 
+                    hasError = true;
+                    Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
+
+                }
                 if (!hasError) {
 
                     saveDataToServer();
@@ -174,14 +197,14 @@ public class AddAllowance extends Fragment {
 
         if (getActivity() != null) {
 
-            String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
-
+            dialog.show();
             InsertAllowanceBody insertBillBody = new InsertAllowanceBody(userID, categoryListId.get(categorySpinner.getSelectedItemPosition()), amount.getText().toString(), description.getText().toString(), allowanceName.getText().toString(), "null");
 
             BudgetCatcher.apiManager.insertAllowance(insertBillBody, new QueryCallback<String>() {
                 @Override
                 public void onSuccess(String data) {
 
+                    dialog.dismiss();
                     getActivity().onBackPressed();
 
                 }
@@ -189,19 +212,21 @@ public class AddAllowance extends Fragment {
                 @Override
                 public void onFail() {
 
+                    dialog.dismiss();
+                    Toast.makeText(getActivity(), "Failed to added new allowance", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onError(Throwable th) {
 
-                    if (th instanceof SocketTimeoutException) {
-
-                        if (getActivity() != null) {
-
+                    dialog.dismiss();
+                    if (getActivity() != null) {
+                        Log.e("SerVerErrAddBill", th.toString());
+                        if (th instanceof SocketTimeoutException) {
                             Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
-
+                        } else {
+                            Toast.makeText(getActivity(), th.toString(), Toast.LENGTH_SHORT).show();
                         }
-
                     }
 
                 }

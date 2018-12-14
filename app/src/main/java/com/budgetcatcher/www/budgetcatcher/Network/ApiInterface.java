@@ -7,6 +7,7 @@ package com.budgetcatcher.www.budgetcatcher.Network;
  * @since june-2018
  */
 
+import com.budgetcatcher.www.budgetcatcher.Model.AddCategory;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertAllowanceBody;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertBillBody;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertExpensesBody;
@@ -39,11 +40,17 @@ public interface ApiInterface {
     @GET
     Call<String> getExpenses(@Url String url);
 
-    @GET(URL.getAllCategory)
-    Call<String> getCategory();
+    @GET
+    Call<String> getUserInfo(@Url String url);
+
+    @GET()
+    Call<String> getCategory(@Url String url);
 
     @POST(URL.signUp)
     Call<String> signUp(@HeaderMap Map<String, String> headers, @Body SignUpBody signUpBody);
+
+    @POST(URL.addCategory)
+    Call<String> addCategory(@HeaderMap Map<String, String> headers, @Body AddCategory addCategory);
 
     @POST
     Call<String> profileSetup(@Url String url, @HeaderMap Map<String, String> headers, @Body ProfileSetupBody profileSetupBody);

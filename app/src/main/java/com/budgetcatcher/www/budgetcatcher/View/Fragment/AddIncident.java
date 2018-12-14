@@ -1,5 +1,6 @@
 package com.budgetcatcher.www.budgetcatcher.View.Fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
 
 import java.net.SocketTimeoutException;
+import java.text.DateFormatSymbols;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -51,7 +53,8 @@ public class AddIncident extends Fragment {
     private ArrayAdapter<String> *//*statusAdapter,*//* categoryAdapter;
     private Boolean statusSelected = false, categoryNameSelected = false;*/
 
-    private String date = "";
+    private String date = "", monthInWord = "", yearForServer = "";
+    private ProgressDialog dialog;
 
     @Nullable
     @Override
@@ -60,6 +63,10 @@ public class AddIncident extends Fragment {
         ButterKnife.bind(this, rootView);
 
         if (getActivity() != null) {
+
+            dialog = ProgressDialog.show(getActivity(), "",
+                    getString(R.string.loading), true);
+            dialog.dismiss();
 
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Add Bill");
             /*statusList();
@@ -75,6 +82,9 @@ public class AddIncident extends Fragment {
                 dateEditText.setVisibility(View.VISIBLE);
                 datePicker.setVisibility(View.GONE);
 
+                yearForServer = Integer.toString(year);
+                DateFormatSymbols dateFormatSymbols = new DateFormatSymbols();
+                monthInWord = dateFormatSymbols.getMonths()[month];
                 date = year + "-" + (month + 1) + "-" + dayOfMonth;
                 dateEditText.setText(date);
 
@@ -208,7 +218,12 @@ if (th instanceof SocketTimeoutException){
 
                     hasError = true;
                 }
+                if (!BudgetCatcher.getConnectedToInternet()) {
 
+                    hasError = true;
+                    Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
+
+                }
                 if (!hasError) {
 
                     saveDataToServer();
@@ -234,14 +249,17 @@ if (th instanceof SocketTimeoutException){
 
         if (getActivity() != null) {
 
+            dialog.show();
+
             String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-            InsertExpensesBody expensesBody = new InsertExpensesBody(userID, name.getText().toString(), /*categoryListId.get(categorySpinner.getSelectedItemPosition())*/ "4", amount.getText().toString(), description.getText().toString(), date, "january", "2018");
+            InsertExpensesBody expensesBody = new InsertExpensesBody(userID, name.getText().toString(), /*categoryListId.get(categorySpinner.getSelectedItemPosition())*/ "4", amount.getText().toString(), description.getText().toString(), date, monthInWord, yearForServer);
 
             BudgetCatcher.apiManager.insertExpenses(expensesBody, new QueryCallback<String>() {
                 @Override
                 public void onSuccess(String data) {
 
+                    dialog.dismiss();
                     Toast.makeText(getActivity(), "Expense successfully added", Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
 
@@ -250,11 +268,14 @@ if (th instanceof SocketTimeoutException){
                 @Override
                 public void onFail() {
 
+                    dialog.dismiss();
+                    Toast.makeText(getActivity(), "Failed to added new expense", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onError(Throwable th) {
 
+                    dialog.dismiss();
                     if (getActivity() != null) {
                         Log.e("SerVerErrAddInci", th.toString());
                         if (th instanceof SocketTimeoutException) {

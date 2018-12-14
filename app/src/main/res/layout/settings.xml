@@ -32,7 +32,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/gap_of_16dp"
                         android:background="@color/deep_sea_dive"
-                        android:drawableEnd="@drawable/ic_add"
+                        android:drawableEnd="@drawable/ic_edit"
                         android:gravity="center"
                         android:padding="@dimen/gap_of_4dp"
                         android:text="Profile"
@@ -69,7 +69,6 @@
                         android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mir rayan"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="@color/white" />
 
@@ -93,7 +92,6 @@
                         android:id="@+id/email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="mir.rayan1@gmail.com"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="@color/white" />
 
@@ -118,7 +116,6 @@
                         android:id="@+id/phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="01670100800"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="@color/white" />
 
@@ -142,7 +139,6 @@
                         android:id="@+id/financial_goal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add to Savings"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="@color/white" />
 
@@ -167,7 +163,6 @@
                         android:id="@+id/risk_level"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="All or NOTHING"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="@color/white" />
 
@@ -191,7 +186,6 @@
                         android:id="@+id/skill_level"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="4 - I aced collage math"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="@color/white" />
 
@@ -219,7 +213,7 @@
                         android:background="@color/deep_sea_dive">
 
                         <TextView
-                            android:id="@+id/add_category"
+                            android:id="@+id/add_categories"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/gap_of_16dp"
@@ -227,7 +221,7 @@
                             android:drawableEnd="@drawable/ic_add"
                             android:gravity="center"
                             android:padding="@dimen/gap_of_4dp"
-                            android:text="Category"
+                            android:text="Categories"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                             android:textColor="@color/white"
                             android:textStyle="bold" />

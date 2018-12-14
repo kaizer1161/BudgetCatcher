@@ -52,11 +52,13 @@ public class AddBill extends Fragment {
     CalendarView datePicker;
     @BindView(R.id.amount)
     EditText amount;
+
     private ArrayList<String> status, categoryListName, categoryListId;
     private ArrayAdapter<String> /*statusAdapter,*/ categoryAdapter;
     private Boolean statusSelected = false, categoryNameSelected = false;
     private String date = "";
     private ProgressDialog dialog;
+    private String userID;
 
     @Nullable
     @Override
@@ -65,6 +67,8 @@ public class AddBill extends Fragment {
         ButterKnife.bind(this, rootView);
 
         if (getActivity() != null) {
+
+            userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
             dialog = ProgressDialog.show(getActivity(), "",
                     getString(R.string.loading), true);
@@ -134,7 +138,7 @@ public class AddBill extends Fragment {
     private void fetchCategory() {
 
         dialog.show();
-        BudgetCatcher.apiManager.getCategory(new QueryCallback<ArrayList<Category>>() {
+        BudgetCatcher.apiManager.getCategory(Config.CATEGORY_BILL_TAG_ID, userID, new QueryCallback<ArrayList<Category>>() {
             @Override
             public void onSuccess(ArrayList<Category> data) {
 
@@ -222,7 +226,12 @@ public class AddBill extends Fragment {
 
                     hasError = true;
                 }
+                if (!BudgetCatcher.getConnectedToInternet()) {
 
+                    hasError = true;
+                    Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
+
+                }
                 if (!hasError) {
 
                     saveDataToServer();
@@ -249,8 +258,6 @@ public class AddBill extends Fragment {
         if (getActivity() != null) {
 
             dialog.show();
-
-            String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
             InsertBillBody insertBillBody = new InsertBillBody(userID, categoryListId.get(categorySpinner.getSelectedItemPosition()), amount.getText().toString(), description.getText().toString(), date, "null", /*status.get(statusSpinner.getSelectedItemPosition())*/ "null", billName.getText().toString());
 

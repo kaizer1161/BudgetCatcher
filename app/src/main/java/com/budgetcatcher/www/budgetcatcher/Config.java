@@ -31,6 +31,9 @@ public class Config {
 
     public static final String KEY_SERIALIZABLE = "KEY_SERIALIZABLE";
 
+    public static final String CATEGORY_ALLOWANCE_TAG_ID = "1";
+    public static final String CATEGORY_BILL_TAG_ID = "2";
+
     /*retrofit okHttp timeout values*/
     public static final int readTimeout = 60;
     public static final int writeTimeout = 60;

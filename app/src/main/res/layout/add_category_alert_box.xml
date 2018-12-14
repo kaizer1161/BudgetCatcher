@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/hinoki"
+        android:gravity="center"
+        android:padding="@dimen/gap_of_16dp"
+        android:text="Add bill category"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/add_catego"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/gap_of_16dp"
+        android:layout_marginTop="@dimen/gap_of_8dp"
+        android:layout_marginRight="@dimen/gap_of_16dp"
+        android:layout_marginBottom="@dimen/gap_of_8dp"
+        android:background="@drawable/transparent_edit_text_background"
+        android:hint="Category name"
+        android:inputType="textCapSentences|textAutoCorrect"
+        android:padding="@dimen/gap_of_8dp" />
+
+
+</LinearLayout>

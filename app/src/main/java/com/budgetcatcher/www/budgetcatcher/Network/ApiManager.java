@@ -12,6 +12,7 @@ package com.budgetcatcher.www.budgetcatcher.Network;
 import android.util.Log;
 
 import com.budgetcatcher.www.budgetcatcher.Config;
+import com.budgetcatcher.www.budgetcatcher.Model.AddCategory;
 import com.budgetcatcher.www.budgetcatcher.Model.Allowance;
 import com.budgetcatcher.www.budgetcatcher.Model.AllowanceResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.Bill;
@@ -20,12 +21,14 @@ import com.budgetcatcher.www.budgetcatcher.Model.Category;
 import com.budgetcatcher.www.budgetcatcher.Model.CategoryResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.Expenses;
 import com.budgetcatcher.www.budgetcatcher.Model.ExpensesResponse;
+import com.budgetcatcher.www.budgetcatcher.Model.GetUserInfo;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertAllowanceBody;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertBillBody;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertExpensesBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyBillBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ProfileSetupBody;
 import com.budgetcatcher.www.budgetcatcher.Model.SignUpBody;
+import com.budgetcatcher.www.budgetcatcher.Model.User;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -207,6 +210,40 @@ public class ApiManager {
 
     }
 
+    public void getUserInfo(String userId, final QueryCallback<ArrayList<User>> callback) {
+
+        String uri = URL.base + URL.getUserInfo + userId;
+
+        Call<String> networkCall = apiInterface.getUserInfo(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    Gson gson = new Gson();
+                    GetUserInfo getUserInfo = gson.fromJson(response.body(), GetUserInfo.class);
+
+                    callback.onSuccess((ArrayList<User>) getUserInfo.getUser());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
     public void getAllowance(String userId, final QueryCallback<ArrayList<Allowance>> callback) {
 
         String uri = URL.base + URL.getAllAllowance + userId;
@@ -241,9 +278,11 @@ public class ApiManager {
 
     }
 
-    public void getCategory(final QueryCallback<ArrayList<Category>> callback) {
+    public void getCategory(String tagId, String userId, final QueryCallback<ArrayList<Category>> callback) {
 
-        Call<String> networkCall = apiInterface.getCategory();
+        String uri = URL.base + URL.getAllCategory + tagId + "/" + userId;
+
+        Call<String> networkCall = apiInterface.getCategory(uri);
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -254,6 +293,35 @@ public class ApiManager {
                     CategoryResponse categoryResponse = gson.fromJson(response.body(), CategoryResponse.class);
 
                     callback.onSuccess((ArrayList<Category>) categoryResponse.getCategory());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void addCategory(AddCategory body, final QueryCallback<String> callback) {
+
+        Call<String> networkCall = apiInterface.addCategory(headers, body);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_CREATED) {
+
+                    callback.onSuccess(response.body());
 
                 } else {
 
