@@ -27,9 +27,11 @@ import android.widget.Toast;
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
 import com.budgetcatcher.www.budgetcatcher.Model.ProfileSetupBody;
+import com.budgetcatcher.www.budgetcatcher.Model.User;
 import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -73,10 +75,27 @@ public class ProfileInfo extends Fragment {
     private ArrayAdapter<String> riskLevelAdapter;
     private ArrayAdapter<String> skillLevelAdapter;
 
+    private User userDetail;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+
+            Gson gson = new Gson();
+            String json = getArguments().getString(Config.KEY_SERIALIZABLE);
+
+            userDetail = gson.fromJson(json, User.class);
+
+        }
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.update_basic_info, container, false);
+        View rootView = inflater.inflate(R.layout.update_profile_setup, container, false);
         ButterKnife.bind(this, rootView);
 
         if (getActivity() != null) {
@@ -85,8 +104,7 @@ public class ProfileInfo extends Fragment {
                     getString(R.string.loading), true);
             dialog.dismiss();
 
-            Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Basic info");
-
+            Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Profile info");
 
         }
 
@@ -162,7 +180,50 @@ public class ProfileInfo extends Fragment {
         });
 
 
+        setDisplayValues();
         return rootView;
+    }
+
+    private void setDisplayValues() {
+
+        byte[] decodedString = Base64.decode(userDetail.getProfilePicUrl(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        profileImage.setImageBitmap(decodedByte);
+
+        for (int i = 0; i < financialGoal.size(); i++) {
+
+            if (userDetail.getFinancialGoal().equals(financialGoal.get(i))) {
+
+                financialGoalSpinner.setSelection(i, true);
+                break;
+
+            }
+
+        }
+
+        for (int i = 0; i < riskLevel.size(); i++) {
+
+            if (userDetail.getRiskLevel().equals(riskLevel.get(i))) {
+
+                riskLevelSpinner.setSelection(i, true);
+                break;
+
+            }
+
+        }
+
+        for (int i = 0; i < skillLevel.size(); i++) {
+
+            if (userDetail.getSkillLevel().equals(skillLevel.get(i))) {
+
+                skillLevelSpinner.setSelection(i, true);
+                break;
+
+            }
+
+        }
+
     }
 
     public void skillLevelList() {

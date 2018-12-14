@@ -250,7 +250,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                 @Override
                 public void onShow(DialogInterface dialogInterface) {
                     alert11.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.RED);
-                    alert11.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(activity.getResources().getColor(R.color.colorPrimary));
+                    alert11.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(activity.getResources().getColor(R.color.colorAccent));
                     alert11.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

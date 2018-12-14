@@ -3,6 +3,8 @@ package com.budgetcatcher.www.budgetcatcher.View.Fragment;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +69,7 @@ public class Settings extends Fragment {
     @BindView(R.id.category_recycler_view)
     RecyclerView categoryRecyclerView;
 
-    private ProgressDialog dialog;
+    private ProgressDialog dialog, categoryDialog;
     private String userID;
     private User userDetails;
     private CategoryListAdapter categoryListAdapter;
@@ -82,6 +85,10 @@ public class Settings extends Fragment {
             dialog = ProgressDialog.show(getActivity(), "",
                     getString(R.string.loading), true);
             dialog.dismiss();
+
+            categoryDialog = ProgressDialog.show(getActivity(), "",
+                    getString(R.string.loading), true);
+            categoryDialog.dismiss();
 
             userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
@@ -101,8 +108,6 @@ public class Settings extends Fragment {
 
     private void fetchUserInfo() {
 
-        Log.d(TAG, "fetchUserInfo: " + userID);
-
         dialog.show();
         BudgetCatcher.apiManager.getUserInfo(userID, new QueryCallback<ArrayList<User>>() {
             @Override
@@ -117,6 +122,11 @@ public class Settings extends Fragment {
                 riskLevel.setText(user.get(0).getRiskLevel());
                 skillLevel.setText(user.get(0).getSkillLevel());
                 userDetails = user.get(0);
+
+                byte[] decodedString = Base64.decode(user.get(0).getProfilePicUrl(), Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                profileImage.setImageBitmap(decodedByte);
 
             }
 
@@ -150,6 +160,24 @@ public class Settings extends Fragment {
         switch (view.getId()) {
 
             case R.id.edit_profile: {
+
+                if (getActivity() != null) {
+
+                    Gson gson = new Gson();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Config.KEY_SERIALIZABLE, gson.toJson(userDetails));
+
+                    BasicInfo basicInfo = new BasicInfo();
+                    basicInfo.setArguments(bundle);
+
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.content, basicInfo, Config.TAG_BASIC_INFO_FRAGMENT)
+                            .addToBackStack(null)
+                            .commit();
+
+                }
 
                 break;
             }
@@ -198,7 +226,7 @@ public class Settings extends Fragment {
             @Override
             public void onShow(DialogInterface dialogInterface) {
                 alert11.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.RED);
-                alert11.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.colorPrimary));
+                alert11.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.colorAccent));
                 alert11.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -207,13 +235,13 @@ public class Settings extends Fragment {
 
                             AddCategory category = new AddCategory(categoryName.getText().toString(), Config.CATEGORY_BILL_TAG_ID, userID);
 
-                            dialog.show();
+                            categoryDialog.show();
 
                             BudgetCatcher.apiManager.addCategory(category, new QueryCallback<String>() {
                                 @Override
                                 public void onSuccess(String data) {
 
-                                    dialog.dismiss();
+                                    categoryDialog.dismiss();
                                     alert11.dismiss();
                                     Toast.makeText(getActivity(), "Successfully category added", Toast.LENGTH_SHORT).show();
                                     if (categoryListAdapter.getItemCount() > 0) {
@@ -230,14 +258,14 @@ public class Settings extends Fragment {
                                 public void onFail() {
 
                                     Toast.makeText(getActivity(), "Failed to add category", Toast.LENGTH_SHORT).show();
-                                    dialog.dismiss();
+                                    categoryDialog.dismiss();
 
                                 }
 
                                 @Override
                                 public void onError(Throwable th) {
 
-                                    dialog.dismiss();
+                                    categoryDialog.dismiss();
                                     Log.e("SerVerErr", th.toString());
                                     if (th instanceof SocketTimeoutException) {
                                         Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
@@ -274,14 +302,12 @@ public class Settings extends Fragment {
 
     private void fetchCategory() {
 
-        dialog.show();
+        categoryDialog.show();
         BudgetCatcher.apiManager.getCategory(Config.CATEGORY_BILL_TAG_ID, userID, new QueryCallback<ArrayList<Category>>() {
             @Override
             public void onSuccess(ArrayList<Category> data) {
 
                 ArrayList<Category> categories = new ArrayList<>();
-
-                Gson gson = new Gson();
 
                 for (int i = 0; i < data.size(); i++) {
 
@@ -293,7 +319,7 @@ public class Settings extends Fragment {
 
                 }
 
-                dialog.dismiss();
+                categoryDialog.dismiss();
                 showCategory(categories);
 
             }
@@ -301,14 +327,14 @@ public class Settings extends Fragment {
             @Override
             public void onFail() {
 
-                dialog.dismiss();
+                categoryDialog.dismiss();
                 Toast.makeText(getActivity(), "Failed to fetch Category", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(Throwable th) {
 
-                dialog.dismiss();
+                categoryDialog.dismiss();
                 if (getActivity() != null) {
                     Log.e("SerVerErrAddBill", th.toString());
                     if (th instanceof SocketTimeoutException) {

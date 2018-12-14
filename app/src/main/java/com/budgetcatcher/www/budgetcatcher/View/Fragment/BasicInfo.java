@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +16,16 @@ import android.widget.Toast;
 
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
-import com.budgetcatcher.www.budgetcatcher.Model.SignUpBody;
-import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
+import com.budgetcatcher.www.budgetcatcher.Model.User;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
+import com.google.gson.Gson;
 
-import java.net.SocketTimeoutException;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -51,6 +48,22 @@ public class BasicInfo extends Fragment {
 
     private BroadcastReceiver mNetworkReceiver;
     private ProgressDialog dialog;
+    private User userDetail;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+
+            Gson gson = new Gson();
+            String json = getArguments().getString(Config.KEY_SERIALIZABLE);
+
+            userDetail = gson.fromJson(json, User.class);
+
+        }
+
+    }
 
     @Nullable
     @Override
@@ -69,8 +82,21 @@ public class BasicInfo extends Fragment {
 
         }
 
+        setDisplayValues();
 
         return rootView;
+    }
+
+    private void setDisplayValues() {
+
+        userName.setText(userDetail.getUsername());
+        phone.setText(userDetail.getUserPhoneNo());
+        email.setText(userDetail.getUserEmailId());
+        password.setText(userDetail.getUserPassword());
+        question.setText(userDetail.getSecurityQuestion());
+        answer.setText(userDetail.getSecurityAnswer());
+
+
     }
 
     @OnClick({R.id.sign_up_now, R.id.back_to_sign_in})
@@ -121,7 +147,8 @@ public class BasicInfo extends Fragment {
                 }
                 if (!hasError) {
 
-                    saveDataToServer();
+                    /*saveDataToServer();*/
+                    Toast.makeText(getActivity(), "Everything seems ok. This feature is coming soon", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -132,9 +159,16 @@ public class BasicInfo extends Fragment {
 
                 if (getActivity() != null) {
 
+                    Gson gson = new Gson();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Config.KEY_SERIALIZABLE, gson.toJson(userDetail));
+
+                    ProfileInfo profileInfo = new ProfileInfo();
+                    profileInfo.setArguments(bundle);
+
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.content, new ProfileInfo(), Config.TAG_PROFILE_INFO_FRAGMENT)
+                            .replace(R.id.content, profileInfo, Config.TAG_PROFILE_INFO_FRAGMENT)
                             .addToBackStack(null)
                             .commit();
 
@@ -147,7 +181,7 @@ public class BasicInfo extends Fragment {
 
     }
 
-    private void saveDataToServer() {
+    /*private void saveDataToServer() {
 
         dialog.show();
 
@@ -159,7 +193,7 @@ public class BasicInfo extends Fragment {
 
                 dialog.dismiss();
 
-                /*if (response.code() == URL.STATUS_SERVER_CREATED) {
+                *//*if (response.code() == URL.STATUS_SERVER_CREATED) {
 
                     JSONObject jsonObject = null;
                     try {
@@ -185,7 +219,7 @@ public class BasicInfo extends Fragment {
                     email.setText("");
                     email.setError("Email already exist!");
 
-                }*/
+                }*//*
 
 
             }
@@ -212,7 +246,7 @@ public class BasicInfo extends Fragment {
             }
         });
 
-    }
+    }*/
 
     private boolean storeUserInformationInSharedPreference(String userId) {
 
