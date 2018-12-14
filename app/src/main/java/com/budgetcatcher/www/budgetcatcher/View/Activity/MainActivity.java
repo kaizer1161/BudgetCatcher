@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity
 
     private BroadcastReceiver mNetworkReceiver;
     public BottomSheetBehavior projectedBalanceBottomSheetBehavior;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         mNetworkReceiver = new NetworkChangeReceiver();
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.content, new Home(), Config.TAG_HOME_FRAGMENT)
                 .commit();
 
+        navigationView.setCheckedItem(R.id.nav_home);
 
     }
 
@@ -124,6 +126,8 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
 
+            navigationView.setCheckedItem(R.id.nav_home);
+
             if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
 
                 getSupportFragmentManager().popBackStack();
@@ -152,6 +156,8 @@ public class MainActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
 
+            navigationView.setCheckedItem(R.id.nav_catcher);
+
 
         } else if (id == R.id.nav_manage) {
 
@@ -167,6 +173,8 @@ public class MainActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
 
+            navigationView.setCheckedItem(R.id.nav_manage);
+
         } else if (id == R.id.nav_advice) {
 
             if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
@@ -180,6 +188,8 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.content, new Advice(), Config.TAG_ADVICE_FRAGMENT)
                     .addToBackStack(null)
                     .commit();
+
+            navigationView.setCheckedItem(R.id.nav_advice);
 
         } else if (id == R.id.nav_report) {
 
@@ -208,6 +218,8 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.content, new Settings(), Config.TAG_SETTINGS_FRAGMENT)
                     .addToBackStack(null)
                     .commit();
+
+            navigationView.setCheckedItem(R.id.nav_settings);
 
         } else if (id == R.id.nav_logout) {
 

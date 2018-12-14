@@ -284,7 +284,7 @@ public class ProfileSetup extends AppCompatActivity {
     public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp = Bitmap.createScaledBitmap(bmp, 1484, 2914, true);
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 20, baos);
         byte[] imageBytes = baos.toByteArray();
         profileImage.setImageBitmap(BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length));
         return Base64.encodeToString(imageBytes, Base64.DEFAULT);
