@@ -168,7 +168,7 @@ public class Catcher extends Fragment {
 
     private void getExpensesFromServer() {
 
-        BudgetCatcher.apiManager.getExpenses(userID, "januar", "2018", new QueryCallback<ArrayList<Expenses>>() {
+        BudgetCatcher.apiManager.getExpenses(userID, "january", "2018", new QueryCallback<ArrayList<Expenses>>() {
             @Override
             public void onSuccess(ArrayList<Expenses> expensesList) {
 
