@@ -154,6 +154,8 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                                 @Override
                                 public void onClick(View view) {
 
+                                    deleteCategory();
+                                    alert11.dismiss();
 
                                 }
                             });
@@ -173,6 +175,44 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                     alert11.show();
 
                     return false;
+                }
+            });
+
+        }
+
+        private void deleteCategory() {
+
+            dialog.show();
+            BudgetCatcher.apiManager.deleteCategory(category.getCategoryId(), new QueryCallback<String>() {
+                @Override
+                public void onSuccess(String data) {
+
+                    dialog.dismiss();
+                    Toast.makeText(activity, "Successfully delete category", Toast.LENGTH_SHORT).show();
+                    categories.remove(getAdapterPosition());
+                    notifyDataSetChanged();
+
+                }
+
+                @Override
+                public void onFail() {
+
+                    Toast.makeText(activity, "Failed to delete category", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+
+                }
+
+                @Override
+                public void onError(Throwable th) {
+
+                    dialog.dismiss();
+                    Log.e("SerVerErr", th.toString());
+                    if (th instanceof SocketTimeoutException) {
+                        Toast.makeText(activity, activity.getResources().getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, th.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             });
 

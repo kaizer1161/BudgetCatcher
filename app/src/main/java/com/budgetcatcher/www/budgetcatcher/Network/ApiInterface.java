@@ -74,5 +74,8 @@ public interface ApiInterface {
     @DELETE
     Call<String> deleteBill(@Url String url);
 
+    @DELETE
+    Call<String> deleteCategory(@Url String url);
+
 
 }

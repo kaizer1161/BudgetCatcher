@@ -22,6 +22,7 @@ public class URL {
     public static final String modifyCategory = "modifyCategory/";
     public static final String getUserInfo = "getUserInfo/";
     public static final String deleteBills = "deleteBills/";
+    public static final String deleteCategory = "deleteCategory/";
     public static final String addCategory = "addCategory";
     public static final String profileSetup = "modifyUser/";
     public static final String insertExpense = "insertExpense";

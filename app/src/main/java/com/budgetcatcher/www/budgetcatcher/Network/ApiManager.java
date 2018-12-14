@@ -351,6 +351,8 @@ public class ApiManager {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
+                Log.d(TAG, "onResponse: " + response);
+
                 if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
 
                     callback.onSuccess(response.body());
@@ -468,6 +470,39 @@ public class ApiManager {
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void deleteCategory(String categoryId, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.deleteCategory + categoryId;
+
+        Call<String> networkCall = apiInterface.deleteCategory(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                Log.d(TAG, "onResponse: " + response);
 
                 if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
 
