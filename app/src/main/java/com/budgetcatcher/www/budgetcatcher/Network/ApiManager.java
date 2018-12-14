@@ -26,6 +26,7 @@ import com.budgetcatcher.www.budgetcatcher.Model.InsertAllowanceBody;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertBillBody;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertExpensesBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyBillBody;
+import com.budgetcatcher.www.budgetcatcher.Model.ModifyCategory;
 import com.budgetcatcher.www.budgetcatcher.Model.ProfileSetupBody;
 import com.budgetcatcher.www.budgetcatcher.Model.SignUpBody;
 import com.budgetcatcher.www.budgetcatcher.Model.User;
@@ -320,6 +321,37 @@ public class ApiManager {
             public void onResponse(Call<String> call, Response<String> response) {
 
                 if (response.code() == URL.STATUS_SERVER_CREATED) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void modifyCategory(String userId, String categoryId, ModifyCategory body, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.modifyCategory + userId + "/" + categoryId;
+
+        Call<String> networkCall = apiInterface.modifyCategory(uri, headers, body);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
 
                     callback.onSuccess(response.body());
 

@@ -19,6 +19,7 @@ public class URL {
     public static final String insertBill = "insertBill";
     public static final String modifyBill = "modifyBill/";
     public static final String getAllBill = "getAllBills/";
+    public static final String modifyCategory = "modifyCategory/";
     public static final String getUserInfo = "getUserInfo/";
     public static final String deleteBills = "deleteBills/";
     public static final String addCategory = "addCategory";
