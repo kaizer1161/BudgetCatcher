@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.content, new Home(), Config.TAG_HOME_FRAGMENT)
                 .commit();
 
+
     }
 
     @Override
@@ -123,13 +124,27 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
 
+            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+
+                getSupportFragmentManager().popBackStack();
+
+            }
+
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content, new Home(), Config.TAG_HOME_FRAGMENT)
                     .addToBackStack(null)
                     .commit();
 
+            getSupportFragmentManager().popBackStack();
+
         } else if (id == R.id.nav_catcher) {
+
+            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+
+                getSupportFragmentManager().popBackStack();
+
+            }
 
             getSupportFragmentManager()
                     .beginTransaction()
@@ -137,7 +152,14 @@ public class MainActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
 
+
         } else if (id == R.id.nav_manage) {
+
+            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+
+                getSupportFragmentManager().popBackStack();
+
+            }
 
             getSupportFragmentManager()
                     .beginTransaction()
@@ -147,6 +169,12 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_advice) {
 
+            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+
+                getSupportFragmentManager().popBackStack();
+
+            }
+
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content, new Advice(), Config.TAG_ADVICE_FRAGMENT)
@@ -155,6 +183,12 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_report) {
 
+            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+
+                getSupportFragmentManager().popBackStack();
+
+            }
+
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content, new Report(), Config.TAG_REPORT_FRAGMENT)
@@ -162,6 +196,12 @@ public class MainActivity extends AppCompatActivity
                     .commit();
 
         } else if (id == R.id.nav_settings) {
+
+            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+
+                getSupportFragmentManager().popBackStack();
+
+            }
 
             getSupportFragmentManager()
                     .beginTransaction()
