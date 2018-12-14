@@ -123,10 +123,14 @@ public class Settings extends Fragment {
                 skillLevel.setText(user.get(0).getSkillLevel());
                 userDetails = user.get(0);
 
-                byte[] decodedString = Base64.decode(user.get(0).getProfilePicUrl(), Base64.DEFAULT);
-                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                if (user.get(0).getProfilePicUrl() != null) {
 
-                profileImage.setImageBitmap(decodedByte);
+                    byte[] decodedString = Base64.decode(user.get(0).getProfilePicUrl(), Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                    profileImage.setImageBitmap(decodedByte);
+
+                }
 
             }
 
