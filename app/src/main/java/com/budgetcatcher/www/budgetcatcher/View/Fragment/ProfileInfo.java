@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -26,7 +25,6 @@ import android.widget.Toast;
 
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
-import com.budgetcatcher.www.budgetcatcher.Model.ProfileSetupBody;
 import com.budgetcatcher.www.budgetcatcher.Model.User;
 import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
@@ -42,8 +40,6 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class ProfileInfo extends Fragment {
 
@@ -190,6 +186,7 @@ public class ProfileInfo extends Fragment {
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
         profileImage.setImageBitmap(decodedByte);
+        imageString = userDetail.getProfilePicUrl();
 
         for (int i = 0; i < financialGoal.size(); i++) {
 
@@ -223,6 +220,11 @@ public class ProfileInfo extends Fragment {
             }
 
         }
+
+        financialGoalSpinnerSelected = true;
+        riskLevelSpinnerSelected = true;
+        skillLevelSpinnerSelected = true;
+        profileImageSelected = true;
 
     }
 
@@ -267,60 +269,14 @@ public class ProfileInfo extends Fragment {
 
             case R.id.save: {
 
-                dialog.show();
-
                 if (profileImageSelected && financialGoalSpinnerSelected && riskLevelSpinnerSelected && skillLevelSpinnerSelected) {
 
-                    String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
+                    userDetail.setProfilePicUrl(imageString);
+                    userDetail.setRiskLevel(riskLevel.get(riskLevelSpinner.getSelectedItemPosition()));
+                    userDetail.setSkillLevel(skillLevel.get(skillLevelSpinner.getSelectedItemPosition()));
+                    userDetail.setFinancialGoal(financialGoal.get(financialGoalSpinner.getSelectedItemPosition()));
 
-                    ProfileSetupBody profileSetupBody = new ProfileSetupBody(imageString, riskLevel.get(riskLevelSpinner.getSelectedItemPosition()), skillLevel.get(skillLevelSpinner.getSelectedItemPosition()), financialGoal.get(financialGoalSpinner.getSelectedItemPosition()));
-
-                    if (!userID.equals("")) {
-
-                        if (BudgetCatcher.getConnectedToInternet()) {
-                            BudgetCatcher.apiManager.userProfileSetup(userID, profileSetupBody, new QueryCallback<String>() {
-                                @Override
-                                public void onSuccess(String data) {
-
-                                    dialog.dismiss();
-
-                                    /*if (storeUserInformationInSharedPreference()) {
-
-                                        Toast.makeText(getActivity(), "Welcome to Budget Catcher", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(getActivity(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
-
-                                    }*/
-
-                                }
-
-                                @Override
-                                public void onFail() {
-
-                                    dialog.dismiss();
-                                    Toast.makeText(getActivity(), "Failed to update profile", Toast.LENGTH_SHORT).show();
-
-                                }
-
-                                @Override
-                                public void onError(Throwable th) {
-
-                                    dialog.dismiss();
-                                    Log.e("SerVerErr", th.toString());
-                                    if (th instanceof SocketTimeoutException) {
-                                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(getActivity(), th.toString(), Toast.LENGTH_SHORT).show();
-                                    }
-
-                                }
-                            });
-                        } else {
-
-                            Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-
+                    saveDataToServer();
                 } else {
 
                     Toast.makeText(getActivity(), "Please select all fields", Toast.LENGTH_SHORT).show();
@@ -381,15 +337,48 @@ public class ProfileInfo extends Fragment {
         }
     }
 
-    private boolean storeUserInformationInSharedPreference() {
+    private void saveDataToServer() {
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE);
+        dialog.show();
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        BudgetCatcher.apiManager.userProfileUpdate(userDetail.getUserId(), userDetail, new QueryCallback<String>() {
+            @Override
+            public void onSuccess(String data) {
 
-        /*editor.putInt(Config.SP_USER_CREATED_LEVEL, Config.SP_USER_CREATED_LEVEL_NONE);
-        editor.putBoolean(Config.SP_LOGGED_IN, true);*/
-        return editor.commit();
+                dialog.dismiss();
+
+                Toast.makeText(getActivity(), "Successfully updated", Toast.LENGTH_SHORT).show();
+                if (getActivity() != null) {
+
+                    getActivity().getSupportFragmentManager().popBackStack();
+                    getActivity().getSupportFragmentManager().popBackStack();
+
+                }
+
+
+            }
+
+            @Override
+            public void onFail() {
+
+                dialog.dismiss();
+                Toast.makeText(getActivity(), "Failed to update profile", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onError(Throwable th) {
+
+                dialog.dismiss();
+                Log.e("SerVerErr", th.toString());
+                if (th instanceof SocketTimeoutException) {
+                    Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), th.toString(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
     }
 

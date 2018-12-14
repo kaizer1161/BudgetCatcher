@@ -177,6 +177,36 @@ public class ApiManager {
 
     }
 
+    public void userProfileUpdate(String userID, User body, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.profileSetup + userID;
+        Call<String> networkCall = apiInterface.profileUpdate(uri, headers, body);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
     public void getBill(String userId, final QueryCallback<ArrayList<Bill>> callback) {
 
         String uri = URL.base + URL.getAllBill + userId;

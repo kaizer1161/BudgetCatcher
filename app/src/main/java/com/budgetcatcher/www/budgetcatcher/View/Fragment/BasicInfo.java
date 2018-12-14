@@ -2,11 +2,11 @@ package com.budgetcatcher.www.budgetcatcher.View.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +17,17 @@ import android.widget.Toast;
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
 import com.budgetcatcher.www.budgetcatcher.Model.User;
+import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
 import com.google.gson.Gson;
 
+import java.net.SocketTimeoutException;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class BasicInfo extends Fragment {
 
@@ -147,8 +147,14 @@ public class BasicInfo extends Fragment {
                 }
                 if (!hasError) {
 
-                    /*saveDataToServer();*/
-                    Toast.makeText(getActivity(), "Everything seems ok. This feature is coming soon", Toast.LENGTH_SHORT).show();
+                    userDetail.setUsername(userName.getText().toString());
+                    userDetail.setUserPhoneNo(phone.getText().toString());
+                    userDetail.setUserEmailId(email.getText().toString());
+                    userDetail.setUserPassword(password.getText().toString());
+                    userDetail.setSecurityQuestion(question.getText().toString());
+                    userDetail.setSecurityAnswer(answer.getText().toString());
+
+                    saveDataToServer();
 
                 }
 
@@ -157,22 +163,7 @@ public class BasicInfo extends Fragment {
 
             case R.id.back_to_sign_in: {
 
-                if (getActivity() != null) {
-
-                    Gson gson = new Gson();
-                    Bundle bundle = new Bundle();
-                    bundle.putString(Config.KEY_SERIALIZABLE, gson.toJson(userDetail));
-
-                    ProfileInfo profileInfo = new ProfileInfo();
-                    profileInfo.setArguments(bundle);
-
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.content, profileInfo, Config.TAG_PROFILE_INFO_FRAGMENT)
-                            .addToBackStack(null)
-                            .commit();
-
-                }
+                goToProfileInfo();
 
                 break;
             }
@@ -181,46 +172,37 @@ public class BasicInfo extends Fragment {
 
     }
 
-    /*private void saveDataToServer() {
+    private void goToProfileInfo() {
+        Gson gson = new Gson();
+        Bundle bundle = new Bundle();
+        bundle.putString(Config.KEY_SERIALIZABLE, gson.toJson(userDetail));
+
+        ProfileInfo profileInfo = new ProfileInfo();
+        profileInfo.setArguments(bundle);
+
+        if (getActivity() != null) {
+
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content, profileInfo, Config.TAG_PROFILE_INFO_FRAGMENT)
+                    .addToBackStack(null)
+                    .commit();
+
+        }
+    }
+
+    private void saveDataToServer() {
 
         dialog.show();
 
-        SignUpBody signUpBody = new SignUpBody(userName.getText().toString(), email.getText().toString(), password.getText().toString(), phone.getText().toString(), "general", question.getText().toString(), answer.getText().toString());
-
-        BudgetCatcher.apiManager.userSignUp(signUpBody, new QueryCallback<Response<String>>() {
+        BudgetCatcher.apiManager.userProfileUpdate(userDetail.getUserId(), userDetail, new QueryCallback<String>() {
             @Override
-            public void onSuccess(Response<String> response) {
+            public void onSuccess(String data) {
 
                 dialog.dismiss();
 
-                *//*if (response.code() == URL.STATUS_SERVER_CREATED) {
-
-                    JSONObject jsonObject = null;
-                    try {
-
-                        jsonObject = new JSONObject(response.body());
-                        JSONArray data = jsonObject.getJSONArray(URL.API_KEY_DATA);
-                        JSONObject userObject = data.getJSONObject(0);
-                        String userID = userObject.getString(URL.API_KEY_USER_ID);
-
-                        if (storeUserInformationInSharedPreference(userID)) {
-
-                            Toast.makeText(SignUp.this, "Successfully account created", Toast.LENGTH_SHORT).show();
-
-
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                } else if (response.code() == URL.STATUS_BAD_REQUEST) {
-
-                    email.setText("");
-                    email.setError("Email already exist!");
-
-                }*//*
-
+                Toast.makeText(getActivity(), "Successfully updated", Toast.LENGTH_SHORT).show();
+                goToProfileInfo();
 
             }
 
@@ -228,7 +210,7 @@ public class BasicInfo extends Fragment {
             public void onFail() {
 
                 dialog.dismiss();
-                Toast.makeText(getActivity(), "Something went wrong: server error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Failed to update profile", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -246,19 +228,6 @@ public class BasicInfo extends Fragment {
             }
         });
 
-    }*/
-
-    private boolean storeUserInformationInSharedPreference(String userId) {
-
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE);
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        /*editor.putString(Config.SP_USER_ID, userId);
-        editor.putInt(Config.SP_USER_CREATED_LEVEL, Config.SP_USER_CREATED_LEVEL_SIGN_UP);*/
-        return editor.commit();
-
     }
-
 
 }

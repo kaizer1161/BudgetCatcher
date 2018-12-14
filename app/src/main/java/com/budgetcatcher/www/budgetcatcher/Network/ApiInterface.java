@@ -15,6 +15,7 @@ import com.budgetcatcher.www.budgetcatcher.Model.ModifyBillBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyCategory;
 import com.budgetcatcher.www.budgetcatcher.Model.ProfileSetupBody;
 import com.budgetcatcher.www.budgetcatcher.Model.SignUpBody;
+import com.budgetcatcher.www.budgetcatcher.Model.User;
 
 import java.util.Map;
 
@@ -55,6 +56,9 @@ public interface ApiInterface {
 
     @POST
     Call<String> profileSetup(@Url String url, @HeaderMap Map<String, String> headers, @Body ProfileSetupBody profileSetupBody);
+
+    @POST
+    Call<String> profileUpdate(@Url String url, @HeaderMap Map<String, String> headers, @Body User user);
 
     @POST(URL.insertBill)
     Call<String> insertBill(@HeaderMap Map<String, String> headers, @Body InsertBillBody insertBillBody);
