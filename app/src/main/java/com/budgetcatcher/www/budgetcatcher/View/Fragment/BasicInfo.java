@@ -2,6 +2,7 @@ package com.budgetcatcher.www.budgetcatcher.View.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,6 +30,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class BasicInfo extends Fragment {
 
     @BindView(R.id.sign_up_now)
@@ -49,21 +52,6 @@ public class BasicInfo extends Fragment {
     private BroadcastReceiver mNetworkReceiver;
     private ProgressDialog dialog;
     private User userDetail;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-
-            Gson gson = new Gson();
-            String json = getArguments().getString(Config.KEY_SERIALIZABLE);
-
-            userDetail = gson.fromJson(json, User.class);
-
-        }
-
-    }
 
     @Nullable
     @Override
@@ -89,13 +77,30 @@ public class BasicInfo extends Fragment {
 
     private void setDisplayValues() {
 
-        userName.setText(userDetail.getUsername());
-        phone.setText(userDetail.getUserPhoneNo());
-        email.setText(userDetail.getUserEmailId());
-        password.setText(userDetail.getUserPassword());
-        question.setText(userDetail.getSecurityQuestion());
-        answer.setText(userDetail.getSecurityAnswer());
+        if (getActivity() != null) {
 
+            String userJson = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_INFO, "");
+
+            if (!userJson.equals("")) {
+
+                Gson gson = new Gson();
+                userDetail = gson.fromJson(userJson, User.class);
+
+                userName.setText(userDetail.getUsername());
+                phone.setText(userDetail.getUserPhoneNo());
+                email.setText(userDetail.getUserEmailId());
+                password.setText(userDetail.getUserPassword());
+                question.setText(userDetail.getSecurityQuestion());
+                answer.setText(userDetail.getSecurityAnswer());
+
+            }
+
+        } else {
+
+            Toast.makeText(getActivity(), "User info not found", Toast.LENGTH_SHORT).show();
+            getActivity().getSupportFragmentManager().popBackStack();
+
+        }
 
     }
 
@@ -173,18 +178,12 @@ public class BasicInfo extends Fragment {
     }
 
     private void goToProfileInfo() {
-        Gson gson = new Gson();
-        Bundle bundle = new Bundle();
-        bundle.putString(Config.KEY_SERIALIZABLE, gson.toJson(userDetail));
-
-        ProfileInfo profileInfo = new ProfileInfo();
-        profileInfo.setArguments(bundle);
 
         if (getActivity() != null) {
 
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.content, profileInfo, Config.TAG_PROFILE_INFO_FRAGMENT)
+                    .replace(R.id.content, new ProfileInfo(), Config.TAG_PROFILE_INFO_FRAGMENT)
                     .addToBackStack(null)
                     .commit();
 
@@ -202,7 +201,12 @@ public class BasicInfo extends Fragment {
                 dialog.dismiss();
 
                 Toast.makeText(getActivity(), "Successfully updated", Toast.LENGTH_SHORT).show();
-                goToProfileInfo();
+
+                if (storeUserInformationInSharedPreference(userDetail)) {
+
+                    goToProfileInfo();
+
+                }
 
             }
 
@@ -227,6 +231,24 @@ public class BasicInfo extends Fragment {
 
             }
         });
+
+    }
+
+    private boolean storeUserInformationInSharedPreference(User user) {
+
+        if (getActivity() != null) {
+
+            Gson gson = new Gson();
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putString(Config.SP_USER_INFO, gson.toJson(user));
+            return editor.commit();
+
+        } else {
+            return false;
+        }
 
     }
 

@@ -3,6 +3,7 @@ package com.budgetcatcher.www.budgetcatcher.View.Fragment;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -71,7 +72,6 @@ public class Settings extends Fragment {
 
     private ProgressDialog dialog, categoryDialog;
     private String userID;
-    private User userDetails;
     private CategoryListAdapter categoryListAdapter;
 
     @Nullable
@@ -94,6 +94,19 @@ public class Settings extends Fragment {
 
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Settings");
 
+            String userJson = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_INFO, "");
+
+            if (!userJson.equals("")) {
+
+                Gson gson = new Gson();
+                setDisplayValues(gson.fromJson(userJson, User.class));
+
+            } else {
+
+                dialog.show();
+
+            }
+
             if (BudgetCatcher.getConnectedToInternet()) {
 
                 fetchUserInfo();
@@ -108,29 +121,13 @@ public class Settings extends Fragment {
 
     private void fetchUserInfo() {
 
-        dialog.show();
         BudgetCatcher.apiManager.getUserInfo(userID, new QueryCallback<ArrayList<User>>() {
             @Override
             public void onSuccess(ArrayList<User> user) {
 
                 dialog.dismiss();
-
-                name.setText(user.get(0).getUsername());
-                email.setText(user.get(0).getUserEmailId());
-                phone.setText(user.get(0).getUserPhoneNo());
-                financialGoal.setText(user.get(0).getFinancialGoal());
-                riskLevel.setText(user.get(0).getRiskLevel());
-                skillLevel.setText(user.get(0).getSkillLevel());
-                userDetails = user.get(0);
-
-                if (user.get(0).getProfilePicUrl() != null) {
-
-                    byte[] decodedString = Base64.decode(user.get(0).getProfilePicUrl(), Base64.DEFAULT);
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-                    profileImage.setImageBitmap(decodedByte);
-
-                }
+                setDisplayValues(user.get(0));
+                storeUserInformationInSharedPreference(user.get(0));
 
             }
 
@@ -158,6 +155,30 @@ public class Settings extends Fragment {
 
     }
 
+    private void setDisplayValues(User userDetails) {
+
+        if (getActivity() != null) {
+
+            name.setText(userDetails.getUsername());
+            email.setText(userDetails.getUserEmailId());
+            phone.setText(userDetails.getUserPhoneNo());
+            financialGoal.setText(userDetails.getFinancialGoal());
+            riskLevel.setText(userDetails.getRiskLevel());
+            skillLevel.setText(userDetails.getSkillLevel());
+
+            if (userDetails.getProfilePicUrl() != null) {
+
+                byte[] decodedString = Base64.decode(userDetails.getProfilePicUrl(), Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                profileImage.setImageBitmap(decodedByte);
+
+            }
+
+        }
+
+    }
+
     @OnClick({R.id.edit_profile, R.id.add_categories})
     public void onClick(View view) {
 
@@ -167,19 +188,19 @@ public class Settings extends Fragment {
 
                 if (getActivity() != null) {
 
-                    Gson gson = new Gson();
+                    if (BudgetCatcher.getConnectedToInternet()) {
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString(Config.KEY_SERIALIZABLE, gson.toJson(userDetails));
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.content, new BasicInfo(), Config.TAG_BASIC_INFO_FRAGMENT)
+                                .addToBackStack(null)
+                                .commit();
 
-                    BasicInfo basicInfo = new BasicInfo();
-                    basicInfo.setArguments(bundle);
+                    } else {
 
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.content, basicInfo, Config.TAG_BASIC_INFO_FRAGMENT)
-                            .addToBackStack(null)
-                            .commit();
+                        Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
+
+                    }
 
                 }
 
@@ -188,7 +209,15 @@ public class Settings extends Fragment {
 
             case R.id.add_categories: {
 
-                addCategory();
+                if (BudgetCatcher.getConnectedToInternet()) {
+
+                    addCategory();
+
+                } else {
+
+                    Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
+
+                }
 
                 break;
             }
@@ -350,6 +379,24 @@ public class Settings extends Fragment {
 
             }
         });
+
+    }
+
+    private boolean storeUserInformationInSharedPreference(User user) {
+
+        if (getActivity() != null) {
+
+            Gson gson = new Gson();
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putString(Config.SP_USER_INFO, gson.toJson(user));
+            return editor.commit();
+
+        } else {
+            return false;
+        }
 
     }
 

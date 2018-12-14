@@ -7,6 +7,7 @@ public class Config {
     /*Shared preference */
     public static final String SP_USER_ID = "USER_ID";
     public static final String SP_LOGGED_IN = "loggedIn";
+    public static final String SP_USER_INFO = "SP_USER_INFO";
     public static final String SP_APP_NAME = "BUDGET_CATCHER";
     public static final String SP_USER_CREATED_LEVEL = "USER_CREATED";
     public static final int SP_USER_CREATED_LEVEL_SIGN_UP = 100;

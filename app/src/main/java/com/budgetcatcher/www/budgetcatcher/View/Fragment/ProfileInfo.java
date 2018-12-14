@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -40,6 +41,8 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ProfileInfo extends Fragment {
 
@@ -182,49 +185,67 @@ public class ProfileInfo extends Fragment {
 
     private void setDisplayValues() {
 
-        byte[] decodedString = Base64.decode(userDetail.getProfilePicUrl(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        if (getActivity() != null) {
 
-        profileImage.setImageBitmap(decodedByte);
-        imageString = userDetail.getProfilePicUrl();
+            String userJson = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_INFO, "");
 
-        for (int i = 0; i < financialGoal.size(); i++) {
+            if (!userJson.equals("")) {
 
-            if (userDetail.getFinancialGoal().equals(financialGoal.get(i))) {
+                Gson gson = new Gson();
+                userDetail = gson.fromJson(userJson, User.class);
 
-                financialGoalSpinner.setSelection(i, true);
-                break;
+                byte[] decodedString = Base64.decode(userDetail.getProfilePicUrl(), Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                profileImage.setImageBitmap(decodedByte);
+                imageString = userDetail.getProfilePicUrl();
+
+                for (int i = 0; i < financialGoal.size(); i++) {
+
+                    if (userDetail.getFinancialGoal().equals(financialGoal.get(i))) {
+
+                        financialGoalSpinner.setSelection(i, true);
+                        break;
+
+                    }
+
+                }
+
+                for (int i = 0; i < riskLevel.size(); i++) {
+
+                    if (userDetail.getRiskLevel().equals(riskLevel.get(i))) {
+
+                        riskLevelSpinner.setSelection(i, true);
+                        break;
+
+                    }
+
+                }
+
+                for (int i = 0; i < skillLevel.size(); i++) {
+
+                    if (userDetail.getSkillLevel().equals(skillLevel.get(i))) {
+
+                        skillLevelSpinner.setSelection(i, true);
+                        break;
+
+                    }
+
+                }
+
+                financialGoalSpinnerSelected = true;
+                riskLevelSpinnerSelected = true;
+                skillLevelSpinnerSelected = true;
+                profileImageSelected = true;
 
             }
 
-        }
+        } else {
 
-        for (int i = 0; i < riskLevel.size(); i++) {
-
-            if (userDetail.getRiskLevel().equals(riskLevel.get(i))) {
-
-                riskLevelSpinner.setSelection(i, true);
-                break;
-
-            }
+            Toast.makeText(getActivity(), "User info not found", Toast.LENGTH_SHORT).show();
+            getActivity().getSupportFragmentManager().popBackStack();
 
         }
-
-        for (int i = 0; i < skillLevel.size(); i++) {
-
-            if (userDetail.getSkillLevel().equals(skillLevel.get(i))) {
-
-                skillLevelSpinner.setSelection(i, true);
-                break;
-
-            }
-
-        }
-
-        financialGoalSpinnerSelected = true;
-        riskLevelSpinnerSelected = true;
-        skillLevelSpinnerSelected = true;
-        profileImageSelected = true;
 
     }
 
@@ -350,8 +371,12 @@ public class ProfileInfo extends Fragment {
                 Toast.makeText(getActivity(), "Successfully updated", Toast.LENGTH_SHORT).show();
                 if (getActivity() != null) {
 
-                    getActivity().getSupportFragmentManager().popBackStack();
-                    getActivity().getSupportFragmentManager().popBackStack();
+                    if (storeUserInformationInSharedPreference(userDetail)) {
+
+                        getActivity().getSupportFragmentManager().popBackStack();
+                        getActivity().getSupportFragmentManager().popBackStack();
+
+                    }
 
                 }
 
@@ -379,6 +404,24 @@ public class ProfileInfo extends Fragment {
 
             }
         });
+
+    }
+
+    private boolean storeUserInformationInSharedPreference(User user) {
+
+        if (getActivity() != null) {
+
+            Gson gson = new Gson();
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putString(Config.SP_USER_INFO, gson.toJson(user));
+            return editor.commit();
+
+        } else {
+            return false;
+        }
 
     }
 
