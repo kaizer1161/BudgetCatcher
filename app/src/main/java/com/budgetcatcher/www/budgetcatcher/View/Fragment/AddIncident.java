@@ -129,6 +129,8 @@ public class AddIncident extends Fragment {
             }
         });*/
 
+        name.requestFocus();
+
         return rootView;
     }
 
@@ -260,7 +262,7 @@ if (th instanceof SocketTimeoutException){
                 public void onSuccess(String data) {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Expense successfully added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Successfully added", Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
 
                 }
@@ -269,7 +271,7 @@ if (th instanceof SocketTimeoutException){
                 public void onFail() {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Failed to added new expense", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Failed to add", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

@@ -194,49 +194,69 @@ public class ProfileInfo extends Fragment {
                 Gson gson = new Gson();
                 userDetail = gson.fromJson(userJson, User.class);
 
-                byte[] decodedString = Base64.decode(userDetail.getProfilePicUrl(), Base64.DEFAULT);
-                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                if (userDetail.getProfilePicUrl() != null) {
 
-                profileImage.setImageBitmap(decodedByte);
-                imageString = userDetail.getProfilePicUrl();
+                    byte[] decodedString = Base64.decode(userDetail.getProfilePicUrl(), Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-                for (int i = 0; i < financialGoal.size(); i++) {
+                    profileImage.setImageBitmap(decodedByte);
+                    imageString = userDetail.getProfilePicUrl();
 
-                    if (userDetail.getFinancialGoal().equals(financialGoal.get(i))) {
 
-                        financialGoalSpinner.setSelection(i, true);
-                        break;
-
-                    }
+                    profileImageSelected = true;
 
                 }
 
-                for (int i = 0; i < riskLevel.size(); i++) {
+                if (userDetail.getFinancialGoal() != null) {
 
-                    if (userDetail.getRiskLevel().equals(riskLevel.get(i))) {
+                    for (int i = 0; i < financialGoal.size(); i++) {
 
-                        riskLevelSpinner.setSelection(i, true);
-                        break;
+                        if (userDetail.getFinancialGoal().equals(financialGoal.get(i))) {
 
-                    }
+                            financialGoalSpinner.setSelection(i, true);
+                            break;
 
-                }
-
-                for (int i = 0; i < skillLevel.size(); i++) {
-
-                    if (userDetail.getSkillLevel().equals(skillLevel.get(i))) {
-
-                        skillLevelSpinner.setSelection(i, true);
-                        break;
+                        }
 
                     }
 
+                    financialGoalSpinnerSelected = true;
+
                 }
 
-                financialGoalSpinnerSelected = true;
-                riskLevelSpinnerSelected = true;
-                skillLevelSpinnerSelected = true;
-                profileImageSelected = true;
+                if (userDetail.getRiskLevel() != null) {
+
+                    for (int i = 0; i < riskLevel.size(); i++) {
+
+                        if (userDetail.getRiskLevel().equals(riskLevel.get(i))) {
+
+                            riskLevelSpinner.setSelection(i, true);
+                            break;
+
+                        }
+
+                    }
+
+                    riskLevelSpinnerSelected = true;
+
+                }
+
+                if (userDetail.getSkillLevel() != null) {
+
+                    for (int i = 0; i < skillLevel.size(); i++) {
+
+                        if (userDetail.getSkillLevel().equals(skillLevel.get(i))) {
+
+                            skillLevelSpinner.setSelection(i, true);
+                            break;
+
+                        }
+
+                    }
+
+                    skillLevelSpinnerSelected = true;
+
+                }
 
             }
 

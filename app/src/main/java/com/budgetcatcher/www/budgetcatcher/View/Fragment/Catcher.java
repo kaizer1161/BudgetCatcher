@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -46,6 +47,14 @@ public class Catcher extends Fragment {
     RecyclerView spendingAllowance;
     @BindView(R.id.incidental_recycler_view)
     RecyclerView incidental;
+    @BindView(R.id.bill_swipe_down)
+    SwipeRefreshLayout billSwipeDown;
+    @BindView(R.id.allowance_swipe_down)
+    SwipeRefreshLayout allowanceSwipeDown;
+    @BindView(R.id.incidental_swipe_down)
+    SwipeRefreshLayout incidentalSwipeDown;
+    @BindView(R.id.swipe_down)
+    SwipeRefreshLayout refreshAllList;
 
     private AccountListAdapter billListAdapter, spendingAllowanceListAdapter, incidentalListAdapter;
     private String userID;
@@ -63,15 +72,37 @@ public class Catcher extends Fragment {
 
             userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-            if (BudgetCatcher.getConnectedToInternet()) {
-                getBillFromServer();
-                getAllowanceFromServer();
-                getExpensesFromServer();
-            } else {
-                Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
-            }
+            fetchAllList();
+
         }
+
+        refreshAllList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                fetchAllList();
+                refreshAllList.setRefreshing(false);
+
+            }
+        });
+
         return rootView;
+    }
+
+    private void fetchAllList() {
+
+        if (BudgetCatcher.getConnectedToInternet()) {
+
+            getBillFromServer();
+            getAllowanceFromServer();
+            getExpensesFromServer();
+
+        } else {
+
+            Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
+
+        }
+
     }
 
     private void showFeedBills(ArrayList<AccountItem> accountItemArrayList) {
@@ -94,10 +125,12 @@ public class Catcher extends Fragment {
 
     private void getBillFromServer() {
 
+        billSwipeDown.setRefreshing(true);
         BudgetCatcher.apiManager.getBill(userID, new QueryCallback<ArrayList<Bill>>() {
             @Override
             public void onSuccess(ArrayList<Bill> billList) {
 
+                billSwipeDown.setRefreshing(false);
                 ArrayList<AccountItem> billsArrayList = new ArrayList<>();
                 for (int i = 0; i < billList.size(); i++) {
                     Bill bill = billList.get(i);
@@ -109,11 +142,14 @@ public class Catcher extends Fragment {
             @Override
             public void onFail() {
 
+                billSwipeDown.setRefreshing(false);
+
             }
 
             @Override
             public void onError(Throwable th) {
 
+                billSwipeDown.setRefreshing(false);
                 if (getActivity() != null) {
                     Log.e("SerVerErrCatcher", th.toString());
                     if (th instanceof SocketTimeoutException) {
@@ -129,10 +165,12 @@ public class Catcher extends Fragment {
 
     private void getAllowanceFromServer() {
 
+        allowanceSwipeDown.setRefreshing(true);
         BudgetCatcher.apiManager.getAllowance(userID, new QueryCallback<ArrayList<Allowance>>() {
             @Override
             public void onSuccess(ArrayList<Allowance> allowancesList) {
 
+                allowanceSwipeDown.setRefreshing(false);
                 ArrayList<AccountItem> spendingAllowanceArrayList = new ArrayList<>();
 
                 for (int i = 0; i < allowancesList.size(); i++) {
@@ -147,10 +185,14 @@ public class Catcher extends Fragment {
             @Override
             public void onFail() {
 
+                allowanceSwipeDown.setRefreshing(false);
+
             }
 
             @Override
             public void onError(Throwable th) {
+
+                allowanceSwipeDown.setRefreshing(false);
 
                 /*if (th instanceof SocketTimeoutException){
 
@@ -169,10 +211,12 @@ public class Catcher extends Fragment {
 
     private void getExpensesFromServer() {
 
+        incidentalSwipeDown.setRefreshing(true);
         BudgetCatcher.apiManager.getExpenses(userID, "january", "2018", new QueryCallback<ArrayList<Expenses>>() {
             @Override
             public void onSuccess(ArrayList<Expenses> expensesList) {
 
+                incidentalSwipeDown.setRefreshing(false);
                 ArrayList<AccountItem> expensesArrayList = new ArrayList<>();
 
                 for (int i = 0; i < expensesList.size(); i++) {
@@ -201,11 +245,14 @@ public class Catcher extends Fragment {
             @Override
             public void onFail() {
 
+                incidentalSwipeDown.setRefreshing(false);
+
             }
 
             @Override
             public void onError(Throwable th) {
 
+                incidentalSwipeDown.setRefreshing(false);
                 /*if (th instanceof SocketTimeoutException){
 
                     if (getActivity() != null){

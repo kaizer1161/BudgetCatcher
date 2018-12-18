@@ -132,6 +132,8 @@ public class AddBill extends Fragment {
             }
         });*/
 
+        billName.requestFocus();
+
         return rootView;
     }
 
@@ -266,7 +268,7 @@ public class AddBill extends Fragment {
                 public void onSuccess(String data) {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Successfully added new bill", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Successfully added", Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
 
                 }
@@ -275,7 +277,7 @@ public class AddBill extends Fragment {
                 public void onFail() {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Failed to added new bill", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Failed to add", Toast.LENGTH_SHORT).show();
 
                 }
 

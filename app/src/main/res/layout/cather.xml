@@ -7,234 +7,262 @@
 
     <include layout="@layout/header_calender_week_view" />
 
-    <LinearLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_down"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/gap_of_16dp"
-        android:background="@color/white"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="@dimen/gap_of_8dp"
-            android:paddingTop="@dimen/gap_of_8dp"
-            android:paddingRight="@dimen/gap_of_8dp"
-            android:text="TOTAL EXPENSES"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/gap_of_8dp"
-            android:drawableStart="@drawable/ic_attach_money_24dp"
-            android:text="1,789.90"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@color/black" />
+        android:layout_margin="@dimen/gap_of_16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="30">
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="@dimen/gap_of_8dp"
+                android:paddingTop="@dimen/gap_of_8dp"
+                android:paddingRight="@dimen/gap_of_8dp"
+                android:text="TOTAL EXPENSES"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/gap_of_8dp"
+                android:drawableStart="@drawable/ic_attach_money_24dp"
+                android:text="1,789.90"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textColor="@color/black" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="0dp"
+                android:layout_weight="30">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/deep_sea_dive"
-                    android:gravity="center"
-                    android:padding="@dimen/gap_of_4dp"
-                    android:text="Bills"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/aquarium">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="@dimen/gap_of_4dp"
-                        android:padding="@dimen/gap_of_4dp"
-                        android:text="Bill"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
+                        android:background="@color/deep_sea_dive"
                         android:gravity="center"
                         android:padding="@dimen/gap_of_4dp"
-                        android:text="Due/Late"
+                        android:text="Bills"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/aquarium">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginLeft="@dimen/gap_of_4dp"
+                            android:padding="@dimen/gap_of_4dp"
+                            android:text="Bill"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:padding="@dimen/gap_of_4dp"
+                            android:text="Due/Late"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="@dimen/gap_of_4dp"
+                            android:gravity="center"
+                            android:padding="@dimen/gap_of_4dp"
+                            android:text="Amount"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                    <android.support.v4.widget.SwipeRefreshLayout
+                        android:id="@+id/bill_swipe_down"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/bill_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </android.support.v7.widget.RecyclerView>
+
+                    </android.support.v4.widget.SwipeRefreshLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="30">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginRight="@dimen/gap_of_4dp"
+                        android:background="@color/deep_sea_dive"
                         android:gravity="center"
                         android:padding="@dimen/gap_of_4dp"
-                        android:text="Amount"
+                        android:text="Spending Allowance"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
-                </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/aquarium">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/bill_recycler_view"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginLeft="@dimen/gap_of_4dp"
+                            android:padding="@dimen/gap_of_4dp"
+                            android:text="Allowance"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="@dimen/gap_of_4dp"
+                            android:gravity="center"
+                            android:padding="@dimen/gap_of_4dp"
+                            android:text="Amount"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                    <android.support.v4.widget.SwipeRefreshLayout
+                        android:id="@+id/allowance_swipe_down"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/sending_allowance_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </android.support.v7.widget.RecyclerView>
+
+                    </android.support.v4.widget.SwipeRefreshLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="30">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                </android.support.v7.widget.RecyclerView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/deep_sea_dive"
+                        android:gravity="center"
+                        android:padding="@dimen/gap_of_4dp"
+                        android:text="Incidentals"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/aquarium">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginLeft="@dimen/gap_of_4dp"
+                            android:padding="@dimen/gap_of_4dp"
+                            android:text="Incident"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:padding="@dimen/gap_of_4dp"
+                            android:text="Date"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="@dimen/gap_of_4dp"
+                            android:gravity="center"
+                            android:padding="@dimen/gap_of_4dp"
+                            android:text="Amount"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                    <android.support.v4.widget.SwipeRefreshLayout
+                        android:id="@+id/incidental_swipe_down"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/incidental_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </android.support.v7.widget.RecyclerView>
+
+                    </android.support.v4.widget.SwipeRefreshLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="30">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/deep_sea_dive"
-                    android:gravity="center"
-                    android:padding="@dimen/gap_of_4dp"
-                    android:text="Spending Allowance"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/aquarium">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="@dimen/gap_of_4dp"
-                        android:padding="@dimen/gap_of_4dp"
-                        android:text="Allowance"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginRight="@dimen/gap_of_4dp"
-                        android:gravity="center"
-                        android:padding="@dimen/gap_of_4dp"
-                        android:text="Amount"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                </RelativeLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/sending_allowance_recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </android.support.v7.widget.RecyclerView>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="30">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/deep_sea_dive"
-                    android:gravity="center"
-                    android:padding="@dimen/gap_of_4dp"
-                    android:text="Incidentals"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/aquarium">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="@dimen/gap_of_4dp"
-                        android:padding="@dimen/gap_of_4dp"
-                        android:text="Incident"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="center"
-                        android:padding="@dimen/gap_of_4dp"
-                        android:text="Date"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginRight="@dimen/gap_of_4dp"
-                        android:gravity="center"
-                        android:padding="@dimen/gap_of_4dp"
-                        android:text="Amount"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                </RelativeLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/incidental_recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </android.support.v7.widget.RecyclerView>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

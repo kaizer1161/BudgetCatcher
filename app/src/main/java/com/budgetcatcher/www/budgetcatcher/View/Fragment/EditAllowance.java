@@ -93,6 +93,8 @@ public class EditAllowance extends Fragment {
 
         initializeAllSpinnerSelectedListener();
 
+        allowanceName.requestFocus();
+
         return rootView;
     }
 
@@ -284,7 +286,7 @@ public class EditAllowance extends Fragment {
                 public void onSuccess(String data) {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Successfully allowance edited", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Successfully edited", Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
 
                 }
@@ -293,7 +295,7 @@ public class EditAllowance extends Fragment {
                 public void onFail() {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Failed to edit allowance", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Failed to edit", Toast.LENGTH_SHORT).show();
 
                 }
 

@@ -90,6 +90,9 @@ public class AddAllowance extends Fragment {
             }
         });
 
+        allowanceName.requestFocus();
+
+
         return rootView;
     }
 
@@ -205,6 +208,7 @@ public class AddAllowance extends Fragment {
                 public void onSuccess(String data) {
 
                     dialog.dismiss();
+                    Toast.makeText(getActivity(), "Successfully added", Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
 
                 }
@@ -213,7 +217,7 @@ public class AddAllowance extends Fragment {
                 public void onFail() {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Failed to added new allowance", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Failed to add", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

@@ -113,6 +113,8 @@ public class EditBill extends Fragment {
 
         initializeAllSpinnerSelectedListener();
 
+        billName.requestFocus();
+
         return rootView;
     }
 
@@ -308,7 +310,7 @@ public class EditBill extends Fragment {
                 public void onSuccess(String data) {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Successfully bill edited", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Successfully edited", Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
 
                 }
@@ -317,7 +319,7 @@ public class EditBill extends Fragment {
                 public void onFail() {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Failed to edit bill", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Failed to edit", Toast.LENGTH_SHORT).show();
 
                 }
 

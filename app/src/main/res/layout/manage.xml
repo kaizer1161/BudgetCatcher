@@ -5,15 +5,15 @@
     android:background="@drawable/background_image"
     android:orientation="vertical">
 
-    <ScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_down"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/gap_of_16dp">
 
-        <LinearLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -22,24 +22,25 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/aquarium"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/deep_sea_dive"
-                        android:gravity="center"
-                        android:padding="@dimen/gap_of_4dp"
-                        android:text="Income Settings"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:layout_height="match_parent"
+                        android:background="@color/aquarium"
+                        android:orientation="vertical">
 
-                    <ScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/deep_sea_dive"
+                            android:gravity="center"
+                            android:padding="@dimen/gap_of_4dp"
+                            android:text="Income Settings"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -158,250 +159,272 @@
 
                         </LinearLayout>
 
-                    </ScrollView>
+                    </LinearLayout>
 
                 </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:orientation="vertical"
-                android:layout_weight="30">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_weight="30"
+                    android:background="@color/white"
                     android:orientation="vertical">
 
-                    <FrameLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/deep_sea_dive">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/add_bill"
+                        <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/gap_of_16dp"
-                            android:background="@color/deep_sea_dive"
-                            android:drawableEnd="@drawable/ic_add"
-                            android:gravity="center"
-                            android:padding="@dimen/gap_of_4dp"
-                            android:text="Bills"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            android:background="@color/deep_sea_dive">
 
-                    </FrameLayout>
+                            <TextView
+                                android:id="@+id/add_bill"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/gap_of_16dp"
+                                android:background="@color/deep_sea_dive"
+                                android:drawableEnd="@drawable/ic_add"
+                                android:gravity="center"
+                                android:padding="@dimen/gap_of_4dp"
+                                android:text="Bills"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/aquarium">
+                        </FrameLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_marginLeft="@dimen/gap_of_4dp"
-                            android:padding="@dimen/gap_of_4dp"
-                            android:text="Bill"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            android:background="@color/aquarium">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:gravity="center"
-                            android:padding="@dimen/gap_of_4dp"
-                            android:text="Due/Late"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginLeft="@dimen/gap_of_4dp"
+                                android:padding="@dimen/gap_of_4dp"
+                                android:text="Bill"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginEnd="@dimen/gap_of_4dp"
-                            android:gravity="center"
-                            android:padding="@dimen/gap_of_4dp"
-                            android:text="Amount"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:gravity="center"
+                                android:padding="@dimen/gap_of_4dp"
+                                android:text="Due/Late"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
 
-                    </RelativeLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="@dimen/gap_of_4dp"
+                                android:gravity="center"
+                                android:padding="@dimen/gap_of_4dp"
+                                android:text="Amount"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/bills"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        </RelativeLayout>
 
-                    </android.support.v7.widget.RecyclerView>
+                        <android.support.v4.widget.SwipeRefreshLayout
+                            android:id="@+id/bill_swipe_down"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/bills"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                            </android.support.v7.widget.RecyclerView>
+
+                        </android.support.v4.widget.SwipeRefreshLayout>
+
+
+                    </LinearLayout>
 
                 </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:orientation="vertical"
-                android:layout_weight="30">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_weight="30"
+                    android:background="@color/white"
                     android:orientation="vertical">
 
-                    <FrameLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/deep_sea_dive">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/add_allowance"
+                        <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/gap_of_16dp"
-                            android:background="@color/deep_sea_dive"
-                            android:drawableEnd="@drawable/ic_add"
-                            android:gravity="center"
-                            android:padding="@dimen/gap_of_4dp"
-                            android:text="Allowance: weekly budget"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            android:background="@color/deep_sea_dive">
 
-                    </FrameLayout>
+                            <TextView
+                                android:id="@+id/add_allowance"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/gap_of_16dp"
+                                android:background="@color/deep_sea_dive"
+                                android:drawableEnd="@drawable/ic_add"
+                                android:gravity="center"
+                                android:padding="@dimen/gap_of_4dp"
+                                android:text="Allowance: weekly budget"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/aquarium">
+                        </FrameLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_marginLeft="@dimen/gap_of_4dp"
-                            android:padding="@dimen/gap_of_4dp"
-                            android:text="Allowance"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            android:background="@color/aquarium">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginRight="@dimen/gap_of_4dp"
-                            android:gravity="center"
-                            android:padding="@dimen/gap_of_4dp"
-                            android:text="Amount"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginLeft="@dimen/gap_of_4dp"
+                                android:padding="@dimen/gap_of_4dp"
+                                android:text="Allowance"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
 
-                    </RelativeLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginRight="@dimen/gap_of_4dp"
+                                android:gravity="center"
+                                android:padding="@dimen/gap_of_4dp"
+                                android:text="Amount"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/allowance"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        </RelativeLayout>
 
-                    </android.support.v7.widget.RecyclerView>
+                        <android.support.v4.widget.SwipeRefreshLayout
+                            android:id="@+id/allowance_swipe_down"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/allowance"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                            </android.support.v7.widget.RecyclerView>
+
+                        </android.support.v4.widget.SwipeRefreshLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:orientation="vertical"
-                android:layout_weight="30">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_weight="30"
+                    android:background="@color/white"
                     android:orientation="vertical">
 
-                    <FrameLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/deep_sea_dive">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/add_incidentals"
+                        <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/gap_of_16dp"
-                            android:background="@color/deep_sea_dive"
-                            android:drawableEnd="@drawable/ic_add"
-                            android:gravity="center"
-                            android:padding="@dimen/gap_of_4dp"
-                            android:text="Incidentals"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            android:background="@color/deep_sea_dive">
 
-                    </FrameLayout>
+                            <TextView
+                                android:id="@+id/add_incidentals"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/gap_of_16dp"
+                                android:background="@color/deep_sea_dive"
+                                android:drawableEnd="@drawable/ic_add"
+                                android:gravity="center"
+                                android:padding="@dimen/gap_of_4dp"
+                                android:text="Incidentals"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/aquarium">
+                        </FrameLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_marginLeft="@dimen/gap_of_4dp"
-                            android:padding="@dimen/gap_of_4dp"
-                            android:text="Incident"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            android:background="@color/aquarium">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:gravity="center"
-                            android:padding="@dimen/gap_of_4dp"
-                            android:text="Date"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginLeft="@dimen/gap_of_4dp"
+                                android:padding="@dimen/gap_of_4dp"
+                                android:text="Incident"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginRight="@dimen/gap_of_4dp"
-                            android:gravity="center"
-                            android:padding="@dimen/gap_of_4dp"
-                            android:text="Amount"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:gravity="center"
+                                android:padding="@dimen/gap_of_4dp"
+                                android:text="Date"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
 
-                    </RelativeLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginRight="@dimen/gap_of_4dp"
+                                android:gravity="center"
+                                android:padding="@dimen/gap_of_4dp"
+                                android:text="Amount"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/incidental_recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        </RelativeLayout>
 
-                    </android.support.v7.widget.RecyclerView>
+                        <android.support.v4.widget.SwipeRefreshLayout
+                            android:id="@+id/incidental_swipe_down"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/incidental_recycler_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                            </android.support.v7.widget.RecyclerView>
+
+                        </android.support.v4.widget.SwipeRefreshLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
-    </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

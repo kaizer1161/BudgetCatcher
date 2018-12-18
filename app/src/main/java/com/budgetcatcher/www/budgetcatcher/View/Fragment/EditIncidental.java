@@ -119,6 +119,8 @@ public class EditIncidental extends Fragment {
 
         initializeAllSpinnerSelectedListener();
 
+        name.requestFocus();
+
         return rootView;
     }
 
@@ -314,7 +316,7 @@ public class EditIncidental extends Fragment {
                 public void onSuccess(String data) {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Successfully edited incidental", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Successfully edited", Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
 
                 }
@@ -323,7 +325,7 @@ public class EditIncidental extends Fragment {
                 public void onFail() {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Failed to edit incidental", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Failed to edit", Toast.LENGTH_SHORT).show();
 
                 }
 
