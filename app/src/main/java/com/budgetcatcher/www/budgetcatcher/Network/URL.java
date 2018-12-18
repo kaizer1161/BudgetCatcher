@@ -19,15 +19,17 @@ public class URL {
     public static final String insertBill = "insertBill";
     public static final String modifyBill = "modifyBill/";
     public static final String getAllBill = "getAllBills/";
-    public static final String modifyCategory = "modifyCategory/";
     public static final String getUserInfo = "getUserInfo/";
     public static final String deleteBills = "deleteBills/";
-    public static final String deleteCategory = "deleteCategory/";
     public static final String addCategory = "addCategory";
     public static final String profileSetup = "modifyUser/";
     public static final String insertExpense = "insertExpense";
+    public static final String modifyExpense = "modifyExpense/";
+    public static final String modifyCategory = "modifyCategory/";
     public static final String getAllExpenses = "getAllExpenses/";
+    public static final String deleteCategory = "deleteCategory/";
     public static final String getAllCategory = "getAllCategory/";
+    public static final String modifyAllowance = "modifyAllowance/";
     public static final String getAllAllowance = "getAllAllowances/";
     public static final String insertAllowances = "insertAllowances";
 

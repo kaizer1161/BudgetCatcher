@@ -18,11 +18,15 @@ import android.widget.Toast;
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
 import com.budgetcatcher.www.budgetcatcher.Model.AccountItem;
+import com.budgetcatcher.www.budgetcatcher.Model.Allowance;
 import com.budgetcatcher.www.budgetcatcher.Model.Bill;
+import com.budgetcatcher.www.budgetcatcher.Model.Expenses;
 import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
+import com.budgetcatcher.www.budgetcatcher.View.Fragment.EditAllowance;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.EditBill;
+import com.budgetcatcher.www.budgetcatcher.View.Fragment.EditIncidental;
 import com.google.gson.Gson;
 
 import java.net.SocketTimeoutException;
@@ -44,8 +48,10 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
     private Activity activity;
     private ArrayList<AccountItem> accountItemArrayList;
     private ArrayList<Bill> bills;
+    private ArrayList<Allowance> allowances;
+    private ArrayList<Expenses> expenses;
     private String fragmentTag;
-    private Boolean hasClickListner;
+    private Boolean hasClickListener;
 
     public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag) {
 
@@ -53,18 +59,32 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         this.activity = activity;
         this.accountItemArrayList = accountItemArrayList;
         this.fragmentTag = fragmentTag;
-        hasClickListner = false;
+        hasClickListener = false;
 
     }
 
-    public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag, ArrayList<Bill> bills) {
+    public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag, ArrayList<Bill> bills, ArrayList<Allowance> allowances, ArrayList<Expenses> expenses) {
 
         inflater = LayoutInflater.from(activity);
         this.activity = activity;
         this.accountItemArrayList = accountItemArrayList;
         this.fragmentTag = fragmentTag;
-        this.bills = bills;
-        hasClickListner = true;
+        hasClickListener = true;
+
+
+        if (fragmentTag.equals(Config.TAG_LIST_BILL)) {
+
+            this.bills = bills;
+
+        } else if (fragmentTag.equals(Config.TAG_LIST_SPENDING_ALLOWANCE)) {
+
+            this.allowances = allowances;
+
+        } else if (fragmentTag.equals(Config.TAG_LIST_INCIDENTAL)) {
+
+            this.expenses = expenses;
+
+        }
 
     }
 
@@ -81,11 +101,11 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         AccountItem accountItem = accountItemArrayList.get(position);
 
         String temp = accountItem.getCol3();
-        Log.i("temp", temp);
+        /*Log.i("temp", temp);*/
         temp = temp.replace("$", "");
         Float val = Float.parseFloat(temp);
         String valStr = String.format("%.2f", val);
-        Log.d("valStr", valStr);
+        /*Log.d("valStr", valStr);*/
         /*int dec = temp.indexOf(".");
         if (dec != -1) {
             if (temp.length() > dec + 3)
@@ -137,7 +157,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            if (hasClickListner) {
+            if (hasClickListener) {
 
                 itemBody.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
@@ -199,6 +219,36 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                                             ((MainActivity) activity).getSupportFragmentManager()
                                                     .beginTransaction()
                                                     .replace(R.id.content, editBill, Config.TAG_EDIT_BILL_FRAGMENT)
+                                                    .addToBackStack(null)
+                                                    .commit();
+
+                                        } else if (fragmentTag.equals(Config.TAG_LIST_SPENDING_ALLOWANCE)) {
+
+                                            alert11.dismiss();
+
+                                            bundle.putString(Config.KEY_SERIALIZABLE, gson.toJson(allowances.get(getAdapterPosition())));
+
+                                            EditAllowance editAllowance = new EditAllowance();
+                                            editAllowance.setArguments(bundle);
+
+                                            ((MainActivity) activity).getSupportFragmentManager()
+                                                    .beginTransaction()
+                                                    .replace(R.id.content, editAllowance, Config.TAG_EDIT_ALLOWANCE_FRAGMENT)
+                                                    .addToBackStack(null)
+                                                    .commit();
+
+                                        } else if (fragmentTag.equals(Config.TAG_LIST_INCIDENTAL)) {
+
+                                            alert11.dismiss();
+
+                                            bundle.putString(Config.KEY_SERIALIZABLE, gson.toJson(expenses.get(getAdapterPosition())));
+
+                                            EditIncidental editIncidental = new EditIncidental();
+                                            editIncidental.setArguments(bundle);
+
+                                            ((MainActivity) activity).getSupportFragmentManager()
+                                                    .beginTransaction()
+                                                    .replace(R.id.content, editIncidental, Config.TAG_EDIT_BILL_FRAGMENT)
                                                     .addToBackStack(null)
                                                     .commit();
 

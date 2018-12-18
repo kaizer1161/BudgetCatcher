@@ -138,7 +138,7 @@ public class Catcher extends Fragment {
                 for (int i = 0; i < allowancesList.size(); i++) {
 
                     Allowance allowance = allowancesList.get(i);
-                    spendingAllowanceArrayList.add(new AccountItem(allowance.getAllowanceName(), "$" + allowance.getAllowanceAmount(), allowance.getAllowanceId()));
+                    spendingAllowanceArrayList.add(new AccountItem(allowance.getCategoryName(), "$" + allowance.getAllowanceAmount(), allowance.getAllowanceId()));
 
                 }
                 showFeedSpendingAllowance(spendingAllowanceArrayList);

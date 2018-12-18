@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,13 +17,20 @@ import android.widget.Toast;
 
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
-import com.budgetcatcher.www.budgetcatcher.Model.InsertExpensesBody;
+import com.budgetcatcher.www.budgetcatcher.Model.Expenses;
+import com.budgetcatcher.www.budgetcatcher.Model.ModifyExpenseBody;
 import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
+import com.google.gson.Gson;
 
 import java.net.SocketTimeoutException;
+import java.text.DateFormat;
 import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -31,7 +39,7 @@ import butterknife.OnClick;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class AddIncident extends Fragment {
+public class EditIncidental extends Fragment {
 
     private static final int SPINNER_INITIAL_POSITION = 0;
     /*@BindView(R.id.category)
@@ -43,23 +51,37 @@ public class AddIncident extends Fragment {
     @BindView(R.id.description)
     EditText description;
     @BindView(R.id.date_edit_text)
-    TextView dateEditText;
+    TextView dateTextView;
     @BindView(R.id.date_picker)
     CalendarView datePicker;
     @BindView(R.id.amount)
     EditText amount;
-
-    /*private ArrayList<String> status, categoryListName, categoryListId;
-    private ArrayAdapter<String> *//*statusAdapter,*//* categoryAdapter;
-    private Boolean statusSelected = false, categoryNameSelected = false;*/
-
+    private ArrayList<String> status, categoryListName, categoryListId;
+    private ArrayAdapter<String> /*statusAdapter,*/ categoryAdapter;
+    private Boolean statusSelected = false, categoryNameSelected = false;
     private String date = "", monthInWord = "", yearForServer = "";
+    private Expenses expenses;
     private ProgressDialog dialog;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+
+            Gson gson = new Gson();
+            String json = getArguments().getString(Config.KEY_SERIALIZABLE);
+
+            expenses = gson.fromJson(json, Expenses.class);
+
+        }
+
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.add_incident, container, false);
+        View rootView = inflater.inflate(R.layout.edit_incident, container, false);
         ButterKnife.bind(this, rootView);
 
         if (getActivity() != null) {
@@ -68,28 +90,39 @@ public class AddIncident extends Fragment {
                     getString(R.string.loading), true);
             dialog.dismiss();
 
-            Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Add Incident");
-            /*statusList();
-            fetchCategory();*/
+            Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Edit Incident");
+            statusList();
+            fetchCategory();
 
         }
+
+        showAllDataInUI();
+        //
 
         datePicker.setVisibility(View.GONE);
         datePicker.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@androidx.annotation.NonNull @NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
-                dateEditText.setVisibility(View.VISIBLE);
+                dateTextView.setVisibility(View.VISIBLE);
                 datePicker.setVisibility(View.GONE);
 
                 yearForServer = Integer.toString(year);
                 DateFormatSymbols dateFormatSymbols = new DateFormatSymbols();
                 monthInWord = dateFormatSymbols.getMonths()[month].toLowerCase();
                 date = year + "-" + (month + 1) + "-" + dayOfMonth;
-                dateEditText.setText(date);
+                dateTextView.setText(date);
 
             }
         });
+
+
+        initializeAllSpinnerSelectedListener();
+
+        return rootView;
+    }
+
+    private void initializeAllSpinnerSelectedListener() {
 
         /*categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -129,53 +162,75 @@ public class AddIncident extends Fragment {
             }
         });*/
 
-        return rootView;
     }
 
-    /*private void fetchCategory() {
+    private void fetchCategory() {
 
-        BudgetCatcher.apiManager.getCategory(new QueryCallback<ArrayList<Category>>() {
-            @Override
-            public void onSuccess(ArrayList<Category> data) {
+        /*dialog.show();
 
-                categoryListId = new ArrayList<>();
-                categoryListName = new ArrayList<>();
+        if (getActivity() != null) {
 
-                categoryListId.add("");
-                categoryListName.add("Select category");
+            String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-                for (int i = 0; i < data.size(); i++) {
+            BudgetCatcher.apiManager.getCategory(Config.CATEGORY_BILL_TAG_ID, userID, new QueryCallback<ArrayList<Category>>() {
+                @Override
+                public void onSuccess(ArrayList<Category> data) {
 
-                    categoryListId.add(data.get(i).getCategoryId());
-                    categoryListName.add(data.get(i).getCategoryName());
+                    dialog.dismiss();
+                    categoryListId = new ArrayList<>();
+                    categoryListName = new ArrayList<>();
 
-                }
+                    categoryListId.add("");
+                    categoryListName.add("Select category");
 
-                categoryAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, R.id.spinner_item_text, categoryListName);
-                categorySpinner.setAdapter(categoryAdapter);
+                    for (int i = 0; i < data.size(); i++) {
 
-            }
+                        categoryListId.add(data.get(i).getCategoryId());
+                        categoryListName.add(data.get(i).getCategoryName());
 
-            @Override
-            public void onFail() {
+                    }
 
-            }
+                    categoryAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, R.id.spinner_item_text, categoryListName);
+                    categorySpinner.setAdapter(categoryAdapter);
 
-            @Override
-            public void onError(Throwable th) {
+                    for (int i = 0; i < categoryListName.size(); i++) {
 
-if (th instanceof SocketTimeoutException){
+                        if (categoryListName.get(i).equals(bill.getCategory())) {
 
-                    if (getActivity() != null){
+                            categorySpinner.setSelection(i, true);
+                            break;
 
-                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                        }
 
                     }
 
                 }
 
-            }
-        });
+                @Override
+                public void onFail() {
+
+                    dialog.dismiss();
+                    Toast.makeText(getActivity(), "Failed to fetch Category", Toast.LENGTH_SHORT).show();
+
+                }
+
+                @Override
+                public void onError(Throwable th) {
+
+                    dialog.dismiss();
+                    if (getActivity() != null) {
+                        Log.e("SerVerErrEditBill", th.toString());
+                        if (th instanceof SocketTimeoutException) {
+                            Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), th.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                }
+            });
+
+        }*/
 
     }
 
@@ -186,10 +241,10 @@ if (th instanceof SocketTimeoutException){
         status.add("Unpaid");
         status.add("Paid");
 
-        *//*statusAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, R.id.spinner_item_text, status);
-        statusSpinner.setAdapter(statusAdapter);*//*
+        /*statusAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, R.id.spinner_item_text, status);
+        statusSpinner.setAdapter(statusAdapter);*/
 
-    }*/
+    }
 
     @OnClick({R.id.save, R.id.date_edit_text})
     public void onClick(View view) {
@@ -235,7 +290,7 @@ if (th instanceof SocketTimeoutException){
 
             case R.id.date_edit_text: {
 
-                dateEditText.setVisibility(View.GONE);
+                dateTextView.setVisibility(View.GONE);
                 datePicker.setVisibility(View.VISIBLE);
 
                 break;
@@ -250,17 +305,16 @@ if (th instanceof SocketTimeoutException){
         if (getActivity() != null) {
 
             dialog.show();
-
             String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-            InsertExpensesBody expensesBody = new InsertExpensesBody(userID, name.getText().toString(), /*categoryListId.get(categorySpinner.getSelectedItemPosition())*/ "1", amount.getText().toString(), description.getText().toString(), date, monthInWord, yearForServer);
+            ModifyExpenseBody modifyExpenseBody = new ModifyExpenseBody(name.getText().toString(), /*categoryListId.get(categorySpinner.getSelectedItemPosition())*/ "1", amount.getText().toString(), description.getText().toString(), date, monthInWord, yearForServer);
 
-            BudgetCatcher.apiManager.insertExpenses(expensesBody, new QueryCallback<String>() {
+            BudgetCatcher.apiManager.modifyExpense(userID, expenses.getExpenseId(), modifyExpenseBody, new QueryCallback<String>() {
                 @Override
                 public void onSuccess(String data) {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Expense successfully added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Successfully edited incidental", Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
 
                 }
@@ -269,7 +323,8 @@ if (th instanceof SocketTimeoutException){
                 public void onFail() {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Failed to added new expense", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Failed to edit incidental", Toast.LENGTH_SHORT).show();
+
                 }
 
                 @Override
@@ -277,7 +332,7 @@ if (th instanceof SocketTimeoutException){
 
                     dialog.dismiss();
                     if (getActivity() != null) {
-                        Log.e("SerVerErrAddInci", th.toString());
+                        Log.e("SerVerErrAddBill", th.toString());
                         if (th instanceof SocketTimeoutException) {
                             Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                         } else {
@@ -289,6 +344,41 @@ if (th instanceof SocketTimeoutException){
             });
 
         }
+
+    }
+
+    private void showAllDataInUI() {
+
+        name.setText(expenses.getExpenseName());
+        description.setText(expenses.getExpenseDescription());
+        amount.setText(expenses.getAmount());
+
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
+        Date date1 = null;
+        try {
+            date1 = formatter.parse(expenses.getDateTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-DD");
+        String finalString = newFormat.format(date1);
+
+        yearForServer = expenses.getYear();
+        monthInWord = expenses.getMonth();
+
+        dateTextView.setText(finalString);
+        date = finalString;
+
+        /*for (int i = 0; i < status.size(); i++) {
+
+            if (status.get(i).equals(bill.getStatus())) {
+
+                statusSpinner.setSelection(i, true);
+                break;
+            }
+
+        }*/
+
 
     }
 

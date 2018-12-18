@@ -11,8 +11,10 @@ import com.budgetcatcher.www.budgetcatcher.Model.AddCategory;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertAllowanceBody;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertBillBody;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertExpensesBody;
+import com.budgetcatcher.www.budgetcatcher.Model.ModifyAllowanceBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyBillBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyCategory;
+import com.budgetcatcher.www.budgetcatcher.Model.ModifyExpenseBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ProfileSetupBody;
 import com.budgetcatcher.www.budgetcatcher.Model.SignUpBody;
 import com.budgetcatcher.www.budgetcatcher.Model.User;
@@ -71,6 +73,12 @@ public interface ApiInterface {
 
     @PUT
     Call<String> modifyBill(@Url String url, @HeaderMap Map<String, String> headers, @Body ModifyBillBody modifyBillBody);
+
+    @PUT
+    Call<String> modifyAllowance(@Url String url, @HeaderMap Map<String, String> headers, @Body ModifyAllowanceBody modifyAllowanceBody);
+
+    @PUT
+    Call<String> modifyExpense(@Url String url, @HeaderMap Map<String, String> headers, @Body ModifyExpenseBody modifyExpenseBody);
 
     @PUT
     Call<String> modifyCategory(@Url String url, @HeaderMap Map<String, String> headers, @Body ModifyCategory modifyCategory);

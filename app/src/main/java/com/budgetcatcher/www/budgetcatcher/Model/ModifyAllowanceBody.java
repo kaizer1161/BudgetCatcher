@@ -3,14 +3,8 @@ package com.budgetcatcher.www.budgetcatcher.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Allowance {
+public class ModifyAllowanceBody {
 
-    @SerializedName("allowanceId")
-    @Expose
-    private String allowanceId;
-    @SerializedName("userId")
-    @Expose
-    private String userId;
     @SerializedName("categoryId")
     @Expose
     private String categoryId;
@@ -23,51 +17,25 @@ public class Allowance {
     @SerializedName("allowanceName")
     @Expose
     private String allowanceName;
-    @SerializedName("categoryName")
-    @Expose
-    private String categoryName;
 
     /**
      * No args constructor for use in serialization
      */
-    public Allowance() {
+    public ModifyAllowanceBody() {
     }
 
     /**
-     *
-     * @param categoryName
      * @param description
      * @param categoryId
-     * @param userId
-     * @param allowanceId
      * @param allowanceAmount
      * @param allowanceName
      */
-    public Allowance(String allowanceId, String userId, String categoryId, String allowanceAmount, String description, String allowanceName, String categoryName) {
+    public ModifyAllowanceBody(String categoryId, String allowanceAmount, String description, String allowanceName) {
         super();
-        this.allowanceId = allowanceId;
-        this.userId = userId;
         this.categoryId = categoryId;
         this.allowanceAmount = allowanceAmount;
         this.description = description;
         this.allowanceName = allowanceName;
-        this.categoryName = categoryName;
-    }
-
-    public String getAllowanceId() {
-        return allowanceId;
-    }
-
-    public void setAllowanceId(String allowanceId) {
-        this.allowanceId = allowanceId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getCategoryId() {
@@ -100,14 +68,6 @@ public class Allowance {
 
     public void setAllowanceName(String allowanceName) {
         this.allowanceName = allowanceName;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
     }
 
 }

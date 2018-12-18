@@ -25,8 +25,10 @@ import com.budgetcatcher.www.budgetcatcher.Model.GetUserInfo;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertAllowanceBody;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertBillBody;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertExpensesBody;
+import com.budgetcatcher.www.budgetcatcher.Model.ModifyAllowanceBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyBillBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyCategory;
+import com.budgetcatcher.www.budgetcatcher.Model.ModifyExpenseBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ProfileSetupBody;
 import com.budgetcatcher.www.budgetcatcher.Model.SignUpBody;
 import com.budgetcatcher.www.budgetcatcher.Model.User;
@@ -441,6 +443,8 @@ public class ApiManager {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
+                Log.d(TAG, "onResponse: " + response.code());
+
                 if (response.code() == URL.STATUS_SERVER_CREATED) {
 
                     callback.onSuccess(response.body());
@@ -561,6 +565,68 @@ public class ApiManager {
         String uri = URL.base + URL.modifyBill + userId + "/" + billId;
 
         Call<String> networkCall = apiInterface.modifyBill(uri, headers, body);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void modifyAllowance(String userId, String allowanceID, ModifyAllowanceBody body, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.modifyAllowance + userId + "/" + allowanceID;
+
+        Call<String> networkCall = apiInterface.modifyAllowance(uri, headers, body);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void modifyExpense(String userId, String expenseId, ModifyExpenseBody body, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.modifyExpense + userId + "/" + expenseId;
+
+        Call<String> networkCall = apiInterface.modifyExpense(uri, headers, body);
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

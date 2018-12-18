@@ -79,7 +79,7 @@ public class Manage extends Fragment {
             ((MainActivity) getActivity()).navigationView.setCheckedItem(R.id.nav_manage);
 
             userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
-            setPayFrequencyListist();
+            setPayFrequencyList();
             editTextCursorVisibility(false);
 
             payFrequencyListAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item_manage, R.id.spinner_item_text, payFrequencyList);
@@ -125,22 +125,22 @@ public class Manage extends Fragment {
     private void showFeedBills(ArrayList<AccountItem> accountItemArrayList, ArrayList<Bill> billArrayList) {
 
         bills.setLayoutManager(new LinearLayoutManager(getContext()));
-        billsListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_BILL, billArrayList);
+        billsListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_BILL, billArrayList, null, null);
         bills.setAdapter(billsListAdapter);
 
     }
 
-    private void showFeedSpendingAllowance(ArrayList<AccountItem> accountItemArrayList) {
+    private void showFeedSpendingAllowance(ArrayList<AccountItem> accountItemArrayList, ArrayList<Allowance> allowanceArrayList) {
 
         allowance.setLayoutManager(new LinearLayoutManager(getContext()));
-        allowanceListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_SPENDING_ALLOWANCE);
+        allowanceListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_SPENDING_ALLOWANCE, null, allowanceArrayList, null);
         allowance.setAdapter(allowanceListAdapter);
     }
 
-    private void showFeedIncidental(ArrayList<AccountItem> accountItemArrayList) {
+    private void showFeedIncidental(ArrayList<AccountItem> accountItemArrayList, ArrayList<Expenses> expensesArrayList) {
 
         incidental.setLayoutManager(new LinearLayoutManager(getContext()));
-        incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCIDENTAL);
+        incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCIDENTAL, null, null, expensesArrayList);
         incidental.setAdapter(incidentalListAdapter);
 
     }
@@ -256,11 +256,11 @@ public class Manage extends Fragment {
                 for (int i = 0; i < allowancesList.size(); i++) {
 
                     Allowance allowance = allowancesList.get(i);
-                    spendingAllowanceArrayList.add(new AccountItem(allowance.getAllowanceName(), "$" + allowance.getAllowanceAmount(), allowance.getAllowanceId()));
+                    spendingAllowanceArrayList.add(new AccountItem(allowance.getCategoryName(), "$" + allowance.getAllowanceAmount(), allowance.getAllowanceId()));
 
                 }
 
-                showFeedSpendingAllowance(spendingAllowanceArrayList);
+                showFeedSpendingAllowance(spendingAllowanceArrayList, allowancesList);
 
             }
 
@@ -289,7 +289,7 @@ public class Manage extends Fragment {
 
     private void getExpensesFromServer() {
 
-        BudgetCatcher.apiManager.getExpenses(userID, "january", "2018", new QueryCallback<ArrayList<Expenses>>() {
+        BudgetCatcher.apiManager.getExpenses(userID, "january", "2019", new QueryCallback<ArrayList<Expenses>>() {
             @Override
             public void onSuccess(ArrayList<Expenses> expensesList) {
 
@@ -313,7 +313,7 @@ public class Manage extends Fragment {
 
                 }
 
-                showFeedIncidental(expensesArrayList);
+                showFeedIncidental(expensesArrayList, expensesList);
 
             }
 
@@ -340,7 +340,7 @@ public class Manage extends Fragment {
 
     }
 
-    public void setPayFrequencyListist() {
+    public void setPayFrequencyList() {
 
         payFrequencyList = new ArrayList<>();
         payFrequencyList.add("Pay Frequency");
