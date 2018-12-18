@@ -48,6 +48,7 @@ public class Home extends Fragment {
         if (getActivity() != null) {
 
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Home");
+            ((MainActivity) getActivity()).navigationView.setCheckedItem(R.id.nav_home);
 
             ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior = BottomSheetBehavior.from(projectedBalanceLayoutBottomSheet);
             ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);

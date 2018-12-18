@@ -68,7 +68,7 @@ public class AddIncident extends Fragment {
                     getString(R.string.loading), true);
             dialog.dismiss();
 
-            Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Add Bill");
+            Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Add Incident");
             /*statusList();
             fetchCategory();*/
 

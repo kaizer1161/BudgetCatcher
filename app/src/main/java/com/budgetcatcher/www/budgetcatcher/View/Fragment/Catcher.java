@@ -59,6 +59,7 @@ public class Catcher extends Fragment {
         if (getActivity() != null) {
 
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Catcher");
+            ((MainActivity) getActivity()).navigationView.setCheckedItem(R.id.nav_catcher);
 
             userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 

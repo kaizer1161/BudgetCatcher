@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
 
     private BroadcastReceiver mNetworkReceiver;
     public BottomSheetBehavior projectedBalanceBottomSheetBehavior;
-    private NavigationView navigationView;
+    public NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

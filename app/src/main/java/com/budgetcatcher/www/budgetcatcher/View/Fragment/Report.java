@@ -39,8 +39,11 @@ public class Report extends Fragment {
         View rootView = inflater.inflate(R.layout.report, container, false);
         ButterKnife.bind(this, rootView);
 
-        if (getActivity() != null)
+        if (getActivity() != null) {
+
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Report");
+            ((MainActivity) getActivity()).navigationView.setCheckedItem(R.id.nav_report);
+        }
 
         pieChart = rootView.findViewById(R.id.pieChart);
         barChart = rootView.findViewById(R.id.barChart);

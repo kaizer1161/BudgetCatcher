@@ -91,6 +91,7 @@ public class Settings extends Fragment {
             categoryDialog.dismiss();
 
             userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
+            ((MainActivity) getActivity()).navigationView.setCheckedItem(R.id.nav_settings);
 
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Settings");
 

@@ -23,8 +23,11 @@ public class Advice extends Fragment {
         View rootView = inflater.inflate(R.layout.advice, container, false);
         ButterKnife.bind(this, rootView);
 
-        if (getActivity() != null)
+        if (getActivity() != null) {
+
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Advice");
+            ((MainActivity) getActivity()).navigationView.setCheckedItem(R.id.nav_advice);
+        }
 
         return rootView;
     }

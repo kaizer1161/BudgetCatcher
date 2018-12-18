@@ -76,6 +76,7 @@ public class Manage extends Fragment {
         if (getActivity() != null) {
 
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Manage");
+            ((MainActivity) getActivity()).navigationView.setCheckedItem(R.id.nav_manage);
 
             userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
             setPayFrequencyListist();
