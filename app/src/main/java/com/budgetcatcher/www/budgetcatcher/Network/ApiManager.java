@@ -527,6 +527,68 @@ public class ApiManager {
 
     }
 
+    public void deleteAllowance(String userId, String allowanceId, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.deleteAllowance + userId + "/" + allowanceId;
+
+        Call<String> networkCall = apiInterface.deleteAllowance(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void deleteExpense(String userId, String expenseId, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.deleteExpense + userId + "/" + expenseId;
+
+        Call<String> networkCall = apiInterface.deleteExpense(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
     public void deleteCategory(String categoryId, final QueryCallback<String> callback) {
 
         String uri = URL.base + URL.deleteCategory + categoryId;

@@ -25,10 +25,12 @@ public class URL {
     public static final String profileSetup = "modifyUser/";
     public static final String insertExpense = "insertExpense";
     public static final String modifyExpense = "modifyExpense/";
+    public static final String deleteExpense = "deleteExpense/";
     public static final String modifyCategory = "modifyCategory/";
     public static final String getAllExpenses = "getAllExpenses/";
     public static final String deleteCategory = "deleteCategory/";
     public static final String getAllCategory = "getAllCategory/";
+    public static final String deleteAllowance = "deleteAllowance/";
     public static final String modifyAllowance = "modifyAllowance/";
     public static final String getAllAllowance = "getAllAllowances/";
     public static final String insertAllowances = "insertAllowances";
