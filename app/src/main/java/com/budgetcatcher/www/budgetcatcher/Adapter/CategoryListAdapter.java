@@ -188,7 +188,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                 public void onSuccess(String data) {
 
                     dialog.dismiss();
-                    Toast.makeText(activity, "Successfully delete category", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, activity.getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show();
                     categories.remove(getAdapterPosition());
                     notifyDataSetChanged();
 
@@ -197,7 +197,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                 @Override
                 public void onFail() {
 
-                    Toast.makeText(activity, "Failed to delete category", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, activity.getString(R.string.delete_failed), Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
 
                 }
@@ -267,7 +267,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
                                         dialog.dismiss();
                                         alert11.dismiss();
-                                        Toast.makeText(activity, "Successfully category updated", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(activity, activity.getString(R.string.successfully_updated), Toast.LENGTH_SHORT).show();
                                         categories.get(getAdapterPosition()).setCategoryName(categoryName.getText().toString());
                                         notifyDataSetChanged();
 
@@ -276,7 +276,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                                     @Override
                                     public void onFail() {
 
-                                        Toast.makeText(activity, "Failed to update category", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(activity, activity.getString(R.string.updated_failed), Toast.LENGTH_SHORT).show();
                                         dialog.dismiss();
 
                                     }

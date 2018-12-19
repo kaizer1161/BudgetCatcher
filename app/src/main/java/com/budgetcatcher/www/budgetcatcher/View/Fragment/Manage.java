@@ -135,7 +135,7 @@ public class Manage extends Fragment {
 
         } else {
 
-            Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 
         }
 

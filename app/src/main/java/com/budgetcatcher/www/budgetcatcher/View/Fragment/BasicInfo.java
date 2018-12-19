@@ -147,7 +147,7 @@ public class BasicInfo extends Fragment {
                 if (!BudgetCatcher.getConnectedToInternet()) {
 
                     hasError = true;
-                    Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
 
                 }
                 if (!hasError) {
@@ -200,7 +200,7 @@ public class BasicInfo extends Fragment {
 
                 dialog.dismiss();
 
-                Toast.makeText(getActivity(), "Successfully updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.successfully_updated), Toast.LENGTH_SHORT).show();
 
                 if (storeUserInformationInSharedPreference(userDetail)) {
 
@@ -214,7 +214,7 @@ public class BasicInfo extends Fragment {
             public void onFail() {
 
                 dialog.dismiss();
-                Toast.makeText(getActivity(), "Failed to update profile", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.updated_failed), Toast.LENGTH_SHORT).show();
 
             }
 

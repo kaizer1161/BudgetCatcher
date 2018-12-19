@@ -13,7 +13,7 @@
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/gap_of_8dp"
+            android:layout_margin="@dimen/gap_of_4dp"
             android:showText="true"
             android:textOff="Weekly"
             android:textOn="Monthly"
@@ -27,7 +27,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <LinearLayout

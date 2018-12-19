@@ -199,7 +199,7 @@ public class Settings extends Fragment {
 
                     } else {
 
-                        Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -216,7 +216,7 @@ public class Settings extends Fragment {
 
                 } else {
 
-                    Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -277,7 +277,7 @@ public class Settings extends Fragment {
 
                                     categoryDialog.dismiss();
                                     alert11.dismiss();
-                                    Toast.makeText(getActivity(), "Successfully category added", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), getString(R.string.successfully_added), Toast.LENGTH_SHORT).show();
                                     if (categoryListAdapter.getItemCount() > 0) {
 
                                         categoryListAdapter.clearList();
@@ -291,7 +291,7 @@ public class Settings extends Fragment {
                                 @Override
                                 public void onFail() {
 
-                                    Toast.makeText(getActivity(), "Failed to add category", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), getString(R.string.failed_to_added), Toast.LENGTH_SHORT).show();
                                     categoryDialog.dismiss();
 
                                 }

@@ -90,7 +90,15 @@ public class EditBill extends Fragment {
 
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Edit Bill");
             statusList();
-            fetchCategory();
+            if (BudgetCatcher.getConnectedToInternet()) {
+
+                fetchCategory();
+
+            } else {
+
+                Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+
+            }
 
         }
 
@@ -272,7 +280,7 @@ public class EditBill extends Fragment {
                 if (!BudgetCatcher.getConnectedToInternet()) {
 
                     hasError = true;
-                    Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
 
                 }
                 if (!hasError) {
@@ -310,7 +318,7 @@ public class EditBill extends Fragment {
                 public void onSuccess(String data) {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Successfully edited", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.successfully_edited), Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
 
                 }
@@ -319,7 +327,7 @@ public class EditBill extends Fragment {
                 public void onFail() {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Failed to edit", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.failed_edit), Toast.LENGTH_SHORT).show();
 
                 }
 

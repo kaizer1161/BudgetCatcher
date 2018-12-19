@@ -67,7 +67,15 @@ public class AddAllowance extends Fragment {
             dialog.dismiss();
 
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Add Allowance");
-            fetchCategory();
+            if (BudgetCatcher.getConnectedToInternet()) {
+
+                fetchCategory();
+
+            } else {
+
+                Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+
+            }
 
         }
 
@@ -180,7 +188,7 @@ public class AddAllowance extends Fragment {
                 if (!BudgetCatcher.getConnectedToInternet()) {
 
                     hasError = true;
-                    Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
 
                 }
                 if (!hasError) {
@@ -208,7 +216,7 @@ public class AddAllowance extends Fragment {
                 public void onSuccess(String data) {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Successfully added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.successfully_added), Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
 
                 }
@@ -217,7 +225,7 @@ public class AddAllowance extends Fragment {
                 public void onFail() {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Failed to add", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.failed_to_added), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

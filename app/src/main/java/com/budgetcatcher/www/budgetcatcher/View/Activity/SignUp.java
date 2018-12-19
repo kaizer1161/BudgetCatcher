@@ -121,7 +121,7 @@ public class SignUp extends AppCompatActivity {
                 if (!BudgetCatcher.getConnectedToInternet()) {
 
                     hasError = true;
-                    Toast.makeText(SignUp.this, "No internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUp.this, getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
 
                 }
                 if (!hasError) {
@@ -173,7 +173,7 @@ public class SignUp extends AppCompatActivity {
 
                         if (storeUserInformationInSharedPreference(userID)) {
 
-                            Toast.makeText(SignUp.this, "Successfully account created", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUp.this, "Successfully created", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(SignUp.this, ProfileSetup.class));
                             finish();
 

@@ -299,7 +299,7 @@ public class SignIn extends AppCompatActivity {
                 if (!BudgetCatcher.getConnectedToInternet()) {
 
                     hasError = true;
-                    Toast.makeText(SignIn.this, "No internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignIn.this, getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
 
                 }
                 if (!hasError) {
@@ -314,18 +314,39 @@ public class SignIn extends AppCompatActivity {
 
             case R.id.google: {
 
-                dialog.show();
-                signIn();
+                boolean hasError = false;
+                if (!BudgetCatcher.getConnectedToInternet()) {
+
+                    hasError = true;
+                    Toast.makeText(SignIn.this, getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
+
+                }
+                if (!hasError) {
+
+                    dialog.show();
+                    signIn();
+
+                }
                 break;
             }
 
             case R.id.facebook: {
 
-                dialog.show();
-                LoginManager.getInstance().logInWithReadPermissions(
-                        this,
-                        Arrays.asList(/*"user_photos",*/ "email", /*"user_birthday",*/ "public_profile")
-                );
+                boolean hasError = false;
+                if (!BudgetCatcher.getConnectedToInternet()) {
+
+                    hasError = true;
+                    Toast.makeText(SignIn.this, getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
+
+                }
+                if (!hasError) {
+
+                    dialog.show();
+                    LoginManager.getInstance().logInWithReadPermissions(
+                            this,
+                            Arrays.asList(/*"user_photos",*/ "email", /*"user_birthday",*/ "public_profile")
+                    );
+                }
                 break;
             }
         }

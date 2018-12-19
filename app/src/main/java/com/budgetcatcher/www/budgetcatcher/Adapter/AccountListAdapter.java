@@ -254,7 +254,6 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
                                         }
 
-
                                     }
                                 });
 
@@ -273,7 +272,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                                                 public void onSuccess(String data) {
 
                                                     dialog.dismiss();
-                                                    Toast.makeText(activity, "Successfully deleted", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(activity, activity.getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show();
                                                     accountItemArrayList.remove(getAdapterPosition());
                                                     notifyDataSetChanged();
                                                     alert11.dismiss();
@@ -283,7 +282,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                                                 @Override
                                                 public void onFail() {
                                                     dialog.dismiss();
-                                                    Toast.makeText(activity, "Delete failed", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(activity, activity.getString(R.string.delete_failed), Toast.LENGTH_SHORT).show();
                                                 }
 
                                                 @Override
@@ -311,7 +310,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                                                 public void onSuccess(String data) {
 
                                                     dialog.dismiss();
-                                                    Toast.makeText(activity, "Successfully deleted", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(activity, activity.getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show();
                                                     accountItemArrayList.remove(getAdapterPosition());
                                                     notifyDataSetChanged();
                                                     alert11.dismiss();
@@ -321,7 +320,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                                                 @Override
                                                 public void onFail() {
                                                     dialog.dismiss();
-                                                    Toast.makeText(activity, "Delete failed", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(activity, activity.getString(R.string.delete_failed), Toast.LENGTH_SHORT).show();
                                                 }
 
                                                 @Override
@@ -349,7 +348,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                                                 public void onSuccess(String data) {
 
                                                     dialog.dismiss();
-                                                    Toast.makeText(activity, "Successfully deleted", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(activity, activity.getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show();
                                                     accountItemArrayList.remove(getAdapterPosition());
                                                     notifyDataSetChanged();
                                                     alert11.dismiss();
@@ -359,7 +358,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                                                 @Override
                                                 public void onFail() {
                                                     dialog.dismiss();
-                                                    Toast.makeText(activity, "Delete failed", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(activity, activity.getString(R.string.delete_failed), Toast.LENGTH_SHORT).show();
                                                 }
 
                                                 @Override

@@ -99,7 +99,7 @@ public class Catcher extends Fragment {
 
         } else {
 
-            Toast.makeText(getActivity(), "No internet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 
         }
 
@@ -212,7 +212,7 @@ public class Catcher extends Fragment {
     private void getExpensesFromServer() {
 
         incidentalSwipeDown.setRefreshing(true);
-        BudgetCatcher.apiManager.getExpenses(userID, "january", "2018", new QueryCallback<ArrayList<Expenses>>() {
+        BudgetCatcher.apiManager.getExpenses(userID, "january", "2019", new QueryCallback<ArrayList<Expenses>>() {
             @Override
             public void onSuccess(ArrayList<Expenses> expensesList) {
 
