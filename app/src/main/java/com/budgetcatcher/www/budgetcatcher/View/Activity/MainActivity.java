@@ -20,6 +20,7 @@ import android.view.MenuItem;
 
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
+import com.budgetcatcher.www.budgetcatcher.Model.Week;
 import com.budgetcatcher.www.budgetcatcher.Network.NetworkChangeReceiver;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Advice;
@@ -33,12 +34,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private BroadcastReceiver mNetworkReceiver;
     public BottomSheetBehavior projectedBalanceBottomSheetBehavior;
     public NavigationView navigationView;
+    private ArrayList<Week> weeks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

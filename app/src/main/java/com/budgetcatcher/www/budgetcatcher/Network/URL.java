@@ -19,10 +19,10 @@ public class URL {
     public static final String insertBill = "insertBill";
     public static final String modifyBill = "modifyBill/";
     public static final String getAllBill = "getAllBills/";
-    public static final String getUserInfo = "getUserInfo/";
-    public static final String deleteBills = "deleteBills/";
     public static final String addCategory = "addCategory";
     public static final String profileSetup = "modifyUser/";
+    public static final String getUserInfo = "getUserInfo/";
+    public static final String deleteBills = "deleteBills/";
     public static final String insertExpense = "insertExpense";
     public static final String modifyExpense = "modifyExpense/";
     public static final String deleteExpense = "deleteExpense/";
@@ -34,6 +34,8 @@ public class URL {
     public static final String modifyAllowance = "modifyAllowance/";
     public static final String getAllAllowance = "getAllAllowances/";
     public static final String insertAllowances = "insertAllowances";
+    public static final String getWeeksOrMonths = "getWeeksOrMonths/";
+    public static final String getCurrentWeekOrMonth = "getCurrentWeekOrMonth/";
 
     /*URL key value*/
     public static final String value_Content_Type = "application/json";

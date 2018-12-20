@@ -8,8 +8,12 @@ public class Config {
     public static final String SP_USER_ID = "USER_ID";
     public static final String SP_LOGGED_IN = "loggedIn";
     public static final String SP_USER_INFO = "SP_USER_INFO";
+    public static final String SP_WEEK_INFO = "SP_WEEK_INFO";
     public static final String SP_APP_NAME = "BUDGET_CATCHER";
+    public static final String SP_MONTH_INFO = "SP_MONTH_INFO";
     public static final String SP_USER_CREATED_LEVEL = "USER_CREATED";
+    public static final String SP_CURRENT_WEEK_INFO = "SP_CURRENT_WEEK_INFO";
+    public static final String SP_CURRENT_MONTH_INFO = "SP_CURRENT_MONTH_INFO";
     public static final int SP_USER_CREATED_LEVEL_SIGN_UP = 100;
     public static final int SP_USER_CREATED_LEVEL_NONE = 99;
 
@@ -36,6 +40,8 @@ public class Config {
 
     public static final String CATEGORY_ALLOWANCE_TAG_ID = "1";
     public static final String CATEGORY_BILL_TAG_ID = "2";
+    public static final String WEEK_TAG_ID = "1";
+    public static final String MONTH_TAG_ID = "2";
 
     /*retrofit okHttp timeout values*/
     public static final int readTimeout = 60;

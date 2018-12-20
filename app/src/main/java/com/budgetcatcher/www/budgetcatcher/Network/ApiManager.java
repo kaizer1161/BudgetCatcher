@@ -147,6 +147,118 @@ public class ApiManager {
 
     }
 
+    public void getWeekBreakDown(String weekId, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.getWeeksOrMonths + weekId;
+
+        Call<String> networkCall = apiInterface.getWeeksOrMonths(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+                    callback.onFail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void getMonthBreakDown(String monthId, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.getWeeksOrMonths + monthId;
+
+        Call<String> networkCall = apiInterface.getCurrentWeeksOrMonths(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+                    callback.onFail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void getCurrentWeek(String weekId, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.getCurrentWeekOrMonth + weekId;
+
+        Call<String> networkCall = apiInterface.getWeeksOrMonths(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+                    callback.onFail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void getCurrentMonth(String monthId, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.getCurrentWeekOrMonth + monthId;
+
+        Call<String> networkCall = apiInterface.getWeeksOrMonths(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+                    callback.onFail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
     public void userProfileSetup(String userID, ProfileSetupBody profileSetupBody, final QueryCallback<String> callback) {
 
         String uri = URL.base + URL.profileSetup + userID;
