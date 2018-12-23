@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.budgetcatcher.www.budgetcatcher.Adapter.AccountListAdapter;
@@ -21,6 +20,7 @@ import com.budgetcatcher.www.budgetcatcher.Model.AccountItem;
 import com.budgetcatcher.www.budgetcatcher.Model.Allowance;
 import com.budgetcatcher.www.budgetcatcher.Model.Bill;
 import com.budgetcatcher.www.budgetcatcher.Model.Expenses;
+import com.budgetcatcher.www.budgetcatcher.Model.Income;
 import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
@@ -41,12 +41,16 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Manage extends Fragment {
 
+    @BindView(R.id.income)
+    RecyclerView income;
     @BindView(R.id.bills)
     RecyclerView bills;
     @BindView(R.id.allowance)
     RecyclerView allowance;
     @BindView(R.id.incidental_recycler_view)
     RecyclerView incidental;
+    @BindView(R.id.income_swipe_down)
+    SwipeRefreshLayout incomeSwipeDown;
     @BindView(R.id.bill_swipe_down)
     SwipeRefreshLayout billSwipeDown;
     @BindView(R.id.allowance_swipe_down)
@@ -56,12 +60,9 @@ public class Manage extends Fragment {
     @BindView(R.id.swipe_down)
     SwipeRefreshLayout refreshAllList;
 
-    private AccountListAdapter billsListAdapter, allowanceListAdapter, incidentalListAdapter;
-    private Boolean payFrequencySpinnerSelected = false;
-    private String userID, date = null;
+    private AccountListAdapter incomeListAdapter, billsListAdapter, allowanceListAdapter, incidentalListAdapter;
+    private String userID;
 
-    private ArrayList<String> payFrequencyList;
-    private ArrayAdapter<String> payFrequencyListAdapter;
 
     @Nullable
     @Override
@@ -97,6 +98,7 @@ public class Manage extends Fragment {
 
         if (BudgetCatcher.getConnectedToInternet()) {
 
+            getIncomeFromServer();
             getBillFromServer();
             getAllowanceFromServer();
             getExpensesFromServer();
@@ -109,10 +111,18 @@ public class Manage extends Fragment {
 
     }
 
+    private void showFeedIncomes(ArrayList<AccountItem> accountItemArrayList, ArrayList<Income> incomeArrayList) {
+
+        income.setLayoutManager(new LinearLayoutManager(getContext()));
+        incomeListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCOME, null, null, null, incomeArrayList);
+        income.setAdapter(incomeListAdapter);
+
+    }
+
     private void showFeedBills(ArrayList<AccountItem> accountItemArrayList, ArrayList<Bill> billArrayList) {
 
         bills.setLayoutManager(new LinearLayoutManager(getContext()));
-        billsListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_BILL, billArrayList, null, null);
+        billsListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_BILL, billArrayList, null, null, null);
         bills.setAdapter(billsListAdapter);
 
     }
@@ -120,14 +130,14 @@ public class Manage extends Fragment {
     private void showFeedSpendingAllowance(ArrayList<AccountItem> accountItemArrayList, ArrayList<Allowance> allowanceArrayList) {
 
         allowance.setLayoutManager(new LinearLayoutManager(getContext()));
-        allowanceListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_SPENDING_ALLOWANCE, null, allowanceArrayList, null);
+        allowanceListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_SPENDING_ALLOWANCE, null, allowanceArrayList, null, null);
         allowance.setAdapter(allowanceListAdapter);
     }
 
     private void showFeedIncidental(ArrayList<AccountItem> accountItemArrayList, ArrayList<Expenses> expensesArrayList) {
 
         incidental.setLayoutManager(new LinearLayoutManager(getContext()));
-        incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCIDENTAL, null, null, expensesArrayList);
+        incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCIDENTAL, null, null, expensesArrayList, null);
         incidental.setAdapter(incidentalListAdapter);
 
     }
@@ -185,6 +195,52 @@ public class Manage extends Fragment {
             }
 
         }
+
+    }
+
+    private void getIncomeFromServer() {
+
+        incomeSwipeDown.setRefreshing(true);
+        BudgetCatcher.apiManager.getIncome(userID, new QueryCallback<ArrayList<Income>>() {
+            @Override
+            public void onSuccess(ArrayList<Income> incomeList) {
+
+                incomeSwipeDown.setRefreshing(false);
+                ArrayList<AccountItem> incomeArrayList = new ArrayList<>();
+
+                for (int i = 0; i < incomeList.size(); i++) {
+
+                    Income income = incomeList.get(i);
+                    incomeArrayList.add(new AccountItem(income.getFrequency(), income.getNextPayDay(), "$" + income.getAmount(), income.getIncomeId()));
+
+                }
+
+                showFeedIncomes(incomeArrayList, incomeList);
+
+            }
+
+            @Override
+            public void onFail() {
+
+                incomeSwipeDown.setRefreshing(false);
+
+            }
+
+            @Override
+            public void onError(Throwable th) {
+
+                incomeSwipeDown.setRefreshing(false);
+                if (getActivity() != null) {
+                    Log.e("SerVerErrManage", th.toString());
+                    if (th instanceof SocketTimeoutException) {
+                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), th.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
 
     }
 

@@ -21,6 +21,7 @@ import com.budgetcatcher.www.budgetcatcher.Model.AccountItem;
 import com.budgetcatcher.www.budgetcatcher.Model.Allowance;
 import com.budgetcatcher.www.budgetcatcher.Model.Bill;
 import com.budgetcatcher.www.budgetcatcher.Model.Expenses;
+import com.budgetcatcher.www.budgetcatcher.Model.Income;
 import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
@@ -50,6 +51,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
     private ArrayList<Bill> bills;
     private ArrayList<Allowance> allowances;
     private ArrayList<Expenses> expenses;
+    private ArrayList<Income> incomes;
     private String fragmentTag;
     private Boolean hasClickListener;
 
@@ -63,7 +65,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
     }
 
-    public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag, ArrayList<Bill> bills, ArrayList<Allowance> allowances, ArrayList<Expenses> expenses) {
+    public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag, ArrayList<Bill> bills, ArrayList<Allowance> allowances, ArrayList<Expenses> expenses, ArrayList<Income> incomes) {
 
         inflater = LayoutInflater.from(activity);
         this.activity = activity;
@@ -83,6 +85,10 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         } else if (fragmentTag.equals(Config.TAG_LIST_INCIDENTAL)) {
 
             this.expenses = expenses;
+
+        } else if (fragmentTag.equals(Config.TAG_LIST_INCOME)) {
+
+            this.incomes = incomes;
 
         }
 

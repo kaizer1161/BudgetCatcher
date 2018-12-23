@@ -24,6 +24,7 @@ public class URL {
     public static final String getUserInfo = "getUserInfo/";
     public static final String deleteBills = "deleteBills/";
     public static final String insertIncome = "insertIncome";
+    public static final String getAllIncome = "getAllIncome/";
     public static final String insertExpense = "insertExpense";
     public static final String modifyExpense = "modifyExpense/";
     public static final String deleteExpense = "deleteExpense/";

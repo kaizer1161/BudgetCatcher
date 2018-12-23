@@ -46,6 +46,9 @@ public interface ApiInterface {
     Call<String> getBill(@Url String url);
 
     @GET
+    Call<String> getIncome(@Url String url);
+
+    @GET
     Call<String> getAllowance(@Url String url);
 
     @GET

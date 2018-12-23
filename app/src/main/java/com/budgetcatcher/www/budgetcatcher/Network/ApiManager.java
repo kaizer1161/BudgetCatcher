@@ -22,6 +22,8 @@ import com.budgetcatcher.www.budgetcatcher.Model.CategoryResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.Expenses;
 import com.budgetcatcher.www.budgetcatcher.Model.ExpensesResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.GetUserInfo;
+import com.budgetcatcher.www.budgetcatcher.Model.Income;
+import com.budgetcatcher.www.budgetcatcher.Model.IncomeResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertAllowanceBody;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertBillBody;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertExpensesBody;
@@ -337,6 +339,40 @@ public class ApiManager {
                     BillResponse billResponse = gson.fromJson(response.body(), BillResponse.class);
 
                     callback.onSuccess((ArrayList<Bill>) billResponse.getBills());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void getIncome(String userId, final QueryCallback<ArrayList<Income>> callback) {
+
+        String uri = URL.base + URL.getAllIncome + userId;
+
+        Call<String> networkCall = apiInterface.getIncome(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    Gson gson = new Gson();
+                    IncomeResponse incomeResponse = gson.fromJson(response.body(), IncomeResponse.class);
+
+                    callback.onSuccess((ArrayList<Income>) incomeResponse.getIncomes());
 
                 } else {
 

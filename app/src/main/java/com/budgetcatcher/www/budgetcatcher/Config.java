@@ -19,6 +19,7 @@ public class Config {
 
     /*Fragment Tag*/
     public static final String TAG_LIST_BILL = "TAG_LIST_BILL";
+    public static final String TAG_LIST_INCOME = "TAG_LIST_INCOME";
     public static final String TAG_LIST_CATEGORY = "TAG_LIST_CATEGORY";
     public static final String TAG_HOME_FRAGMENT = "TAG_HOME_FRAGMENT";
     public static final String TAG_REPORT_FRAGMENT = "TAG_REPORT_FRAGMENT";
