@@ -11,12 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
-import android.widget.CalendarView;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.budgetcatcher.www.budgetcatcher.Adapter.AccountListAdapter;
@@ -52,14 +47,6 @@ public class Manage extends Fragment {
     RecyclerView allowance;
     @BindView(R.id.incidental_recycler_view)
     RecyclerView incidental;
-    @BindView(R.id.next_pay_day)
-    TextView nextPayDay;
-    @BindView(R.id.date_picker)
-    CalendarView datePicker;
-    @BindView(R.id.pay_frequency)
-    Spinner payFrequency;
-    @BindView(R.id.net_pay)
-    EditText netPay;
     @BindView(R.id.bill_swipe_down)
     SwipeRefreshLayout billSwipeDown;
     @BindView(R.id.allowance_swipe_down)
@@ -88,29 +75,10 @@ public class Manage extends Fragment {
             ((MainActivity) getActivity()).navigationView.setCheckedItem(R.id.nav_manage);
 
             userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
-            setPayFrequencyList();
-            editTextCursorVisibility(false);
-
-            payFrequencyListAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item_manage, R.id.spinner_item_text, payFrequencyList);
-            payFrequency.setAdapter(payFrequencyListAdapter);
 
             fetchAllList();
 
         }
-
-        datePicker.setVisibility(View.GONE);
-        datePicker.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@androidx.annotation.NonNull @NonNull CalendarView view, int year, int month, int dayOfMonth) {
-
-                nextPayDay.setVisibility(View.VISIBLE);
-                datePicker.setVisibility(View.GONE);
-
-                date = year + "-" + (month + 1) + "-" + dayOfMonth;
-                nextPayDay.setText(date);
-
-            }
-        });
 
         refreshAllList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -141,12 +109,6 @@ public class Manage extends Fragment {
 
     }
 
-    private void editTextCursorVisibility(boolean visibility) {
-
-        netPay.setCursorVisible(visibility);
-
-    }
-
     private void showFeedBills(ArrayList<AccountItem> accountItemArrayList, ArrayList<Bill> billArrayList) {
 
         bills.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -170,7 +132,7 @@ public class Manage extends Fragment {
 
     }
 
-    @OnClick({R.id.add_bill, R.id.add_allowance, R.id.add_incidentals, R.id.next_pay_day, R.id.net_pay})
+    @OnClick({R.id.add_bill, R.id.add_allowance, R.id.add_incidentals, R.id.add_income_setting})
     public void onClick(View view) {
 
         switch (view.getId()) {
@@ -209,18 +171,15 @@ public class Manage extends Fragment {
 
                 break;
             }
-            case R.id.next_pay_day: {
 
-                nextPayDay.setVisibility(View.GONE);
-                datePicker.setVisibility(View.VISIBLE);
+            case (R.id.add_income_setting): {
 
-                break;
-            }
-
-            case R.id.net_pay: {
-
-                editTextCursorVisibility(true);
-                netPay.setImeOptions(EditorInfo.IME_ACTION_DONE);
+                if (getActivity() != null)
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.content, new AddIncome(), Config.TAG_ADD_INCOME_FRAGMENT)
+                            .addToBackStack(null)
+                            .commit();
 
                 break;
             }
@@ -380,17 +339,6 @@ public class Manage extends Fragment {
 
             }
         });
-
-    }
-
-    public void setPayFrequencyList() {
-
-        payFrequencyList = new ArrayList<>();
-        payFrequencyList.add("Pay Frequency");
-        payFrequencyList.add("Weekly");
-        payFrequencyList.add("Bi weekly");
-        payFrequencyList.add("Monthly");
-        payFrequencyList.add("Bi monthly");
 
     }
 
