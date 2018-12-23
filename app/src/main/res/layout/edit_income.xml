@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_image">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/gap_of_16dp">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/aquarium"
+            android:orientation="vertical"
+            android:padding="@dimen/gap_of_8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/gap_of_16dp"
+
+                android:gravity="center"
+                android:text="Edit Income"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:text="Normal or Est. Net Pay"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/net_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:layout_marginTop="@dimen/gap_of_8dp"
+                android:layout_marginRight="@dimen/gap_of_16dp"
+                android:layout_marginBottom="@dimen/gap_of_8dp"
+                android:background="@drawable/white_button_background"
+                android:hint="Amount"
+                android:inputType="numberDecimal"
+                android:padding="@dimen/gap_of_8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:text="Next Payday "
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/date_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:layout_marginTop="@dimen/gap_of_8dp"
+                android:layout_marginRight="@dimen/gap_of_16dp"
+                android:layout_marginBottom="@dimen/gap_of_8dp"
+                android:background="@drawable/white_button_background"
+                android:hint="Select date"
+                android:padding="@dimen/gap_of_8dp" />
+
+            <CalendarView
+                android:id="@+id/date_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:layout_marginTop="@dimen/gap_of_8dp"
+                android:layout_marginRight="@dimen/gap_of_16dp"
+                android:layout_marginBottom="@dimen/gap_of_8dp"
+                android:background="@color/hinoki">
+
+            </CalendarView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_of_16dp"
+                android:layout_marginBottom="@dimen/gap_of_8dp"
+                android:text="Pay Frequency"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/white" />
+
+            <Spinner
+                android:id="@+id/pay_frequency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/gap_of_16dp"
+                android:paddingRight="@dimen/gap_of_16dp">
+
+            </Spinner>
+
+            <Button
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/gap_of_8dp"
+                android:background="@drawable/hinoki_button_background"
+                android:text="Save"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

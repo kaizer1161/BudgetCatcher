@@ -325,7 +325,7 @@ public class EditIncidental extends Fragment {
                 public void onFail() {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), getString(R.string.failed_edit), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.failed_to_edited), Toast.LENGTH_SHORT).show();
 
                 }
 

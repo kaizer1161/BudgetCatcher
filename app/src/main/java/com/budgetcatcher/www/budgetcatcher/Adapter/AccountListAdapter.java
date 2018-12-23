@@ -28,6 +28,7 @@ import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.EditAllowance;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.EditBill;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.EditIncidental;
+import com.budgetcatcher.www.budgetcatcher.View.Fragment.EditIncome;
 import com.google.gson.Gson;
 
 import java.net.SocketTimeoutException;
@@ -213,7 +214,22 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                                         Bundle bundle = new Bundle();
                                         Gson gson = new Gson();
 
-                                        if (fragmentTag.equals(Config.TAG_LIST_BILL)) {
+                                        if (fragmentTag.equals(Config.TAG_LIST_INCOME)) {
+
+                                            alert11.dismiss();
+
+                                            bundle.putString(Config.KEY_SERIALIZABLE, gson.toJson(incomes.get(getAdapterPosition())));
+
+                                            EditIncome editIncome = new EditIncome();
+                                            editIncome.setArguments(bundle);
+
+                                            ((MainActivity) activity).getSupportFragmentManager()
+                                                    .beginTransaction()
+                                                    .replace(R.id.content, editIncome, Config.TAG_EDIT_INCOME_FRAGMENT)
+                                                    .addToBackStack(null)
+                                                    .commit();
+
+                                        } else if (fragmentTag.equals(Config.TAG_LIST_BILL)) {
 
                                             alert11.dismiss();
 

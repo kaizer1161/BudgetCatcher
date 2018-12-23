@@ -32,6 +32,7 @@ public class Config {
     public static final String TAG_EDIT_BILL_FRAGMENT = "TAG_EDIT_BILL_FRAGMENT";
     public static final String TAG_ADD_INCOME_FRAGMENT = "TAG_ADD_INCOME_FRAGMENT";
     public static final String TAG_BASIC_INFO_FRAGMENT = "TAG_BASIC_INFO_FRAGMENT";
+    public static final String TAG_EDIT_INCOME_FRAGMENT = "TAG_EDIT_INCOME_FRAGMENT";
     public static final String TAG_PROFILE_INFO_FRAGMENT = "TAG_PROFILE_INFO_FRAGMENT";
     public static final String TAG_ADD_ALLOWANCE_FRAGMENT = "TAG_ADD_ALLOWANCE_FRAGMENT";
     public static final String TAG_EDIT_ALLOWANCE_FRAGMENT = "TAG_EDIT_ALLOWANCE_FRAGMENT";

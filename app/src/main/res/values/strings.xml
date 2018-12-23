@@ -35,6 +35,6 @@
     <string name="successfully_added">Successfully added</string>
     <string name="failed_to_added">Failed to add</string>
     <string name="successfully_edited">Successfully edited</string>
-    <string name="failed_edit">Failed to edit</string>
+    <string name="failed_to_edited">Failed to edit</string>
 
 </resources>
