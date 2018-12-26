@@ -236,8 +236,41 @@ public class Home extends Fragment {
 
                 if (isMonthSelected) {
 
-                    monthIndex--;/*
-                    updateHeader();*/
+                    if (monthIndex > 0) {
+
+                        monthIndex--;
+
+                        try {
+
+                            startDate = format.parse(monthArrayList.get(monthIndex).getFirstDayOfMonth());
+                            endDate = format.parse(monthArrayList.get(monthIndex).getLastDayOfMonth());
+                            updateHeader(startDate, endDate, "Month of");
+                            updateHomeData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getFirstDayOfMonth());
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                } else {
+
+                    if (weekIndex > 0) {
+
+                        weekIndex--;
+
+                        try {
+
+                            startDate = format.parse(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek());
+                            endDate = format.parse(weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
+                            updateHeader(startDate, endDate, "Week of");
+                            updateHomeData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getFirstDayOfMonth());
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
 
                 }
 
@@ -245,6 +278,52 @@ public class Home extends Fragment {
             }
 
             case R.id.right_arrow: {
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                Date startDate = null, endDate = null;
+
+                if (isMonthSelected) {
+
+                    if (monthIndex < monthArrayList.size() - 1) {
+
+                        monthIndex++;
+
+                        try {
+
+                            startDate = format.parse(monthArrayList.get(monthIndex).getFirstDayOfMonth());
+                            endDate = format.parse(monthArrayList.get(monthIndex).getLastDayOfMonth());
+                            updateHeader(startDate, endDate, "Month of");
+                            updateHomeData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getFirstDayOfMonth());
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                } else {
+
+                    Log.d(TAG, "onClick: weekindex" + weekIndex);
+                    Log.d(TAG, "onClick: week size" + weekArrayList.size());
+
+                    if (weekIndex < weekArrayList.size() - 1) {
+
+                        weekIndex++;
+
+                        try {
+
+                            startDate = format.parse(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek());
+                            endDate = format.parse(weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
+                            updateHeader(startDate, endDate, "Week of");
+                            updateHomeData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getFirstDayOfMonth());
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                }
 
                 break;
             }
