@@ -2,21 +2,14 @@ package com.budgetcatcher.www.budgetcatcher.View.Activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
 import com.budgetcatcher.www.budgetcatcher.Network.NetworkChangeReceiver;
-import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
 
 import butterknife.ButterKnife;
@@ -35,9 +28,8 @@ public class Launcher extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mNetworkReceiver = new NetworkChangeReceiver();
-        registerNetworkBroadcastForNougat();
-
-        sharedPreferences = getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE);
+//        registerNetworkBroadcastForNougat();
+//        sharedPreferences = getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -52,7 +44,10 @@ public class Launcher extends AppCompatActivity {
 
                     if (getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getBoolean(Config.SP_LOGGED_IN, false)) {
 
-                        if (BudgetCatcher.getConnectedToInternet()) {
+                        startActivity(new Intent(Launcher.this, MainActivity.class));
+                        finish();
+
+                        /*if (BudgetCatcher.getConnectedToInternet()) {
 
                             fetchWeekBreakdown();
                             fetchMonthBreakdown();
@@ -63,7 +58,7 @@ public class Launcher extends AppCompatActivity {
 
                             Toast.makeText(Launcher.this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 
-                        }
+                        }*/
 
                     } else {
                         startActivity(new Intent(Launcher.this, SignInSignUp.class));
@@ -76,7 +71,7 @@ public class Launcher extends AppCompatActivity {
         }, 1000);
     }
 
-    private void fetchWeekBreakdown() {
+    /*private void fetchWeekBreakdown() {
 
         BudgetCatcher.apiManager.getWeekBreakDown(Config.WEEK_TAG_ID, new QueryCallback<String>() {
             @Override
@@ -197,9 +192,9 @@ public class Launcher extends AppCompatActivity {
 
         }
 
-    }
+    }*/
 
-    private void registerNetworkBroadcastForNougat() {
+    /*private void registerNetworkBroadcastForNougat() {
 
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -243,6 +238,6 @@ public class Launcher extends AppCompatActivity {
 
         super.onResume();
         BudgetCatcher.activityResumed();// On Resume notify the Application
-    }
+    }*/
 
 }

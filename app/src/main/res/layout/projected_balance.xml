@@ -53,14 +53,31 @@
             android:layout_height="1dp"
             android:background="@color/gris" />
 
-        <NumberPicker
-            android:id="@+id/picker"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:theme="@style/MyNumberPickerTheme">
+            android:layout_height="match_parent">
 
-        </NumberPicker>
+            <NumberPicker
+                android:id="@+id/month_picker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:descendantFocusability="blocksDescendants"
+                android:theme="@style/MyNumberPickerTheme">
+
+            </NumberPicker>
+
+            <NumberPicker
+                android:id="@+id/week_picker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:descendantFocusability="blocksDescendants"
+                android:theme="@style/MyNumberPickerTheme">
+
+            </NumberPicker>
+
+        </FrameLayout>
 
     </LinearLayout>
 

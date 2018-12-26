@@ -22,6 +22,8 @@ import com.budgetcatcher.www.budgetcatcher.Model.CategoryResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.Expenses;
 import com.budgetcatcher.www.budgetcatcher.Model.ExpensesResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.GetUserInfo;
+import com.budgetcatcher.www.budgetcatcher.Model.Home;
+import com.budgetcatcher.www.budgetcatcher.Model.HomeResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.Income;
 import com.budgetcatcher.www.budgetcatcher.Model.IncomeResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.InsertAllowanceBody;
@@ -340,6 +342,40 @@ public class ApiManager {
                     BillResponse billResponse = gson.fromJson(response.body(), BillResponse.class);
 
                     callback.onSuccess((ArrayList<Bill>) billResponse.getBills());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void getHome(String userId, String startDate, String endDate, final QueryCallback<Home> callback) {
+
+        String uri = URL.base + URL.getHome + userId + "/" + startDate + "/" + endDate;
+
+        Call<String> networkCall = apiInterface.getHome(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    Gson gson = new Gson();
+                    HomeResponse homeResponse = gson.fromJson(response.body(), HomeResponse.class);
+
+                    callback.onSuccess(homeResponse.getHome());
 
                 } else {
 
