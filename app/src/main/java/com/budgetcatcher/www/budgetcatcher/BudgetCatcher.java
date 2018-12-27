@@ -31,7 +31,15 @@ public class BudgetCatcher extends Application {
 
     public static Boolean getConnectedToInternet() {
 
-        return connectedToInternet;
+        if (connectedToInternet != null) {
+
+            return connectedToInternet;
+
+        } else {
+
+            return false;
+
+        }
 
     }
 

@@ -38,6 +38,9 @@ public interface ApiInterface {
     Call<String> signIn(@Url String url);
 
     @GET
+    Call<String> getCatcher(@Url String url);
+
+    @GET
     Call<String> getWeeksOrMonths(@Url String url);
 
     @GET

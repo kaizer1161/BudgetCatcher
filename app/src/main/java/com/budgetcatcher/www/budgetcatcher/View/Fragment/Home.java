@@ -87,7 +87,6 @@ public class Home extends Fragment {
     private Week currentWeek;
     private Month currentMonth;
     private int weekIndex, monthIndex;
-
     private String[] weekDate, monthDate;
 
     @Nullable
@@ -110,6 +109,44 @@ public class Home extends Fragment {
 
             ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior = BottomSheetBehavior.from(projectedBalanceLayoutBottomSheet);
             ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+        } else {
+
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+
+        }
+
+        editTextCursorVisibility(false);
+
+        weeklyMonthlySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                isMonthSelected = isChecked;
+                Log.d(TAG, "onResume: 1");
+                homeUiDataUpdateBasedOnMonthOrWeek();
+
+            }
+        });
+
+        return rootView;
+    }
+
+    private void editTextCursorVisibility(boolean visibility) {
+
+        addToBill.setCursorVisible(visibility);
+        reduceDebts.setCursorVisible(visibility);
+
+        addToBill.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        reduceDebts.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (getActivity() != null) {
 
             if (getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_WEEK_INFO, "").equals("") || getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_MONTH_INFO, "").equals("") || getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_CURRENT_WEEK_INFO, "").equals("") || getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_CURRENT_MONTH_INFO, "").equals("")) {
 
@@ -134,43 +171,17 @@ public class Home extends Fragment {
 
                 currentMonth = gson.fromJson(getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_CURRENT_MONTH_INFO, ""), MonthData.class).getMonths().get(0);
 
+                Log.d(TAG, "onResume: 2");
                 homeUiDataUpdateBasedOnMonthOrWeek();
-
+/*
                 fetchCurrentWeek();
                 fetchCurrentMonth();
                 fetchWeekBreakdown();
-                fetchMonthBreakdown();
+                fetchMonthBreakdown();*/
 
             }
-
-        } else {
-
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 
         }
-
-        editTextCursorVisibility(false);
-
-        weeklyMonthlySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                isMonthSelected = isChecked;
-                homeUiDataUpdateBasedOnMonthOrWeek();
-
-            }
-        });
-
-        return rootView;
-    }
-
-    private void editTextCursorVisibility(boolean visibility) {
-
-        addToBill.setCursorVisible(visibility);
-        reduceDebts.setCursorVisible(visibility);
-
-        addToBill.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        reduceDebts.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
     }
 
@@ -245,7 +256,7 @@ public class Home extends Fragment {
                             startDate = format.parse(monthArrayList.get(monthIndex).getFirstDayOfMonth());
                             endDate = format.parse(monthArrayList.get(monthIndex).getLastDayOfMonth());
                             updateHeader(startDate, endDate, "Month of");
-                            updateHomeData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getFirstDayOfMonth());
+                            updateHomeData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getLastDayOfMonth());
 
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -264,7 +275,7 @@ public class Home extends Fragment {
                             startDate = format.parse(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek());
                             endDate = format.parse(weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
                             updateHeader(startDate, endDate, "Week of");
-                            updateHomeData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getFirstDayOfMonth());
+                            updateHomeData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
 
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -302,9 +313,6 @@ public class Home extends Fragment {
                     }
 
                 } else {
-
-                    Log.d(TAG, "onClick: weekindex" + weekIndex);
-                    Log.d(TAG, "onClick: week size" + weekArrayList.size());
 
                     if (weekIndex < weekArrayList.size() - 1) {
 
@@ -461,7 +469,7 @@ public class Home extends Fragment {
     private void updateData() {
 
         if (dataFetchCount == totalFetchCount) {
-
+            Log.d(TAG, "onResume: 3");
             homeUiDataUpdateBasedOnMonthOrWeek();
 
         }
@@ -581,13 +589,23 @@ public class Home extends Fragment {
                 if (getActivity() != null)
                     Toast.makeText(getActivity(), "Failed to load data", Toast.LENGTH_SHORT).show();
 
+                startCashBalance.setText("$ 0");
+                income.setText("$ 0");
+                expenses.setText("($ 0" + ")");
+                deficit.setText("$ 0");
+
             }
 
             @Override
             public void onError(Throwable th) {
 
                 dialog.dismiss();
-                dialog.dismiss();
+
+                startCashBalance.setText("$ 0");
+                income.setText("$ 0");
+                expenses.setText("($ 0" + ")");
+                deficit.setText("$ 0");
+
                 if (getActivity() != null) {
                     Log.e("SerVerErrAddBill", th.toString());
                     if (th instanceof SocketTimeoutException) {

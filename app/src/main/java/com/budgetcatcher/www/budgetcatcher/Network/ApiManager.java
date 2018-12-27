@@ -17,6 +17,7 @@ import com.budgetcatcher.www.budgetcatcher.Model.Allowance;
 import com.budgetcatcher.www.budgetcatcher.Model.AllowanceResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.Bill;
 import com.budgetcatcher.www.budgetcatcher.Model.BillResponse;
+import com.budgetcatcher.www.budgetcatcher.Model.CatcherResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.Category;
 import com.budgetcatcher.www.budgetcatcher.Model.CategoryResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.Expenses;
@@ -342,6 +343,41 @@ public class ApiManager {
                     BillResponse billResponse = gson.fromJson(response.body(), BillResponse.class);
 
                     callback.onSuccess((ArrayList<Bill>) billResponse.getBills());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void getCatcher(String userId, String startDate, String endDate, final QueryCallback<CatcherResponse> callback) {
+
+        String uri = URL.base + URL.getCatcher + userId + "/" + startDate + "/" + endDate;
+
+        Call<String> networkCall = apiInterface.getCatcher(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    Gson gson = new Gson();
+                    CatcherResponse catcherResponse = gson.fromJson(response.body(), CatcherResponse.class);
+
+                    callback.onSuccess(catcherResponse);
 
                 } else {
 
@@ -779,7 +815,7 @@ public class ApiManager {
 
         String uri = URL.base + URL.deleteIncome + userId + "/" + incomeId;
 
-        Call<String> networkCall = apiInterface.deleteBill(uri);
+        Call<String> networkCall = apiInterface.deleteIncome(uri);
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
