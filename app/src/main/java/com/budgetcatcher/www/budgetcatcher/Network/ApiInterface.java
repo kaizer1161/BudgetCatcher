@@ -107,6 +107,9 @@ public interface ApiInterface {
     Call<String> deleteBill(@Url String url);
 
     @DELETE
+    Call<String> deleteIncome(@Url String url);
+
+    @DELETE
     Call<String> deleteAllowance(@Url String url);
 
     @DELETE

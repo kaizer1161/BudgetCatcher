@@ -199,7 +199,7 @@ public class EditIncome extends Fragment {
 
             dialog.show();
 
-            ModifyIncomeBody modifyIncomeBody = new ModifyIncomeBody(payFrequencyList.get(payFrequencySpinner.getSelectedItemPosition()), netPay.getText().toString(), date, "null", "null");
+            ModifyIncomeBody modifyIncomeBody = new ModifyIncomeBody(netPay.getText().toString(), payFrequencyList.get(payFrequencySpinner.getSelectedItemPosition()), date, "null", "null");
 
             String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 

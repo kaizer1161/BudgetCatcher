@@ -14,12 +14,12 @@ public class ModifyIncomeBody {
     @SerializedName("nextPayDay")
     @Expose
     private String nextPayDay;
-    @SerializedName("source")
+    /*@SerializedName("source")
     @Expose
     private String source;
     @SerializedName("provider")
     @Expose
-    private String provider;
+    private String provider;*/
 
     /**
      * No args constructor for use in serialization
@@ -39,8 +39,8 @@ public class ModifyIncomeBody {
         this.amount = amount;
         this.frequency = frequency;
         this.nextPayDay = nextPayDay;
-        this.source = source;
-        this.provider = provider;
+        /*this.source = source;
+        this.provider = provider;*/
     }
 
     public String getAmount() {
@@ -67,7 +67,7 @@ public class ModifyIncomeBody {
         this.nextPayDay = nextPayDay;
     }
 
-    public String getSource() {
+    /*public String getSource() {
         return source;
     }
 
@@ -81,6 +81,6 @@ public class ModifyIncomeBody {
 
     public void setProvider(String provider) {
         this.provider = provider;
-    }
+    }*/
 
 }

@@ -285,7 +285,45 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
                                         String userID = activity.getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-                                        if (fragmentTag.equals(Config.TAG_LIST_BILL)) {
+                                        if (fragmentTag.equals(Config.TAG_LIST_INCOME)) {
+
+                                            dialog.show();
+
+                                            BudgetCatcher.apiManager.deleteIncome(userID, incomes.get(getAdapterPosition()).getIncomeId(), new QueryCallback<String>() {
+                                                @Override
+                                                public void onSuccess(String data) {
+
+                                                    dialog.dismiss();
+                                                    Toast.makeText(activity, activity.getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show();
+                                                    accountItemArrayList.remove(getAdapterPosition());
+                                                    notifyDataSetChanged();
+                                                    alert11.dismiss();
+
+                                                }
+
+                                                @Override
+                                                public void onFail() {
+                                                    dialog.dismiss();
+                                                    Toast.makeText(activity, activity.getString(R.string.delete_failed), Toast.LENGTH_SHORT).show();
+                                                }
+
+                                                @Override
+                                                public void onError(Throwable th) {
+
+                                                    dialog.dismiss();
+                                                    if (activity != null) {
+                                                        Log.e("SerVerErrAddBill", th.toString());
+                                                        if (th instanceof SocketTimeoutException) {
+                                                            Toast.makeText(activity, activity.getResources().getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            Toast.makeText(activity, th.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+
+                                                }
+                                            });
+
+                                        } else if (fragmentTag.equals(Config.TAG_LIST_BILL)) {
 
                                             dialog.show();
 

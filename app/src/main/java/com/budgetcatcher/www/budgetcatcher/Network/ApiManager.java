@@ -775,6 +775,37 @@ public class ApiManager {
 
     }
 
+    public void deleteIncome(String userId, String incomeId, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.deleteIncome + userId + "/" + incomeId;
+
+        Call<String> networkCall = apiInterface.deleteBill(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
     public void deleteAllowance(String userId, String allowanceId, final QueryCallback<String> callback) {
 
         String uri = URL.base + URL.deleteAllowance + userId + "/" + allowanceId;
