@@ -107,7 +107,7 @@
                 android:layout_marginBottom="@dimen/gap_of_8dp"
                 android:background="@drawable/white_button_background"
                 android:hint="Select date"
-                android:padding="@dimen/gap_of_8dp" />
+                android:padding="@dimen/gap_of_10dp" />
 
             <CalendarView
                 android:id="@+id/date_picker"

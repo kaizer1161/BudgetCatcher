@@ -5,6 +5,7 @@
     <dimen name="gap_of_16dp">16dp</dimen>
     <dimen name="gap_of_32dp">32dp</dimen>
     <dimen name="gap_of_52dp">52dp</dimen>
+    <dimen name="gap_of_10dp">10dp</dimen>
     <dimen name="gap_of_8dp">8dp</dimen>
     <dimen name="gap_of_4dp">4dp</dimen>
     <dimen name="gap_of_2dp">2dp</dimen>
