@@ -171,6 +171,7 @@ public class SignIn extends AppCompatActivity {
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
+            dialog.show();
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
@@ -180,6 +181,7 @@ public class SignIn extends AppCompatActivity {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
                 // [START_EXCLUDE]
+                dialog.dismiss();
                 startActivity(new Intent(SignIn.this, SignIn.class));
                 finish();
 
@@ -202,7 +204,7 @@ public class SignIn extends AppCompatActivity {
         // [START_EXCLUDE silent]
         //showProgressDialog();
         // [END_EXCLUDE]
-
+        dialog.show();
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -214,6 +216,7 @@ public class SignIn extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         } else {
+                            dialog.dismiss();
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Log.d(TAG, "signInWithCredential: Authentication Failed.", task.getException());
@@ -259,14 +262,16 @@ public class SignIn extends AppCompatActivity {
 
             this.user = user;
             Log.d(TAG, "updateUI: " + user.getEmail());
+            Log.d(TAG, "updateUI: " + user.getUid());
             if (user.getEmail() != null)
                 login(user.getEmail(), user.getUid(), false);
             else {
 
+                dialog.dismiss();
                 startActivity(new Intent(SignIn.this, SignIn.class));
                 finish();
 
-                Toast.makeText(this, "Cannot login: No email address provided by facebook", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Cannot login: Email address was not provided by social media", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -323,7 +328,6 @@ public class SignIn extends AppCompatActivity {
                 }
                 if (!hasError) {
 
-                    dialog.show();
                     signIn();
 
                 }
@@ -507,6 +511,7 @@ public class SignIn extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        dialog.dismiss();
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");

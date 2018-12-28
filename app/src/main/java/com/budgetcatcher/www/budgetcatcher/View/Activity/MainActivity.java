@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,7 +21,6 @@ import android.view.MenuItem;
 
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
-import com.budgetcatcher.www.budgetcatcher.Model.Week;
 import com.budgetcatcher.www.budgetcatcher.Network.NetworkChangeReceiver;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Advice;
@@ -34,15 +34,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String TAG = "MainActivity";
 
     private BroadcastReceiver mNetworkReceiver;
     public BottomSheetBehavior projectedBalanceBottomSheetBehavior;
     public NavigationView navigationView;
-    private ArrayList<Week> weeks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +74,7 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content, new Home(), Config.TAG_HOME_FRAGMENT)
+                .addToBackStack(Config.TAG_HOME_FRAGMENT)
                 .commit();
 
         navigationView.setCheckedItem(R.id.nav_home);
@@ -94,7 +94,20 @@ public class MainActivity extends AppCompatActivity
 
             } else {
 
-                super.onBackPressed();
+                if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+
+                    getSupportFragmentManager().popBackStack(Config.TAG_HOME_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.content, new Home(), Config.TAG_HOME_FRAGMENT)
+                            .commit();
+
+                } else {
+
+                    /*super.onBackPressed();*/
+                    finish();
+                }
 
             }
         }
@@ -134,25 +147,17 @@ public class MainActivity extends AppCompatActivity
 
             if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
 
-                getSupportFragmentManager().popBackStack();
+                getSupportFragmentManager().popBackStack(Config.TAG_HOME_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
             }
 
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content, new Home(), Config.TAG_HOME_FRAGMENT)
-                    .addToBackStack(null)
                     .commit();
-
-            getSupportFragmentManager().popBackStack();
 
         } else if (id == R.id.nav_catcher) {
 
-            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-
-                getSupportFragmentManager().popBackStack();
-
-            }
 
             getSupportFragmentManager()
                     .beginTransaction()
@@ -165,12 +170,6 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_manage) {
 
-            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-
-                getSupportFragmentManager().popBackStack();
-
-            }
-
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content, new Manage(), Config.TAG_MANAGE_FRAGMENT)
@@ -180,12 +179,6 @@ public class MainActivity extends AppCompatActivity
             navigationView.setCheckedItem(R.id.nav_manage);
 
         } else if (id == R.id.nav_advice) {
-
-            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-
-                getSupportFragmentManager().popBackStack();
-
-            }
 
             getSupportFragmentManager()
                     .beginTransaction()
@@ -197,12 +190,6 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_report) {
 
-            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-
-                getSupportFragmentManager().popBackStack();
-
-            }
-
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content, new Report(), Config.TAG_REPORT_FRAGMENT)
@@ -210,12 +197,6 @@ public class MainActivity extends AppCompatActivity
                     .commit();
 
         } else if (id == R.id.nav_settings) {
-
-            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-
-                getSupportFragmentManager().popBackStack();
-
-            }
 
             getSupportFragmentManager()
                     .beginTransaction()

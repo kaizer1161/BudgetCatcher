@@ -23,47 +23,11 @@
           }
         },
         {
-          "client_id": "658211121601-ot0mdr47e2aku8m6cejg9kfre5f7qqrd.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCpAQbDCo4jT8yhDWBxTO2BZDTeW_3HfQA"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "658211121601-ot0mdr47e2aku8m6cejg9kfre5f7qqrd.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:658211121601:android:d58c8d2068650721",
-        "android_client_info": {
-          "package_name": "com.pushertest.www.budgetcatcher"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "658211121601-6v1k2os4vjnjfcdfjq4bku3gk6chq338.apps.googleusercontent.com",
+          "client_id": "658211121601-c45j41m67598fdqo7tqt3rrr7ktvb07f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.pushertest.www.budgetcatcher",
-            "certificate_hash": "a09b8fd4734242c05a48e35e07fbb932cb0b875e"
+            "package_name": "com.budgetcatcher.www",
+            "certificate_hash": "e1c0c7e605f5210a5a9aa54a15203d0bff7f7cb3"
           }
         },
         {
