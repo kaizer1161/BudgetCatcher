@@ -10,6 +10,8 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,9 +58,11 @@ public class Home extends Fragment {
     private static final int totalFetchCount = 4;
     private static final String TAG = "Home";
     @BindView(R.id.add_to_saving)
-    EditText addToBill;
+    EditText addToSavings;
     @BindView(R.id.reduce_debts)
     EditText reduceDebts;
+    @BindView(R.id.editTextAddToCash)
+    EditText addToCash;
     @BindView(R.id.week_picker)
     NumberPicker weekPicker;
     @BindView(R.id.month_picker)
@@ -129,15 +133,82 @@ public class Home extends Fragment {
             }
         });
 
+        addToSavings.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                float savingsAmount = 0;
+                float reduceDebtsAmount=0;
+                float deficitAmount = Float.parseFloat(deficit.getText().toString());
+                if(s.toString().isEmpty()){
+                    savingsAmount=0;
+                }else{
+                    savingsAmount = Integer.parseInt(addToSavings.getText().toString());
+                }
+                if(reduceDebts.getText().toString().isEmpty()){
+                    reduceDebtsAmount=0;
+                }else{
+                    reduceDebtsAmount = Integer.parseInt(reduceDebts.getText().toString());
+                }
+                Float sum = deficitAmount - savingsAmount-reduceDebtsAmount;
+                addToCash.setText(String.valueOf(sum));
+
+            }
+        });
+
+        reduceDebts.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String valStr = reduceDebts.getText().toString();
+                float reduceDebtsAmount = Float.parseFloat(valStr);
+                float savingsAmount=0;
+                float deficitAmount = Float.parseFloat(deficit.getText().toString());
+                if(s.toString().isEmpty()){
+                    reduceDebtsAmount=0;
+                }else{
+                    reduceDebtsAmount = Integer.parseInt(addToSavings.getText().toString());
+                }
+                if(addToSavings.getText().toString().isEmpty()){
+                    savingsAmount=0;
+                }else{
+                    savingsAmount = Integer.parseInt(reduceDebts.getText().toString());
+                }
+                Float sum = deficitAmount - savingsAmount-reduceDebtsAmount;
+                addToCash.setText(String.valueOf(sum));
+            }
+        });
         return rootView;
     }
 
     private void editTextCursorVisibility(boolean visibility) {
 
-        addToBill.setCursorVisible(visibility);
+        addToSavings.setCursorVisible(visibility);
         reduceDebts.setCursorVisible(visibility);
 
-        addToBill.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        addToSavings.setImeOptions(EditorInfo.IME_ACTION_DONE);
         reduceDebts.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
     }
