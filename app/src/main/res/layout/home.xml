@@ -187,7 +187,7 @@
                                     android:background="@drawable/white_button_background"
                                     android:gravity="center"
                                     android:hint="Enter amount"
-                                    android:inputType="number"
+                                    android:inputType="numberDecimal"
                                     android:padding="@dimen/gap_of_8dp"
                                     android:textColorHint="@color/black" />
 
@@ -220,7 +220,7 @@
                                     android:background="@drawable/white_button_background"
                                     android:gravity="center"
                                     android:hint="Enter amount"
-                                    android:inputType="number"
+                                    android:inputType="numberDecimal"
                                     android:padding="@dimen/gap_of_8dp"
                                     android:textColorHint="@color/black" />
 
@@ -243,13 +243,14 @@
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
 
-                                <Button
+                                <EditText
+                                    android:id="@+id/editTextAddToCash"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="@dimen/gap_of_8dp"
                                     android:layout_weight="50"
                                     android:background="@drawable/white_button_background"
-                                    android:text="{Calculate}"
+                                    android:text="0"
                                     android:textColor="@color/black"
                                     android:textStyle="bold" />
 
