@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +15,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.NumberPicker;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,6 +85,14 @@ public class Catcher extends Fragment {
     TextView headerTop;
     @BindView(R.id.header_bottom)
     TextView headerBottom;
+    @BindView(R.id.month_picker)
+    NumberPicker monthPicker;
+    @BindView(R.id.week_picker)
+    NumberPicker weekPicker;
+    @BindView(R.id.weekly_monthly)
+    Switch weeklyMonthlySwitch;
+    @BindView(R.id.projected_balance_layout)
+    CoordinatorLayout projectedBalanceLayoutBottomSheet;
 
     private int dataFetchCount = 0;
 
@@ -87,6 +100,7 @@ public class Catcher extends Fragment {
     private ArrayList<Month> monthArrayList;
     private Week currentWeek;
     private Month currentMonth;
+    private boolean isMonthSelected = false;
     private int weekIndex, monthIndex;
     private String[] weekDate, monthDate;
 
@@ -113,6 +127,9 @@ public class Catcher extends Fragment {
 
             userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
+            ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior = BottomSheetBehavior.from(projectedBalanceLayoutBottomSheet);
+            ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
             fetchAllList();
 
         }
@@ -123,6 +140,16 @@ public class Catcher extends Fragment {
 
                 fetchAllList();
                 refreshAllList.setRefreshing(false);
+
+            }
+        });
+
+        weeklyMonthlySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                isMonthSelected = isChecked;
+                homeUiDataUpdateBasedOnMonthOrWeek();
 
             }
         });
@@ -202,7 +229,6 @@ public class Catcher extends Fragment {
                 currentMonth = gson.fromJson(getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_CURRENT_MONTH_INFO, ""), MonthData.class).getMonths().get(0);
 
                 homeUiDataUpdateBasedOnMonthOrWeek();
-
 
             }
 
@@ -351,7 +377,7 @@ public class Catcher extends Fragment {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = null, endDate = null;
 
-        /*if (isMonthSelected) {
+        if (isMonthSelected) {
 
             monthPicker.setVisibility(View.VISIBLE);
             weekPicker.setVisibility(View.GONE);
@@ -368,7 +394,7 @@ public class Catcher extends Fragment {
                 endDate = format.parse(currentMonth.getLastDayOfMonth());
                 monthIndex = Integer.parseInt(currentMonth.getMonthNumber()) - 1;
                 updateHeader(startDate, endDate, "Month of");
-                updateHomeData(currentMonth.getFirstDayOfMonth(), currentMonth.getLastDayOfMonth());
+                updateCatherData(currentMonth.getFirstDayOfMonth(), currentMonth.getLastDayOfMonth());
 
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -381,33 +407,33 @@ public class Catcher extends Fragment {
         } else {
 
             monthPicker.setVisibility(View.GONE);
-            weekPicker.setVisibility(View.VISIBLE);*/
+            weekPicker.setVisibility(View.VISIBLE);
 
-        weekDate = new String[weekArrayList.size()];
-        for (int i = 0; i < weekArrayList.size(); i++) {
+            weekDate = new String[weekArrayList.size()];
+            for (int i = 0; i < weekArrayList.size(); i++) {
 
-            weekDate[i] = weekArrayList.get(i).getFirstDayOfEveryWeek() + " - " + weekArrayList.get(i).getLastDayOfEveryWeek();
+                weekDate[i] = weekArrayList.get(i).getFirstDayOfEveryWeek() + " - " + weekArrayList.get(i).getLastDayOfEveryWeek();
 
-        }
+            }
 
-        try {
+            try {
 
-            startDate = format.parse(currentWeek.getFirstDayOfEveryWeek());
-            endDate = format.parse(currentWeek.getLastDayOfEveryWeek());
-            weekIndex = Integer.parseInt(currentWeek.getWeekNumber()) - 1;
-            updateHeader(startDate, endDate, "Week of");
+                startDate = format.parse(currentWeek.getFirstDayOfEveryWeek());
+                endDate = format.parse(currentWeek.getLastDayOfEveryWeek());
+                weekIndex = Integer.parseInt(currentWeek.getWeekNumber()) - 1;
+                updateHeader(startDate, endDate, "Week of");
 
-            updateHomeData(currentWeek.getFirstDayOfEveryWeek(), currentWeek.getLastDayOfEveryWeek());
+                updateCatherData(currentWeek.getFirstDayOfEveryWeek(), currentWeek.getLastDayOfEveryWeek());
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-            /*weekPicker.setMinValue(0);
+            weekPicker.setMinValue(0);
             weekPicker.setMaxValue(weekDate.length - 1);
-            weekPicker.setDisplayedValues(weekDate);*/
+            weekPicker.setDisplayedValues(weekDate);
 
-        /*}*/
+        }
 
     }
 
@@ -433,12 +459,13 @@ public class Catcher extends Fragment {
 
     }
 
-    private void updateHomeData(String startDate, String endDate) {
+    private void updateCatherData(String startDate, String endDate) {
 
         billSwipeDown.setRefreshing(true);
         incomeSwipeDown.setRefreshing(true);
         incidentalSwipeDown.setRefreshing(true);
         allowanceSwipeDown.setRefreshing(true);
+        dialog.show();
 
         BudgetCatcher.apiManager.getCatcher(userID, startDate, endDate, new QueryCallback<CatcherResponse>() {
             @Override
@@ -448,14 +475,26 @@ public class Catcher extends Fragment {
                 incidentalSwipeDown.setRefreshing(false);
                 allowanceSwipeDown.setRefreshing(false);
                 incomeSwipeDown.setRefreshing(false);
+                dialog.dismiss();
+
+                if (incomeListAdapter != null)
+                    incomeListAdapter.clear();
+                if (billListAdapter != null)
+                    billListAdapter.clear();
+                if (spendingAllowanceListAdapter != null)
+                    spendingAllowanceListAdapter.clear();
+                if (incidentalListAdapter != null)
+                    incidentalListAdapter.clear();
 
                 DecimalFormat decimalFormat = new DecimalFormat();
                 decimalFormat.setMaximumFractionDigits(2);
 
                 totalExpense.setText("$ " + decimalFormat.format(Float.parseFloat(data.getExpenseData().getExpenseTotal())));
 
-                incomeSwipeDown.setRefreshing(false);
                 ArrayList<AccountItem> incomeArrayList = new ArrayList<>();
+                ArrayList<AccountItem> billsArrayList = new ArrayList<>();
+                ArrayList<AccountItem> spendingAllowanceArrayList = new ArrayList<>();
+                ArrayList<AccountItem> expensesArrayList = new ArrayList<>();
 
                 for (int i = 0; i < data.getIncomesData().size(); i++) {
 
@@ -463,10 +502,6 @@ public class Catcher extends Fragment {
                     incomeArrayList.add(new AccountItem(income.getFrequency(), income.getNextPayDay(), "$" + income.getAmount(), income.getIncomeId()));
 
                 }
-
-                ArrayList<AccountItem> billsArrayList = new ArrayList<>();
-                ArrayList<AccountItem> spendingAllowanceArrayList = new ArrayList<>();
-                ArrayList<AccountItem> expensesArrayList = new ArrayList<>();
 
                 for (int i = 0; i < data.getBillsData().size(); i++) {
                     Bill bill = data.getBillsData().get(i);
@@ -483,7 +518,7 @@ public class Catcher extends Fragment {
                 for (int i = 0; i < data.getIncidentalsData().size(); i++) {
 
                     Expenses expenses = data.getIncidentalsData().get(i);
-                    String dateTime = expenses.getDateTime();
+                    /*String dateTime = expenses.getDateTime();
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
                     Date date = null;
                     try {
@@ -492,10 +527,9 @@ public class Catcher extends Fragment {
                         e.printStackTrace();
                     }
                     SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-DD");
-                    String finalString = newFormat.format(date);
+                    String finalString = newFormat.format(date);*/
 
-
-                    expensesArrayList.add(new AccountItem(expenses.getExpenseName(), finalString, "$" + expenses.getAmount(), expenses.getExpenseId()));
+                    expensesArrayList.add(new AccountItem(expenses.getExpenseName(), expenses.getDateTime(), "$" + expenses.getAmount(), expenses.getExpenseId()));
 
                 }
 
@@ -513,6 +547,7 @@ public class Catcher extends Fragment {
                 incidentalSwipeDown.setRefreshing(false);
                 allowanceSwipeDown.setRefreshing(false);
                 incomeSwipeDown.setRefreshing(false);
+                dialog.dismiss();
 
             }
 
@@ -523,6 +558,7 @@ public class Catcher extends Fragment {
                 incidentalSwipeDown.setRefreshing(false);
                 allowanceSwipeDown.setRefreshing(false);
                 incomeSwipeDown.setRefreshing(false);
+                dialog.dismiss();
                 if (getActivity() != null) {
                     Log.e("SerVerErrCatcher", th.toString());
                     if (th instanceof SocketTimeoutException) {
@@ -537,17 +573,68 @@ public class Catcher extends Fragment {
 
     }
 
-    @OnClick({R.id.left_arrow, R.id.right_arrow})
+    @OnClick({R.id.left_arrow, R.id.right_arrow, R.id.date_display, R.id.done_bottom_sheet})
     public void onClick(View view) {
 
         switch (view.getId()) {
+
+            case R.id.date_display: {
+
+                if (getActivity() != null)
+                    ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+                break;
+            }
+
+            case R.id.done_bottom_sheet: {
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                Date startDate = null, endDate = null;
+
+                if (getActivity() != null) {
+
+                    ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+                }
+
+                if (isMonthSelected) {
+
+                    try {
+
+                        monthIndex = monthPicker.getValue();
+                        startDate = format.parse(monthArrayList.get(monthPicker.getValue()).getFirstDayOfMonth());
+                        endDate = format.parse(monthArrayList.get(monthPicker.getValue()).getLastDayOfMonth());
+                        updateHeader(startDate, endDate, "Month of");
+                        updateCatherData(currentMonth.getFirstDayOfMonth(), currentMonth.getLastDayOfMonth());
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+
+                    try {
+
+                        weekIndex = weekPicker.getValue();
+                        startDate = format.parse(weekArrayList.get(weekPicker.getValue()).getFirstDayOfEveryWeek());
+                        endDate = format.parse(weekArrayList.get(weekPicker.getValue()).getLastDayOfEveryWeek());
+                        updateHeader(startDate, endDate, "Week of");
+                        updateCatherData(currentWeek.getFirstDayOfEveryWeek(), currentWeek.getLastDayOfEveryWeek());
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                break;
+            }
 
             case R.id.left_arrow: {
 
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 Date startDate = null, endDate = null;
 
-                /*if (isMonthSelected) {
+                if (isMonthSelected) {
 
                     if (monthIndex > 0) {
 
@@ -558,7 +645,7 @@ public class Catcher extends Fragment {
                             startDate = format.parse(monthArrayList.get(monthIndex).getFirstDayOfMonth());
                             endDate = format.parse(monthArrayList.get(monthIndex).getLastDayOfMonth());
                             updateHeader(startDate, endDate, "Month of");
-                            updateHomeData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getFirstDayOfMonth());
+                            updateCatherData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getLastDayOfMonth());
 
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -566,26 +653,26 @@ public class Catcher extends Fragment {
 
                     }
 
-                } else {*/
+                } else {
 
-                if (weekIndex > 0) {
+                    if (weekIndex > 0) {
 
-                    weekIndex--;
+                        weekIndex--;
 
-                    try {
+                        try {
 
-                        startDate = format.parse(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek());
-                        endDate = format.parse(weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
-                        updateHeader(startDate, endDate, "Week of");
-                        updateHomeData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
+                            startDate = format.parse(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek());
+                            endDate = format.parse(weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
+                            updateHeader(startDate, endDate, "Week of");
+                            updateCatherData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
 
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
                     }
 
                 }
-
-                /*}*/
 
                 break;
             }
@@ -595,7 +682,7 @@ public class Catcher extends Fragment {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 Date startDate = null, endDate = null;
 
-                /*if (isMonthSelected) {
+                if (isMonthSelected) {
 
                     if (monthIndex < monthArrayList.size() - 1) {
 
@@ -606,7 +693,7 @@ public class Catcher extends Fragment {
                             startDate = format.parse(monthArrayList.get(monthIndex).getFirstDayOfMonth());
                             endDate = format.parse(monthArrayList.get(monthIndex).getLastDayOfMonth());
                             updateHeader(startDate, endDate, "Month of");
-                            updateHomeData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getFirstDayOfMonth());
+                            updateCatherData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getLastDayOfMonth());
 
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -614,26 +701,26 @@ public class Catcher extends Fragment {
 
                     }
 
-                } else {*/
+                } else {
 
-                if (weekIndex < weekArrayList.size() - 1) {
+                    if (weekIndex < weekArrayList.size() - 1) {
 
-                    weekIndex++;
+                        weekIndex++;
 
-                    try {
+                        try {
 
-                        startDate = format.parse(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek());
-                        endDate = format.parse(weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
-                        updateHeader(startDate, endDate, "Week of");
-                        updateHomeData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
+                            startDate = format.parse(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek());
+                            endDate = format.parse(weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
+                            updateHeader(startDate, endDate, "Week of");
+                            updateCatherData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
 
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
                     }
 
                 }
-
-                /*}*/
 
                 break;
             }

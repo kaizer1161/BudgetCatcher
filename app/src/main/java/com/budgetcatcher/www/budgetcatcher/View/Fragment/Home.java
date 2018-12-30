@@ -127,7 +127,6 @@ public class Home extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 isMonthSelected = isChecked;
-                Log.d(TAG, "onResume: 1");
                 homeUiDataUpdateBasedOnMonthOrWeek();
 
             }
@@ -242,13 +241,12 @@ public class Home extends Fragment {
 
                 currentMonth = gson.fromJson(getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_CURRENT_MONTH_INFO, ""), MonthData.class).getMonths().get(0);
 
-                Log.d(TAG, "onResume: 2");
                 homeUiDataUpdateBasedOnMonthOrWeek();
-/*
+
                 fetchCurrentWeek();
                 fetchCurrentMonth();
                 fetchWeekBreakdown();
-                fetchMonthBreakdown();*/
+                fetchMonthBreakdown();
 
             }
 
@@ -285,7 +283,7 @@ public class Home extends Fragment {
 
                 if (isMonthSelected) {
 
-                    weekNumber.setText(monthDate[weekPicker.getValue()]);
+                    weekNumber.setText(monthDate[monthPicker.getValue()]);
 
                 } else {
 
@@ -375,7 +373,7 @@ public class Home extends Fragment {
                             startDate = format.parse(monthArrayList.get(monthIndex).getFirstDayOfMonth());
                             endDate = format.parse(monthArrayList.get(monthIndex).getLastDayOfMonth());
                             updateHeader(startDate, endDate, "Month of");
-                            updateHomeData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getFirstDayOfMonth());
+                            updateHomeData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getLastDayOfMonth());
 
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -394,7 +392,7 @@ public class Home extends Fragment {
                             startDate = format.parse(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek());
                             endDate = format.parse(weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
                             updateHeader(startDate, endDate, "Week of");
-                            updateHomeData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getFirstDayOfMonth());
+                            updateHomeData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
 
                         } catch (ParseException e) {
                             e.printStackTrace();

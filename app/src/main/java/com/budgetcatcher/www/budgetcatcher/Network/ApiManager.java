@@ -374,7 +374,6 @@ public class ApiManager {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
-
                 if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
 
                     Gson gson = new Gson();

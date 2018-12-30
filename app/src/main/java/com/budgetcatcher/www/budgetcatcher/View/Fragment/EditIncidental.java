@@ -25,12 +25,8 @@ import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
 import com.google.gson.Gson;
 
 import java.net.SocketTimeoutException;
-import java.text.DateFormat;
 import java.text.DateFormatSymbols;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -317,7 +313,14 @@ public class EditIncidental extends Fragment {
 
                     dialog.dismiss();
                     Toast.makeText(getActivity(), getString(R.string.successfully_edited), Toast.LENGTH_SHORT).show();
-                    getActivity().onBackPressed();
+                    if (getActivity() != null) {
+
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.content, new Manage(), Config.TAG_MANAGE_FRAGMENT)
+                                .commit();
+
+                    }
 
                 }
 
@@ -355,7 +358,7 @@ public class EditIncidental extends Fragment {
         description.setText(expenses.getExpenseDescription());
         amount.setText(expenses.getAmount());
 
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
+        /*DateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
         Date date1 = null;
         try {
             date1 = formatter.parse(expenses.getDateTime());
@@ -363,13 +366,13 @@ public class EditIncidental extends Fragment {
             e.printStackTrace();
         }
         SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-DD");
-        String finalString = newFormat.format(date1);
+        String finalString = newFormat.format(date1);*/
 
         yearForServer = expenses.getYear();
         monthInWord = expenses.getMonth();
 
-        dateTextView.setText(finalString);
-        date = finalString;
+        dateTextView.setText(expenses.getDateTime());
+        date = expenses.getDateTime();
 
         /*for (int i = 0; i < status.size(); i++) {
 

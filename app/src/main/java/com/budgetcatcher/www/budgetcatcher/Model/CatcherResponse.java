@@ -3,7 +3,7 @@ package com.budgetcatcher.www.budgetcatcher.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class CatcherResponse {
 
@@ -12,16 +12,16 @@ public class CatcherResponse {
     private String status;
     @SerializedName("incidentalsData")
     @Expose
-    private List<Expenses> incidentalsData = null;
+    private ArrayList<Expenses> incidentalsData = null;
     @SerializedName("allowancesData")
     @Expose
-    private List<Allowance> allowancesData = null;
+    private ArrayList<Allowance> allowancesData = null;
     @SerializedName("billsData")
     @Expose
-    private List<Bill> billsData = null;
+    private ArrayList<Bill> billsData = null;
     @SerializedName("incomesData")
     @Expose
-    private List<Income> incomesData = null;
+    private ArrayList<Income> incomesData = null;
     @SerializedName("expenseData")
     @Expose
     private ExpenseData expenseData;
@@ -40,7 +40,7 @@ public class CatcherResponse {
      * @param allowancesData
      * @param expenseData
      */
-    public CatcherResponse(String status, List<Expenses> incidentalsData, List<Allowance> allowancesData, List<Bill> billsData, List<Income> incomesData, ExpenseData expenseData) {
+    public CatcherResponse(String status, ArrayList<Expenses> incidentalsData, ArrayList<Allowance> allowancesData, ArrayList<Bill> billsData, ArrayList<Income> incomesData, ExpenseData expenseData) {
         super();
         this.status = status;
         this.incidentalsData = incidentalsData;
@@ -58,35 +58,35 @@ public class CatcherResponse {
         this.status = status;
     }
 
-    public List<Expenses> getIncidentalsData() {
+    public ArrayList<Expenses> getIncidentalsData() {
         return incidentalsData;
     }
 
-    public void setIncidentalsData(List<Expenses> incidentalsData) {
+    public void setIncidentalsData(ArrayList<Expenses> incidentalsData) {
         this.incidentalsData = incidentalsData;
     }
 
-    public List<Allowance> getAllowancesData() {
+    public ArrayList<Allowance> getAllowancesData() {
         return allowancesData;
     }
 
-    public void setAllowancesData(List<Allowance> allowancesData) {
+    public void setAllowancesData(ArrayList<Allowance> allowancesData) {
         this.allowancesData = allowancesData;
     }
 
-    public List<Bill> getBillsData() {
+    public ArrayList<Bill> getBillsData() {
         return billsData;
     }
 
-    public void setBillsData(List<Bill> billsData) {
+    public void setBillsData(ArrayList<Bill> billsData) {
         this.billsData = billsData;
     }
 
-    public List<Income> getIncomesData() {
+    public ArrayList<Income> getIncomesData() {
         return incomesData;
     }
 
-    public void setIncomesData(List<Income> incomesData) {
+    public void setIncomesData(ArrayList<Income> incomesData) {
         this.incomesData = incomesData;
     }
 

@@ -21,6 +21,7 @@
                 android:src="@drawable/ic_arrow_left" />
 
             <LinearLayout
+                android:id="@+id/date_display"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="60"

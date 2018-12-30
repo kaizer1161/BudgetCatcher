@@ -141,6 +141,22 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         return accountItemArrayList.size();
     }
 
+    public void clear() {
+
+        if (accountItemArrayList != null)
+            accountItemArrayList.clear();
+        if (bills != null)
+            bills.clear();
+        if (allowances != null)
+            allowances.clear();
+        if (incomes != null)
+            incomes.clear();
+        if (expenses != null)
+            expenses.clear();
+        notifyDataSetChanged();
+
+    }
+
     public void listUpdated(AccountItem[] accountItems) {
 
         accountItemArrayList.clear();

@@ -209,7 +209,14 @@ public class EditIncome extends Fragment {
 
                     dialog.dismiss();
                     Toast.makeText(getActivity(), getString(R.string.successfully_edited), Toast.LENGTH_SHORT).show();
-                    getActivity().onBackPressed();
+                    if (getActivity() != null) {
+
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.content, new Manage(), Config.TAG_MANAGE_FRAGMENT)
+                                .commit();
+
+                    }
 
                 }
 

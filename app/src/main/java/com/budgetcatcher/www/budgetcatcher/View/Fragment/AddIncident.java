@@ -263,7 +263,14 @@ if (th instanceof SocketTimeoutException){
 
                     dialog.dismiss();
                     Toast.makeText(getActivity(), getString(R.string.successfully_added), Toast.LENGTH_SHORT).show();
-                    getActivity().onBackPressed();
+                    if (getActivity() != null) {
+
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.content, new Manage(), Config.TAG_MANAGE_FRAGMENT)
+                                .commit();
+
+                    }
 
                 }
 

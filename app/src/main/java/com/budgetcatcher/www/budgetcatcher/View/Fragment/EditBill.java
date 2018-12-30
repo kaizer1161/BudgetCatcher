@@ -197,9 +197,9 @@ public class EditBill extends Fragment {
                     categoryAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, R.id.spinner_item_text, categoryListName);
                     categorySpinner.setAdapter(categoryAdapter);
 
-                    for (int i = 0; i < categoryListName.size(); i++) {
+                    for (int i = 0; i < categoryListId.size(); i++) {
 
-                        if (categoryListName.get(i).equals(bill.getCategory())) {
+                        if (categoryListId.get(i).equals(bill.getCategoryId())) {
 
                             categorySpinner.setSelection(i, true);
                             break;
@@ -319,7 +319,14 @@ public class EditBill extends Fragment {
 
                     dialog.dismiss();
                     Toast.makeText(getActivity(), getString(R.string.successfully_edited), Toast.LENGTH_SHORT).show();
-                    getActivity().onBackPressed();
+                    if (getActivity() != null) {
+
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.content, new Manage(), Config.TAG_MANAGE_FRAGMENT)
+                                .commit();
+
+                    }
 
                 }
 
