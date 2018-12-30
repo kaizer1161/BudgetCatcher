@@ -17,7 +17,6 @@ import com.budgetcatcher.www.budgetcatcher.Model.ModifyBillBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyCategory;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyExpenseBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyIncomeBody;
-import com.budgetcatcher.www.budgetcatcher.Model.ProfileSetupBody;
 import com.budgetcatcher.www.budgetcatcher.Model.SignUpBody;
 import com.budgetcatcher.www.budgetcatcher.Model.User;
 
@@ -74,7 +73,7 @@ public interface ApiInterface {
     Call<String> addCategory(@HeaderMap Map<String, String> headers, @Body AddCategory addCategory);
 
     @POST
-    Call<String> profileSetup(@Url String url, @HeaderMap Map<String, String> headers, @Body ProfileSetupBody profileSetupBody);
+    Call<String> profileSetup(@Url String url, @HeaderMap Map<String, String> headers, @Body String body /*ProfileSetupBody profileSetupBody*/);
 
     @POST
     Call<String> profileUpdate(@Url String url, @HeaderMap Map<String, String> headers, @Body User user);

@@ -31,7 +31,6 @@ import com.budgetcatcher.www.budgetcatcher.Model.ProfileSetupBody;
 import com.budgetcatcher.www.budgetcatcher.Network.NetworkChangeReceiver;
 import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
-import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -210,11 +209,11 @@ public class ProfileSetup extends AppCompatActivity {
 
                     String userID = getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-                    ProfileSetupBody profileSetupBody = new ProfileSetupBody(imageString.substring(0, 100) + " /n", riskLevel.get(riskLevelSpinner.getSelectedItemPosition()), skillLevel.get(skillLevelSpinner.getSelectedItemPosition()), financialGoal.get(financialGoalSpinner.getSelectedItemPosition()));
+                    ProfileSetupBody profileSetupBody = new ProfileSetupBody(imageString.substring(0, 100), riskLevel.get(riskLevelSpinner.getSelectedItemPosition()), skillLevel.get(skillLevelSpinner.getSelectedItemPosition()), financialGoal.get(financialGoalSpinner.getSelectedItemPosition()));
 
-                    Gson gson = new Gson();
+                    /*Gson gson = new Gson();
                     Log.d("Profile", "onClick: " + gson.toJson(profileSetupBody));
-                    Log.d("Profile", "onClick: " + imageString);
+                    Log.d("Profile", "onClick: " + imageString);*/
 
                     if (!userID.equals("")) {
 
@@ -289,10 +288,11 @@ public class ProfileSetup extends AppCompatActivity {
     public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp = Bitmap.createScaledBitmap(bmp, 1484, 2914, false);
-        bmp.compress(Bitmap.CompressFormat.PNG, 20, baos);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 20, baos);
+        bmp.recycle();
         byte[] imageBytes = baos.toByteArray();
         profileImage.setImageBitmap(BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length));
-        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return Base64.encodeToString(imageBytes, Base64.NO_WRAP);
     }
 
     @Override

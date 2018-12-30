@@ -269,7 +269,10 @@ public class ApiManager {
     public void userProfileSetup(String userID, ProfileSetupBody profileSetupBody, final QueryCallback<String> callback) {
 
         String uri = URL.base + URL.profileSetup + userID;
-        Call<String> networkCall = apiInterface.profileSetup(uri, headers, profileSetupBody);
+
+        Gson gson = new Gson();
+
+        Call<String> networkCall = apiInterface.profileSetup(uri, headers, gson.toJson(profileSetupBody));
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
