@@ -31,7 +31,7 @@
             android:id="@+id/swipe_down"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/gap_of_16dp">
+            android:layout_margin="@dimen/gap_of_8dp">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -67,6 +67,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="170dp"
                         android:background="@color/white"
+                        android:visibility="gone"
                         android:orientation="vertical">
 
                         <LinearLayout

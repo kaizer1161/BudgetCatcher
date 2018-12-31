@@ -11,7 +11,7 @@
         android:id="@+id/pieChart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/gap_of_16dp"
+        android:layout_margin="@dimen/gap_of_8dp"
         android:layout_weight="50"
         android:background="#aa3aa9ae">
 
@@ -20,9 +20,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/gap_of_16dp"
+        android:layout_margin="@dimen/gap_of_8dp"
         android:layout_weight="50"
         android:background="#aa3aa9ae"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <TextView

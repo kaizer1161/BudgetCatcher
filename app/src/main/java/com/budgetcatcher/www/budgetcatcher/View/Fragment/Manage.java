@@ -387,7 +387,7 @@ public class Manage extends Fragment {
             monthDate = new String[monthArrayList.size()];
             for (int i = 0; i < monthArrayList.size(); i++) {
 
-                monthDate[i] = monthArrayList.get(i).getFirstDayOfMonth() + " - " + monthArrayList.get(i).getLastDayOfMonth();
+                monthDate[i] = monthArrayList.get(i).getMonth();
 
             }
             try {
@@ -414,7 +414,7 @@ public class Manage extends Fragment {
             weekDate = new String[weekArrayList.size()];
             for (int i = 0; i < weekArrayList.size(); i++) {
 
-                weekDate[i] = weekArrayList.get(i).getFirstDayOfEveryWeek() + " - " + weekArrayList.get(i).getLastDayOfEveryWeek();
+                weekDate[i] = weekArrayList.get(i).getWeek();
 
             }
 

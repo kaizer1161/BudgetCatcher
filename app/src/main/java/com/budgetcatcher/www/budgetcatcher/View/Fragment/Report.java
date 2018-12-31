@@ -8,7 +8,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
+import com.budgetcatcher.www.budgetcatcher.Config;
+import com.budgetcatcher.www.budgetcatcher.Model.PieChartData;
+import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
 import com.github.mikephil.charting.charts.BarChart;
@@ -26,12 +31,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Report extends Fragment {
 
     private PieChart pieChart;
     private BarChart barChart;
+    @BindView(R.id.header_top)
+    TextView headerTop;
+    @BindView(R.id.header_bottom)
+    TextView headerBottom;
+    private String userID;
 
     @Nullable
     @Override
@@ -43,7 +56,11 @@ public class Report extends Fragment {
 
             Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Report");
             ((MainActivity) getActivity()).navigationView.setCheckedItem(R.id.nav_report);
+            userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
         }
+
+        headerTop.setText("Year To Date");
+        headerBottom.setText("2018 - 2019");
 
         pieChart = rootView.findViewById(R.id.pieChart);
         barChart = rootView.findViewById(R.id.barChart);
@@ -116,37 +133,59 @@ public class Report extends Fragment {
 
     private void addDataSet() {
 
-        List<PieEntry> entries = new ArrayList<>();
+        BudgetCatcher.apiManager.getPieChart(userID, new QueryCallback<ArrayList<PieChartData>>() {
+            @Override
+            public void onSuccess(ArrayList<PieChartData> data) {
 
-        entries.add(new PieEntry(20.79f, "20.79% Home"));
-        entries.add(new PieEntry(17.11f, "17.11% Food"));
-        entries.add(new PieEntry(2.91f, "2.91% Medical"));
-        entries.add(new PieEntry(7.48f, "7.48% Auto"));
-        entries.add(new PieEntry(8.31f, "8.31% Utilities"));
-        entries.add(new PieEntry(29.10f, "29.10% Travel"));
+                List<PieEntry> entries = new ArrayList<>();
+
+                for (int i = 0; i < data.size(); i++) {
+
+                    entries.add(new PieEntry(Float.valueOf(data.get(i).getPercentage()), data.get(i).getPercentage() + "% " + data.get(i).getCategory()));
+
+                }
+
+                /*entries.add(new PieEntry(17.11f, "17.11% Food"));
+                entries.add(new PieEntry(2.91f, "2.91% Medical"));
+                entries.add(new PieEntry(7.48f, "7.48% Auto"));
+                entries.add(new PieEntry(8.31f, "8.31% Utilities"));
+                entries.add(new PieEntry(29.10f, "29.10% Travel"));*/
         /*entries.add(new PieEntry(2.66f, "2.66% Entertainment"));
         entries.add(new PieEntry(6.68f, "6.68% Personal Items"));
         entries.add(new PieEntry(4.99f, "4.99% Other"));*/
 
-        PieDataSet set = new PieDataSet(entries, "");
-        set.setSliceSpace(4);
-        set.setDrawValues(false);
+                PieDataSet set = new PieDataSet(entries, "");
+                set.setSliceSpace(4);
+                set.setDrawValues(false);
 
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.GRAY);
-        colors.add(Color.BLUE);
-        colors.add(Color.RED);
+                ArrayList<Integer> colors = new ArrayList<>();
+                colors.add(Color.GRAY);
+                colors.add(Color.BLUE);
+                colors.add(Color.RED);
         /*colors.add(Color.GREEN);
         colors.add(Color.LTGRAY);*/
-        colors.add(Color.CYAN);
-        /*colors.add(Color.YELLOW);*/
-        colors.add(Color.MAGENTA);
-        colors.add(Color.DKGRAY);
+                colors.add(Color.CYAN);
+                /*colors.add(Color.YELLOW);*/
+                colors.add(Color.MAGENTA);
+                colors.add(Color.DKGRAY);
 
-        set.setColors(colors);
-        PieData data = new PieData(set);
-        pieChart.setData(data);
-        pieChart.invalidate(); // refresh
+                set.setColors(colors);
+                PieData pieData = new PieData(set);
+                pieChart.setData(pieData);
+                pieChart.invalidate(); // refresh
+
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+
+            @Override
+            public void onError(Throwable th) {
+
+            }
+        });
 
     }
 

@@ -36,6 +36,8 @@ import com.budgetcatcher.www.budgetcatcher.Model.ModifyBillBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyCategory;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyExpenseBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyIncomeBody;
+import com.budgetcatcher.www.budgetcatcher.Model.PieChartData;
+import com.budgetcatcher.www.budgetcatcher.Model.PieChartResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.ProfileSetupBody;
 import com.budgetcatcher.www.budgetcatcher.Model.SignUpBody;
 import com.budgetcatcher.www.budgetcatcher.Model.User;
@@ -346,6 +348,40 @@ public class ApiManager {
                     BillResponse billResponse = gson.fromJson(response.body(), BillResponse.class);
 
                     callback.onSuccess((ArrayList<Bill>) billResponse.getBills());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void getPieChart(String userId, final QueryCallback<ArrayList<PieChartData>> callback) {
+
+        String uri = URL.base + URL.pieChart + userId;
+
+        Call<String> networkCall = apiInterface.pieChart(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    Gson gson = new Gson();
+                    PieChartResponse pieChartResponse = gson.fromJson(response.body(), PieChartResponse.class);
+
+                    callback.onSuccess((ArrayList<PieChartData>) pieChartResponse.getData());
 
                 } else {
 
