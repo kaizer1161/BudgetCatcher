@@ -194,18 +194,20 @@ public class ProfileInfo extends Fragment {
                 Gson gson = new Gson();
                 userDetail = gson.fromJson(userJson, User.class);
 
-                if (userDetail.getProfilePicUrl() != null) {
+                if (getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_PROFILE_PIC, "").equals("")) {
 
-                    byte[] decodedString = Base64.decode(userDetail.getProfilePicUrl(), Base64.DEFAULT);
+                    profileImage.setImageDrawable(getActivity().getDrawable(R.drawable.propic));
+
+                } else {
+
+                    byte[] decodedString = Base64.decode(getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_PROFILE_PIC, ""), Base64.DEFAULT);
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
                     profileImage.setImageBitmap(decodedByte);
-                    imageString = userDetail.getProfilePicUrl();
-
-
-                    profileImageSelected = true;
 
                 }
+
+                profileImageSelected = true;
 
                 if (userDetail.getFinancialGoal() != null) {
 
@@ -310,9 +312,9 @@ public class ProfileInfo extends Fragment {
 
             case R.id.save: {
 
-                if (profileImageSelected && financialGoalSpinnerSelected && riskLevelSpinnerSelected && skillLevelSpinnerSelected) {
+                if (/*profileImageSelected &&*/ financialGoalSpinnerSelected && riskLevelSpinnerSelected && skillLevelSpinnerSelected) {
 
-                    userDetail.setProfilePicUrl(imageString);
+                    /*userDetail.setProfilePicUrl(imageString);*/
                     userDetail.setRiskLevel(riskLevel.get(riskLevelSpinner.getSelectedItemPosition()));
                     userDetail.setSkillLevel(skillLevel.get(skillLevelSpinner.getSelectedItemPosition()));
                     userDetail.setFinancialGoal(financialGoal.get(financialGoalSpinner.getSelectedItemPosition()));
@@ -390,6 +392,11 @@ public class ProfileInfo extends Fragment {
 
                 Toast.makeText(getActivity(), "Successfully updated", Toast.LENGTH_SHORT).show();
                 if (getActivity() != null) {
+
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(Config.SP_PROFILE_PIC, imageString);
+                    editor.apply();
 
                     if (storeUserInformationInSharedPreference(userDetail)) {
 

@@ -17,9 +17,9 @@ public class User {
     @SerializedName("userPassword")
     @Expose
     private String userPassword;
-    @SerializedName("profilePicUrl")
+    /*@SerializedName("profilePicUrl")
     @Expose
-    private String profilePicUrl;
+    private String profilePicUrl;*/
     @SerializedName("loginType")
     @Expose
     private String loginType;
@@ -59,20 +59,20 @@ public class User {
      * @param userId
      * @param financialGoal
      * @param userPassword
-     * @param profilePicUrl
+     * @param
      * @param userEmailId
      * @param securityQuestion
      * @param securityAnswer
      * @param loginType
      * @param skillLevel
      */
-    public User(String userId, String userEmailId, String userPhoneNo, String userPassword, String profilePicUrl, String loginType, String securityQuestion, String securityAnswer, String username, String financialGoal, String riskLevel, String loginId, String skillLevel) {
+    public User(String userId, String userEmailId, String userPhoneNo, String userPassword, /*String profilePicUrl,*/ String loginType, String securityQuestion, String securityAnswer, String username, String financialGoal, String riskLevel, String loginId, String skillLevel) {
         super();
         this.userId = userId;
         this.userEmailId = userEmailId;
         this.userPhoneNo = userPhoneNo;
         this.userPassword = userPassword;
-        this.profilePicUrl = profilePicUrl;
+        /*this.profilePicUrl = profilePicUrl;*/
         this.loginType = loginType;
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
@@ -115,13 +115,13 @@ public class User {
         this.userPassword = userPassword;
     }
 
-    public String getProfilePicUrl() {
+    /*public String getProfilePicUrl() {
         return profilePicUrl;
     }
 
     public void setProfilePicUrl(String profilePicUrl) {
         this.profilePicUrl = profilePicUrl;
-    }
+    }*/
 
     public String getLoginType() {
         return loginType;

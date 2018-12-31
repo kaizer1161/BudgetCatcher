@@ -167,9 +167,13 @@ public class Settings extends Fragment {
             riskLevel.setText(userDetails.getRiskLevel());
             skillLevel.setText(userDetails.getSkillLevel());
 
-            if (userDetails.getProfilePicUrl() != null) {
+            if (getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_PROFILE_PIC, "").equals("")) {
 
-                byte[] decodedString = Base64.decode(userDetails.getProfilePicUrl(), Base64.DEFAULT);
+                profileImage.setImageDrawable(getActivity().getDrawable(R.drawable.propic));
+
+            } else {
+
+                byte[] decodedString = Base64.decode(getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_PROFILE_PIC, ""), Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
                 profileImage.setImageBitmap(decodedByte);

@@ -11,6 +11,7 @@ public class Config {
     public static final String SP_WEEK_INFO = "SP_WEEK_INFO";
     public static final String SP_APP_NAME = "BUDGET_CATCHER";
     public static final String SP_MONTH_INFO = "SP_MONTH_INFO";
+    public static final String SP_PROFILE_PIC = "SP_PROFILE_PIC";
     public static final String SP_USER_CREATED_LEVEL = "USER_CREATED";
     public static final String SP_CURRENT_WEEK_INFO = "SP_CURRENT_WEEK_INFO";
     public static final String SP_CURRENT_MONTH_INFO = "SP_CURRENT_MONTH_INFO";

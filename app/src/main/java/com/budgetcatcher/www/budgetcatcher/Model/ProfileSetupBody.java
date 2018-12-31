@@ -7,9 +7,9 @@ import java.io.Serializable;
 
 public class ProfileSetupBody implements Serializable {
 
-    @SerializedName("profilePicUrl")
+    /*@SerializedName("profilePicUrl")
     @Expose
-    private String profilePicUrl;
+    private String profilePicUrl;*/
     @SerializedName("riskLevel")
     @Expose
     private String riskLevel;
@@ -25,23 +25,23 @@ public class ProfileSetupBody implements Serializable {
      * @param skillLevel
      * @param riskLevel
      * @param financialGoal
-     * @param profilePicUrl
+     * @param
      */
-    public ProfileSetupBody(String profilePicUrl, String riskLevel, String skillLevel, String financialGoal) {
+    public ProfileSetupBody(/*String profilePicUrl,*/ String riskLevel, String skillLevel, String financialGoal) {
         super();
-        this.profilePicUrl = profilePicUrl;
+        /*this.profilePicUrl = profilePicUrl;*/
         this.riskLevel = riskLevel;
         this.skillLevel = skillLevel;
         this.financialGoal = financialGoal;
     }
 
-    public String getProfilePicUrl() {
+    /*public String getProfilePicUrl() {
         return profilePicUrl;
     }
 
     public void setProfilePicUrl(String profilePicUrl) {
         this.profilePicUrl = profilePicUrl;
-    }
+    }*/
 
     public String getRiskLevel() {
         return riskLevel;

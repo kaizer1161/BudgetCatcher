@@ -81,7 +81,7 @@ public class Home extends Fragment {
     TextView expenses;
     @BindView(R.id.deficit)
     TextView deficit;
-    private boolean isMonthSelected = false;
+    private boolean isMonthSelected = false, isProjectedBalanceSelected = false;
     private ProgressDialog dialog;
     private SharedPreferences sharedPreferences;
     private int dataFetchCount = 0;
@@ -204,6 +204,14 @@ public class Home extends Fragment {
 
     private void editTextCursorVisibility(boolean visibility) {
 
+        if (getActivity() != null) {
+
+
+            if (((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+                ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+        }
+
         addToSavings.setCursorVisible(visibility);
         reduceDebts.setCursorVisible(visibility);
 
@@ -243,6 +251,7 @@ public class Home extends Fragment {
 
                 homeUiDataUpdateBasedOnMonthOrWeek();
 
+                dataFetchCount--;
                 fetchCurrentWeek();
                 fetchCurrentMonth();
                 fetchWeekBreakdown();
@@ -254,45 +263,101 @@ public class Home extends Fragment {
 
     }
 
-    @OnClick({R.id.projected_balance, R.id.done_bottom_sheet, R.id.add_to_saving, R.id.reduce_debts, R.id.left_arrow, R.id.right_arrow})
+    @OnClick({R.id.projected_balance, R.id.done_bottom_sheet, R.id.add_to_saving, R.id.reduce_debts, R.id.left_arrow, R.id.right_arrow, R.id.date_display})
     public void onClick(View view) {
 
         switch (view.getId()) {
+
+            case R.id.date_display: {
+
+                if (getActivity() != null)
+                    ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+                isProjectedBalanceSelected = false;
+
+                break;
+            }
 
             case R.id.projected_balance: {
 
                 if (getActivity() != null)
                     ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
+                isProjectedBalanceSelected = true;
+
                 break;
             }
 
             case R.id.done_bottom_sheet: {
 
-                final Activity activity = getActivity();
+                if (isProjectedBalanceSelected) {
 
-                final AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
-                builder1.setCancelable(true);
+                    final Activity activity = getActivity();
 
-                LayoutInflater inflater = this.getLayoutInflater();
-                View alertView = inflater.inflate(R.layout.projected_balance_alert_box, null);
-                builder1.setView(alertView);
+                    final AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
+                    builder1.setCancelable(true);
 
-                TextView weekSum = alertView.findViewById(R.id.week_sum);
-                TextView weekNumber = alertView.findViewById(R.id.week_number);
+                    LayoutInflater inflater = this.getLayoutInflater();
+                    View alertView = inflater.inflate(R.layout.projected_balance_alert_box, null);
+                    builder1.setView(alertView);
 
-                if (isMonthSelected) {
+                    TextView weekSum = alertView.findViewById(R.id.week_sum);
+                    TextView weekNumber = alertView.findViewById(R.id.week_number);
 
-                    weekNumber.setText(monthDate[monthPicker.getValue()]);
+                    if (isMonthSelected) {
+
+                        weekNumber.setText(monthDate[monthPicker.getValue()]);
+
+                    } else {
+
+                        weekNumber.setText(weekDate[weekPicker.getValue()]);
+                    }
+
+                    final AlertDialog alert11 = builder1.create();
+
+                    alert11.show();
 
                 } else {
 
-                    weekNumber.setText(weekDate[weekPicker.getValue()]);
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    Date startDate = null, endDate = null;
+
+                    if (getActivity() != null) {
+
+                        ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+                    }
+
+                    if (isMonthSelected) {
+
+                        try {
+
+                            monthIndex = monthPicker.getValue();
+                            startDate = format.parse(monthArrayList.get(monthPicker.getValue()).getFirstDayOfMonth());
+                            endDate = format.parse(monthArrayList.get(monthPicker.getValue()).getLastDayOfMonth());
+                            updateHeader(startDate, endDate, "Month of");
+                            updateHomeData(currentMonth.getFirstDayOfMonth(), currentMonth.getLastDayOfMonth());
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                    } else {
+
+                        try {
+
+                            weekIndex = weekPicker.getValue();
+                            startDate = format.parse(weekArrayList.get(weekPicker.getValue()).getFirstDayOfEveryWeek());
+                            endDate = format.parse(weekArrayList.get(weekPicker.getValue()).getLastDayOfEveryWeek());
+                            updateHeader(startDate, endDate, "Week of");
+                            updateHomeData(currentWeek.getFirstDayOfEveryWeek(), currentWeek.getLastDayOfEveryWeek());
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                 }
-
-                final AlertDialog alert11 = builder1.create();
-
-                alert11.show();
 
                 break;
             }

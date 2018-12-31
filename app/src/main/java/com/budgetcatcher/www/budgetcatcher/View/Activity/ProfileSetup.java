@@ -205,11 +205,11 @@ public class ProfileSetup extends AppCompatActivity {
 
             case R.id.save: {
 
-                if (profileImageSelected && financialGoalSpinnerSelected && riskLevelSpinnerSelected && skillLevelSpinnerSelected) {
+                if (/*profileImageSelected &&*/ financialGoalSpinnerSelected && riskLevelSpinnerSelected && skillLevelSpinnerSelected) {
 
                     String userID = getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-                    ProfileSetupBody profileSetupBody = new ProfileSetupBody(imageString.substring(0, 100), riskLevel.get(riskLevelSpinner.getSelectedItemPosition()), skillLevel.get(skillLevelSpinner.getSelectedItemPosition()), financialGoal.get(financialGoalSpinner.getSelectedItemPosition()));
+                    ProfileSetupBody profileSetupBody = new ProfileSetupBody(riskLevel.get(riskLevelSpinner.getSelectedItemPosition()), skillLevel.get(skillLevelSpinner.getSelectedItemPosition()), financialGoal.get(financialGoalSpinner.getSelectedItemPosition()));
 
                     /*Gson gson = new Gson();
                     Log.d("Profile", "onClick: " + gson.toJson(profileSetupBody));
@@ -327,6 +327,7 @@ public class ProfileSetup extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putInt(Config.SP_USER_CREATED_LEVEL, Config.SP_USER_CREATED_LEVEL_NONE);
+        editor.putString(Config.SP_PROFILE_PIC, imageString);
         editor.putBoolean(Config.SP_LOGGED_IN, true);
         return editor.commit();
 
