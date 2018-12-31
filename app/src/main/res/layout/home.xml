@@ -249,8 +249,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="@dimen/gap_of_8dp"
                                     android:layout_weight="50"
+                                    android:gravity="center"
                                     android:background="@drawable/white_button_background"
                                     android:text="0"
+                                    android:enabled="false"
                                     android:textColor="@color/black"
                                     android:textStyle="bold" />
 

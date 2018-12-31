@@ -149,7 +149,7 @@ public class Home extends Fragment {
             public void afterTextChanged(Editable s) {
                 float savingsAmount = 0;
                 float reduceDebtsAmount=0;
-                float deficitAmount = Float.parseFloat(deficit.getText().toString());
+                float deficitAmount = Float.parseFloat(deficit.getText().toString().replace("$ ", ""));
                 if(s.toString().isEmpty()){
                     savingsAmount=0;
                 }else{
@@ -182,18 +182,18 @@ public class Home extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 String valStr = reduceDebts.getText().toString();
-                float reduceDebtsAmount = Float.parseFloat(valStr);
+                float reduceDebtsAmount = 0;
                 float savingsAmount=0;
-                float deficitAmount = Float.parseFloat(deficit.getText().toString());
+                float deficitAmount = Float.parseFloat(deficit.getText().toString().replace("$ ", ""));
                 if(s.toString().isEmpty()){
                     reduceDebtsAmount=0;
                 }else{
-                    reduceDebtsAmount = Integer.parseInt(addToSavings.getText().toString());
+                    reduceDebtsAmount = Integer.parseInt(reduceDebts.getText().toString());
                 }
                 if(addToSavings.getText().toString().isEmpty()){
                     savingsAmount=0;
                 }else{
-                    savingsAmount = Integer.parseInt(reduceDebts.getText().toString());
+                    savingsAmount = Integer.parseInt(addToSavings.getText().toString());
                 }
                 Float sum = deficitAmount - savingsAmount-reduceDebtsAmount;
                 addToCash.setText(String.valueOf(sum));
