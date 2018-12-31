@@ -122,108 +122,6 @@ public class Home extends Fragment {
 
         editTextCursorVisibility(false);
 
-        weeklyMonthlySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                isMonthSelected = isChecked;
-                homeUiDataUpdateBasedOnMonthOrWeek();
-
-            }
-        });
-
-        addToSavings.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                float savingsAmount = 0;
-                float reduceDebtsAmount=0;
-                float deficitAmount = Float.parseFloat(deficit.getText().toString().replace("$ ", ""));
-                if(s.toString().isEmpty()){
-                    savingsAmount=0;
-                }else{
-                    savingsAmount = Integer.parseInt(addToSavings.getText().toString());
-                }
-                if(reduceDebts.getText().toString().isEmpty()){
-                    reduceDebtsAmount=0;
-                }else{
-                    reduceDebtsAmount = Integer.parseInt(reduceDebts.getText().toString());
-                }
-                Float sum = deficitAmount - savingsAmount-reduceDebtsAmount;
-                addToCash.setText(String.valueOf(sum));
-
-            }
-        });
-
-        reduceDebts.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String valStr = reduceDebts.getText().toString();
-                float reduceDebtsAmount = 0;
-                float savingsAmount=0;
-                float deficitAmount = Float.parseFloat(deficit.getText().toString().replace("$ ", ""));
-                if(s.toString().isEmpty()){
-                    reduceDebtsAmount=0;
-                }else{
-                    reduceDebtsAmount = Integer.parseInt(reduceDebts.getText().toString());
-                }
-                if(addToSavings.getText().toString().isEmpty()){
-                    savingsAmount=0;
-                }else{
-                    savingsAmount = Integer.parseInt(addToSavings.getText().toString());
-                }
-                Float sum = deficitAmount - savingsAmount-reduceDebtsAmount;
-                addToCash.setText(String.valueOf(sum));
-            }
-        });
-        return rootView;
-    }
-
-    private void editTextCursorVisibility(boolean visibility) {
-
-        if (getActivity() != null) {
-
-
-            if (((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
-                ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-
-        }
-
-        addToSavings.setCursorVisible(visibility);
-        reduceDebts.setCursorVisible(visibility);
-
-        addToSavings.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        reduceDebts.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
         if (getActivity() != null) {
 
             if (getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_WEEK_INFO, "").equals("") || getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_MONTH_INFO, "").equals("") || getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_CURRENT_WEEK_INFO, "").equals("") || getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_CURRENT_MONTH_INFO, "").equals("")) {
@@ -260,6 +158,102 @@ public class Home extends Fragment {
             }
 
         }
+
+        weeklyMonthlySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                isMonthSelected = isChecked;
+                homeUiDataUpdateBasedOnMonthOrWeek();
+
+            }
+        });
+
+        addToSavings.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                float savingsAmount = 0;
+                float reduceDebtsAmount = 0;
+                float deficitAmount = Float.parseFloat(deficit.getText().toString().replace("$ ", ""));
+                if (s.toString().isEmpty()) {
+                    savingsAmount = 0;
+                } else {
+                    savingsAmount = Integer.parseInt(addToSavings.getText().toString());
+                }
+                if (reduceDebts.getText().toString().isEmpty()) {
+                    reduceDebtsAmount = 0;
+                } else {
+                    reduceDebtsAmount = Integer.parseInt(reduceDebts.getText().toString());
+                }
+                Float sum = deficitAmount - savingsAmount - reduceDebtsAmount;
+                addToCash.setText(String.valueOf(sum));
+
+            }
+        });
+
+        reduceDebts.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String valStr = reduceDebts.getText().toString();
+                float reduceDebtsAmount = 0;
+                float savingsAmount = 0;
+                float deficitAmount = Float.parseFloat(deficit.getText().toString().replace("$ ", ""));
+                if (s.toString().isEmpty()) {
+                    reduceDebtsAmount = 0;
+                } else {
+                    reduceDebtsAmount = Integer.parseInt(reduceDebts.getText().toString());
+                }
+                if (addToSavings.getText().toString().isEmpty()) {
+                    savingsAmount = 0;
+                } else {
+                    savingsAmount = Integer.parseInt(addToSavings.getText().toString());
+                }
+                Float sum = deficitAmount - savingsAmount - reduceDebtsAmount;
+                addToCash.setText(String.valueOf(sum));
+            }
+        });
+        return rootView;
+    }
+
+    private void editTextCursorVisibility(boolean visibility) {
+
+        if (getActivity() != null) {
+
+            if (((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+                ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+        }
+
+        addToSavings.setCursorVisible(visibility);
+        reduceDebts.setCursorVisible(visibility);
+
+        addToSavings.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        reduceDebts.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
     }
 

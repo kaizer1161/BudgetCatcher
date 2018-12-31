@@ -15,8 +15,8 @@ android {
         applicationId 'com.budgetcatcher.www'
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 12
-        versionName "0.1.9"
+        versionCode 17
+        versionName "0.1.14"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
