@@ -174,6 +174,7 @@ public class Home extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 // TODO Auto-generated method stub
+
             }
 
             @Override
@@ -188,18 +189,30 @@ public class Home extends Fragment {
                 float savingsAmount = 0;
                 float reduceDebtsAmount = 0;
                 float deficitAmount = Float.parseFloat(deficit.getText().toString().replace("$ ", ""));
-                if (s.toString().isEmpty()) {
-                    savingsAmount = 0;
-                } else {
-                    savingsAmount = Integer.parseInt(addToSavings.getText().toString());
+
+                if (s.toString().equals(".")) {
+
+                    addToSavings.setText("0.");
+                    addToSavings.setSelection(addToSavings.getText().toString().length());
+
                 }
-                if (reduceDebts.getText().toString().isEmpty()) {
-                    reduceDebtsAmount = 0;
-                } else {
-                    reduceDebtsAmount = Integer.parseInt(reduceDebts.getText().toString());
+
+                if (s.toString().length() < 11) {
+
+                    if (s.toString().isEmpty()) {
+                        savingsAmount = 0;
+                    } else {
+                        savingsAmount = Float.parseFloat(addToSavings.getText().toString());
+                    }
+                    if (reduceDebts.getText().toString().isEmpty()) {
+                        reduceDebtsAmount = 0;
+                    } else {
+                        reduceDebtsAmount = Float.parseFloat(reduceDebts.getText().toString());
+                    }
+                    Float sum = deficitAmount - savingsAmount - reduceDebtsAmount;
+                    addToCash.setText(String.valueOf(sum));
+
                 }
-                Float sum = deficitAmount - savingsAmount - reduceDebtsAmount;
-                addToCash.setText(String.valueOf(sum));
 
             }
         });
@@ -223,18 +236,31 @@ public class Home extends Fragment {
                 float reduceDebtsAmount = 0;
                 float savingsAmount = 0;
                 float deficitAmount = Float.parseFloat(deficit.getText().toString().replace("$ ", ""));
-                if (s.toString().isEmpty()) {
-                    reduceDebtsAmount = 0;
-                } else {
-                    reduceDebtsAmount = Integer.parseInt(reduceDebts.getText().toString());
+
+                if (s.toString().equals(".")) {
+
+                    reduceDebts.setText("0.");
+                    reduceDebts.setSelection(reduceDebts.getText().toString().length());
+
                 }
-                if (addToSavings.getText().toString().isEmpty()) {
-                    savingsAmount = 0;
-                } else {
-                    savingsAmount = Integer.parseInt(addToSavings.getText().toString());
+
+                if (s.toString().length() < 11) {
+
+                    if (s.toString().isEmpty()) {
+                        reduceDebtsAmount = 0;
+                    } else {
+                        reduceDebtsAmount = Float.parseFloat(reduceDebts.getText().toString());
+                    }
+                    if (addToSavings.getText().toString().isEmpty()) {
+                        savingsAmount = 0;
+                    } else {
+                        savingsAmount = Float.parseFloat(addToSavings.getText().toString());
+                    }
+                    Float sum = deficitAmount - savingsAmount - reduceDebtsAmount;
+                    addToCash.setText(String.valueOf(sum));
+
                 }
-                Float sum = deficitAmount - savingsAmount - reduceDebtsAmount;
-                addToCash.setText(String.valueOf(sum));
+
             }
         });
         return rootView;
