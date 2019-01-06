@@ -111,6 +111,7 @@ public class Home extends Fragment {
             sharedPreferences = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE);
             userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
+
             ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior = BottomSheetBehavior.from(projectedBalanceLayoutBottomSheet);
             ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
@@ -356,7 +357,7 @@ public class Home extends Fragment {
                             startDate = format.parse(monthArrayList.get(monthPicker.getValue()).getFirstDayOfMonth());
                             endDate = format.parse(monthArrayList.get(monthPicker.getValue()).getLastDayOfMonth());
                             updateHeader(startDate, endDate, "Month of");
-                            updateHomeData(currentMonth.getFirstDayOfMonth(), currentMonth.getLastDayOfMonth());
+                            updateHomeData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getLastDayOfMonth());
 
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -370,7 +371,7 @@ public class Home extends Fragment {
                             startDate = format.parse(weekArrayList.get(weekPicker.getValue()).getFirstDayOfEveryWeek());
                             endDate = format.parse(weekArrayList.get(weekPicker.getValue()).getLastDayOfEveryWeek());
                             updateHeader(startDate, endDate, "Week of");
-                            updateHomeData(currentWeek.getFirstDayOfEveryWeek(), currentWeek.getLastDayOfEveryWeek());
+                            updateHomeData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
 
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -679,7 +680,6 @@ public class Home extends Fragment {
                 endDate = format.parse(currentWeek.getLastDayOfEveryWeek());
                 weekIndex = Integer.parseInt(currentWeek.getWeekNumber()) - 1;
                 updateHeader(startDate, endDate, "Week of");
-
                 updateHomeData(currentWeek.getFirstDayOfEveryWeek(), currentWeek.getLastDayOfEveryWeek());
 
             } catch (ParseException e) {

@@ -605,7 +605,7 @@ public class Catcher extends Fragment {
                         startDate = format.parse(monthArrayList.get(monthPicker.getValue()).getFirstDayOfMonth());
                         endDate = format.parse(monthArrayList.get(monthPicker.getValue()).getLastDayOfMonth());
                         updateHeader(startDate, endDate, "Month of");
-                        updateCatherData(currentMonth.getFirstDayOfMonth(), currentMonth.getLastDayOfMonth());
+                        updateCatherData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getLastDayOfMonth());
 
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -619,7 +619,7 @@ public class Catcher extends Fragment {
                         startDate = format.parse(weekArrayList.get(weekPicker.getValue()).getFirstDayOfEveryWeek());
                         endDate = format.parse(weekArrayList.get(weekPicker.getValue()).getLastDayOfEveryWeek());
                         updateHeader(startDate, endDate, "Week of");
-                        updateCatherData(currentWeek.getFirstDayOfEveryWeek(), currentWeek.getLastDayOfEveryWeek());
+                        updateCatherData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
 
                     } catch (ParseException e) {
                         e.printStackTrace();

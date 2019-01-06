@@ -164,8 +164,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:padding="@dimen/gap_of_8dp">
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:layout_width="0dp"
@@ -196,8 +195,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:padding="@dimen/gap_of_8dp">
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:layout_width="0dp"
@@ -229,8 +227,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:padding="@dimen/gap_of_8dp">
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:layout_width="0dp"
@@ -249,10 +246,11 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="@dimen/gap_of_8dp"
                                     android:layout_weight="50"
-                                    android:gravity="center"
                                     android:background="@drawable/white_button_background"
+                                    android:gravity="center"
                                     android:text="0"
                                     android:enabled="false"
+                                    android:padding="@dimen/gap_of_8dp"
                                     android:textColor="@color/black"
                                     android:textStyle="bold" />
 

@@ -493,7 +493,7 @@ public class Manage extends Fragment {
                         startDate = format.parse(monthArrayList.get(monthPicker.getValue()).getFirstDayOfMonth());
                         endDate = format.parse(monthArrayList.get(monthPicker.getValue()).getLastDayOfMonth());
                         updateHeader(startDate, endDate, "Month of");
-                        updateManageData(currentMonth.getFirstDayOfMonth(), currentMonth.getLastDayOfMonth());
+                        updateManageData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getLastDayOfMonth());
 
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -507,7 +507,7 @@ public class Manage extends Fragment {
                         startDate = format.parse(weekArrayList.get(weekPicker.getValue()).getFirstDayOfEveryWeek());
                         endDate = format.parse(weekArrayList.get(weekPicker.getValue()).getLastDayOfEveryWeek());
                         updateHeader(startDate, endDate, "Week of");
-                        updateManageData(currentWeek.getFirstDayOfEveryWeek(), currentWeek.getLastDayOfEveryWeek());
+                        updateManageData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
 
                     } catch (ParseException e) {
                         e.printStackTrace();
