@@ -5,6 +5,8 @@ public class URL {
     /*Api base url*/
     //public static final String base = "http://www.budget-catcher.com/api/";
     public static final String base = "http://bc.biniyogbondhu.com/api/";
+    /*Yodlee base URL*/
+    public static final String yodleeBase = "https://developer.api.yodlee.com/ysl/";
 
     /*URL status code*/
     public static final int STATUS_BAD_REQUEST = 400;
@@ -29,7 +31,9 @@ public class URL {
     public static final String insertIncome = "insertIncome";
     public static final String deleteIncome = "deleteIncome/";
     public static final String getAllIncome = "getAllIncome/";
+    public static final String cobrandLogin = "cobrand/login";
     public static final String modifyIncome = "modifyIncome/";
+    public static final String yodleeUserLogin = "user/login";
     public static final String insertExpense = "insertExpense";
     public static final String modifyExpense = "modifyExpense/";
     public static final String deleteExpense = "deleteExpense/";
@@ -45,14 +49,22 @@ public class URL {
     public static final String getCurrentWeekOrMonth = "getCurrentWeekOrMonth/";
 
     /*URL key value*/
+    public static final String value_Api_Version = "1.1";
+    public static final String value_Local_language = "en_US";
+    public static final String value_Cobrand_Name = "restserver";
     public static final String value_Content_Type = "application/json";
+    public static final String value_Cobrand_login = "sbCobdd1dcc211512e9a5485650d4299722930a";
+    public static final String value_Cobrand_password = "7fcf6aec-4c2f-41a3-959d-531353ffb64d";
 
     /*API key*/
     public static final String API_KEY_DATA = "data";
     public static final String API_KEY_USER_ID = "userId";
 
     /*URL key */
+    public static final String key_Api_Version = "Api-Version";
     public static final String key_content_Type = "Content_Type";
-
+    public static final String key_Cobrand_Name = "Cobrand-Name";
+    public static final String key_Yodlee_Authorization = "Authorization";
+    public static final String key_Yodlee_cobSession = "cobSession=";
 
 }

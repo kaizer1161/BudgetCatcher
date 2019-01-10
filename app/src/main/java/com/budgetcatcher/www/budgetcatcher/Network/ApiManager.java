@@ -20,6 +20,8 @@ import com.budgetcatcher.www.budgetcatcher.Model.BillResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.CatcherResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.Category;
 import com.budgetcatcher.www.budgetcatcher.Model.CategoryResponse;
+import com.budgetcatcher.www.budgetcatcher.Model.Cobrand;
+import com.budgetcatcher.www.budgetcatcher.Model.CobrandLoginBody;
 import com.budgetcatcher.www.budgetcatcher.Model.Expenses;
 import com.budgetcatcher.www.budgetcatcher.Model.ExpensesResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.GetUserInfo;
@@ -41,6 +43,7 @@ import com.budgetcatcher.www.budgetcatcher.Model.PieChartResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.ProfileSetupBody;
 import com.budgetcatcher.www.budgetcatcher.Model.SignUpBody;
 import com.budgetcatcher.www.budgetcatcher.Model.User;
+import com.budgetcatcher.www.budgetcatcher.Model.YodleeUserLoginBody;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -736,6 +739,9 @@ public class ApiManager {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
+                Log.d(TAG, "onResponse: " + response.code());
+                Log.d(TAG, "onResponse: " + response.body());
+
                 if (response.code() == URL.STATUS_SERVER_CREATED) {
 
                     callback.onSuccess(response.body());
@@ -1083,6 +1089,87 @@ public class ApiManager {
                     ExpensesResponse expensesResponse = gson.fromJson(response.body(), ExpensesResponse.class);
 
                     callback.onSuccess((ArrayList<Expenses>) expensesResponse.getExpenses());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    /*Yodlee APIs*/
+    public void cobrandLogin(final QueryCallback<String> callback) {
+
+        String uri = URL.yodleeBase + URL.cobrandLogin;
+
+        Map<String, String> cobrandHeaders = new HashMap<>();
+        cobrandHeaders.put(URL.key_content_Type, URL.value_Content_Type);
+        cobrandHeaders.put(URL.key_Api_Version, URL.value_Api_Version);
+        cobrandHeaders.put(URL.key_Cobrand_Name, URL.value_Cobrand_Name);
+
+        Cobrand cobrand = new Cobrand(URL.value_Cobrand_login, URL.value_Cobrand_password, URL.value_Local_language);
+        CobrandLoginBody cobrandLoginBody = new CobrandLoginBody(cobrand);
+
+        Call<String> networkCall = apiInterface.cobrandLogin(uri, cobrandHeaders, cobrandLoginBody);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void yodleeUserLogin(String session, final String loginName, final String loginPassword, final QueryCallback<String> callback) {
+
+        String uri = URL.yodleeBase + URL.yodleeUserLogin;
+
+        Map<String, String> yodleeHeaders = new HashMap<>();
+        yodleeHeaders.put(URL.key_content_Type, URL.value_Content_Type);
+        yodleeHeaders.put(URL.key_Api_Version, URL.value_Api_Version);
+        yodleeHeaders.put(URL.key_Cobrand_Name, URL.value_Cobrand_Name);
+        yodleeHeaders.put(URL.key_Yodlee_Authorization, URL.key_Yodlee_cobSession + session);
+
+        YodleeUserLoginBody yodleeUserLoginBody = new YodleeUserLoginBody(new YodleeUserLoginBody.User(loginName, loginPassword, URL.value_Local_language));
+
+        Call<String> networkCall = apiInterface.yodleeUserLogin(uri, yodleeHeaders, yodleeUserLoginBody);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                Log.d(TAG, "onResponse: " + response.body());
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
 
                 } else {
 

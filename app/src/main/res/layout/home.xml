@@ -275,9 +275,9 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/ending_balance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="$ 989.00"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />

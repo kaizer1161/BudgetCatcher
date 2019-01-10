@@ -533,10 +533,14 @@ public class Catcher extends Fragment {
 
                 }
 
-                showFeedIncomes(incomeArrayList);
-                showFeedIncidental(expensesArrayList);
-                showFeedSpendingAllowance(spendingAllowanceArrayList);
-                showFeedBills(billsArrayList);
+                if (getActivity() != null) {
+
+                    showFeedIncomes(incomeArrayList);
+                    showFeedIncidental(expensesArrayList);
+                    showFeedSpendingAllowance(spendingAllowanceArrayList);
+                    showFeedBills(billsArrayList);
+
+                }
 
             }
 

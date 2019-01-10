@@ -29,6 +29,7 @@ import com.budgetcatcher.www.budgetcatcher.View.Fragment.Home;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Manage;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Report;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Settings;
+import com.budgetcatcher.www.budgetcatcher.Yodlee.YodleeActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -205,6 +206,11 @@ public class MainActivity extends AppCompatActivity
                     .commit();
 
             navigationView.setCheckedItem(R.id.nav_settings);
+
+        } else if (id == R.id.nav_yodlee) {
+
+            startActivity(new Intent(MainActivity.this, YodleeActivity.class));
+            finish();
 
         } else if (id == R.id.nav_logout) {
 

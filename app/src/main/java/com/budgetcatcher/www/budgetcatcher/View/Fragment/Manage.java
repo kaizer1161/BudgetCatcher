@@ -734,10 +734,14 @@ public class Manage extends Fragment {
 
                 }
 
-                showFeedIncomes(incomeArrayList, data.getIncomesData());
-                showFeedIncidental(expensesArrayList, data.getIncidentalsData());
-                showFeedSpendingAllowance(spendingAllowanceArrayList, data.getAllowancesData());
-                showFeedBills(billsArrayList, data.getBillsData());
+                if (getActivity() != null) {
+
+                    showFeedIncomes(incomeArrayList, data.getIncomesData());
+                    showFeedIncidental(expensesArrayList, data.getIncidentalsData());
+                    showFeedSpendingAllowance(spendingAllowanceArrayList, data.getAllowancesData());
+                    showFeedBills(billsArrayList, data.getBillsData());
+
+                }
 
             }
 

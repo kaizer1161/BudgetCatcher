@@ -36,5 +36,6 @@
     <string name="failed_to_added">Failed to add</string>
     <string name="successfully_edited">Successfully edited</string>
     <string name="failed_to_edited">Failed to edit</string>
+    <string name="yodlee">Yodlee</string>
 
 </resources>

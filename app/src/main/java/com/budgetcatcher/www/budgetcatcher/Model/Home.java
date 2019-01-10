@@ -14,6 +14,9 @@ public class Home {
     @SerializedName("expense")
     @Expose
     private String expense;
+    @SerializedName("endingBalance")
+    @Expose
+    private String endingBalance;
 
     /**
      * No args constructor for use in serialization
@@ -22,18 +25,16 @@ public class Home {
     }
 
     /**
+     *
      * @param expense
      * @param income
      * @param startingBalance
+     * @param endingBalance
      */
-    public Home(String startingBalance, String income, String expense) {
+    public Home(String startingBalance, String endingBalance, String income, String expense) {
         super();
-
-        /*this.startingBalance = String.format("%.2f", Float.parseFloat(startingBalance));
-        this.income = String.format("%.2f", Float.parseFloat(income));
-        this.expense = ;*/
-
         this.startingBalance = startingBalance;
+        this.endingBalance = endingBalance;
         this.income = income;
         this.expense = expense;
     }
@@ -44,6 +45,14 @@ public class Home {
 
     public void setStartingBalance(String startingBalance) {
         this.startingBalance = startingBalance;
+    }
+
+    public String getEndingBalance() {
+        return endingBalance;
+    }
+
+    public void setEndingBalance(String endingBalance) {
+        this.endingBalance = endingBalance;
     }
 
     public String getIncome() {

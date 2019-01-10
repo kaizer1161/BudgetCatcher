@@ -113,7 +113,7 @@ public class EditBill extends Fragment {
                 dateTextView.setVisibility(View.VISIBLE);
                 datePicker.setVisibility(View.GONE);
 
-                date = year + "-" + (month + 1) + "-" + dayOfMonth;
+                date = (month + 1) + "-" + dayOfMonth + "-" + year;
                 dateTextView.setText(date);
 
             }

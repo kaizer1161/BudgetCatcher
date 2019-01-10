@@ -32,6 +32,11 @@
             android:title="Settings" />
 
         <item
+            android:id="@+id/nav_yodlee"
+            android:icon="@drawable/ic_action_setting"
+            android:title="Yodlee" />
+
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_action_logout"
             android:title="Logout" />

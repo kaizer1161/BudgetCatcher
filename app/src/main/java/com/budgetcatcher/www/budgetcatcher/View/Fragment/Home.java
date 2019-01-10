@@ -63,6 +63,8 @@ public class Home extends Fragment {
     EditText reduceDebts;
     @BindView(R.id.editTextAddToCash)
     EditText addToCash;
+    @BindView(R.id.ending_balance)
+    TextView endingBalance;
     @BindView(R.id.week_picker)
     NumberPicker weekPicker;
     @BindView(R.id.month_picker)
@@ -732,6 +734,7 @@ public class Home extends Fragment {
                 income.setText("$ " + decimalFormat.format(Float.parseFloat(home.getIncome())));
                 expenses.setText("($ " + decimalFormat.format(Float.parseFloat(home.getExpense())) + ")");
                 deficit.setText("$ " + decimalFormat.format(Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense())));
+                endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getEndingBalance())));
 
             }
 
@@ -746,6 +749,7 @@ public class Home extends Fragment {
                 income.setText("$ 0");
                 expenses.setText("($ 0" + ")");
                 deficit.setText("$ 0");
+                endingBalance.setText("$ 0");
 
             }
 
@@ -758,6 +762,7 @@ public class Home extends Fragment {
                 income.setText("$ 0");
                 expenses.setText("($ 0" + ")");
                 deficit.setText("$ 0");
+                endingBalance.setText("$ 0");
 
                 if (getActivity() != null) {
                     Log.e("SerVerErrAddBill", th.toString());
