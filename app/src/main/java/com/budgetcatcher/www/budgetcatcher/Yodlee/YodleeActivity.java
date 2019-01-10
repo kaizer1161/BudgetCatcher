@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
+import com.budgetcatcher.www.budgetcatcher.Config;
 import com.budgetcatcher.www.budgetcatcher.Model.CobrandLoginResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.YodleeUserLoginResponse;
 import com.budgetcatcher.www.budgetcatcher.Network.NetworkChangeReceiver;
@@ -30,10 +31,13 @@ public class YodleeActivity extends AppCompatActivity {
     private BroadcastReceiver mNetworkReceiver;
     private ProgressDialog dialog;
 
+    public YodleeUserLoginResponse yodleeUserLoginResponse;
+    public CobrandLoginResponse cobrandLoginResponse;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.launcher_screen);
+        setContentView(R.layout.yodlee);
         ButterKnife.bind(this);
 
         dialog = ProgressDialog.show(YodleeActivity.this, "",
@@ -50,7 +54,7 @@ public class YodleeActivity extends AppCompatActivity {
 
     private void loginToCobrand() {
 
-        if (BudgetCatcher.connectedToInternet) {
+        /*if (BudgetCatcher.connectedToInternet) {*/
 
             dialog.show();
             BudgetCatcher.apiManager.cobrandLogin(new QueryCallback<String>() {
@@ -58,7 +62,7 @@ public class YodleeActivity extends AppCompatActivity {
                 public void onSuccess(String data) {
 
                     Gson gson = new Gson();
-                    CobrandLoginResponse cobrandLoginResponse = gson.fromJson(data, CobrandLoginResponse.class);
+                    cobrandLoginResponse = gson.fromJson(data, CobrandLoginResponse.class);
                     yodleeLogin(cobrandLoginResponse);
 
                 }
@@ -68,6 +72,7 @@ public class YodleeActivity extends AppCompatActivity {
 
                     dialog.dismiss();
                     Toast.makeText(YodleeActivity.this, "Something went wrong: server error", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
 
                 }
 
@@ -82,28 +87,34 @@ public class YodleeActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(YodleeActivity.this, th.toString(), Toast.LENGTH_SHORT).show();
                     }
+                    onBackPressed();
 
                 }
             });
 
-        } else {
+        /*} else {
 
             Toast.makeText(YodleeActivity.this, getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
 
-        }
+        }*/
 
     }
 
     private void yodleeLogin(CobrandLoginResponse cobrandLoginResponse) {
 
-        if (BudgetCatcher.connectedToInternet) {
+        /*if (BudgetCatcher.connectedToInternet) {*/
 
             BudgetCatcher.apiManager.yodleeUserLogin(cobrandLoginResponse.getSession().getCobSession(), "sbMemdd1dcc211512e9a5485650d4299722930a1", "sbMemdd1dcc211512e9a5485650d4299722930a1#123", new QueryCallback<String>() {
                 @Override
                 public void onSuccess(String data) {
 
                     Gson gson = new Gson();
-                    YodleeUserLoginResponse yodleeUserLoginResponse = gson.fromJson(data, YodleeUserLoginResponse.class);
+                    yodleeUserLoginResponse = gson.fromJson(data, YodleeUserLoginResponse.class);
+
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.yodlee_content, new YodleeAccount(), Config.TAG_HOME_FRAGMENT)
+                            .commit();
 
                     dialog.dismiss();
 
@@ -114,6 +125,7 @@ public class YodleeActivity extends AppCompatActivity {
 
                     dialog.dismiss();
                     Toast.makeText(YodleeActivity.this, "Something went wrong: server error", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
 
                 }
 
@@ -128,16 +140,17 @@ public class YodleeActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(YodleeActivity.this, th.toString(), Toast.LENGTH_SHORT).show();
                     }
+                    onBackPressed();
 
                 }
             });
 
-        } else {
+        /*} else {
 
             dialog.dismiss();
             Toast.makeText(YodleeActivity.this, getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
 
-        }
+        }*/
 
     }
 

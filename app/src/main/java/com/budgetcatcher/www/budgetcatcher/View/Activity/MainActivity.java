@@ -210,7 +210,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_yodlee) {
 
             startActivity(new Intent(MainActivity.this, YodleeActivity.class));
-            finish();
 
         } else if (id == R.id.nav_logout) {
 

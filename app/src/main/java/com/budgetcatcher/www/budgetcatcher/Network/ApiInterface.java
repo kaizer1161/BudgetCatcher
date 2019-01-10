@@ -20,6 +20,7 @@ import com.budgetcatcher.www.budgetcatcher.Model.ModifyExpenseBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyIncomeBody;
 import com.budgetcatcher.www.budgetcatcher.Model.SignUpBody;
 import com.budgetcatcher.www.budgetcatcher.Model.User;
+import com.budgetcatcher.www.budgetcatcher.Model.YodleeCreateManualAccountBody;
 import com.budgetcatcher.www.budgetcatcher.Model.YodleeUserLoginBody;
 
 import java.util.Map;
@@ -71,11 +72,17 @@ public interface ApiInterface {
     @GET()
     Call<String> getCategory(@Url String url);
 
+    @GET
+    Call<String> yodleeGetAccount(@Url String url, @HeaderMap Map<String, String> headers);
+
     @POST(URL.signUp)
     Call<String> signUp(@HeaderMap Map<String, String> headers, @Body SignUpBody signUpBody);
 
     @POST()
     Call<String> cobrandLogin(@Url String url, @HeaderMap Map<String, String> headers, @Body CobrandLoginBody cobrandLoginBody);
+
+    @POST()
+    Call<String> yodleeCreateAccountManually(@Url String url, @HeaderMap Map<String, String> headers, @Body YodleeCreateManualAccountBody createManualAccountBody);
 
     @POST()
     Call<String> yodleeUserLogin(@Url String url, @HeaderMap Map<String, String> headers, @Body YodleeUserLoginBody yodleeUserLoginBody);

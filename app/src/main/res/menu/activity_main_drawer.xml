@@ -34,7 +34,7 @@
         <item
             android:id="@+id/nav_yodlee"
             android:icon="@drawable/ic_action_setting"
-            android:title="Yodlee" />
+            android:title="Pay your bills" />
 
         <item
             android:id="@+id/nav_logout"

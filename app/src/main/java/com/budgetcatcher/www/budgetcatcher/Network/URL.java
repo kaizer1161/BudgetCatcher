@@ -34,6 +34,7 @@ public class URL {
     public static final String cobrandLogin = "cobrand/login";
     public static final String modifyIncome = "modifyIncome/";
     public static final String yodleeUserLogin = "user/login";
+    public static final String yodleeGetAccount = "accounts?";
     public static final String insertExpense = "insertExpense";
     public static final String modifyExpense = "modifyExpense/";
     public static final String deleteExpense = "deleteExpense/";
@@ -41,6 +42,7 @@ public class URL {
     public static final String getAllExpenses = "getAllExpenses/";
     public static final String deleteCategory = "deleteCategory/";
     public static final String getAllCategory = "getAllCategory/";
+    public static final String yodleeAddAccoutManually = "accounts";
     public static final String deleteAllowance = "deleteAllowance/";
     public static final String modifyAllowance = "modifyAllowance/";
     public static final String getAllAllowance = "getAllAllowances/";
@@ -66,5 +68,6 @@ public class URL {
     public static final String key_Cobrand_Name = "Cobrand-Name";
     public static final String key_Yodlee_Authorization = "Authorization";
     public static final String key_Yodlee_cobSession = "cobSession=";
+    public static final String key_Yodlee_userSession = "userSession=";
 
 }
