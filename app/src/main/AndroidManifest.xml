@@ -49,7 +49,7 @@
             android:label="@string/yodlee"
             android:parentActivityName=".View.Activity.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name="com.budgetcatcher.www.budgetcatcher.View.Activity.SignIn"

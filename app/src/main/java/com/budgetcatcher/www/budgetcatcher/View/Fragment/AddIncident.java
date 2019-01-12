@@ -269,7 +269,7 @@ if (th instanceof SocketTimeoutException){
 
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.content, new Manage(), Config.TAG_MANAGE_FRAGMENT)
+                                .replace(R.id.content, new Catcher(), Config.TAG_CATCHER_FRAGMENT)
                                 .commit();
 
                     }

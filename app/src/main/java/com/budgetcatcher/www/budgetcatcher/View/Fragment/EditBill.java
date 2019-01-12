@@ -103,7 +103,6 @@ public class EditBill extends Fragment {
         }
 
         showAllDataInUI();
-        //
 
         datePicker.setVisibility(View.GONE);
         datePicker.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {

@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.webkit.WebView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import com.budgetcatcher.www.budgetcatcher.R;
 import com.google.gson.Gson;
 
 import java.net.SocketTimeoutException;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +47,12 @@ public class YodleeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.yodlee);
         ButterKnife.bind(this);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         dialog = ProgressDialog.show(YodleeActivity.this, "",
                 getString(R.string.loading), true);
