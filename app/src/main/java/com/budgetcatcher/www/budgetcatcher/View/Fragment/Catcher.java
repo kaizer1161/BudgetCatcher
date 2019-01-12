@@ -507,13 +507,27 @@ public class Catcher extends Fragment {
                 for (int i = 0; i < data.getIncomesData().size(); i++) {
 
                     Income income = data.getIncomesData().get(i);
-                    incomeArrayList.add(new AccountItem(income.getFrequency(), income.getNextPayDay(), "$" + income.getAmount(), income.getIncomeId()));
+
+                    String year, month, day;
+
+                    year = income.getNextPayDay().substring(0, 4);
+                    month = income.getNextPayDay().substring(5, 7);
+                    day = income.getNextPayDay().substring(8, 10);
+
+                    incomeArrayList.add(new AccountItem(income.getFrequency(), month + "-" + day + "-" + year, "$" + income.getAmount(), income.getIncomeId()));
 
                 }
 
                 for (int i = 0; i < data.getBillsData().size(); i++) {
                     Bill bill = data.getBillsData().get(i);
-                    billsArrayList.add(new AccountItem(bill.getBillName(), bill.getDueDate(), "$" + bill.getAmount(), bill.getBillId()));
+
+                    String year, month, day;
+
+                    year = bill.getDueDate().substring(0, 4);
+                    month = bill.getDueDate().substring(5, 7);
+                    day = bill.getDueDate().substring(8, 10);
+
+                    billsArrayList.add(new AccountItem(bill.getBillName(), month + "-" + day + "-" + year, "$" + bill.getAmount(), bill.getBillId()));
                 }
 
                 for (int i = 0; i < data.getAllowancesData().size(); i++) {
@@ -537,7 +551,13 @@ public class Catcher extends Fragment {
                     SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-DD");
                     String finalString = newFormat.format(date);*/
 
-                    expensesArrayList.add(new AccountItem(expenses.getExpenseName(), expenses.getDateTime(), "$" + expenses.getAmount(), expenses.getExpenseId()));
+                    String year, month, day;
+
+                    year = expenses.getDateTime().substring(0, 4);
+                    month = expenses.getDateTime().substring(5, 7);
+                    day = expenses.getDateTime().substring(8, 10);
+
+                    expensesArrayList.add(new AccountItem(expenses.getExpenseName(), month + "-" + day + "-" + year, "$" + expenses.getAmount(), expenses.getExpenseId()));
 
                 }
 

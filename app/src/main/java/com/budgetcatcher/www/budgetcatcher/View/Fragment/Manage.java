@@ -28,7 +28,6 @@ import com.budgetcatcher.www.budgetcatcher.Model.AccountItem;
 import com.budgetcatcher.www.budgetcatcher.Model.Allowance;
 import com.budgetcatcher.www.budgetcatcher.Model.Bill;
 import com.budgetcatcher.www.budgetcatcher.Model.CatcherResponse;
-import com.budgetcatcher.www.budgetcatcher.Model.Expenses;
 import com.budgetcatcher.www.budgetcatcher.Model.Income;
 import com.budgetcatcher.www.budgetcatcher.Model.Month;
 import com.budgetcatcher.www.budgetcatcher.Model.MonthData;
@@ -699,13 +698,27 @@ public class Manage extends Fragment {
                 for (int i = 0; i < data.getIncomesData().size(); i++) {
 
                     Income income = data.getIncomesData().get(i);
-                    incomeArrayList.add(new AccountItem(income.getFrequency(), income.getNextPayDay(), "$" + income.getAmount(), income.getIncomeId()));
+
+                    String year, month, day;
+
+                    year = income.getNextPayDay().substring(0, 4);
+                    month = income.getNextPayDay().substring(5, 7);
+                    day = income.getNextPayDay().substring(8, 10);
+
+                    incomeArrayList.add(new AccountItem(income.getFrequency(), month + "-" + day + "-" + year, "$" + income.getAmount(), income.getIncomeId()));
 
                 }
 
                 for (int i = 0; i < data.getBillsData().size(); i++) {
                     Bill bill = data.getBillsData().get(i);
-                    billsArrayList.add(new AccountItem(bill.getBillName(), bill.getDueDate(), "$" + bill.getAmount(), bill.getBillId()));
+
+                    String year, month, day;
+
+                    year = bill.getDueDate().substring(0, 4);
+                    month = bill.getDueDate().substring(5, 7);
+                    day = bill.getDueDate().substring(8, 10);
+
+                    billsArrayList.add(new AccountItem(bill.getBillName(), month + "-" + day + "-" + year, "$" + bill.getAmount(), bill.getBillId()));
                 }
 
                 for (int i = 0; i < data.getAllowancesData().size(); i++) {
@@ -715,10 +728,10 @@ public class Manage extends Fragment {
 
                 }
 
-                for (int i = 0; i < data.getIncidentalsData().size(); i++) {
+                /*for (int i = 0; i < data.getIncidentalsData().size(); i++) {
 
                     Expenses expenses = data.getIncidentalsData().get(i);
-                    /*String dateTime = expenses.getDateTime();
+                    *//*String dateTime = expenses.getDateTime();
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
                     Date date = null;
                     try {
@@ -727,11 +740,11 @@ public class Manage extends Fragment {
                         e.printStackTrace();
                     }
                     SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-DD");
-                    String finalString = newFormat.format(date);*/
+                    String finalString = newFormat.format(date);*//*
 
                     expensesArrayList.add(new AccountItem(expenses.getExpenseName(), expenses.getDateTime(), "$" + expenses.getAmount(), expenses.getExpenseId()));
 
-                }
+                }*/
 
                 if (getActivity() != null) {
 

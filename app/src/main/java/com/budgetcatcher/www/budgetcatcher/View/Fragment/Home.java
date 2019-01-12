@@ -1,6 +1,5 @@
 package com.budgetcatcher.www.budgetcatcher.View.Fragment;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -315,7 +313,13 @@ public class Home extends Fragment {
 
                 if (isProjectedBalanceSelected) {
 
-                    final Activity activity = getActivity();
+                    if (getActivity() != null) {
+
+                        ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+                    }
+
+                    /*final Activity activity = getActivity();
 
                     final AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
                     builder1.setCancelable(true);
@@ -338,7 +342,7 @@ public class Home extends Fragment {
 
                     final AlertDialog alert11 = builder1.create();
 
-                    alert11.show();
+                    alert11.show();*/
 
                 } else {
 
@@ -654,7 +658,8 @@ public class Home extends Fragment {
                 endDate = format.parse(currentMonth.getLastDayOfMonth());
                 monthIndex = Integer.parseInt(currentMonth.getMonthNumber()) - 1;
                 updateHeader(startDate, endDate, "Month of");
-                updateHomeData(currentMonth.getFirstDayOfMonth(), currentMonth.getLastDayOfMonth());
+                //updateHomeData(currentMonth.getFirstDayOfMonth(), currentMonth.getLastDayOfMonth());
+                updateHomeDataAndEndBalance(currentMonth.getFirstDayOfMonth(), currentMonth.getLastDayOfMonth(), isMonthSelected);
 
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -682,7 +687,8 @@ public class Home extends Fragment {
                 endDate = format.parse(currentWeek.getLastDayOfEveryWeek());
                 weekIndex = Integer.parseInt(currentWeek.getWeekNumber()) - 1;
                 updateHeader(startDate, endDate, "Week of");
-                updateHomeData(currentWeek.getFirstDayOfEveryWeek(), currentWeek.getLastDayOfEveryWeek());
+                //updateHomeData(currentWeek.getFirstDayOfEveryWeek(), currentWeek.getLastDayOfEveryWeek());
+                updateHomeDataAndEndBalance(currentWeek.getFirstDayOfEveryWeek(), currentWeek.getLastDayOfEveryWeek(), isMonthSelected);
 
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -735,6 +741,96 @@ public class Home extends Fragment {
                 expenses.setText("($ " + decimalFormat.format(Float.parseFloat(home.getExpense())) + ")");
                 deficit.setText("$ " + decimalFormat.format(Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense())));
                 endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getEndingBalance())));
+
+            }
+
+            @Override
+            public void onFail() {
+
+                dialog.dismiss();
+                if (getActivity() != null)
+                    Toast.makeText(getActivity(), "Failed to load data", Toast.LENGTH_SHORT).show();
+
+                startCashBalance.setText("$ 0");
+                income.setText("$ 0");
+                expenses.setText("($ 0" + ")");
+                deficit.setText("$ 0");
+                endingBalance.setText("$ 0");
+
+            }
+
+            @Override
+            public void onError(Throwable th) {
+
+                dialog.dismiss();
+
+                startCashBalance.setText("$ 0");
+                income.setText("$ 0");
+                expenses.setText("($ 0" + ")");
+                deficit.setText("$ 0");
+                endingBalance.setText("$ 0");
+
+                if (getActivity() != null) {
+                    Log.e("SerVerErrAddBill", th.toString());
+                    if (th instanceof SocketTimeoutException) {
+                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), th.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+
+    }
+
+    private void updateHomeDataAndEndBalance(String startDate, String endDate, final Boolean forMonth) {
+
+        dialog.show();
+        BudgetCatcher.apiManager.getHome(userID, startDate, endDate, new QueryCallback<com.budgetcatcher.www.budgetcatcher.Model.Home>() {
+            @Override
+            public void onSuccess(com.budgetcatcher.www.budgetcatcher.Model.Home home) {
+
+                dialog.dismiss();
+
+                DecimalFormat decimalFormat = new DecimalFormat();
+                decimalFormat.setMaximumFractionDigits(2);
+
+                startCashBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getStartingBalance())));
+                income.setText("$ " + decimalFormat.format(Float.parseFloat(home.getIncome())));
+                expenses.setText("($ " + decimalFormat.format(Float.parseFloat(home.getExpense())) + ")");
+                deficit.setText("$ " + decimalFormat.format(Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense())));
+                endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getEndingBalance())));
+
+                if (forMonth) {
+
+                    String[] temp = monthDate.clone();
+
+                    for (int i = monthIndex + 1; i < monthDate.length; i++) {
+
+                        temp[i] = temp[i] + " - ($ " + home.getEndingBalance() + ")";
+
+                    }
+
+                    monthPicker.setMinValue(0);
+                    monthPicker.setMaxValue(monthDate.length - 1);
+                    monthPicker.setDisplayedValues(temp);
+
+                } else {
+
+                    String[] temp = weekDate.clone();
+
+                    for (int i = weekIndex + 1; i < weekDate.length; i++) {
+
+                        temp[i] = temp[i] + " - ($ " + home.getEndingBalance() + ")";
+
+                    }
+
+                    weekPicker.setMinValue(0);
+                    weekPicker.setMaxValue(weekDate.length - 1);
+                    weekPicker.setDisplayedValues(temp);
+
+                }
 
             }
 

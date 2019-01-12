@@ -86,7 +86,8 @@ public class AddIncome extends Fragment {
                 datePicker.setVisibility(View.GONE);
 
                 date = year + "-" + (month + 1) + "-" + dayOfMonth;
-                dateEditText.setText(date);
+                String temp = (month + 1) + "-" + dayOfMonth + "-" + year;
+                dateEditText.setText(temp);
 
             }
         });

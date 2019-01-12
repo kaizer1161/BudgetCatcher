@@ -106,8 +106,10 @@ public class EditIncidental extends Fragment {
                 yearForServer = Integer.toString(year);
                 DateFormatSymbols dateFormatSymbols = new DateFormatSymbols();
                 monthInWord = dateFormatSymbols.getMonths()[month].toLowerCase();
-                date = (month + 1) + "-" + dayOfMonth + "-" + year;
-                dateTextView.setText(date);
+
+                date = year + "-" + (month + 1) + "-" + dayOfMonth;
+                String temp = (month + 1) + "-" + dayOfMonth + "-" + year;
+                dateTextView.setText(temp);
 
             }
         });
@@ -317,7 +319,7 @@ public class EditIncidental extends Fragment {
 
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.content, new Manage(), Config.TAG_MANAGE_FRAGMENT)
+                                .replace(R.id.content, new Catcher(), Config.TAG_CATCHER_FRAGMENT)
                                 .commit();
 
                     }
@@ -371,7 +373,12 @@ public class EditIncidental extends Fragment {
         yearForServer = expenses.getYear();
         monthInWord = expenses.getMonth();
 
-        dateTextView.setText(expenses.getDateTime());
+        String year, month, day;
+        year = expenses.getDateTime().substring(0, 4);
+        month = expenses.getDateTime().substring(5, 7);
+        day = expenses.getDateTime().substring(8, 10);
+        dateTextView.setText(String.format("%s-%s-%s", month, day, year));
+
         date = expenses.getDateTime();
 
         /*for (int i = 0; i < status.size(); i++) {

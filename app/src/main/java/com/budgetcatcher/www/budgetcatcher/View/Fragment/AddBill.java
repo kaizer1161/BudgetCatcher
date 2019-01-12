@@ -95,8 +95,18 @@ public class AddBill extends Fragment {
                 dateEditText.setVisibility(View.VISIBLE);
                 datePicker.setVisibility(View.GONE);
 
-                date = (month + 1) + "-" + dayOfMonth + "-" + year;
-                dateEditText.setText(date);
+                if (month < 9) {
+
+                    date = year + "-0" + (month + 1) + "-" + dayOfMonth;
+
+                } else {
+
+                    date = year + "-" + (month + 1) + "-" + dayOfMonth;
+                }
+
+
+                String temp = (month + 1) + "-" + dayOfMonth + "-" + year;
+                dateEditText.setText(temp);
 
             }
         });

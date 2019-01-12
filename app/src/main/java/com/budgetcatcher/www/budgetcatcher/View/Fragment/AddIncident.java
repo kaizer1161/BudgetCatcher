@@ -85,8 +85,10 @@ public class AddIncident extends Fragment {
                 yearForServer = Integer.toString(year);
                 DateFormatSymbols dateFormatSymbols = new DateFormatSymbols();
                 monthInWord = dateFormatSymbols.getMonths()[month].toLowerCase();
-                date = (month + 1) + "-" + dayOfMonth + "-" + year;
-                dateEditText.setText(date);
+
+                date = year + "-" + (month + 1) + "-" + dayOfMonth;
+                String temp = (month + 1) + "-" + dayOfMonth + "-" + year;
+                dateEditText.setText(temp);
 
             }
         });

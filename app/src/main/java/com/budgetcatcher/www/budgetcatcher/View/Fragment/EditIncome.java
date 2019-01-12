@@ -106,7 +106,8 @@ public class EditIncome extends Fragment {
                 datePicker.setVisibility(View.GONE);
 
                 date = year + "-" + (month + 1) + "-" + dayOfMonth;
-                dateEditText.setText(date);
+                String temp = (month + 1) + "-" + dayOfMonth + "-" + year;
+                dateEditText.setText(temp);
 
             }
         });
@@ -254,7 +255,13 @@ public class EditIncome extends Fragment {
         String valStr = String.format("%.2f", val);
 
         netPay.setText(valStr);
-        dateEditText.setText(income.getNextPayDay());
+
+        String year, month, day;
+        year = income.getNextPayDay().substring(0, 4);
+        month = income.getNextPayDay().substring(5, 7);
+        day = income.getNextPayDay().substring(8, 10);
+        dateEditText.setText(String.format("%s-%s-%s", month, day, year));
+
         date = income.getNextPayDay();
 
         for (int i = 0; i < payFrequencyList.size(); i++) {

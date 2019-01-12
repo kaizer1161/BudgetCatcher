@@ -113,8 +113,17 @@ public class EditBill extends Fragment {
                 dateTextView.setVisibility(View.VISIBLE);
                 datePicker.setVisibility(View.GONE);
 
-                date = (month + 1) + "-" + dayOfMonth + "-" + year;
-                dateTextView.setText(date);
+                if (month < 9) {
+
+                    date = year + "-0" + (month + 1) + "-" + dayOfMonth;
+
+                } else {
+
+                    date = year + "-" + (month + 1) + "-" + dayOfMonth;
+                }
+
+                String temp = (month + 1) + "-" + dayOfMonth + "-" + year;
+                dateTextView.setText(temp);
 
             }
         });
@@ -363,7 +372,13 @@ public class EditBill extends Fragment {
         billName.setText(bill.getBillName());
         description.setText(bill.getDescription());
         amount.setText(bill.getAmount());
-        dateTextView.setText(bill.getDueDate());
+
+        String year, month, day;
+        year = bill.getDueDate().substring(0, 4);
+        month = bill.getDueDate().substring(5, 7);
+        day = bill.getDueDate().substring(8, 10);
+        dateTextView.setText(String.format("%s-%s-%s", month, day, year));
+
         date = bill.getDueDate();
 
         /*for (int i = 0; i < status.size(); i++) {
