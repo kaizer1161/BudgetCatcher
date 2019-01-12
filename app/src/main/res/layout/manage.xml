@@ -300,7 +300,7 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
+                    <!--<LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="170dp"
                         android:layout_weight="30"
@@ -387,7 +387,7 @@
 
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </LinearLayout>-->
 
                 </LinearLayout>
 

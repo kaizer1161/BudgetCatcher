@@ -10,19 +10,22 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
-import com.budgetcatcher.www.budgetcatcher.Config;
 import com.budgetcatcher.www.budgetcatcher.Model.CobrandLoginResponse;
+import com.budgetcatcher.www.budgetcatcher.Model.YodleeFastLinkResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.YodleeUserLoginResponse;
 import com.budgetcatcher.www.budgetcatcher.Network.NetworkChangeReceiver;
 import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
+import com.budgetcatcher.www.budgetcatcher.Network.URL;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.google.gson.Gson;
 
 import java.net.SocketTimeoutException;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class YodleeActivity extends AppCompatActivity {
@@ -33,6 +36,9 @@ public class YodleeActivity extends AppCompatActivity {
 
     public YodleeUserLoginResponse yodleeUserLoginResponse;
     public CobrandLoginResponse cobrandLoginResponse;
+
+    @BindView(R.id.web_view)
+    WebView webView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,7 +60,7 @@ public class YodleeActivity extends AppCompatActivity {
 
     private void loginToCobrand() {
 
-        /*if (BudgetCatcher.connectedToInternet) {*/
+        if (BudgetCatcher.connectedToInternet) {
 
             dialog.show();
             BudgetCatcher.apiManager.cobrandLogin(new QueryCallback<String>() {
@@ -92,17 +98,17 @@ public class YodleeActivity extends AppCompatActivity {
                 }
             });
 
-        /*} else {
+        } else {
 
             Toast.makeText(YodleeActivity.this, getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
 
-        }*/
+        }
 
     }
 
-    private void yodleeLogin(CobrandLoginResponse cobrandLoginResponse) {
+    private void yodleeLogin(final CobrandLoginResponse cobrandLoginResponse) {
 
-        /*if (BudgetCatcher.connectedToInternet) {*/
+        if (BudgetCatcher.connectedToInternet) {
 
             BudgetCatcher.apiManager.yodleeUserLogin(cobrandLoginResponse.getSession().getCobSession(), "sbMemdd1dcc211512e9a5485650d4299722930a1", "sbMemdd1dcc211512e9a5485650d4299722930a1#123", new QueryCallback<String>() {
                 @Override
@@ -111,10 +117,12 @@ public class YodleeActivity extends AppCompatActivity {
                     Gson gson = new Gson();
                     yodleeUserLoginResponse = gson.fromJson(data, YodleeUserLoginResponse.class);
 
-                    getSupportFragmentManager()
+                    /*getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.yodlee_content, new YodleeAccount(), Config.TAG_HOME_FRAGMENT)
-                            .commit();
+                            .replace(R.id.yodlee_content, new YodleeAccount())
+                            .commit();*/
+
+                    getFastLink();
 
                     dialog.dismiss();
 
@@ -145,12 +153,53 @@ public class YodleeActivity extends AppCompatActivity {
                 }
             });
 
-        /*} else {
+        } else {
 
             dialog.dismiss();
             Toast.makeText(YodleeActivity.this, getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
 
-        }*/
+        }
+
+    }
+
+    private void getFastLink() {
+
+        final String session = URL.key_Yodlee_cobSession + cobrandLoginResponse.getSession().getCobSession() + "," + URL.key_Yodlee_userSession + yodleeUserLoginResponse.getUser().getSession().getUserSession();
+
+        dialog.show();
+        BudgetCatcher.apiManager.yodleeFastLink(session, new QueryCallback<String>() {
+            @Override
+            public void onSuccess(String data) {
+
+                dialog.dismiss();
+
+                Gson gson = new Gson();
+                YodleeFastLinkResponse yodleeFastLinkResponse = gson.fromJson(data, YodleeFastLinkResponse.class);
+
+                String appId = yodleeFastLinkResponse.getUser().getAccessTokens().get(0).getAppId();
+                String token = yodleeFastLinkResponse.getUser().getAccessTokens().get(0).getValue();
+
+                String uri = URL.base + URL.getFastLinkView + appId + "/" + yodleeUserLoginResponse.getUser().getSession().getUserSession() + "/" + token + "/" + "true" + "/" + "callback=www.google.com&dataset=%5B%20%20%0A%20%20%20%7B%20%20%0A%20%20%20%20%20%20%22name%22%3A%22ACCT_PROFILE%22%2C%0A%20%20%20%20%20%20%22attribute%22%3A%5B%0A%20%20%20%20%20%20%20%20%20%7B%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%22name%22%3A%22BANK_TRANSFER_CODE%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22container%22%3A%5B%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22bank%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%7B%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%22name%22%3A%22HOLDER_NAME%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22container%22%3A%5B%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22bank%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%5D%0A%20%20%20%7D%0A%5D";
+
+                webView.getSettings().setJavaScriptEnabled(true);
+                webView.loadUrl(uri);
+
+            }
+
+            @Override
+            public void onFail() {
+
+                dialog.dismiss();
+
+            }
+
+            @Override
+            public void onError(Throwable th) {
+
+                dialog.dismiss();
+
+            }
+        });
 
     }
 

@@ -1213,6 +1213,42 @@ public class ApiManager {
 
     }
 
+    public void yodleeFastLink(String session, final QueryCallback<String> callback) {
+
+        String uri = URL.yodleeBase + URL.yodleeFastLink;
+
+        Map<String, String> yodleeHeaders = new HashMap<>();
+        yodleeHeaders.put(URL.key_Api_Version, URL.value_Api_Version);
+        yodleeHeaders.put(URL.key_Cobrand_Name, URL.value_Cobrand_Name);
+        yodleeHeaders.put(URL.key_Yodlee_Authorization, session);
+
+        Call<String> networkCall = apiInterface.yodleeFastLink(uri, yodleeHeaders);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
     public void yodleeCrateAccountManually(String session, YodleeCreateManualAccountBody yodleeCreateManualAccountBody, final QueryCallback<String> callback) {
 
         String uri = URL.yodleeBase + URL.yodleeAddAccoutManually;

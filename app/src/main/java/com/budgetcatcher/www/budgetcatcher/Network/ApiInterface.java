@@ -75,6 +75,9 @@ public interface ApiInterface {
     @GET
     Call<String> yodleeGetAccount(@Url String url, @HeaderMap Map<String, String> headers);
 
+    @GET
+    Call<String> yodleeFastLink(@Url String url, @HeaderMap Map<String, String> headers);
+
     @POST(URL.signUp)
     Call<String> signUp(@HeaderMap Map<String, String> headers, @Body SignUpBody signUpBody);
 

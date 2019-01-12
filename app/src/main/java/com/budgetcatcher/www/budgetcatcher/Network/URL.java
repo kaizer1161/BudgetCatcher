@@ -42,6 +42,7 @@ public class URL {
     public static final String getAllExpenses = "getAllExpenses/";
     public static final String deleteCategory = "deleteCategory/";
     public static final String getAllCategory = "getAllCategory/";
+    public static final String getFastLinkView = "getFastLinkView/";
     public static final String yodleeAddAccoutManually = "accounts";
     public static final String deleteAllowance = "deleteAllowance/";
     public static final String modifyAllowance = "modifyAllowance/";
@@ -49,6 +50,7 @@ public class URL {
     public static final String insertAllowances = "insertAllowances";
     public static final String getWeeksOrMonths = "getWeeksOrMonths/";
     public static final String getCurrentWeekOrMonth = "getCurrentWeekOrMonth/";
+    public static final String yodleeFastLink = "/user/accessTokens?appIds=10003600";
 
     /*URL key value*/
     public static final String value_Api_Version = "1.1";

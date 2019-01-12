@@ -5,30 +5,26 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
-import com.budgetcatcher.www.budgetcatcher.Model.YodleeCreateManualAccountBody;
+import com.budgetcatcher.www.budgetcatcher.Model.YodleeFastLinkResponse;
 import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.Network.URL;
 import com.budgetcatcher.www.budgetcatcher.R;
+import com.google.gson.Gson;
 
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -36,7 +32,7 @@ public class AddYodleeAccount extends Fragment {
 
     private static final int SPINNER_INITIAL_POSITION = 0;
 
-    @BindView(R.id.name)
+    /*@BindView(R.id.name)
     EditText name;
     @BindView(R.id.account_type)
     Spinner accountType;
@@ -45,7 +41,10 @@ public class AddYodleeAccount extends Fragment {
     @BindView(R.id.description)
     EditText description;
     @BindView(R.id.amount)
-    EditText amount;
+    EditText amount;*/
+
+    @BindView(R.id.web_view)
+    WebView webView;
 
     private ProgressDialog dialog;
     private boolean typeSelected = false;
@@ -71,15 +70,25 @@ public class AddYodleeAccount extends Fragment {
 
             setAccountTypeList();
 
-            accountType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            if (BudgetCatcher.connectedToInternet) {
+
+                getFastLink();
+
+            } else {
+
+                Toast.makeText(getActivity(), getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
+
+            }
+
+            /*accountType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                    /*
+                    *//*
                      * If position == SPINNER_INITIAL_POSITION,
                      * then financialGoalSpinnerSelected = false
                      * else financialGoalSpinnerSelected = true.
-                     */
+             *//*
                     typeSelected = position != SPINNER_INITIAL_POSITION;
 
                 }
@@ -88,14 +97,59 @@ public class AddYodleeAccount extends Fragment {
                 public void onNothingSelected(AdapterView<?> parent) {
 
                 }
-            });
+            });*/
 
         }
 
 
-        name.requestFocus();
+        /*name.requestFocus();*/
 
         return rootView;
+    }
+
+    private void getFastLink() {
+
+        if (getActivity() != null) {
+
+            final String session = URL.key_Yodlee_cobSession + ((YodleeActivity) getActivity()).cobrandLoginResponse.getSession().getCobSession() + "," + URL.key_Yodlee_userSession + ((YodleeActivity) getActivity()).yodleeUserLoginResponse.getUser().getSession().getUserSession();
+
+            dialog.show();
+            BudgetCatcher.apiManager.yodleeFastLink(session, new QueryCallback<String>() {
+                @Override
+                public void onSuccess(String data) {
+
+                    dialog.dismiss();
+
+                    Gson gson = new Gson();
+                    YodleeFastLinkResponse yodleeFastLinkResponse = gson.fromJson(data, YodleeFastLinkResponse.class);
+
+                    String appId = yodleeFastLinkResponse.getUser().getAccessTokens().get(0).getAppId();
+                    String token = yodleeFastLinkResponse.getUser().getAccessTokens().get(0).getValue();
+
+                    String uri = URL.base + URL.getFastLinkView + appId + "/" + ((YodleeActivity) getActivity()).yodleeUserLoginResponse.getUser().getSession().getUserSession() + "/" + token + "/" + "true" + "/" + "callback=www.google.com&dataset=%5B%20%20%0A%20%20%20%7B%20%20%0A%20%20%20%20%20%20%22name%22%3A%22ACCT_PROFILE%22%2C%0A%20%20%20%20%20%20%22attribute%22%3A%5B%0A%20%20%20%20%20%20%20%20%20%7B%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%22name%22%3A%22BANK_TRANSFER_CODE%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22container%22%3A%5B%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22bank%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%7B%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%22name%22%3A%22HOLDER_NAME%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22container%22%3A%5B%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22bank%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%5D%0A%20%20%20%7D%0A%5D";
+
+                    webView.getSettings().setJavaScriptEnabled(true);
+                    webView.loadUrl(uri);
+
+                }
+
+                @Override
+                public void onFail() {
+
+                    dialog.dismiss();
+
+                }
+
+                @Override
+                public void onError(Throwable th) {
+
+                    dialog.dismiss();
+
+                }
+            });
+
+        }
+
     }
 
     private void setAccountTypeList() {
@@ -154,11 +208,11 @@ public class AddYodleeAccount extends Fragment {
         accountTypeList.add("brokerageLinkAccount");*/
 
         accountTypeListAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, R.id.spinner_item_text, accountTypeList);
-        accountType.setAdapter(accountTypeListAdapter);
+        /*accountType.setAdapter(accountTypeListAdapter);*/
 
     }
 
-    @OnClick({R.id.save})
+    /*@OnClick({R.id.save})
     public void onClick(View view) {
 
         switch (view.getId()) {
@@ -255,6 +309,6 @@ public class AddYodleeAccount extends Fragment {
 
         }
 
-    }
+    }*/
 
 }
