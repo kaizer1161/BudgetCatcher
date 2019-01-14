@@ -1,6 +1,7 @@
 package com.budgetcatcher.www.budgetcatcher.View.Fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -267,6 +269,9 @@ if (th instanceof SocketTimeoutException){
                     Toast.makeText(getActivity(), getString(R.string.successfully_added), Toast.LENGTH_SHORT).show();
                     if (getActivity() != null) {
 
+                        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        Objects.requireNonNull(imm).hideSoftInputFromWindow(Objects.requireNonNull(getView()).getWindowToken(), 0);
+
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.content, new Catcher(), Config.TAG_CATCHER_FRAGMENT)
@@ -292,7 +297,7 @@ if (th instanceof SocketTimeoutException){
                         if (th instanceof SocketTimeoutException) {
                             Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getActivity(), th.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), th.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
 

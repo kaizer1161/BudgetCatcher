@@ -99,7 +99,7 @@ public class YodleeActivity extends AppCompatActivity {
                     if (th instanceof SocketTimeoutException) {
                         Toast.makeText(YodleeActivity.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(YodleeActivity.this, th.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(YodleeActivity.this, th.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                     onBackPressed();
 
@@ -154,7 +154,7 @@ public class YodleeActivity extends AppCompatActivity {
                     if (th instanceof SocketTimeoutException) {
                         Toast.makeText(YodleeActivity.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(YodleeActivity.this, th.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(YodleeActivity.this, th.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                     onBackPressed();
 

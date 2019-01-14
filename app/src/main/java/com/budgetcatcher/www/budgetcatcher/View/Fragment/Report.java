@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
@@ -27,6 +29,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -183,6 +186,15 @@ public class Report extends Fragment {
 
             @Override
             public void onError(Throwable th) {
+
+                if (getActivity() != null) {
+                    Log.e("SerVerErrAddBill", th.toString());
+                    if (th instanceof SocketTimeoutException) {
+                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), th.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
 
             }
         });
