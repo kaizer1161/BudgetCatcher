@@ -109,7 +109,20 @@ public class EditIncidental extends Fragment {
                 DateFormatSymbols dateFormatSymbols = new DateFormatSymbols();
                 monthInWord = dateFormatSymbols.getMonths()[month].toLowerCase();
 
-                date = year + "-" + (month + 1) + "-" + dayOfMonth;
+                String d = "" + dayOfMonth, m = "" + (month + 1);
+
+                if (month < 9) {
+
+                    m = "0" + (month + 1);
+
+                }
+                if (dayOfMonth < 9) {
+
+                    d = "0" + dayOfMonth;
+
+                }
+
+                date = year + "-" + m + "-" + d;
                 String temp = (month + 1) + "-" + dayOfMonth + "-" + year;
                 dateTextView.setText(temp);
 
