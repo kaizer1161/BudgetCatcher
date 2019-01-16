@@ -1,7 +1,10 @@
 package com.budgetcatcher.www.budgetcatcher.View.Fragment;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +12,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,18 +20,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.budgetcatcher.www.budgetcatcher.Adapter.AccountListAdapter;
+import com.budgetcatcher.www.budgetcatcher.Adapter.CategoryListAdapter;
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
 import com.budgetcatcher.www.budgetcatcher.Model.AccountItem;
+import com.budgetcatcher.www.budgetcatcher.Model.AddCategory;
 import com.budgetcatcher.www.budgetcatcher.Model.Allowance;
 import com.budgetcatcher.www.budgetcatcher.Model.Bill;
 import com.budgetcatcher.www.budgetcatcher.Model.CatcherResponse;
+import com.budgetcatcher.www.budgetcatcher.Model.Category;
+import com.budgetcatcher.www.budgetcatcher.Model.Expenses;
 import com.budgetcatcher.www.budgetcatcher.Model.Income;
 import com.budgetcatcher.www.budgetcatcher.Model.Month;
 import com.budgetcatcher.www.budgetcatcher.Model.MonthData;
@@ -64,16 +73,16 @@ public class Manage extends Fragment {
     RecyclerView bills;
     @BindView(R.id.allowance)
     RecyclerView allowance;
-    /*@BindView(R.id.incidental_recycler_view)
-    RecyclerView incidental;*/
+    @BindView(R.id.incidental_recycler_view)
+    RecyclerView incidental;
     @BindView(R.id.income_swipe_down)
     SwipeRefreshLayout incomeSwipeDown;
     @BindView(R.id.bill_swipe_down)
     SwipeRefreshLayout billSwipeDown;
     @BindView(R.id.allowance_swipe_down)
     SwipeRefreshLayout allowanceSwipeDown;
-    /*@BindView(R.id.incidental_swipe_down)
-    SwipeRefreshLayout incidentalSwipeDown;*/
+    @BindView(R.id.incidental_swipe_down)
+    SwipeRefreshLayout incidentalSwipeDown;
     @BindView(R.id.swipe_down)
     SwipeRefreshLayout refreshAllList;
     @BindView(R.id.header_top)
@@ -88,6 +97,12 @@ public class Manage extends Fragment {
     Switch weeklyMonthlySwitch;
     @BindView(R.id.projected_balance_layout)
     CoordinatorLayout projectedBalanceLayoutBottomSheet;
+    @BindView(R.id.add_categories)
+    TextView addCategories;
+    @BindView(R.id.category_recycler_view)
+    RecyclerView categoryRecyclerView;
+    @BindView(R.id.category_swipe_down)
+    SwipeRefreshLayout categorySwipeDown;
 
     private ArrayList<Week> weekArrayList;
     private ArrayList<Month> monthArrayList;
@@ -99,6 +114,7 @@ public class Manage extends Fragment {
     private SharedPreferences sharedPreferences;
     private int dataFetchCount = 0;
     private ProgressDialog dialog;
+    private CategoryListAdapter categoryListAdapter;
 
     private AccountListAdapter incomeListAdapter, billsListAdapter, allowanceListAdapter, incidentalListAdapter;
     private String userID;
@@ -161,6 +177,7 @@ public class Manage extends Fragment {
             getExpensesFromServer();*/
 
             getCurrentDateRange();
+            fetchCategory();
 
         } else {
 
@@ -459,10 +476,37 @@ public class Manage extends Fragment {
 
     }
 
-    @OnClick({R.id.add_bill, R.id.add_allowance, /*R.id.add_incidentals,*/ R.id.add_income_setting, R.id.left_arrow, R.id.right_arrow, R.id.date_display, R.id.done_bottom_sheet})
+    @OnClick({R.id.add_bill, R.id.add_allowance, R.id.add_income_setting, R.id.left_arrow, R.id.right_arrow, R.id.date_display, R.id.done_bottom_sheet, R.id.add_incidentals, R.id.add_categories})
     public void onClick(View view) {
 
         switch (view.getId()) {
+
+            case R.id.add_categories: {
+
+                if (BudgetCatcher.getConnectedToInternet()) {
+
+                    addCategory();
+
+                } else {
+
+                    Toast.makeText(getActivity(), getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
+
+                }
+
+                break;
+            }
+
+            case (R.id.add_incidentals): {
+
+                if (getActivity() != null)
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.content, new AddIncident(), Config.TAG_ADD_INCIDENTAL_FRAGMENT)
+                            .addToBackStack(null)
+                            .commit();
+
+                break;
+            }
 
             case R.id.date_display: {
 
@@ -635,18 +679,6 @@ public class Manage extends Fragment {
                 break;
             }
 
-            /*case (R.id.add_incidentals): {
-
-                if (getActivity() != null)
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.content, new AddIncident(), Config.TAG_ADD_INCIDENTAL_FRAGMENT)
-                            .addToBackStack(null)
-                            .commit();
-
-                break;
-            }*/
-
             case (R.id.add_income_setting): {
 
                 if (getActivity() != null)
@@ -663,11 +695,168 @@ public class Manage extends Fragment {
 
     }
 
+    private void addCategory() {
+
+        final Activity activity = getActivity();
+
+        final AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
+        builder1.setCancelable(true);
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View alertView = inflater.inflate(R.layout.add_category_alert_box, null);
+        builder1.setView(alertView);
+
+        final EditText categoryName = alertView.findViewById(R.id.add_catego);
+
+        builder1.setPositiveButton(
+                getContext().getResources().getString(R.string.done),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+
+                    }
+                }).setNeutralButton(getContext().getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+                dialog.cancel();
+            }
+        });
+
+        final AlertDialog alert11 = builder1.create();
+
+        alert11.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                alert11.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.RED);
+                alert11.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.colorAccent));
+                alert11.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (!categoryName.getText().toString().equals("")) {
+
+                            AddCategory category = new AddCategory(categoryName.getText().toString(), Config.CATEGORY_BILL_TAG_ID, userID);
+
+                            categorySwipeDown.setRefreshing(true);
+
+                            BudgetCatcher.apiManager.addCategory(category, new QueryCallback<String>() {
+                                @Override
+                                public void onSuccess(String data) {
+
+                                    categorySwipeDown.setRefreshing(false);
+                                    alert11.dismiss();
+                                    Toast.makeText(getActivity(), getString(R.string.successfully_added), Toast.LENGTH_SHORT).show();
+                                    if (categoryListAdapter.getItemCount() > 0) {
+
+                                        categoryListAdapter.clearList();
+
+                                    }
+
+                                    fetchCategory();
+
+                                }
+
+                                @Override
+                                public void onFail() {
+
+                                    Toast.makeText(getActivity(), getString(R.string.failed_to_added), Toast.LENGTH_SHORT).show();
+                                    categorySwipeDown.setRefreshing(false);
+
+                                }
+
+                                @Override
+                                public void onError(Throwable th) {
+
+                                    categorySwipeDown.setRefreshing(false);
+                                    Log.e("SerVerErr", th.toString());
+                                    if (th instanceof SocketTimeoutException) {
+                                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getActivity(), th.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+                            });
+
+                        } else {
+
+                            categoryName.setError("Empty");
+
+                        }
+
+                    }
+                });
+
+            }
+        });
+
+        alert11.show();
+
+    }
+
+    private void showCategory(ArrayList<Category> categories) {
+
+        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        categoryListAdapter = new CategoryListAdapter(getActivity(), categories, Config.TAG_LIST_CATEGORY);
+        categoryRecyclerView.setAdapter(categoryListAdapter);
+
+    }
+
+    private void fetchCategory() {
+
+        categorySwipeDown.setRefreshing(true);
+
+        BudgetCatcher.apiManager.getCategory(Config.CATEGORY_BILL_TAG_ID, userID, new QueryCallback<ArrayList<Category>>() {
+            @Override
+            public void onSuccess(ArrayList<Category> data) {
+
+                categorySwipeDown.setRefreshing(false);
+                ArrayList<Category> categories = new ArrayList<>();
+
+                for (int i = 0; i < data.size(); i++) {
+
+                    if (data.get(i).getUserId() != null) {
+
+                        categories.add(data.get(i));
+
+                    }
+
+                }
+
+                showCategory(categories);
+
+            }
+
+            @Override
+            public void onFail() {
+
+                categorySwipeDown.setRefreshing(false);
+                Toast.makeText(getActivity(), "Failed to fetch Category", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Throwable th) {
+
+                categorySwipeDown.setRefreshing(false);
+                if (getActivity() != null) {
+                    Log.e("SerVerErrAddBill", th.toString());
+                    if (th instanceof SocketTimeoutException) {
+                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), th.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+
+    }
+
     private void updateManageData(String startDate, String endDate) {
 
         billSwipeDown.setRefreshing(true);
         incomeSwipeDown.setRefreshing(true);
-        /*incidentalSwipeDown.setRefreshing(true);*/
+        incidentalSwipeDown.setRefreshing(true);
         allowanceSwipeDown.setRefreshing(true);
         dialog.show();
 
@@ -676,7 +865,7 @@ public class Manage extends Fragment {
             public void onSuccess(CatcherResponse data) {
 
                 billSwipeDown.setRefreshing(false);
-                /*incidentalSwipeDown.setRefreshing(false);*/
+                incidentalSwipeDown.setRefreshing(false);
                 allowanceSwipeDown.setRefreshing(false);
                 incomeSwipeDown.setRefreshing(false);
                 dialog.dismiss();
@@ -728,10 +917,11 @@ public class Manage extends Fragment {
 
                 }
 
-                /*for (int i = 0; i < data.getIncidentalsData().size(); i++) {
+                for (int i = 0; i < data.getIncidentalsData().size(); i++) {
 
                     Expenses expenses = data.getIncidentalsData().get(i);
-                    *//*String dateTime = expenses.getDateTime();
+
+                    /*String dateTime = expenses.getDateTime();
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
                     Date date = null;
                     try {
@@ -740,16 +930,16 @@ public class Manage extends Fragment {
                         e.printStackTrace();
                     }
                     SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-DD");
-                    String finalString = newFormat.format(date);*//*
+                    String finalString = newFormat.format(date);*/
 
                     expensesArrayList.add(new AccountItem(expenses.getExpenseName(), expenses.getDateTime(), "$" + expenses.getAmount(), expenses.getExpenseId()));
 
-                }*/
+                }
 
                 if (getActivity() != null) {
 
                     showFeedIncomes(incomeArrayList, data.getIncomesData());
-                    /*showFeedIncidental(expensesArrayList, data.getIncidentalsData());*/
+                    showFeedIncidental(expensesArrayList, data.getIncidentalsData());
                     showFeedSpendingAllowance(spendingAllowanceArrayList, data.getAllowancesData());
                     showFeedBills(billsArrayList, data.getBillsData());
 
@@ -761,7 +951,7 @@ public class Manage extends Fragment {
             public void onFail() {
 
                 billSwipeDown.setRefreshing(false);
-                /*incidentalSwipeDown.setRefreshing(false);*/
+                incidentalSwipeDown.setRefreshing(false);
                 allowanceSwipeDown.setRefreshing(false);
                 incomeSwipeDown.setRefreshing(false);
                 dialog.dismiss();
@@ -772,7 +962,7 @@ public class Manage extends Fragment {
             public void onError(Throwable th) {
 
                 billSwipeDown.setRefreshing(false);
-                /*incidentalSwipeDown.setRefreshing(false);*/
+                incidentalSwipeDown.setRefreshing(false);
                 allowanceSwipeDown.setRefreshing(false);
                 incomeSwipeDown.setRefreshing(false);
                 dialog.dismiss();
@@ -787,6 +977,14 @@ public class Manage extends Fragment {
 
             }
         });
+
+    }
+
+    private void showFeedIncidental(ArrayList<AccountItem> accountItemArrayList, ArrayList<Expenses> expensesArrayList) {
+
+        incidental.setLayoutManager(new LinearLayoutManager(getContext()));
+        incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCIDENTAL, null, null, expensesArrayList, null);
+        incidental.setAdapter(incidentalListAdapter);
 
     }
 

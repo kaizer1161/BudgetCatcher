@@ -187,19 +187,19 @@ public class Catcher extends Fragment {
         spendingAllowance.setAdapter(spendingAllowanceListAdapter);
     }
 
-    /*private void showFeedIncidental(ArrayList<AccountItem> accountItemArrayList) {
+    private void showFeedIncidental(ArrayList<AccountItem> accountItemArrayList) {
         incidental.setLayoutManager(new LinearLayoutManager(getContext()));
         incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCIDENTAL);
         incidental.setAdapter(incidentalListAdapter);
-    }*/
+    }
 
-    private void showFeedIncidental(ArrayList<AccountItem> accountItemArrayList, ArrayList<Expenses> expensesArrayList) {
+    /*private void showFeedIncidental(ArrayList<AccountItem> accountItemArrayList, ArrayList<Expenses> expensesArrayList) {
 
         incidental.setLayoutManager(new LinearLayoutManager(getContext()));
         incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCIDENTAL, null, null, expensesArrayList, null);
         incidental.setAdapter(incidentalListAdapter);
 
-    }
+    }*/
 
     private void showFeedIncomes(ArrayList<AccountItem> accountItemArrayList) {
 
@@ -564,7 +564,7 @@ public class Catcher extends Fragment {
                 if (getActivity() != null) {
 
                     showFeedIncomes(incomeArrayList);
-                    showFeedIncidental(expensesArrayList, data.getIncidentalsData());
+                    showFeedIncidental(expensesArrayList);
                     showFeedSpendingAllowance(spendingAllowanceArrayList);
                     showFeedBills(billsArrayList);
 
@@ -605,22 +605,10 @@ public class Catcher extends Fragment {
 
     }
 
-    @OnClick({R.id.left_arrow, R.id.right_arrow, R.id.date_display, R.id.done_bottom_sheet, R.id.add_incidentals})
+    @OnClick({R.id.left_arrow, R.id.right_arrow, R.id.date_display, R.id.done_bottom_sheet})
     public void onClick(View view) {
 
         switch (view.getId()) {
-
-            case (R.id.add_incidentals): {
-
-                if (getActivity() != null)
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.content, new AddIncident(), Config.TAG_ADD_INCIDENTAL_FRAGMENT)
-                            .addToBackStack(null)
-                            .commit();
-
-                break;
-            }
 
             case R.id.date_display: {
 

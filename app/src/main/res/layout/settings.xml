@@ -193,45 +193,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/gap_of_16dp"
-                android:layout_marginRight="@dimen/gap_of_16dp"
-                android:layout_marginBottom="@dimen/gap_of_16dp"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/deep_sea_dive">
-
-                    <TextView
-                        android:id="@+id/add_categories"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/gap_of_16dp"
-                        android:background="@color/deep_sea_dive"
-                        android:drawableEnd="@drawable/ic_add"
-                        android:gravity="center"
-                        android:padding="@dimen/gap_of_4dp"
-                        android:text="Categories"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                </FrameLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/category_recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </android.support.v7.widget.RecyclerView>
-
-            </LinearLayout>
-
         </LinearLayout>
 
     </ScrollView>

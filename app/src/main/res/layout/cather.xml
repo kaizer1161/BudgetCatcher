@@ -316,7 +316,6 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/gap_of_16dp"
                                     android:background="@color/deep_sea_dive"
-                                    android:drawableEnd="@drawable/ic_add"
                                     android:gravity="center"
                                     android:padding="@dimen/gap_of_4dp"
                                     android:text="Incidentals"

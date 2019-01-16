@@ -1,33 +1,23 @@
 package com.budgetcatcher.www.budgetcatcher.View.Fragment;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.budgetcatcher.www.budgetcatcher.Adapter.CategoryListAdapter;
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
-import com.budgetcatcher.www.budgetcatcher.Model.AddCategory;
-import com.budgetcatcher.www.budgetcatcher.Model.Category;
 import com.budgetcatcher.www.budgetcatcher.Model.User;
 import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
@@ -65,14 +55,9 @@ public class Settings extends Fragment {
     TextView riskLevel;
     @BindView(R.id.skill_level)
     TextView skillLevel;
-    @BindView(R.id.add_categories)
-    TextView addCategories;
-    @BindView(R.id.category_recycler_view)
-    RecyclerView categoryRecyclerView;
 
     private ProgressDialog dialog, categoryDialog;
     private String userID;
-    private CategoryListAdapter categoryListAdapter;
 
     @Nullable
     @Override
@@ -111,7 +96,6 @@ public class Settings extends Fragment {
             if (BudgetCatcher.getConnectedToInternet()) {
 
                 fetchUserInfo();
-                fetchCategory();
 
             }
 
@@ -184,7 +168,7 @@ public class Settings extends Fragment {
 
     }
 
-    @OnClick({R.id.edit_profile, R.id.add_categories})
+    @OnClick({R.id.edit_profile})
     public void onClick(View view) {
 
         switch (view.getId()) {
@@ -212,178 +196,7 @@ public class Settings extends Fragment {
                 break;
             }
 
-            case R.id.add_categories: {
-
-                if (BudgetCatcher.getConnectedToInternet()) {
-
-                    addCategory();
-
-                } else {
-
-                    Toast.makeText(getActivity(), getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
-
-                }
-
-                break;
-            }
-
         }
-
-    }
-
-    private void addCategory() {
-
-        final Activity activity = getActivity();
-
-        final AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
-        builder1.setCancelable(true);
-
-        LayoutInflater inflater = this.getLayoutInflater();
-        View alertView = inflater.inflate(R.layout.add_category_alert_box, null);
-        builder1.setView(alertView);
-
-        final EditText categoryName = alertView.findViewById(R.id.add_catego);
-
-        builder1.setPositiveButton(
-                getContext().getResources().getString(R.string.done),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-
-                    }
-                }).setNeutralButton(getContext().getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User cancelled the dialog
-                dialog.cancel();
-            }
-        });
-
-        final AlertDialog alert11 = builder1.create();
-
-        alert11.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                alert11.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.RED);
-                alert11.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.colorAccent));
-                alert11.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        if (!categoryName.getText().toString().equals("")) {
-
-                            AddCategory category = new AddCategory(categoryName.getText().toString(), Config.CATEGORY_BILL_TAG_ID, userID);
-
-                            categoryDialog.show();
-
-                            BudgetCatcher.apiManager.addCategory(category, new QueryCallback<String>() {
-                                @Override
-                                public void onSuccess(String data) {
-
-                                    categoryDialog.dismiss();
-                                    alert11.dismiss();
-                                    Toast.makeText(getActivity(), getString(R.string.successfully_added), Toast.LENGTH_SHORT).show();
-                                    if (categoryListAdapter.getItemCount() > 0) {
-
-                                        categoryListAdapter.clearList();
-
-                                    }
-
-                                    fetchCategory();
-
-                                }
-
-                                @Override
-                                public void onFail() {
-
-                                    Toast.makeText(getActivity(), getString(R.string.failed_to_added), Toast.LENGTH_SHORT).show();
-                                    categoryDialog.dismiss();
-
-                                }
-
-                                @Override
-                                public void onError(Throwable th) {
-
-                                    categoryDialog.dismiss();
-                                    Log.e("SerVerErr", th.toString());
-                                    if (th instanceof SocketTimeoutException) {
-                                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(getActivity(), th.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-
-                                }
-                            });
-
-                        } else {
-
-                            categoryName.setError("Empty");
-
-                        }
-
-                    }
-                });
-
-            }
-        });
-
-        alert11.show();
-
-    }
-
-    private void showCategory(ArrayList<Category> categories) {
-
-        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        categoryListAdapter = new CategoryListAdapter(getActivity(), categories, Config.TAG_LIST_CATEGORY);
-        categoryRecyclerView.setAdapter(categoryListAdapter);
-
-    }
-
-    private void fetchCategory() {
-
-        categoryDialog.show();
-        BudgetCatcher.apiManager.getCategory(Config.CATEGORY_BILL_TAG_ID, userID, new QueryCallback<ArrayList<Category>>() {
-            @Override
-            public void onSuccess(ArrayList<Category> data) {
-
-                ArrayList<Category> categories = new ArrayList<>();
-
-                for (int i = 0; i < data.size(); i++) {
-
-                    if (data.get(i).getUserId() != null) {
-
-                        categories.add(data.get(i));
-
-                    }
-
-                }
-
-                categoryDialog.dismiss();
-                showCategory(categories);
-
-            }
-
-            @Override
-            public void onFail() {
-
-                categoryDialog.dismiss();
-                Toast.makeText(getActivity(), "Failed to fetch Category", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(Throwable th) {
-
-                categoryDialog.dismiss();
-                if (getActivity() != null) {
-                    Log.e("SerVerErrAddBill", th.toString());
-                    if (th instanceof SocketTimeoutException) {
-                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity(), th.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            }
-        });
 
     }
 
