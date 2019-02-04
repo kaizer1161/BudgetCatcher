@@ -226,7 +226,7 @@ public class BasicInfo extends Fragment {
                 if (th instanceof SocketTimeoutException) {
                     Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getActivity(), th.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
                 }
 
             }

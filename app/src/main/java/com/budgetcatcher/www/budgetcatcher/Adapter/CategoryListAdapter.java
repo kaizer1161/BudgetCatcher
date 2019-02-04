@@ -210,7 +210,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                     if (th instanceof SocketTimeoutException) {
                         Toast.makeText(activity, activity.getResources().getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(activity, th.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, activity.getResources().getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -289,7 +289,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                                         if (th instanceof SocketTimeoutException) {
                                             Toast.makeText(activity, activity.getResources().getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(activity, th.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(activity, activity.getResources().getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
                                         }
 
                                     }

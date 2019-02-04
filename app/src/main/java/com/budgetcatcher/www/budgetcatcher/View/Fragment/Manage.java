@@ -772,7 +772,7 @@ public class Manage extends Fragment {
                                     if (th instanceof SocketTimeoutException) {
                                         Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(getActivity(), th.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
                                     }
 
                                 }
@@ -823,7 +823,9 @@ public class Manage extends Fragment {
 
                 }
 
-                showCategory(categories);
+                if (getActivity() != null) {
+                    showCategory(categories);
+                }
 
             }
 
@@ -843,7 +845,7 @@ public class Manage extends Fragment {
                     if (th instanceof SocketTimeoutException) {
                         Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getActivity(), th.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -971,7 +973,7 @@ public class Manage extends Fragment {
                     if (th instanceof SocketTimeoutException) {
                         Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getActivity(), th.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
                     }
                 }
 

@@ -19,7 +19,7 @@
             android:background="@color/white"
             android:orientation="horizontal">
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/left_arrow_bottom_sheet"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -31,9 +31,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
-                android:src="@drawable/ic_arrow_right_aquarium" />
+                android:src="@drawable/ic_arrow_right_aquarium" />-->
 
             <TextView
+                android:padding="@dimen/gap_of_8dp"
                 android:id="@+id/done_bottom_sheet"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -44,7 +45,6 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/aquarium"
                 android:textStyle="bold" />
-
 
         </LinearLayout>
 

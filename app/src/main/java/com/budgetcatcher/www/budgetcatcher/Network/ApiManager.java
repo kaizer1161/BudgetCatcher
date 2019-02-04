@@ -37,6 +37,7 @@ import com.budgetcatcher.www.budgetcatcher.Model.ModifyAllowanceBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyBillBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyCategory;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyExpenseBody;
+import com.budgetcatcher.www.budgetcatcher.Model.ModifyHomeBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyIncomeBody;
 import com.budgetcatcher.www.budgetcatcher.Model.PieChartData;
 import com.budgetcatcher.www.budgetcatcher.Model.PieChartResponse;
@@ -1008,6 +1009,42 @@ public class ApiManager {
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void modifyHome(String userId, String startDate, String endDate, ModifyHomeBody body, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.modifyHome + userId + "/" + startDate + "/" + endDate;
+
+        Log.d(TAG, "modifyHome: " + uri);
+
+        Call<String> networkCall = apiInterface.modifyHome(uri, headers, body);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                Log.d(TAG, "onResponse: " + response.code());
+                Log.d(TAG, "onResponse: " + response.body());
 
                 if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
 

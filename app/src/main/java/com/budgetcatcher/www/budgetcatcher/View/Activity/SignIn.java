@@ -413,7 +413,7 @@ public class SignIn extends AppCompatActivity {
                 if (th instanceof SocketTimeoutException) {
                     Toast.makeText(SignIn.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(SignIn.this, th.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignIn.this, getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -479,7 +479,7 @@ public class SignIn extends AppCompatActivity {
                 if (th instanceof SocketTimeoutException) {
                     Toast.makeText(SignIn.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(SignIn.this, th.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignIn.this, getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
                 }
 
             }

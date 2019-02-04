@@ -250,7 +250,7 @@ public class ProfileSetup extends AppCompatActivity {
                                     if (th instanceof SocketTimeoutException) {
                                         Toast.makeText(ProfileSetup.this, getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(ProfileSetup.this, th.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ProfileSetup.this, getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
                                     }
 
                                 }

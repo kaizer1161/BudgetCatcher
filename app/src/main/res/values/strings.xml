@@ -38,5 +38,6 @@
     <string name="failed_to_edited">Failed to edit</string>
     <string name="yodlee">Pay your bills</string>
     <string name="pay_your_bills">Pay your bills</string>
+    <string name="server_reach_error">Cannot reach server</string>
 
 </resources>

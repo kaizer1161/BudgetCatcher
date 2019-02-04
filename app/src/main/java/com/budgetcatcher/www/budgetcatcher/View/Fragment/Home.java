@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
+import com.budgetcatcher.www.budgetcatcher.Model.ModifyHomeBody;
 import com.budgetcatcher.www.budgetcatcher.Model.Month;
 import com.budgetcatcher.www.budgetcatcher.Model.MonthData;
 import com.budgetcatcher.www.budgetcatcher.Model.Week;
@@ -81,6 +82,7 @@ public class Home extends Fragment {
     TextView expenses;
     @BindView(R.id.deficit)
     TextView deficit;
+
     private boolean isMonthSelected = false, isProjectedBalanceSelected = false;
     private ProgressDialog dialog;
     private SharedPreferences sharedPreferences;
@@ -92,6 +94,7 @@ public class Home extends Fragment {
     private Month currentMonth;
     private int weekIndex, monthIndex;
     private String[] weekDate, monthDate;
+    private float reduceDebtsAmount = 0, savingsAmount = 0;
 
     @Nullable
     @Override
@@ -212,6 +215,8 @@ public class Home extends Fragment {
                     }
                     Float sum = deficitAmount - savingsAmount - reduceDebtsAmount;
                     addToCash.setText(String.valueOf(sum));
+                    float temp = sum + Float.parseFloat(startCashBalance.getText().toString().replace("$ ", ""));
+                    endingBalance.setText(Float.toString(temp));
 
                 }
 
@@ -234,8 +239,6 @@ public class Home extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 String valStr = reduceDebts.getText().toString();
-                float reduceDebtsAmount = 0;
-                float savingsAmount = 0;
                 float deficitAmount = Float.parseFloat(deficit.getText().toString().replace("$ ", ""));
 
                 if (s.toString().equals(".")) {
@@ -259,6 +262,8 @@ public class Home extends Fragment {
                     }
                     Float sum = deficitAmount - savingsAmount - reduceDebtsAmount;
                     addToCash.setText(String.valueOf(sum));
+                    float temp = sum + Float.parseFloat(startCashBalance.getText().toString().replace("$ ", ""));
+                    endingBalance.setText(Float.toString(temp));
 
                 }
 
@@ -284,7 +289,7 @@ public class Home extends Fragment {
 
     }
 
-    @OnClick({R.id.projected_balance, R.id.done_bottom_sheet, R.id.add_to_saving, R.id.reduce_debts, R.id.left_arrow, R.id.right_arrow, R.id.date_display})
+    @OnClick({R.id.projected_balance, R.id.done_bottom_sheet, R.id.add_to_saving, R.id.reduce_debts, R.id.left_arrow, R.id.right_arrow, R.id.date_display, R.id.save_to_adjust})
     public void onClick(View view) {
 
         switch (view.getId()) {
@@ -401,6 +406,49 @@ public class Home extends Fragment {
 
                 break;
             }
+
+            case R.id.save_to_adjust: {
+
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                Date startDate = null, endDate = null;
+
+                ModifyHomeBody modifyHomeBody = new ModifyHomeBody(endingBalance.getText().toString().replace("$ ", ""), Float.toString(savingsAmount), Float.toString(reduceDebtsAmount));
+
+                if (isMonthSelected) {
+
+                    try {
+
+                        startDate = format.parse(monthArrayList.get(monthPicker.getValue()).getFirstDayOfMonth());
+                        endDate = format.parse(monthArrayList.get(monthPicker.getValue()).getLastDayOfMonth());
+                        updateEndingBalance(userID, monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getLastDayOfMonth(), modifyHomeBody);
+
+                        /*updateHeader(startDate, endDate, "Month of");
+                        updateHomeData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getLastDayOfMonth());*/
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+
+                    try {
+
+                        startDate = format.parse(weekArrayList.get(weekPicker.getValue()).getFirstDayOfEveryWeek());
+                        endDate = format.parse(weekArrayList.get(weekPicker.getValue()).getLastDayOfEveryWeek());
+                        updateEndingBalance(userID, weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek(), modifyHomeBody);
+                        /*updateHeader(startDate, endDate, "Week of");
+                        updateHomeData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());*/
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                break;
+
+            }
+
             case R.id.left_arrow: {
 
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -498,6 +546,48 @@ public class Home extends Fragment {
             }
 
         }
+
+    }
+
+    private void updateEndingBalance(String userID, String startDate, String endDate, ModifyHomeBody modifyHomeBody) {
+
+        dialog.show();
+
+        BudgetCatcher.apiManager.modifyHome(userID, startDate, endDate, modifyHomeBody, new QueryCallback<String>() {
+            @Override
+            public void onSuccess(String data) {
+
+                dialog.dismiss();
+                if (getActivity() != null)
+                    Toast.makeText(getActivity(), getString(R.string.successfully_updated), Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFail() {
+
+                dialog.dismiss();
+                if (getActivity() != null)
+                    Toast.makeText(getActivity(), "Failed to save data: Try again later", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onError(Throwable th) {
+
+                dialog.dismiss();
+
+                if (getActivity() != null) {
+                    Log.e("SerVerErrAddBill", th.toString());
+                    if (th instanceof SocketTimeoutException) {
+                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
 
     }
 
@@ -775,7 +865,7 @@ public class Home extends Fragment {
                     if (th instanceof SocketTimeoutException) {
                         Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getActivity(), th.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -801,6 +891,7 @@ public class Home extends Fragment {
                 expenses.setText("($ " + decimalFormat.format(Float.parseFloat(home.getExpense())) + ")");
                 deficit.setText("$ " + decimalFormat.format(Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense())));
                 endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getEndingBalance())));
+                /*endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getStartingBalance())));*/
 
                 if (forMonth) {
 
@@ -865,7 +956,7 @@ public class Home extends Fragment {
                     if (th instanceof SocketTimeoutException) {
                         Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getActivity(), th.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
                     }
                 }
 
