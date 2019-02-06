@@ -24,7 +24,6 @@ import com.budgetcatcher.www.budgetcatcher.Config;
 import com.budgetcatcher.www.budgetcatcher.Network.NetworkChangeReceiver;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Advice;
-import com.budgetcatcher.www.budgetcatcher.View.Fragment.Catcher;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Home;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Manage;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Report;
@@ -157,7 +156,7 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.content, new Home(), Config.TAG_HOME_FRAGMENT)
                     .commit();
 
-        } else if (id == R.id.nav_catcher) {
+        } /*else if (id == R.id.nav_catcher) {
 
 
             getSupportFragmentManager()
@@ -169,7 +168,7 @@ public class MainActivity extends AppCompatActivity
             navigationView.setCheckedItem(R.id.nav_catcher);
 
 
-        } else if (id == R.id.nav_manage) {
+        }*/ else if (id == R.id.nav_manage) {
 
             getSupportFragmentManager()
                     .beginTransaction()

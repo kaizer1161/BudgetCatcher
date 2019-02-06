@@ -190,7 +190,7 @@ public class Manage extends Fragment {
     private void showFeedIncomes(ArrayList<AccountItem> accountItemArrayList, ArrayList<Income> incomeArrayList) {
 
         income.setLayoutManager(new LinearLayoutManager(getContext()));
-        incomeListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCOME, null, null, null, incomeArrayList);
+        incomeListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCOME, null, null, null, incomeArrayList, null);
         income.setAdapter(incomeListAdapter);
 
     }
@@ -198,7 +198,7 @@ public class Manage extends Fragment {
     private void showFeedBills(ArrayList<AccountItem> accountItemArrayList, ArrayList<Bill> billArrayList) {
 
         bills.setLayoutManager(new LinearLayoutManager(getContext()));
-        billsListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_BILL, billArrayList, null, null, null);
+        billsListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_BILL, billArrayList, null, null, null, null);
         bills.setAdapter(billsListAdapter);
 
     }
@@ -206,7 +206,7 @@ public class Manage extends Fragment {
     private void showFeedSpendingAllowance(ArrayList<AccountItem> accountItemArrayList, ArrayList<Allowance> allowanceArrayList) {
 
         allowance.setLayoutManager(new LinearLayoutManager(getContext()));
-        allowanceListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_SPENDING_ALLOWANCE, null, allowanceArrayList, null, null);
+        allowanceListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_SPENDING_ALLOWANCE, null, allowanceArrayList, null, null, null);
         allowance.setAdapter(allowanceListAdapter);
     }
 
@@ -985,7 +985,7 @@ public class Manage extends Fragment {
     private void showFeedIncidental(ArrayList<AccountItem> accountItemArrayList, ArrayList<Expenses> expensesArrayList) {
 
         incidental.setLayoutManager(new LinearLayoutManager(getContext()));
-        incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCIDENTAL, null, null, expensesArrayList, null);
+        incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCIDENTAL, null, null, expensesArrayList, null, null);
         incidental.setAdapter(incidentalListAdapter);
 
     }

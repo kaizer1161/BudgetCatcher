@@ -74,6 +74,9 @@ public interface ApiInterface {
     @GET()
     Call<String> getCategory(@Url String url);
 
+    @GET()
+    Call<String> getOutstandingChecks(@Url String url);
+
     @GET
     Call<String> yodleeGetAccount(@Url String url, @HeaderMap Map<String, String> headers);
 

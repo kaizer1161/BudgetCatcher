@@ -1,6 +1,7 @@
 package com.budgetcatcher.www.budgetcatcher.View.Fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,8 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.NumberPicker;
@@ -23,12 +27,16 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.budgetcatcher.www.budgetcatcher.Adapter.AccountListAdapter;
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
+import com.budgetcatcher.www.budgetcatcher.Model.AccountItem;
 import com.budgetcatcher.www.budgetcatcher.Model.AddOutstandingCheckBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyHomeBody;
 import com.budgetcatcher.www.budgetcatcher.Model.Month;
 import com.budgetcatcher.www.budgetcatcher.Model.MonthData;
+import com.budgetcatcher.www.budgetcatcher.Model.OutstandingCheckResponseBody;
+import com.budgetcatcher.www.budgetcatcher.Model.OutstandingChecks;
 import com.budgetcatcher.www.budgetcatcher.Model.Week;
 import com.budgetcatcher.www.budgetcatcher.Model.WeekData;
 import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
@@ -549,21 +557,55 @@ public class Home extends Fragment {
 
             case R.id.outstanding_balance: {
 
+                getOutstandingChecks();
+
+                break;
+            }
+
+        }
+
+    }
+
+    private void getOutstandingChecks() {
+
+        dialog.show();
+        BudgetCatcher.apiManager.getOutstandingChecks(userID, new QueryCallback<OutstandingCheckResponseBody>() {
+            @Override
+            public void onSuccess(OutstandingCheckResponseBody data) {
+
+                dialog.dismiss();
                 if (getContext() != null) {
 
                     final AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
                     builder1.setCancelable(false);
 
-                    LayoutInflater inflater = this.getLayoutInflater();
+                    LayoutInflater inflater = getLayoutInflater();
                     View alertView = inflater.inflate(R.layout.outstanding_bills, null);
                     builder1.setView(alertView);
                     final AlertDialog alert11 = builder1.create();
 
                     TextView close = alertView.findViewById(R.id.close);
                     TextView addOS = alertView.findViewById(R.id.add_os);
-                    TextView startingCashBalance = alertView.findViewById(R.id.start_cash_balance);
+
+                    TextView sCBalance = alertView.findViewById(R.id.start_cash_balance);
                     TextView totalOS = alertView.findViewById(R.id.total_os);
                     TextView bankBalance = alertView.findViewById(R.id.bank_balance);
+                    RecyclerView recyclerView = alertView.findViewById(R.id.oc_list);
+
+                    sCBalance.setText(startCashBalance.getText().toString());
+                    totalOS.setText("$" + data.getTotal());
+                    bankBalance.setText(String.format("$%s", Float.parseFloat(startCashBalance.getText().toString().replace("$ ", "")) - Float.parseFloat(data.getTotal())));
+
+                    ArrayList<AccountItem> accountItems = new ArrayList<>();
+
+                    for (int i = 0; i < data.getOutstandingChecks().size(); i++) {
+
+                        OutstandingChecks outstandingChecks = data.getOutstandingChecks().get(i);
+                        accountItems.add(new AccountItem(outstandingChecks.getCheckNo(), outstandingChecks.getOutBalance(), outstandingChecks.getOcId()));
+
+                    }
+
+                    showFeedOutstandingChecks(accountItems, data.getOutstandingChecks(), recyclerView);
 
                     close.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -578,63 +620,8 @@ public class Home extends Fragment {
                         @Override
                         public void onClick(View v) {
 
-                            if (getContext() != null) {
+                            addOutstandingCheckLayout();
 
-                                final AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
-                                builder1.setCancelable(false);
-
-                                LayoutInflater inflater = getActivity().getLayoutInflater();
-                                final View alertView = inflater.inflate(R.layout.add_outstanding_bills, null);
-                                builder1.setView(alertView);
-                                final AlertDialog alert11 = builder1.create();
-
-                                final TextView checkNumber = alertView.findViewById(R.id.check_number);
-                                final TextView checkAmount = alertView.findViewById(R.id.check_amount);
-                                TextView cancel = alertView.findViewById(R.id.cancel);
-                                TextView add = alertView.findViewById(R.id.add);
-
-                                cancel.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-
-                                        alert11.dismiss();
-
-                                    }
-                                });
-
-                                add.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-
-                                        boolean hasError = false;
-
-                                        if (checkNumber.getText().toString().equals("")) {
-                                            checkNumber.setError("Empty");
-                                            hasError = true;
-                                        }
-                                        if (checkAmount.getText().toString().equals("")) {
-                                            checkAmount.setError("Empty");
-                                            hasError = true;
-                                        }
-                                        if (!BudgetCatcher.getConnectedToInternet()) {
-
-                                            hasError = true;
-                                            Toast.makeText(getActivity(), getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
-
-                                        }
-                                        if (!hasError) {
-
-                                            addOutstandingCheck(checkNumber.getText().toString(), checkAmount.getText().toString(), alert11);
-
-                                        }
-
-
-                                    }
-                                });
-
-                                alert11.show();
-
-                            }
 
                         }
                     });
@@ -643,8 +630,102 @@ public class Home extends Fragment {
 
                 }
 
-                break;
             }
+
+            @Override
+            public void onFail() {
+
+                dialog.dismiss();
+                if (getActivity() != null)
+                    Toast.makeText(getActivity(), "Failed to save data: Try again later", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onError(Throwable th) {
+
+                dialog.dismiss();
+
+                if (getActivity() != null) {
+                    Log.e("SerVerErrAddBill", th.toString());
+                    if (th instanceof SocketTimeoutException) {
+                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+
+        });
+
+    }
+
+    private void showFeedOutstandingChecks(ArrayList<AccountItem> accountItemArrayList, ArrayList<OutstandingChecks> outstandingChecksArrayList, RecyclerView recyclerView) {
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        AccountListAdapter accountListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_OUTSTANDING_CHECKS, null, null, null, null, outstandingChecksArrayList);
+        recyclerView.setAdapter(accountListAdapter);
+
+    }
+
+    private void addOutstandingCheckLayout() {
+
+        if (getContext() != null) {
+
+            final AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+            builder1.setCancelable(false);
+
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            final View alertView = inflater.inflate(R.layout.add_outstanding_bills, null);
+            builder1.setView(alertView);
+            final AlertDialog alert11 = builder1.create();
+
+            final TextView checkNumber = alertView.findViewById(R.id.check_number);
+            final TextView checkAmount = alertView.findViewById(R.id.check_amount);
+            TextView cancel = alertView.findViewById(R.id.cancel);
+            TextView add = alertView.findViewById(R.id.add);
+
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    alert11.dismiss();
+
+                }
+            });
+
+            add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    boolean hasError = false;
+
+                    if (checkNumber.getText().toString().equals("")) {
+                        checkNumber.setError("Empty");
+                        hasError = true;
+                    }
+                    if (checkAmount.getText().toString().equals("")) {
+                        checkAmount.setError("Empty");
+                        hasError = true;
+                    }
+                    if (!BudgetCatcher.getConnectedToInternet()) {
+
+                        hasError = true;
+                        Toast.makeText(getActivity(), getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
+
+                    }
+                    if (!hasError) {
+
+                        addOutstandingCheck(checkNumber.getText().toString(), checkAmount.getText().toString(), alert11);
+
+                    }
+
+
+                }
+            });
+
+            alert11.show();
 
         }
 
@@ -660,6 +741,11 @@ public class Home extends Fragment {
             public void onSuccess(String data) {
 
                 alertDialog.dismiss();
+                dialog.dismiss();
+
+                final InputMethodManager imm = (InputMethodManager) Objects.requireNonNull(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
+                Objects.requireNonNull(imm).hideSoftInputFromWindow(Objects.requireNonNull(getView()).getWindowToken(), 0);
+
                 Toast.makeText(getActivity(), getString(R.string.successfully_added), Toast.LENGTH_SHORT).show();
 
             }

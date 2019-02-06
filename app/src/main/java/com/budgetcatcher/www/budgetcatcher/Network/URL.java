@@ -51,6 +51,7 @@ public class URL {
     public static final String getAllAllowance = "getAllAllowances/";
     public static final String insertAllowances = "insertAllowances";
     public static final String getWeeksOrMonths = "getWeeksOrMonths/";
+    public static final String getOutstandingChecks = "getOutstandingChecks/";
     public static final String getCurrentWeekOrMonth = "getCurrentWeekOrMonth/";
     public static final String yodleeFastLink = "/user/accessTokens?appIds=10003600";
 

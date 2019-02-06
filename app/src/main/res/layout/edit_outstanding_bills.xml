@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="@dimen/gap_of_16dp"
-        android:text="Add New Check"
+        android:text="Edit Check"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         android:textStyle="bold" />
 

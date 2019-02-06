@@ -22,6 +22,7 @@ import com.budgetcatcher.www.budgetcatcher.Model.Allowance;
 import com.budgetcatcher.www.budgetcatcher.Model.Bill;
 import com.budgetcatcher.www.budgetcatcher.Model.Expenses;
 import com.budgetcatcher.www.budgetcatcher.Model.Income;
+import com.budgetcatcher.www.budgetcatcher.Model.OutstandingChecks;
 import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
@@ -53,6 +54,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
     private ArrayList<Allowance> allowances;
     private ArrayList<Expenses> expenses;
     private ArrayList<Income> incomes;
+    private ArrayList<OutstandingChecks> outstandingChecks;
     private String fragmentTag;
     private Boolean hasClickListener;
 
@@ -66,7 +68,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
     }
 
-    public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag, ArrayList<Bill> bills, ArrayList<Allowance> allowances, ArrayList<Expenses> expenses, ArrayList<Income> incomes) {
+    public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag, ArrayList<Bill> bills, ArrayList<Allowance> allowances, ArrayList<Expenses> expenses, ArrayList<Income> incomes, ArrayList<OutstandingChecks> outstandingChecks) {
 
         inflater = LayoutInflater.from(activity);
         this.activity = activity;
@@ -90,6 +92,10 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         } else if (fragmentTag.equals(Config.TAG_LIST_INCOME)) {
 
             this.incomes = incomes;
+
+        } else if (fragmentTag.equals(Config.TAG_LIST_OUTSTANDING_CHECKS)) {
+
+            this.outstandingChecks = outstandingChecks;
 
         }
 
@@ -121,7 +127,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         }*/
         //Log.d("TEMP", "saveDataToServer: " + dec);
 
-        if (fragmentTag.equals(Config.TAG_LIST_SPENDING_ALLOWANCE)) {
+        if (fragmentTag.equals(Config.TAG_LIST_SPENDING_ALLOWANCE) || fragmentTag.equals(Config.TAG_LIST_OUTSTANDING_CHECKS)) {
 
             holder.col1.setText(accountItem.getCol1());
             holder.col3.setText("$" + valStr);
@@ -289,6 +295,11 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                                                     .replace(R.id.content, editIncidental, Config.TAG_EDIT_BILL_FRAGMENT)
                                                     .addToBackStack(null)
                                                     .commit();
+
+                                        } else if (fragmentTag.equals(Config.TAG_LIST_OUTSTANDING_CHECKS)) {
+
+                                            alert11.dismiss();
+                                            editOutstandingCheckLayout();
 
                                         }
 
@@ -474,6 +485,71 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                         return false;
                     }
                 });
+
+            }
+
+        }
+
+        private void editOutstandingCheckLayout() {
+
+            if (activity != null) {
+
+                final AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
+                builder1.setCancelable(false);
+
+                LayoutInflater inflater = activity.getLayoutInflater();
+                final View alertView = inflater.inflate(R.layout.edit_outstanding_bills, null);
+                builder1.setView(alertView);
+                final AlertDialog alert11 = builder1.create();
+
+                final TextView checkNumber = alertView.findViewById(R.id.check_number);
+                final TextView checkAmount = alertView.findViewById(R.id.check_amount);
+                TextView cancel = alertView.findViewById(R.id.cancel);
+                TextView add = alertView.findViewById(R.id.add);
+
+                checkNumber.setText(outstandingChecks.get(getAdapterPosition()).getCheckNo());
+                checkAmount.setText(outstandingChecks.get(getAdapterPosition()).getOutBalance());
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        alert11.dismiss();
+
+                    }
+                });
+
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        boolean hasError = false;
+
+                        if (checkNumber.getText().toString().equals("")) {
+                            checkNumber.setError("Empty");
+                            hasError = true;
+                        }
+                        if (checkAmount.getText().toString().equals("")) {
+                            checkAmount.setError("Empty");
+                            hasError = true;
+                        }
+                        if (!BudgetCatcher.getConnectedToInternet()) {
+
+                            hasError = true;
+                            Toast.makeText(activity, activity.getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
+
+                        }
+                        if (!hasError) {
+
+                            //addOutstandingCheck(checkNumber.getText().toString(), checkAmount.getText().toString(), alert11);
+
+                        }
+
+
+                    }
+                });
+
+                alert11.show();
 
             }
 

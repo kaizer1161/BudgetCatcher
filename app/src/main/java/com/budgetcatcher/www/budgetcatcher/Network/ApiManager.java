@@ -40,6 +40,7 @@ import com.budgetcatcher.www.budgetcatcher.Model.ModifyCategory;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyExpenseBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyHomeBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyIncomeBody;
+import com.budgetcatcher.www.budgetcatcher.Model.OutstandingCheckResponseBody;
 import com.budgetcatcher.www.budgetcatcher.Model.PieChartData;
 import com.budgetcatcher.www.budgetcatcher.Model.PieChartResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.ProfileSetupBody;
@@ -420,6 +421,40 @@ public class ApiManager {
                     CatcherResponse catcherResponse = gson.fromJson(response.body(), CatcherResponse.class);
 
                     callback.onSuccess(catcherResponse);
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void getOutstandingChecks(String userId, final QueryCallback<OutstandingCheckResponseBody> callback) {
+
+        String uri = URL.base + URL.getOutstandingChecks + userId;
+
+        Call<String> networkCall = apiInterface.getOutstandingChecks(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    Gson gson = new Gson();
+                    OutstandingCheckResponseBody outstandingCheckResponseBody = gson.fromJson(response.body(), OutstandingCheckResponseBody.class);
+
+                    callback.onSuccess(outstandingCheckResponseBody);
 
                 } else {
 
