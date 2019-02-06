@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import com.budgetcatcher.www.budgetcatcher.BudgetCatcher;
 import com.budgetcatcher.www.budgetcatcher.Config;
+import com.budgetcatcher.www.budgetcatcher.Model.AddOutstandingCheckBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyHomeBody;
 import com.budgetcatcher.www.budgetcatcher.Model.Month;
 import com.budgetcatcher.www.budgetcatcher.Model.MonthData;
@@ -289,7 +291,7 @@ public class Home extends Fragment {
 
     }
 
-    @OnClick({R.id.projected_balance, R.id.done_bottom_sheet, R.id.add_to_saving, R.id.reduce_debts, R.id.left_arrow, R.id.right_arrow, R.id.date_display, R.id.save_to_adjust})
+    @OnClick({R.id.projected_balance, R.id.done_bottom_sheet, R.id.add_to_saving, R.id.reduce_debts, R.id.left_arrow, R.id.right_arrow, R.id.date_display, R.id.save_to_adjust, R.id.outstanding_balance})
     public void onClick(View view) {
 
         switch (view.getId()) {
@@ -330,7 +332,7 @@ public class Home extends Fragment {
                     builder1.setCancelable(true);
 
                     LayoutInflater inflater = this.getLayoutInflater();
-                    View alertView = inflater.inflate(R.layout.projected_balance_alert_box, null);
+                    View alertView = inflater.inflate(R.layout.add_outstanding_bills, null);
                     builder1.setView(alertView);
 
                     TextView weekSum = alertView.findViewById(R.id.week_sum);
@@ -545,7 +547,148 @@ public class Home extends Fragment {
                 break;
             }
 
+            case R.id.outstanding_balance: {
+
+                if (getContext() != null) {
+
+                    final AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+                    builder1.setCancelable(false);
+
+                    LayoutInflater inflater = this.getLayoutInflater();
+                    View alertView = inflater.inflate(R.layout.outstanding_bills, null);
+                    builder1.setView(alertView);
+                    final AlertDialog alert11 = builder1.create();
+
+                    TextView close = alertView.findViewById(R.id.close);
+                    TextView addOS = alertView.findViewById(R.id.add_os);
+                    TextView startingCashBalance = alertView.findViewById(R.id.start_cash_balance);
+                    TextView totalOS = alertView.findViewById(R.id.total_os);
+                    TextView bankBalance = alertView.findViewById(R.id.bank_balance);
+
+                    close.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            alert11.dismiss();
+
+                        }
+                    });
+
+                    addOS.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            if (getContext() != null) {
+
+                                final AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+                                builder1.setCancelable(false);
+
+                                LayoutInflater inflater = getActivity().getLayoutInflater();
+                                final View alertView = inflater.inflate(R.layout.add_outstanding_bills, null);
+                                builder1.setView(alertView);
+                                final AlertDialog alert11 = builder1.create();
+
+                                final TextView checkNumber = alertView.findViewById(R.id.check_number);
+                                final TextView checkAmount = alertView.findViewById(R.id.check_amount);
+                                TextView cancel = alertView.findViewById(R.id.cancel);
+                                TextView add = alertView.findViewById(R.id.add);
+
+                                cancel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        alert11.dismiss();
+
+                                    }
+                                });
+
+                                add.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        boolean hasError = false;
+
+                                        if (checkNumber.getText().toString().equals("")) {
+                                            checkNumber.setError("Empty");
+                                            hasError = true;
+                                        }
+                                        if (checkAmount.getText().toString().equals("")) {
+                                            checkAmount.setError("Empty");
+                                            hasError = true;
+                                        }
+                                        if (!BudgetCatcher.getConnectedToInternet()) {
+
+                                            hasError = true;
+                                            Toast.makeText(getActivity(), getString(R.string.connect_to_internet), Toast.LENGTH_SHORT).show();
+
+                                        }
+                                        if (!hasError) {
+
+                                            addOutstandingCheck(checkNumber.getText().toString(), checkAmount.getText().toString(), alert11);
+
+                                        }
+
+
+                                    }
+                                });
+
+                                alert11.show();
+
+                            }
+
+                        }
+                    });
+
+                    alert11.show();
+
+                }
+
+                break;
+            }
+
         }
+
+    }
+
+    private void addOutstandingCheck(String checkNumber, String checkAmount, final AlertDialog alertDialog) {
+
+        dialog.show();
+        AddOutstandingCheckBody addOutstandingCheckBody = new AddOutstandingCheckBody(userID, checkNumber, checkAmount);
+
+        BudgetCatcher.apiManager.addOC(addOutstandingCheckBody, new QueryCallback<String>() {
+            @Override
+            public void onSuccess(String data) {
+
+                alertDialog.dismiss();
+                Toast.makeText(getActivity(), getString(R.string.successfully_added), Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFail() {
+
+                dialog.dismiss();
+                if (getActivity() != null)
+                    Toast.makeText(getActivity(), "Failed to save data: Try again later", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onError(Throwable th) {
+
+                dialog.dismiss();
+
+                if (getActivity() != null) {
+                    Log.e("SerVerErrAddBill", th.toString());
+                    if (th instanceof SocketTimeoutException) {
+                        Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
 
     }
 

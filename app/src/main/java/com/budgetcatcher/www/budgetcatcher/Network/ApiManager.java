@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.budgetcatcher.www.budgetcatcher.Config;
 import com.budgetcatcher.www.budgetcatcher.Model.AddCategory;
+import com.budgetcatcher.www.budgetcatcher.Model.AddOutstandingCheckBody;
 import com.budgetcatcher.www.budgetcatcher.Model.Allowance;
 import com.budgetcatcher.www.budgetcatcher.Model.AllowanceResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.Bill;
@@ -789,6 +790,35 @@ public class ApiManager {
     public void insertAllowance(InsertAllowanceBody body, final QueryCallback<String> callback) {
 
         Call<String> networkCall = apiInterface.insertAllowances(headers, body);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_CREATED) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void addOC(AddOutstandingCheckBody body, final QueryCallback<String> callback) {
+
+        Call<String> networkCall = apiInterface.addOC(headers, body);
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

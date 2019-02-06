@@ -16,6 +16,7 @@ public class URL {
     public static final int STATUS_SERVER_INTERNAL_ERROR = 500;
 
     /*URL Suffix*/
+    public static final String addOC = "addOC";
     public static final String getHome = "getHome/";
     public static final String signIn = "checkUser/";
     public static final String signUp = "insertUser";

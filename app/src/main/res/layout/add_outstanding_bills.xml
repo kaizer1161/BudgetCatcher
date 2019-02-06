@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/aquitant"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/gap_of_16dp"
+        android:text="Add New Check"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/check_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/gap_of_16dp"
+        android:layout_marginTop="@dimen/gap_of_8dp"
+        android:layout_marginRight="@dimen/gap_of_16dp"
+        android:background="@drawable/add_outstanding_edittext_layout"
+        android:hint="Enter check number"
+        android:inputType="number"
+        android:padding="@dimen/gap_of_8dp" />
+
+    <EditText
+        android:id="@+id/check_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/gap_of_16dp"
+        android:layout_marginRight="@dimen/gap_of_16dp"
+        android:layout_marginBottom="@dimen/gap_of_8dp"
+        android:background="@drawable/add_outstanding_edittext_layout"
+        android:hint="Enter your amount"
+        android:inputType="phone"
+        android:padding="@dimen/gap_of_8dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/deep_sea_dive" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="45"
+            android:gravity="center"
+            android:padding="@dimen/gap_of_8dp"
+            android:text="Cancel"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/deep_sea_dive"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/deep_sea_dive" />
+
+        <TextView
+            android:id="@+id/add"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="45"
+            android:gravity="center"
+            android:padding="@dimen/gap_of_8dp"
+            android:text="Add"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/deep_sea_dive"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>
