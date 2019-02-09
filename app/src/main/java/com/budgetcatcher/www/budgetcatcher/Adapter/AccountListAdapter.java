@@ -3,6 +3,7 @@ package com.budgetcatcher.www.budgetcatcher.Adapter;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -22,6 +23,7 @@ import com.budgetcatcher.www.budgetcatcher.Model.Allowance;
 import com.budgetcatcher.www.budgetcatcher.Model.Bill;
 import com.budgetcatcher.www.budgetcatcher.Model.Expenses;
 import com.budgetcatcher.www.budgetcatcher.Model.Income;
+import com.budgetcatcher.www.budgetcatcher.Model.ModifyOutstandingCheck;
 import com.budgetcatcher.www.budgetcatcher.Model.OutstandingChecks;
 import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
@@ -57,6 +59,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
     private ArrayList<OutstandingChecks> outstandingChecks;
     private String fragmentTag;
     private Boolean hasClickListener;
+    private AlertDialog alertDialog;
 
     public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag) {
 
@@ -68,7 +71,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
     }
 
-    public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag, ArrayList<Bill> bills, ArrayList<Allowance> allowances, ArrayList<Expenses> expenses, ArrayList<Income> incomes, ArrayList<OutstandingChecks> outstandingChecks) {
+    public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag, ArrayList<Bill> bills, ArrayList<Allowance> allowances, ArrayList<Expenses> expenses, ArrayList<Income> incomes/*, ArrayList<OutstandingChecks> outstandingChecks*/) {
 
         inflater = LayoutInflater.from(activity);
         this.activity = activity;
@@ -96,6 +99,23 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         } else if (fragmentTag.equals(Config.TAG_LIST_OUTSTANDING_CHECKS)) {
 
             this.outstandingChecks = outstandingChecks;
+
+        }
+
+    }
+
+    public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag, ArrayList<OutstandingChecks> outstandingChecks, AlertDialog alertDialog) {
+
+        inflater = LayoutInflater.from(activity);
+        this.activity = activity;
+        this.accountItemArrayList = accountItemArrayList;
+        this.fragmentTag = fragmentTag;
+        hasClickListener = true;
+
+        if (fragmentTag.equals(Config.TAG_LIST_OUTSTANDING_CHECKS)) {
+
+            this.outstandingChecks = outstandingChecks;
+            this.alertDialog = alertDialog;
 
         }
 
@@ -464,6 +484,47 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                                                 }
                                             });
 
+                                        } else if (fragmentTag.equals(Config.TAG_LIST_OUTSTANDING_CHECKS)) {
+
+                                            dialog.show();
+
+                                            BudgetCatcher.apiManager.deleteOC(outstandingChecks.get(getAdapterPosition()).getOcId(), new QueryCallback<String>() {
+                                                @Override
+                                                public void onSuccess(String data) {
+
+                                                    dialog.dismiss();
+                                                    Toast.makeText(activity, activity.getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show();
+                                                    /*accountItemArrayList.remove(getAdapterPosition());
+                                                    notifyDataSetChanged();*/
+                                                    alert11.dismiss();
+
+                                                    activity.startActivity(new Intent(activity, MainActivity.class));
+                                                    activity.finish();
+
+                                                }
+
+                                                @Override
+                                                public void onFail() {
+                                                    dialog.dismiss();
+                                                    Toast.makeText(activity, activity.getString(R.string.delete_failed), Toast.LENGTH_SHORT).show();
+                                                }
+
+                                                @Override
+                                                public void onError(Throwable th) {
+
+                                                    dialog.dismiss();
+                                                    if (activity != null) {
+                                                        Log.e("SerVerErrAddBill", th.toString());
+                                                        if (th instanceof SocketTimeoutException) {
+                                                            Toast.makeText(activity, activity.getResources().getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            Toast.makeText(activity, activity.getResources().getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+
+                                                }
+                                            });
+
                                         }
                                     }
                                 });
@@ -500,6 +561,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                 LayoutInflater inflater = activity.getLayoutInflater();
                 final View alertView = inflater.inflate(R.layout.edit_outstanding_bills, null);
                 builder1.setView(alertView);
+
                 final AlertDialog alert11 = builder1.create();
 
                 final TextView checkNumber = alertView.findViewById(R.id.check_number);
@@ -507,8 +569,11 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                 TextView cancel = alertView.findViewById(R.id.cancel);
                 TextView add = alertView.findViewById(R.id.add);
 
+                Float val = Float.parseFloat(outstandingChecks.get(getAdapterPosition()).getOutBalance());
+                String valStr = String.format("%.2f", val);
+
                 checkNumber.setText(outstandingChecks.get(getAdapterPosition()).getCheckNo());
-                checkAmount.setText(outstandingChecks.get(getAdapterPosition()).getOutBalance());
+                checkAmount.setText(valStr);
 
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -541,17 +606,78 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                         }
                         if (!hasError) {
 
-                            //addOutstandingCheck(checkNumber.getText().toString(), checkAmount.getText().toString(), alert11);
+                            editOutstandingCheck(checkNumber.getText().toString(), checkAmount.getText().toString(), alert11);
 
                         }
 
 
                     }
+
                 });
 
                 alert11.show();
 
             }
+
+        }
+
+        private void editOutstandingCheck(String checkNumber, String checkAmount, final AlertDialog alertDialog) {
+
+            final ProgressDialog dialog = ProgressDialog.show(activity, "",
+                    activity.getString(R.string.loading), true);
+
+            dialog.show();
+            final ModifyOutstandingCheck modifyOutstandingCheck = new ModifyOutstandingCheck(checkNumber, checkAmount);
+
+            BudgetCatcher.apiManager.modifyOC(outstandingChecks.get(getAdapterPosition()).getOcId(), modifyOutstandingCheck, new QueryCallback<String>() {
+                @Override
+                public void onSuccess(String data) {
+
+                    alertDialog.dismiss();
+                    dialog.dismiss();
+
+                    /*final InputMethodManager imm = (InputMethodManager) Objects.requireNonNull(activity).getSystemService(Context.INPUT_METHOD_SERVICE);
+                    Objects.requireNonNull(imm).hideSoftInputFromWindow(getView().getWindowToken(), 0);*/
+
+                    Toast.makeText(activity, activity.getString(R.string.successfully_edited), Toast.LENGTH_SHORT).show();
+
+                    activity.startActivity(new Intent(activity, MainActivity.class));
+                    activity.finish();
+
+                    /*outstandingChecks.get(getAdapterPosition()).setCheckNo(modifyOutstandingCheck.getCheckNo());
+                    outstandingChecks.get(getAdapterPosition()).setOutBalance(modifyOutstandingCheck.getOutBalance());
+
+                    accountItemArrayList.get(getAdapterPosition()).setCol1(modifyOutstandingCheck.getCheckNo());
+                    accountItemArrayList.get(getAdapterPosition()).setCol3(modifyOutstandingCheck.getOutBalance());
+
+                    notifyDataSetChanged();*/
+
+                }
+
+                @Override
+                public void onFail() {
+
+                    dialog.dismiss();
+                    if (activity != null)
+                        Toast.makeText(activity, "Failed to save data: Try again later", Toast.LENGTH_SHORT).show();
+
+                }
+
+                @Override
+                public void onError(Throwable th) {
+
+                    dialog.dismiss();
+
+                    if (activity != null) {
+                        Log.e("SerVerErrAddBill", th.toString());
+                        if (th instanceof SocketTimeoutException) {
+                            Toast.makeText(activity, activity.getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(activity, activity.getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            });
 
         }
 

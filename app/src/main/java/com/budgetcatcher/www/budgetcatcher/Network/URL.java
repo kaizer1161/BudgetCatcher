@@ -20,6 +20,8 @@ public class URL {
     public static final String getHome = "getHome/";
     public static final String signIn = "checkUser/";
     public static final String signUp = "insertUser";
+    public static final String modifyOC = "modifyOC/";
+    public static final String deleteOC = "deleteOC/";
     public static final String pieChart = "pieChart/";
     public static final String insertBill = "insertBill";
     public static final String modifyBill = "modifyBill/";

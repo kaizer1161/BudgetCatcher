@@ -35,7 +35,7 @@
         android:layout_marginBottom="@dimen/gap_of_8dp"
         android:background="@drawable/add_outstanding_edittext_layout"
         android:hint="Enter your amount"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:padding="@dimen/gap_of_8dp" />
 
     <View

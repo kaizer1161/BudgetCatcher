@@ -20,6 +20,7 @@ import com.budgetcatcher.www.budgetcatcher.Model.ModifyCategory;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyExpenseBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyHomeBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyIncomeBody;
+import com.budgetcatcher.www.budgetcatcher.Model.ModifyOutstandingCheck;
 import com.budgetcatcher.www.budgetcatcher.Model.SignUpBody;
 import com.budgetcatcher.www.budgetcatcher.Model.User;
 import com.budgetcatcher.www.budgetcatcher.Model.YodleeCreateManualAccountBody;
@@ -137,8 +138,14 @@ public interface ApiInterface {
     @PUT
     Call<String> modifyCategory(@Url String url, @HeaderMap Map<String, String> headers, @Body ModifyCategory modifyCategory);
 
+    @PUT
+    Call<String> modifyOC(@Url String url, @HeaderMap Map<String, String> headers, @Body ModifyOutstandingCheck modifyOutstandingCheck);
+
     @DELETE
     Call<String> deleteBill(@Url String url);
+
+    @DELETE
+    Call<String> deleteOC(@Url String url);
 
     @DELETE
     Call<String> deleteIncome(@Url String url);

@@ -105,6 +105,7 @@ public class Home extends Fragment {
     private int weekIndex, monthIndex;
     private String[] weekDate, monthDate;
     private float reduceDebtsAmount = 0, savingsAmount = 0;
+    private AlertDialog OCAlert;
 
     @Nullable
     @Override
@@ -582,7 +583,7 @@ public class Home extends Fragment {
                     LayoutInflater inflater = getLayoutInflater();
                     View alertView = inflater.inflate(R.layout.outstanding_bills, null);
                     builder1.setView(alertView);
-                    final AlertDialog alert11 = builder1.create();
+                    OCAlert = builder1.create();
 
                     TextView close = alertView.findViewById(R.id.close);
                     TextView addOS = alertView.findViewById(R.id.add_os);
@@ -591,27 +592,41 @@ public class Home extends Fragment {
                     TextView totalOS = alertView.findViewById(R.id.total_os);
                     TextView bankBalance = alertView.findViewById(R.id.bank_balance);
                     RecyclerView recyclerView = alertView.findViewById(R.id.oc_list);
-
                     sCBalance.setText(startCashBalance.getText().toString());
-                    totalOS.setText("$" + data.getTotal());
-                    bankBalance.setText(String.format("$%s", Float.parseFloat(startCashBalance.getText().toString().replace("$ ", "")) - Float.parseFloat(data.getTotal())));
-
                     ArrayList<AccountItem> accountItems = new ArrayList<>();
 
-                    for (int i = 0; i < data.getOutstandingChecks().size(); i++) {
+                    if (data != null) {
 
-                        OutstandingChecks outstandingChecks = data.getOutstandingChecks().get(i);
-                        accountItems.add(new AccountItem(outstandingChecks.getCheckNo(), outstandingChecks.getOutBalance(), outstandingChecks.getOcId()));
+                        Float val = Float.parseFloat(data.getTotal());
+                        String valStr = String.format("%.2f", val);
+
+                        Float val1 = Float.parseFloat(startCashBalance.getText().toString().replace("$ ", "")) - Float.parseFloat(data.getTotal());
+                        String valStr1 = String.format("%.2f", val);
+
+                        totalOS.setText("$" + valStr);
+                        bankBalance.setText(String.format("$%s", valStr1));
+
+                        for (int i = 0; i < data.getOutstandingChecks().size(); i++) {
+
+                            OutstandingChecks outstandingChecks = data.getOutstandingChecks().get(i);
+                            accountItems.add(new AccountItem(outstandingChecks.getCheckNo(), outstandingChecks.getOutBalance(), outstandingChecks.getOcId()));
+
+                        }
+
+                        showFeedOutstandingChecks(accountItems, data.getOutstandingChecks(), recyclerView);
+
+                    } else {
+
+                        totalOS.setText("$0");
+                        bankBalance.setText(String.format("$%s", Float.parseFloat(startCashBalance.getText().toString().replace("$ ", ""))));
 
                     }
-
-                    showFeedOutstandingChecks(accountItems, data.getOutstandingChecks(), recyclerView);
 
                     close.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                            alert11.dismiss();
+                            OCAlert.dismiss();
 
                         }
                     });
@@ -626,7 +641,7 @@ public class Home extends Fragment {
                         }
                     });
 
-                    alert11.show();
+                    OCAlert.show();
 
                 }
 
@@ -637,7 +652,7 @@ public class Home extends Fragment {
 
                 dialog.dismiss();
                 if (getActivity() != null)
-                    Toast.makeText(getActivity(), "Failed to save data: Try again later", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Failed to load data: Try again later", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -664,7 +679,7 @@ public class Home extends Fragment {
     private void showFeedOutstandingChecks(ArrayList<AccountItem> accountItemArrayList, ArrayList<OutstandingChecks> outstandingChecksArrayList, RecyclerView recyclerView) {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        AccountListAdapter accountListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_OUTSTANDING_CHECKS, null, null, null, null, outstandingChecksArrayList);
+        AccountListAdapter accountListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_OUTSTANDING_CHECKS, outstandingChecksArrayList, OCAlert);
         recyclerView.setAdapter(accountListAdapter);
 
     }
@@ -747,6 +762,9 @@ public class Home extends Fragment {
                 Objects.requireNonNull(imm).hideSoftInputFromWindow(Objects.requireNonNull(getView()).getWindowToken(), 0);
 
                 Toast.makeText(getActivity(), getString(R.string.successfully_added), Toast.LENGTH_SHORT).show();
+
+                OCAlert.dismiss();
+                getOutstandingChecks();
 
             }
 

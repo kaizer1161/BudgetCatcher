@@ -40,6 +40,7 @@ import com.budgetcatcher.www.budgetcatcher.Model.ModifyCategory;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyExpenseBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyHomeBody;
 import com.budgetcatcher.www.budgetcatcher.Model.ModifyIncomeBody;
+import com.budgetcatcher.www.budgetcatcher.Model.ModifyOutstandingCheck;
 import com.budgetcatcher.www.budgetcatcher.Model.OutstandingCheckResponseBody;
 import com.budgetcatcher.www.budgetcatcher.Model.PieChartData;
 import com.budgetcatcher.www.budgetcatcher.Model.PieChartResponse;
@@ -449,7 +450,7 @@ public class ApiManager {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
-                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK || response.code() == URL.STATUS_SERVER_NOT_FOUND) {
 
                     Gson gson = new Gson();
                     OutstandingCheckResponseBody outstandingCheckResponseBody = gson.fromJson(response.body(), OutstandingCheckResponseBody.class);
@@ -709,6 +710,37 @@ public class ApiManager {
         String uri = URL.base + URL.modifyIncome + userId + "/" + incomeId;
 
         Call<String> networkCall = apiInterface.modifyIncome(uri, headers, body);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void modifyOC(String OCID, ModifyOutstandingCheck body, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.modifyOC + OCID;
+
+        Call<String> networkCall = apiInterface.modifyOC(uri, headers, body);
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -1009,6 +1041,37 @@ public class ApiManager {
         String uri = URL.base + URL.deleteCategory + categoryId;
 
         Call<String> networkCall = apiInterface.deleteCategory(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
+    public void deleteOC(String oCId, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.deleteOC + oCId;
+
+        Call<String> networkCall = apiInterface.deleteOC(uri);
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
