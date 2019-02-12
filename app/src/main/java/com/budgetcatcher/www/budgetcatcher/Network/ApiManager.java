@@ -248,6 +248,34 @@ public class ApiManager {
 
     }
 
+    public void getBudgetStatus(String userId, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.getBudgetStatus + userId;
+
+        Call<String> networkCall = apiInterface.getBudgetStatus(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+                    callback.onFail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
     public void getCurrentMonth(String monthId, final QueryCallback<String> callback) {
 
         String uri = URL.base + URL.getCurrentWeekOrMonth + monthId;
@@ -736,6 +764,39 @@ public class ApiManager {
 
     }
 
+    public void updateDataTable(String userId, final QueryCallback<String> callback) {
+
+        String uri = URL.base + URL.updateDataTables + userId + "/" + "initial";
+
+        Call<String> networkCall = apiInterface.updateDataTable(uri, headers);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                Log.d(TAG, "onResponse: " + response.code());
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    callback.onSuccess(response.body());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
     public void modifyOC(String OCID, ModifyOutstandingCheck body, final QueryCallback<String> callback) {
 
         String uri = URL.base + URL.modifyOC + OCID;
@@ -864,6 +925,10 @@ public class ApiManager {
                 if (response.code() == URL.STATUS_SERVER_CREATED) {
 
                     callback.onSuccess(response.body());
+
+                } else if (response.code() == URL.STATUS_SERVER_NOT_FOUND) {
+
+                    callback.onSuccess("1");
 
                 } else {
 

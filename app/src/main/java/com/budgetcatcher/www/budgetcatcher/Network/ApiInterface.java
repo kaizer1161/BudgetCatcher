@@ -58,6 +58,9 @@ public interface ApiInterface {
     Call<String> getBill(@Url String url);
 
     @GET
+    Call<String> getBudgetStatus(@Url String url);
+
+    @GET
     Call<String> getHome(@Url String url);
 
     @GET
@@ -140,6 +143,9 @@ public interface ApiInterface {
 
     @PUT
     Call<String> modifyOC(@Url String url, @HeaderMap Map<String, String> headers, @Body ModifyOutstandingCheck modifyOutstandingCheck);
+
+    @PUT
+    Call<String> updateDataTable(@Url String url, @HeaderMap Map<String, String> headers);
 
     @DELETE
     Call<String> deleteBill(@Url String url);

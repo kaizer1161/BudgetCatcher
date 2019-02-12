@@ -32,6 +32,7 @@ import com.budgetcatcher.www.budgetcatcher.View.Fragment.EditAllowance;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.EditBill;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.EditIncidental;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.EditIncome;
+import com.budgetcatcher.www.budgetcatcher.View.Fragment.Manage;
 import com.google.gson.Gson;
 
 import java.net.SocketTimeoutException;
@@ -59,7 +60,6 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
     private ArrayList<OutstandingChecks> outstandingChecks;
     private String fragmentTag;
     private Boolean hasClickListener;
-    private AlertDialog alertDialog;
 
     public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag) {
 
@@ -104,7 +104,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
     }
 
-    public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag, ArrayList<OutstandingChecks> outstandingChecks, AlertDialog alertDialog) {
+    public AccountListAdapter(Activity activity, ArrayList<AccountItem> accountItemArrayList, String fragmentTag, ArrayList<OutstandingChecks> outstandingChecks) {
 
         inflater = LayoutInflater.from(activity);
         this.activity = activity;
@@ -115,7 +115,6 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         if (fragmentTag.equals(Config.TAG_LIST_OUTSTANDING_CHECKS)) {
 
             this.outstandingChecks = outstandingChecks;
-            this.alertDialog = alertDialog;
 
         }
 
@@ -124,7 +123,15 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
     @Override
     public AccountListAdapterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new AccountListAdapter.AccountListAdapterHolder(inflater.inflate(R.layout.account_item_layout, parent, false));
+        if (fragmentTag.equals(Config.TAG_LIST_OUTSTANDING_CHECKS)) {
+            return new AccountListAdapter.AccountListAdapterHolder(inflater.inflate(R.layout.account_item_layout_oc, parent, false));
+
+
+        } else {
+
+            return new AccountListAdapter.AccountListAdapterHolder(inflater.inflate(R.layout.account_item_layout, parent, false));
+
+        }
 
     }
 
@@ -342,9 +349,15 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
                                                     dialog.dismiss();
                                                     Toast.makeText(activity, activity.getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show();
-                                                    accountItemArrayList.remove(getAdapterPosition());
-                                                    notifyDataSetChanged();
+                                                    /*accountItemArrayList.remove(getAdapterPosition());
+                                                    notifyDataSetChanged();*/
+
                                                     alert11.dismiss();
+
+                                                    ((MainActivity) activity).getSupportFragmentManager()
+                                                            .beginTransaction()
+                                                            .replace(R.id.content, new Manage(), Config.TAG_EDIT_BILL_FRAGMENT)
+                                                            .commit();
 
                                                 }
 
@@ -380,9 +393,14 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
                                                     dialog.dismiss();
                                                     Toast.makeText(activity, activity.getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show();
-                                                    accountItemArrayList.remove(getAdapterPosition());
-                                                    notifyDataSetChanged();
+                                                    /*accountItemArrayList.remove(getAdapterPosition());
+                                                    notifyDataSetChanged();*/
                                                     alert11.dismiss();
+
+                                                    ((MainActivity) activity).getSupportFragmentManager()
+                                                            .beginTransaction()
+                                                            .replace(R.id.content, new Manage(), Config.TAG_EDIT_BILL_FRAGMENT)
+                                                            .commit();
 
                                                 }
 
@@ -418,9 +436,14 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
                                                     dialog.dismiss();
                                                     Toast.makeText(activity, activity.getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show();
-                                                    accountItemArrayList.remove(getAdapterPosition());
-                                                    notifyDataSetChanged();
+                                                    /*accountItemArrayList.remove(getAdapterPosition());
+                                                    notifyDataSetChanged();*/
                                                     alert11.dismiss();
+
+                                                    ((MainActivity) activity).getSupportFragmentManager()
+                                                            .beginTransaction()
+                                                            .replace(R.id.content, new Manage(), Config.TAG_EDIT_BILL_FRAGMENT)
+                                                            .commit();
 
                                                 }
 

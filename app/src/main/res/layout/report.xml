@@ -23,17 +23,16 @@
         android:layout_margin="@dimen/gap_of_8dp"
         android:layout_weight="50"
         android:background="#aa3aa9ae"
-        android:visibility="gone"
         android:orientation="vertical">
 
-        <TextView
+        <!--<TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="@dimen/gap_of_8dp"
             android:text="Budget VS. Actual"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:textColor="@color/white" />
+            android:textColor="@color/white" />-->
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChart"

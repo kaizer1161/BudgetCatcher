@@ -19,15 +19,23 @@ import com.budgetcatcher.www.budgetcatcher.Network.QueryCallback;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.BarLineChartBase;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -62,8 +70,8 @@ public class Report extends Fragment {
             userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
         }
 
-        headerTop.setText("Year To Date");
-        headerBottom.setText("2018 - 2019");
+        headerTop.setText("Year of 2019");
+//        headerBottom.setText("2018 - 2019");
 
         pieChart = rootView.findViewById(R.id.pieChart);
         barChart = rootView.findViewById(R.id.barChart);
@@ -97,40 +105,105 @@ public class Report extends Fragment {
 
     private void addBarChart() {
 
-        ArrayList<BarEntry> NoOfEmp = new ArrayList<>();
-
-        NoOfEmp.add(new BarEntry(0f, 500));
-        NoOfEmp.add(new BarEntry(1f, 250));
-        NoOfEmp.add(new BarEntry(2f, 125));
-        NoOfEmp.add(new BarEntry(3f, 0));
-        NoOfEmp.add(new BarEntry(4f, 375));
-        NoOfEmp.add(new BarEntry(5f, 500));
-        NoOfEmp.add(new BarEntry(6f, 375));
-        NoOfEmp.add(new BarEntry(7f, 500));
-        NoOfEmp.add(new BarEntry(8f, 250));
-        NoOfEmp.add(new BarEntry(9f, 0));
-        NoOfEmp.add(new BarEntry(10f, 375));
-        NoOfEmp.add(new BarEntry(11f, 125));
-        NoOfEmp.add(new BarEntry(12f, 500));
-        NoOfEmp.add(new BarEntry(13f, 375));
-        NoOfEmp.add(new BarEntry(14f, 400));
-        NoOfEmp.add(new BarEntry(15f, 250));
-        NoOfEmp.add(new BarEntry(16f, 300));
-        NoOfEmp.add(new BarEntry(17f, 400));
-        NoOfEmp.add(new BarEntry(18f, 125));
-
-        BarDataSet barDataSet = new BarDataSet(NoOfEmp, "");
-        barDataSet.setDrawValues(false);
-        barChart.animateY(3000);
-        BarData data = new BarData(barDataSet);
-        int[] colors = {getResources().getColor(R.color.hinoki), getResources().getColor(R.color.deep_sea_dive)};
-        barDataSet.setColors(ColorTemplate.createColors(colors));
-        barChart.setData(data);
-        barChart.getLegend().setEnabled(false);
-        barChart.getXAxis().setEnabled(false);
-        barChart.getAxisRight().setEnabled(false);
-        barChart.getAxisLeft().setTextColor(Color.WHITE);
+        barChart.setDrawBarShadow(false);
         barChart.getDescription().setEnabled(false);
+        barChart.setPinchZoom(false);
+        barChart.setDrawGridBackground(false);
+
+        // empty labels so that the names are spread evenly
+        String[] labels = {"", "Jan", "Feb", "Mar", "Apr", "May", "June", "july", "Aug", "Sep", "Oct", "Nov", "Dec", ""};
+        IAxisValueFormatter xAxisFormatter = new LabelFormatter(barChart, labels);
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(true);
+        xAxis.setGranularity(1f); // only intervals of 1 day
+        xAxis.setTextColor(Color.WHITE);
+        xAxis.setTextSize(10);
+        xAxis.setAxisLineColor(Color.WHITE);
+        xAxis.setAxisMinimum(1f);
+        xAxis.setValueFormatter(xAxisFormatter);
+
+        YAxis leftAxis = barChart.getAxisLeft();
+        leftAxis.setTextColor(Color.WHITE);
+        leftAxis.setTextSize(12);
+        leftAxis.setAxisLineColor(Color.WHITE);
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setGranularity(10);
+        leftAxis.setLabelCount(labels.length, true);
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+
+        barChart.getAxisRight().setEnabled(false);
+
+        Legend barChartLegend = barChart.getLegend();
+        barChartLegend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        barChartLegend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        barChartLegend.setOrientation(Legend.LegendOrientation.VERTICAL);
+        barChartLegend.setDrawInside(true);
+        barChartLegend.setTextColor(Color.WHITE);
+        barChartLegend.setWordWrapEnabled(true);
+
+        float[] valOne = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120};
+        float[] valTwo = {120, 110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10};
+
+        ArrayList<BarEntry> barOne = new ArrayList<>();
+        ArrayList<BarEntry> barTwo = new ArrayList<>();
+        for (int i = 0; i < valOne.length; i++) {
+            barOne.add(new BarEntry(i, valOne[i]));
+            barTwo.add(new BarEntry(i, valTwo[i]));
+        }
+
+        BarDataSet set1 = new BarDataSet(barOne, "Budget");
+        set1.setColor(getResources().getColor(R.color.deep_sea_dive));
+        BarDataSet set2 = new BarDataSet(barTwo, "Actual");
+        set2.setColor(getResources().getColor(R.color.hinoki));
+
+        set1.setHighlightEnabled(true);
+        set1.setDrawValues(true);
+
+        set2.setHighlightEnabled(true);
+        set2.setDrawValues(true);
+
+        ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
+        dataSets.add(set1);
+        dataSets.add(set2);
+
+        BarData data = new BarData(dataSets);
+        float groupSpace = 0.2f;
+        float barSpace = 0f;
+        float barWidth = 0.1f;
+        barChart.setExtraBottomOffset(5f);
+        // (barSpace + barWidth) * 5 + groupSpace = 1
+        // multiplied by 5 because there are 5 five bars
+        // labels will be centered as long as the equation is satisfied
+        data.setBarWidth((barSpace + barWidth) * 2 + groupSpace);
+        // so that the entire chart is shown when scrolled from right to left
+        xAxis.setAxisMaximum(labels.length - 1.1f);
+        barChart.setData(data);
+        barChart.setScaleEnabled(false);
+        barChart.setTouchEnabled(true);
+        barChart.setHighlightFullBarEnabled(true);
+        barChart.setVisibleXRangeMaximum(2);
+        barChart.groupBars(1f, groupSpace, barSpace);
+        barChart.invalidate();
+
+        barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+
+                Log.d("Report", "onValueSelected: " + h.getX());
+                Log.d("Report", "onValueSelected: " + h.getDataSetIndex());
+
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+                Log.d("Report", "onNothingSelected: ");
+
+
+            }
+        });
 
     }
 
@@ -199,6 +272,24 @@ public class Report extends Fragment {
             }
         });
 
+    }
+
+    private class LabelFormatter implements IAxisValueFormatter {
+
+        String[] labels;
+        BarLineChartBase<?> chart;
+
+        LabelFormatter(BarLineChartBase<?> chart, String[] labels) {
+            this.chart = chart;
+            this.labels = labels;
+        }
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            if (labels.length > (int) value) {
+                return labels[(int) value];
+            } else return null;
+        }
     }
 
 }

@@ -679,7 +679,7 @@ public class Home extends Fragment {
     private void showFeedOutstandingChecks(ArrayList<AccountItem> accountItemArrayList, ArrayList<OutstandingChecks> outstandingChecksArrayList, RecyclerView recyclerView) {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        AccountListAdapter accountListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_OUTSTANDING_CHECKS, outstandingChecksArrayList, OCAlert);
+        AccountListAdapter accountListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_OUTSTANDING_CHECKS, outstandingChecksArrayList);
         recyclerView.setAdapter(accountListAdapter);
 
     }

@@ -218,16 +218,25 @@ public class AddAllowance extends Fragment {
                 public void onSuccess(String data) {
 
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), getString(R.string.successfully_added), Toast.LENGTH_SHORT).show();
-                    if (getActivity() != null) {
 
-                        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        Objects.requireNonNull(imm).hideSoftInputFromWindow(Objects.requireNonNull(getView()).getWindowToken(), 0);
+                    if (data.equals("1")) {
 
-                        getActivity().getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.content, new Manage(), Config.TAG_MANAGE_FRAGMENT)
-                                .commit();
+                        Toast.makeText(getActivity(), "Duplicate category allowance for the user detected!", Toast.LENGTH_SHORT).show();
+
+                    } else {
+
+                        Toast.makeText(getActivity(), getString(R.string.successfully_added), Toast.LENGTH_SHORT).show();
+                        if (getActivity() != null) {
+
+                            final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            Objects.requireNonNull(imm).hideSoftInputFromWindow(Objects.requireNonNull(getView()).getWindowToken(), 0);
+
+                            getActivity().getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.content, new Manage(), Config.TAG_MANAGE_FRAGMENT)
+                                    .commit();
+
+                        }
 
                     }
 

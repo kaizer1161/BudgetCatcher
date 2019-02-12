@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import com.budgetcatcher.www.budgetcatcher.Model.AccountItem;
 import com.budgetcatcher.www.budgetcatcher.Model.AddCategory;
 import com.budgetcatcher.www.budgetcatcher.Model.Allowance;
 import com.budgetcatcher.www.budgetcatcher.Model.Bill;
+import com.budgetcatcher.www.budgetcatcher.Model.BudgetStatusResponseBody;
 import com.budgetcatcher.www.budgetcatcher.Model.CatcherResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.Category;
 import com.budgetcatcher.www.budgetcatcher.Model.Expenses;
@@ -103,12 +105,14 @@ public class Manage extends Fragment {
     RecyclerView categoryRecyclerView;
     @BindView(R.id.category_swipe_down)
     SwipeRefreshLayout categorySwipeDown;
+    @BindView(R.id.initial_budget_layout)
+    LinearLayout initialBudgetLayout;
 
     private ArrayList<Week> weekArrayList;
     private ArrayList<Month> monthArrayList;
     private Week currentWeek;
     private Month currentMonth;
-    private boolean isMonthSelected = false;
+    private boolean isMonthSelected = false, hasAtleastOneIncome = false, hasAtleastOneAllowance = false, hasAtleastOneBill = false;
     private int weekIndex, monthIndex;
     private String[] weekDate, monthDate;
     private SharedPreferences sharedPreferences;
@@ -118,7 +122,6 @@ public class Manage extends Fragment {
 
     private AccountListAdapter incomeListAdapter, billsListAdapter, allowanceListAdapter, incidentalListAdapter;
     private String userID;
-
 
     @Nullable
     @Override
@@ -177,6 +180,7 @@ public class Manage extends Fragment {
             getExpensesFromServer();*/
 
             getCurrentDateRange();
+            getBudgetStatus();
             fetchCategory();
 
         } else {
@@ -184,6 +188,48 @@ public class Manage extends Fragment {
             Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 
         }
+
+    }
+
+    private void getBudgetStatus() {
+
+        BudgetCatcher.apiManager.getBudgetStatus(userID, new QueryCallback<String>() {
+            @Override
+            public void onSuccess(String data) {
+
+                Gson gson = new Gson();
+                BudgetStatusResponseBody budgetStatusResponseBody = gson.fromJson(data, BudgetStatusResponseBody.class);
+
+                if (budgetStatusResponseBody.getData().get(0).getBudgetStatus() == 0) {
+
+                    initialBudgetLayout.setVisibility(View.VISIBLE);
+
+                } else {
+
+                    initialBudgetLayout.setVisibility(View.GONE);
+
+                }
+
+            }
+
+            @Override
+            public void onFail() {
+
+
+            }
+
+            @Override
+            public void onError(Throwable th) {
+
+                /*Log.e("SerVerErr", th.toString());
+                if (th instanceof SocketTimeoutException) {
+                    Toast.makeText(getActivity(), getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
+                }*/
+
+            }
+        });
 
     }
 
@@ -476,10 +522,25 @@ public class Manage extends Fragment {
 
     }
 
-    @OnClick({R.id.add_bill, R.id.add_allowance, R.id.add_income_setting, R.id.left_arrow, R.id.right_arrow, R.id.date_display, R.id.done_bottom_sheet, R.id.add_incidentals, R.id.add_categories})
+    @OnClick({R.id.add_bill, R.id.add_allowance, R.id.add_income_setting, R.id.left_arrow, R.id.right_arrow, R.id.date_display, R.id.done_bottom_sheet, R.id.add_incidentals, R.id.add_categories, R.id.initial_budget})
     public void onClick(View view) {
 
         switch (view.getId()) {
+
+            case R.id.initial_budget: {
+
+                if (hasAtleastOneAllowance && hasAtleastOneBill && hasAtleastOneIncome) {
+
+                    initialText("Set Initial Budget", "You are going to set your current Incomes. Bills and Allowance as your initial Budget. This initial Budget Can't be changed. Do you want to proceed?", true);
+
+                } else {
+
+                    initialText("No Data", "You have to insert your Incomes, Bills, Allowances, then set Initial Budget", false);
+
+                }
+
+                break;
+            }
 
             case R.id.add_categories: {
 
@@ -940,6 +1001,13 @@ public class Manage extends Fragment {
 
                 if (getActivity() != null) {
 
+                    if (incomeArrayList.size() > 0)
+                        hasAtleastOneIncome = true;
+                    if (billsArrayList.size() > 0)
+                        hasAtleastOneBill = true;
+                    if (spendingAllowanceArrayList.size() > 0)
+                        hasAtleastOneAllowance = true;
+
                     showFeedIncomes(incomeArrayList, data.getIncomesData());
                     showFeedIncidental(expensesArrayList, data.getIncidentalsData());
                     showFeedSpendingAllowance(spendingAllowanceArrayList, data.getAllowancesData());
@@ -987,6 +1055,118 @@ public class Manage extends Fragment {
         incidental.setLayoutManager(new LinearLayoutManager(getContext()));
         incidentalListAdapter = new AccountListAdapter(getActivity(), accountItemArrayList, Config.TAG_LIST_INCIDENTAL, null, null, expensesArrayList, null);
         incidental.setAdapter(incidentalListAdapter);
+
+    }
+
+    private void initialText(String title, String message, final Boolean hasData) {
+
+        if (getActivity() != null) {
+
+            final AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+            builder1.setCancelable(false);
+
+            builder1.setTitle(title);
+            builder1.setMessage(message);
+
+            if (!hasData) {
+
+                builder1.setPositiveButton(
+                        getString(R.string.ok),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                dialog.cancel();
+
+                            }
+                        });
+
+            } else {
+
+                builder1.setPositiveButton(
+                        getString(R.string.yes),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(final DialogInterface dialogInterface, int id) {
+
+                            }
+                        }).setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+
+                    }
+                });
+            }
+
+            final AlertDialog alert11 = builder1.create();
+
+            alert11.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(final DialogInterface dialogInterface) {
+                    alert11.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.deep_sea_dive));
+
+                    alert11.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            if (!hasData) {
+
+                                alert11.dismiss();
+
+                            } else {
+
+                                dialog.show();
+                                BudgetCatcher.apiManager.updateDataTable(userID, new QueryCallback<String>() {
+                                    @Override
+                                    public void onSuccess(String data) {
+
+                                        dialogInterface.dismiss();
+                                        dialog.dismiss();
+                                        Toast.makeText(getActivity(), getString(R.string.successfully_added), Toast.LENGTH_SHORT).show();
+                                        if (getActivity() != null) {
+
+                                            getActivity().getSupportFragmentManager()
+                                                    .beginTransaction()
+                                                    .replace(R.id.content, new Manage(), Config.TAG_MANAGE_FRAGMENT)
+                                                    .commit();
+
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFail() {
+                                        dialog.dismiss();
+                                        Toast.makeText(getActivity(), getString(R.string.failed_to_added), Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable th) {
+
+                                        dialog.dismiss();
+                                        if (getActivity() != null) {
+                                            Log.e("SerVerErrAddBill", th.toString());
+                                            if (th instanceof SocketTimeoutException) {
+                                                Toast.makeText(getActivity(), getResources().getString(R.string.time_out_error), Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getActivity(), getResources().getString(R.string.server_reach_error), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+
+                                    }
+                                });
+
+                            }
+
+                        }
+                    });
+
+                }
+            });
+
+            alert11.show();
+
+        }
 
     }
 

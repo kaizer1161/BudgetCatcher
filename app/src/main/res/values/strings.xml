@@ -39,5 +39,8 @@
     <string name="yodlee">Pay your bills</string>
     <string name="pay_your_bills">Pay your bills</string>
     <string name="server_reach_error">Cannot reach server</string>
+    <string name="ok">Ok</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 
 </resources>

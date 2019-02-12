@@ -48,7 +48,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -122,8 +121,8 @@ public class Catcher extends Fragment {
                     getString(R.string.loading), true);
             dialog.dismiss();
 
-            Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Catcher");
-            ((MainActivity) getActivity()).navigationView.setCheckedItem(R.id.nav_catcher);
+            /*Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setTitle("Catcher");
+            ((MainActivity) getActivity()).navigationView.setCheckedItem(R.id.nav_catcher);*/
 
             userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
