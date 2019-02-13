@@ -50,12 +50,7 @@ import com.budgetcatcher.www.budgetcatcher.View.Activity.MainActivity;
 import com.google.gson.Gson;
 
 import java.net.SocketTimeoutException;
-import java.text.DateFormatSymbols;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -437,9 +432,6 @@ public class Manage extends Fragment {
 
     private void homeUiDataUpdateBasedOnMonthOrWeek() {
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = null, endDate = null;
-
         if (isMonthSelected) {
 
             monthPicker.setVisibility(View.VISIBLE);
@@ -451,17 +443,10 @@ public class Manage extends Fragment {
                 monthDate[i] = monthArrayList.get(i).getMonth();
 
             }
-            try {
-
-                startDate = format.parse(currentMonth.getFirstDayOfMonth());
-                endDate = format.parse(currentMonth.getLastDayOfMonth());
-                monthIndex = Integer.parseInt(currentMonth.getMonthNumber()) - 1;
-                updateHeader(startDate, endDate, "Month of");
-                updateManageData(currentMonth.getFirstDayOfMonth(), currentMonth.getLastDayOfMonth());
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            monthIndex = Integer.parseInt(currentMonth.getMonthNumber()) - 1;
+            headerTop.setText("Month of");
+            headerBottom.setText(String.format("%s %s", monthArrayList.get(monthIndex).getMonth(), monthArrayList.get(monthPicker.getValue()).getYear()));
+            updateManageData(currentMonth.getFirstDayOfMonth(), currentMonth.getLastDayOfMonth());
 
             monthPicker.setMinValue(0);
             monthPicker.setMaxValue(monthDate.length - 1);
@@ -478,45 +463,14 @@ public class Manage extends Fragment {
                 weekDate[i] = weekArrayList.get(i).getWeek();
 
             }
-
-            try {
-
-                startDate = format.parse(currentWeek.getFirstDayOfEveryWeek());
-                endDate = format.parse(currentWeek.getLastDayOfEveryWeek());
-                weekIndex = Integer.parseInt(currentWeek.getWeekNumber()) - 1;
-                updateHeader(startDate, endDate, "Week of");
-
-                updateManageData(currentWeek.getFirstDayOfEveryWeek(), currentWeek.getLastDayOfEveryWeek());
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            weekIndex = Integer.parseInt(currentWeek.getWeekNumber()) - 1;
+            headerTop.setText(String.format("Week of %s", weekArrayList.get(weekIndex).getFirstDayOfEveryWeek()));
+            headerBottom.setText(String.format("to %s", weekArrayList.get(weekIndex).getLastDayOfEveryWeek()));
+            updateManageData(currentWeek.getFirstDayOfEveryWeek(), currentWeek.getLastDayOfEveryWeek());
 
             weekPicker.setMinValue(0);
             weekPicker.setMaxValue(weekDate.length - 1);
             weekPicker.setDisplayedValues(weekDate);
-
-        }
-
-    }
-
-    private void updateHeader(Date startDate, Date endDate, String topHeader) {
-
-        headerTop.setText(topHeader);
-
-        if (startDate != null && endDate != null) {
-
-            Calendar startCalender = Calendar.getInstance(), endCalender = Calendar.getInstance();
-            startCalender.setTime(startDate);
-            endCalender.setTime(endDate);
-
-            DateFormatSymbols dateFormatSymbols = new DateFormatSymbols();
-            String monthInWord = dateFormatSymbols.getMonths()[startCalender.get(Calendar.MONTH)];
-
-            int startDay = startCalender.get(Calendar.DAY_OF_MONTH);
-            int endDay = endCalender.get(Calendar.DAY_OF_MONTH);
-
-            headerBottom.setText(String.format("%s %d - %d", monthInWord, startDay, endDay));
 
         }
 
@@ -579,9 +533,6 @@ public class Manage extends Fragment {
 
             case R.id.done_bottom_sheet: {
 
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                Date startDate = null, endDate = null;
-
                 if (getActivity() != null) {
 
                     ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
@@ -590,31 +541,19 @@ public class Manage extends Fragment {
 
                 if (isMonthSelected) {
 
-                    try {
+                    monthIndex = monthPicker.getValue();
+                    headerTop.setText("Month of");
+                    headerBottom.setText(String.format("%s %s", monthArrayList.get(monthPicker.getValue()).getMonth(), monthArrayList.get(monthPicker.getValue()).getYear()));
+                    updateManageData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getLastDayOfMonth());
 
-                        monthIndex = monthPicker.getValue();
-                        startDate = format.parse(monthArrayList.get(monthPicker.getValue()).getFirstDayOfMonth());
-                        endDate = format.parse(monthArrayList.get(monthPicker.getValue()).getLastDayOfMonth());
-                        updateHeader(startDate, endDate, "Month of");
-                        updateManageData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getLastDayOfMonth());
-
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
 
                 } else {
 
-                    try {
+                    weekIndex = weekPicker.getValue();
+                    headerTop.setText(String.format("Week of %s", weekArrayList.get(weekPicker.getValue()).getFirstDayOfEveryWeek()));
+                    headerBottom.setText(String.format("to %s", weekArrayList.get(weekPicker.getValue()).getLastDayOfEveryWeek()));
+                    updateManageData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
 
-                        weekIndex = weekPicker.getValue();
-                        startDate = format.parse(weekArrayList.get(weekPicker.getValue()).getFirstDayOfEveryWeek());
-                        endDate = format.parse(weekArrayList.get(weekPicker.getValue()).getLastDayOfEveryWeek());
-                        updateHeader(startDate, endDate, "Week of");
-                        updateManageData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
-
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
                 }
 
                 break;
@@ -622,26 +561,15 @@ public class Manage extends Fragment {
 
             case R.id.left_arrow: {
 
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                Date startDate = null, endDate = null;
-
                 if (isMonthSelected) {
 
                     if (monthIndex > 0) {
 
                         monthIndex--;
 
-                        try {
-
-                            startDate = format.parse(monthArrayList.get(monthIndex).getFirstDayOfMonth());
-                            endDate = format.parse(monthArrayList.get(monthIndex).getLastDayOfMonth());
-                            Log.d(TAG, "onClick: " + startDate + " - " + endDate);
-                            updateHeader(startDate, endDate, "Month of");
-                            updateManageData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getLastDayOfMonth());
-
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                        headerTop.setText("Month of");
+                        headerBottom.setText(String.format("%s %s", monthArrayList.get(monthIndex).getMonth(), monthArrayList.get(monthIndex).getYear()));
+                        updateManageData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getLastDayOfMonth());
 
                     }
 
@@ -651,16 +579,9 @@ public class Manage extends Fragment {
 
                         weekIndex--;
 
-                        try {
-
-                            startDate = format.parse(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek());
-                            endDate = format.parse(weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
-                            updateHeader(startDate, endDate, "Week of");
-                            updateManageData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
-
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                        headerTop.setText(String.format("Week of %s", weekArrayList.get(weekIndex).getFirstDayOfEveryWeek()));
+                        headerBottom.setText(String.format("to %s", weekArrayList.get(weekIndex).getLastDayOfEveryWeek()));
+                        updateManageData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
 
                     }
 
@@ -671,25 +592,15 @@ public class Manage extends Fragment {
 
             case R.id.right_arrow: {
 
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                Date startDate = null, endDate = null;
-
                 if (isMonthSelected) {
 
                     if (monthIndex < monthArrayList.size() - 1) {
 
                         monthIndex++;
 
-                        try {
-
-                            startDate = format.parse(monthArrayList.get(monthIndex).getFirstDayOfMonth());
-                            endDate = format.parse(monthArrayList.get(monthIndex).getLastDayOfMonth());
-                            updateHeader(startDate, endDate, "Month of");
-                            updateManageData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getLastDayOfMonth());
-
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                        headerTop.setText("Month of");
+                        headerBottom.setText(String.format("%s %s", monthArrayList.get(monthIndex).getMonth(), monthArrayList.get(monthIndex).getYear()));
+                        updateManageData(monthArrayList.get(monthIndex).getFirstDayOfMonth(), monthArrayList.get(monthIndex).getLastDayOfMonth());
 
                     }
 
@@ -699,16 +610,9 @@ public class Manage extends Fragment {
 
                         weekIndex++;
 
-                        try {
-
-                            startDate = format.parse(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek());
-                            endDate = format.parse(weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
-                            updateHeader(startDate, endDate, "Week of");
-                            updateManageData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
-
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                        headerTop.setText(String.format("Week of %s", weekArrayList.get(weekIndex).getFirstDayOfEveryWeek()));
+                        headerBottom.setText(String.format("to %s", weekArrayList.get(weekIndex).getLastDayOfEveryWeek()));
+                        updateManageData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
 
                     }
 

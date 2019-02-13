@@ -320,18 +320,15 @@ public class Report extends Fragment {
                 set.setSliceSpace(4);
                 set.setDrawValues(false);
 
-                ArrayList<Integer> colors = new ArrayList<>();
-                colors.add(Color.GRAY);
-                colors.add(Color.BLUE);
-                colors.add(Color.RED);
-        /*colors.add(Color.GREEN);
-        colors.add(Color.LTGRAY);*/
-                colors.add(Color.CYAN);
-                /*colors.add(Color.YELLOW);*/
-                colors.add(Color.MAGENTA);
-                colors.add(Color.DKGRAY);
+                if (getActivity() != null) {
+                    ArrayList<Integer> colors = new ArrayList<>();
+                    colors.add(getActivity().getResources().getColor(R.color.hinoki));
+                    colors.add(getActivity().getResources().getColor(R.color.aquitant));
+                    colors.add(getActivity().getResources().getColor(R.color.deep_sea_dive));
+                    set.setColors(colors);
 
-                set.setColors(colors);
+                }
+
                 PieData pieData = new PieData(set);
                 pieChart.setData(pieData);
                 pieChart.invalidate(); // refresh
