@@ -464,8 +464,18 @@ public class Manage extends Fragment {
 
             }
             weekIndex = Integer.parseInt(currentWeek.getWeekNumber()) - 1;
-            headerTop.setText(String.format("Week of %s", weekArrayList.get(weekIndex).getFirstDayOfEveryWeek()));
-            headerBottom.setText(String.format("to %s", weekArrayList.get(weekIndex).getLastDayOfEveryWeek()));
+            String yearStart, monthStart, dayStart, yearEnd, monthEnd, dayEnd;
+
+            yearStart = weekArrayList.get(weekIndex).getFirstDayOfEveryWeek().substring(0, 4);
+            monthStart = weekArrayList.get(weekIndex).getFirstDayOfEveryWeek().substring(5, 7);
+            dayStart = weekArrayList.get(weekIndex).getFirstDayOfEveryWeek().substring(8, 10);
+
+            yearEnd = weekArrayList.get(weekIndex).getLastDayOfEveryWeek().substring(0, 4);
+            monthEnd = weekArrayList.get(weekIndex).getLastDayOfEveryWeek().substring(5, 7);
+            dayEnd = weekArrayList.get(weekIndex).getLastDayOfEveryWeek().substring(8, 10);
+
+            headerTop.setText(String.format("Week of %s-%s-%s", monthStart, dayStart, yearStart));
+            headerBottom.setText(String.format("to %s-%s-%s", monthEnd, dayEnd, yearEnd));
             updateManageData(currentWeek.getFirstDayOfEveryWeek(), currentWeek.getLastDayOfEveryWeek());
 
             weekPicker.setMinValue(0);
@@ -550,8 +560,18 @@ public class Manage extends Fragment {
                 } else {
 
                     weekIndex = weekPicker.getValue();
-                    headerTop.setText(String.format("Week of %s", weekArrayList.get(weekPicker.getValue()).getFirstDayOfEveryWeek()));
-                    headerBottom.setText(String.format("to %s", weekArrayList.get(weekPicker.getValue()).getLastDayOfEveryWeek()));
+                    String yearStart, monthStart, dayStart, yearEnd, monthEnd, dayEnd;
+
+                    yearStart = weekArrayList.get(weekIndex).getFirstDayOfEveryWeek().substring(0, 4);
+                    monthStart = weekArrayList.get(weekIndex).getFirstDayOfEveryWeek().substring(5, 7);
+                    dayStart = weekArrayList.get(weekIndex).getFirstDayOfEveryWeek().substring(8, 10);
+
+                    yearEnd = weekArrayList.get(weekIndex).getLastDayOfEveryWeek().substring(0, 4);
+                    monthEnd = weekArrayList.get(weekIndex).getLastDayOfEveryWeek().substring(5, 7);
+                    dayEnd = weekArrayList.get(weekIndex).getLastDayOfEveryWeek().substring(8, 10);
+
+                    headerTop.setText(String.format("Week of %s-%s-%s", monthStart, dayStart, yearStart));
+                    headerBottom.setText(String.format("to %s-%s-%s", monthEnd, dayEnd, yearEnd));
                     updateManageData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
 
                 }
@@ -579,8 +599,18 @@ public class Manage extends Fragment {
 
                         weekIndex--;
 
-                        headerTop.setText(String.format("Week of %s", weekArrayList.get(weekIndex).getFirstDayOfEveryWeek()));
-                        headerBottom.setText(String.format("to %s", weekArrayList.get(weekIndex).getLastDayOfEveryWeek()));
+                        String yearStart, monthStart, dayStart, yearEnd, monthEnd, dayEnd;
+
+                        yearStart = weekArrayList.get(weekIndex).getFirstDayOfEveryWeek().substring(0, 4);
+                        monthStart = weekArrayList.get(weekIndex).getFirstDayOfEveryWeek().substring(5, 7);
+                        dayStart = weekArrayList.get(weekIndex).getFirstDayOfEveryWeek().substring(8, 10);
+
+                        yearEnd = weekArrayList.get(weekIndex).getLastDayOfEveryWeek().substring(0, 4);
+                        monthEnd = weekArrayList.get(weekIndex).getLastDayOfEveryWeek().substring(5, 7);
+                        dayEnd = weekArrayList.get(weekIndex).getLastDayOfEveryWeek().substring(8, 10);
+
+                        headerTop.setText(String.format("Week of %s-%s-%s", monthStart, dayStart, yearStart));
+                        headerBottom.setText(String.format("to %s-%s-%s", monthEnd, dayEnd, yearEnd));
                         updateManageData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
 
                     }
@@ -610,8 +640,18 @@ public class Manage extends Fragment {
 
                         weekIndex++;
 
-                        headerTop.setText(String.format("Week of %s", weekArrayList.get(weekIndex).getFirstDayOfEveryWeek()));
-                        headerBottom.setText(String.format("to %s", weekArrayList.get(weekIndex).getLastDayOfEveryWeek()));
+                        String yearStart, monthStart, dayStart, yearEnd, monthEnd, dayEnd;
+
+                        yearStart = weekArrayList.get(weekIndex).getFirstDayOfEveryWeek().substring(0, 4);
+                        monthStart = weekArrayList.get(weekIndex).getFirstDayOfEveryWeek().substring(5, 7);
+                        dayStart = weekArrayList.get(weekIndex).getFirstDayOfEveryWeek().substring(8, 10);
+
+                        yearEnd = weekArrayList.get(weekIndex).getLastDayOfEveryWeek().substring(0, 4);
+                        monthEnd = weekArrayList.get(weekIndex).getLastDayOfEveryWeek().substring(5, 7);
+                        dayEnd = weekArrayList.get(weekIndex).getLastDayOfEveryWeek().substring(8, 10);
+
+                        headerTop.setText(String.format("Week of %s-%s-%s", monthStart, dayStart, yearStart));
+                        headerBottom.setText(String.format("to %s-%s-%s", monthEnd, dayEnd, yearEnd));
                         updateManageData(weekArrayList.get(weekIndex).getFirstDayOfEveryWeek(), weekArrayList.get(weekIndex).getLastDayOfEveryWeek());
 
                     }
