@@ -16,6 +16,8 @@ import com.budgetcatcher.www.budgetcatcher.Model.AddCategory;
 import com.budgetcatcher.www.budgetcatcher.Model.AddOutstandingCheckBody;
 import com.budgetcatcher.www.budgetcatcher.Model.Allowance;
 import com.budgetcatcher.www.budgetcatcher.Model.AllowanceResponse;
+import com.budgetcatcher.www.budgetcatcher.Model.BarChartData;
+import com.budgetcatcher.www.budgetcatcher.Model.BarChartResponseBody;
 import com.budgetcatcher.www.budgetcatcher.Model.Bill;
 import com.budgetcatcher.www.budgetcatcher.Model.BillResponse;
 import com.budgetcatcher.www.budgetcatcher.Model.CatcherResponse;
@@ -673,6 +675,40 @@ public class ApiManager {
 
     }
 
+    public void getBarChart(String userId, final QueryCallback<ArrayList<BarChartData>> callback) {
+
+        String uri = URL.base + URL.getBarGraph + userId;
+
+        Call<String> networkCall = apiInterface.getBarChart(uri);
+        networkCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
+
+                    Gson gson = new Gson();
+                    BarChartResponseBody barChartResponseBody = gson.fromJson(response.body(), BarChartResponseBody.class);
+
+                    callback.onSuccess((ArrayList<BarChartData>) barChartResponseBody.getBarDataList());
+
+                } else {
+
+                    callback.onFail();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                callback.onError(t);
+
+            }
+        });
+
+    }
+
     public void addCategory(AddCategory body, final QueryCallback<String> callback) {
 
         Call<String> networkCall = apiInterface.addCategory(headers, body);
@@ -772,8 +808,6 @@ public class ApiManager {
         networkCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-
-                Log.d(TAG, "onResponse: " + response.code());
 
                 if (response.code() == URL.STATUS_SERVER_RESPONSE_OK) {
 

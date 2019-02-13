@@ -31,6 +31,7 @@ public class URL {
     public static final String addCategory = "addCategory";
     public static final String profileSetup = "modifyUser/";
     public static final String getUserInfo = "getUserInfo/";
+    public static final String getBarGraph = "getBarGraph/";
     public static final String deleteBills = "deleteBills/";
     public static final String insertIncome = "insertIncome";
     public static final String deleteIncome = "deleteIncome/";

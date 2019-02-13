@@ -75,6 +75,9 @@ public interface ApiInterface {
     @GET
     Call<String> getUserInfo(@Url String url);
 
+    @GET
+    Call<String> getBarChart(@Url String url);
+
     @GET()
     Call<String> getCategory(@Url String url);
 

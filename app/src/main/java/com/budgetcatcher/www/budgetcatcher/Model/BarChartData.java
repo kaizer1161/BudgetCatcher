@@ -16,25 +16,25 @@ public class BarChartData {
     private Integer mUserId;
     @SerializedName("incomeBudget")
     @Expose
-    private Integer incomeBudget;
+    private Float incomeBudget;
     @SerializedName("incomeActual")
     @Expose
-    private Integer incomeActual;
+    private Float incomeActual;
     @SerializedName("allowanceBudget")
     @Expose
-    private Integer allowanceBudget;
+    private Float allowanceBudget;
     @SerializedName("allowanceActual")
     @Expose
-    private Integer allowanceActual;
+    private Float allowanceActual;
     @SerializedName("billsBudget")
     @Expose
-    private Integer billsBudget;
+    private Float billsBudget;
     @SerializedName("billsActual")
     @Expose
-    private Integer billsActual;
+    private Float billsActual;
     @SerializedName("incidentalTotal")
     @Expose
-    private Integer incidentalTotal;
+    private Float incidentalTotal;
 
     /**
      * No args constructor for use in serialization
@@ -54,7 +54,7 @@ public class BarChartData {
      * @param allowanceBudget
      * @param mUserId
      */
-    public BarChartData(Integer years, Integer months, Integer mUserId, Integer incomeBudget, Integer incomeActual, Integer allowanceBudget, Integer allowanceActual, Integer billsBudget, Integer billsActual, Integer incidentalTotal) {
+    public BarChartData(Integer years, Integer months, Integer mUserId, Float incomeBudget, Float incomeActual, Float allowanceBudget, Float allowanceActual, Float billsBudget, Float billsActual, Float incidentalTotal) {
         super();
         this.years = years;
         this.months = months;
@@ -92,59 +92,59 @@ public class BarChartData {
         this.mUserId = mUserId;
     }
 
-    public Integer getIncomeBudget() {
+    public Float getIncomeBudget() {
         return incomeBudget;
     }
 
-    public void setIncomeBudget(Integer incomeBudget) {
+    public void setIncomeBudget(Float incomeBudget) {
         this.incomeBudget = incomeBudget;
     }
 
-    public Integer getIncomeActual() {
+    public Float getIncomeActual() {
         return incomeActual;
     }
 
-    public void setIncomeActual(Integer incomeActual) {
+    public void setIncomeActual(Float incomeActual) {
         this.incomeActual = incomeActual;
     }
 
-    public Integer getAllowanceBudget() {
+    public Float getAllowanceBudget() {
         return allowanceBudget;
     }
 
-    public void setAllowanceBudget(Integer allowanceBudget) {
+    public void setAllowanceBudget(Float allowanceBudget) {
         this.allowanceBudget = allowanceBudget;
     }
 
-    public Integer getAllowanceActual() {
+    public Float getAllowanceActual() {
         return allowanceActual;
     }
 
-    public void setAllowanceActual(Integer allowanceActual) {
+    public void setAllowanceActual(Float allowanceActual) {
         this.allowanceActual = allowanceActual;
     }
 
-    public Integer getBillsBudget() {
+    public Float getBillsBudget() {
         return billsBudget;
     }
 
-    public void setBillsBudget(Integer billsBudget) {
+    public void setBillsBudget(Float billsBudget) {
         this.billsBudget = billsBudget;
     }
 
-    public Integer getBillsActual() {
+    public Float getBillsActual() {
         return billsActual;
     }
 
-    public void setBillsActual(Integer billsActual) {
+    public void setBillsActual(Float billsActual) {
         this.billsActual = billsActual;
     }
 
-    public Integer getIncidentalTotal() {
+    public Float getIncidentalTotal() {
         return incidentalTotal;
     }
 
-    public void setIncidentalTotal(Integer incidentalTotal) {
+    public void setIncidentalTotal(Float incidentalTotal) {
         this.incidentalTotal = incidentalTotal;
     }
 
