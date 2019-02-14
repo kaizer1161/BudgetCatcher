@@ -37,6 +37,11 @@
             android:title="Pay your bills" />
 
         <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_help"
+            android:title="Help" />
+
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_action_logout"
             android:title="Logout" />

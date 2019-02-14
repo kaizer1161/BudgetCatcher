@@ -42,5 +42,6 @@
     <string name="ok">Ok</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="video">Video</string>
 
 </resources>

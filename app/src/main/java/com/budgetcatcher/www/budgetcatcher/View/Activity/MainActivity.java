@@ -24,6 +24,7 @@ import com.budgetcatcher.www.budgetcatcher.Config;
 import com.budgetcatcher.www.budgetcatcher.Network.NetworkChangeReceiver;
 import com.budgetcatcher.www.budgetcatcher.R;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Advice;
+import com.budgetcatcher.www.budgetcatcher.View.Fragment.Help;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Home;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Manage;
 import com.budgetcatcher.www.budgetcatcher.View.Fragment.Report;
@@ -205,6 +206,16 @@ public class MainActivity extends AppCompatActivity
                     .commit();
 
             navigationView.setCheckedItem(R.id.nav_settings);
+
+        } else if (id == R.id.nav_help) {
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content, new Help())
+                    .addToBackStack(null)
+                    .commit();
+
+            navigationView.setCheckedItem(R.id.nav_help);
 
         } else if (id == R.id.nav_yodlee) {
 

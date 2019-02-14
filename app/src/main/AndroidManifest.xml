@@ -45,6 +45,13 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
+            android:name="com.budgetcatcher.www.budgetcatcher.View.Activity.VideoActivity"
+            android:label="@string/video"
+            android:parentActivityName=".View.Activity.MainActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.fullScreen"></activity>
+
+        <activity
             android:name="com.budgetcatcher.www.budgetcatcher.Yodlee.YodleeActivity"
             android:label="@string/yodlee"
             android:parentActivityName=".View.Activity.MainActivity"

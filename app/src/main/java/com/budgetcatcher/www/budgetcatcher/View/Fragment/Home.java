@@ -2,7 +2,9 @@ package com.budgetcatcher.www.budgetcatcher.View.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -295,7 +297,7 @@ public class Home extends Fragment {
 
     }
 
-    @OnClick({R.id.projected_balance, R.id.done_bottom_sheet, R.id.add_to_saving, R.id.reduce_debts, R.id.left_arrow, R.id.right_arrow, R.id.date_display, R.id.save_to_adjust, R.id.outstanding_balance})
+    @OnClick({R.id.projected_balance, R.id.done_bottom_sheet, R.id.add_to_saving, R.id.reduce_debts, R.id.left_arrow, R.id.right_arrow, R.id.date_display, R.id.save_to_adjust, R.id.outstanding_balance, R.id.video})
     public void onClick(View view) {
 
         switch (view.getId()) {
@@ -306,6 +308,17 @@ public class Home extends Fragment {
                     ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
                 isProjectedBalanceSelected = false;
+
+                break;
+            }
+
+            case R.id.video: {
+
+                /*startActivity(new Intent(getActivity(), VideoActivity.class));*/
+
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse("http://biniyogbondhu.com/storage/videos/reconciliation.mp4"), "video/*");
+                startActivity(intent);
 
                 break;
             }
