@@ -1001,15 +1001,28 @@ public class Home extends Fragment {
                 income.setText("$ " + decimalFormat.format(Float.parseFloat(home.getIncome())));
                 expenses.setText("($ " + decimalFormat.format(Float.parseFloat(home.getExpense())) + ")");
                 deficit.setText("$ " + decimalFormat.format(Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense())));
-                endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getStartingBalance()) + (Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense()))));
+                endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getStartingBalance()) + (Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense()) - (Float.parseFloat(home.getSavings() + Float.parseFloat(home.getDebts()))))));
 
-                reduceDebts.getText().clear();
-                addToSavings.getText().clear();
-                addToCash.getText().clear();
+                reduceDebts.setText(home.getDebts());
+                addToSavings.setText(home.getSavings());
+                addToCash.setText(decimalFormat.format(Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense()) - (Float.parseFloat(home.getSavings()) + Float.parseFloat(home.getDebts()))));
 
-                reduceDebts.setHint("Enter amount");
-                addToSavings.setHint("Enter amount");
-                addToCash.setText("0");
+                if (home.getDebts().equals("0")) {
+                    reduceDebts.getText().clear();
+                    reduceDebts.setHint("Enter amount");
+                }
+
+                if (home.getSavings().equals("0")) {
+                    addToSavings.getText().clear();
+                    addToSavings.setHint("Enter amount");
+                }
+
+                if (home.getSavings().equals("0") && home.getDebts().equals("0")) {
+
+                    addToCash.getText().clear();
+                    addToCash.setText("0");
+
+                }
 
             }
 
@@ -1069,15 +1082,28 @@ public class Home extends Fragment {
                 income.setText("$ " + decimalFormat.format(Float.parseFloat(home.getIncome())));
                 expenses.setText("($ " + decimalFormat.format(Float.parseFloat(home.getExpense())) + ")");
                 deficit.setText("$ " + decimalFormat.format(Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense())));
-                endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getStartingBalance()) + (Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense()))));
+                endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getStartingBalance()) + (Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense()) - (Float.parseFloat(home.getSavings()) + Float.parseFloat(home.getDebts())))));
 
-                reduceDebts.getText().clear();
-                addToSavings.getText().clear();
-                addToCash.getText().clear();
+                reduceDebts.setText(home.getDebts());
+                addToSavings.setText(home.getSavings());
+                addToCash.setText(decimalFormat.format(Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense()) - (Float.parseFloat(home.getSavings() + Float.parseFloat(home.getDebts())))));
 
-                reduceDebts.setHint("Enter amount");
-                addToSavings.setHint("Enter amount");
-                addToCash.setText("0");
+                if (home.getDebts().equals("0")) {
+                    reduceDebts.getText().clear();
+                    reduceDebts.setHint("Enter amount");
+                }
+
+                if (home.getSavings().equals("0")) {
+                    addToSavings.getText().clear();
+                    addToSavings.setHint("Enter amount");
+                }
+
+                if (home.getSavings().equals("0") && home.getDebts().equals("0")) {
+
+                    addToCash.getText().clear();
+                    addToCash.setText("0");
+
+                }
                 /*endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getStartingBalance())));*/
 
                 if (forMonth) {

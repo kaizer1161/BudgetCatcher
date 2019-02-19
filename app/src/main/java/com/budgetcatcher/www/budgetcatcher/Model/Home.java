@@ -17,6 +17,12 @@ public class Home {
     @SerializedName("endingBalance")
     @Expose
     private String endingBalance;
+    @SerializedName("savings")
+    @Expose
+    private String savings;
+    @SerializedName("debts")
+    @Expose
+    private String debts;
 
     /**
      * No args constructor for use in serialization
@@ -31,12 +37,14 @@ public class Home {
      * @param startingBalance
      * @param endingBalance
      */
-    public Home(String startingBalance, String endingBalance, String income, String expense) {
+    public Home(String startingBalance, String endingBalance, String income, String expense, String savings, String debts) {
         super();
         this.startingBalance = startingBalance;
         this.endingBalance = endingBalance;
         this.income = income;
         this.expense = expense;
+        this.savings = savings;
+        this.debts = debts;
     }
 
     public String getStartingBalance() {
@@ -71,4 +79,19 @@ public class Home {
         this.expense = expense;
     }
 
+    public String getSavings() {
+        return savings;
+    }
+
+    public void setSavings(String savings) {
+        this.savings = savings;
+    }
+
+    public String getDebts() {
+        return debts;
+    }
+
+    public void setDebts(String debts) {
+        this.debts = debts;
+    }
 }
