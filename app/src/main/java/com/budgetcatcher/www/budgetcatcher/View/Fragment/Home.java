@@ -403,7 +403,7 @@ public class Home extends Fragment {
             case R.id.save_to_adjust: {
 
 
-                ModifyHomeBody modifyHomeBody = new ModifyHomeBody(endingBalance.getText().toString().replace("$ ", ""), Float.toString(savingsAmount), Float.toString(reduceDebtsAmount));
+                ModifyHomeBody modifyHomeBody = new ModifyHomeBody(endingBalance.getText().toString().replace("$ ", "").replace(",",""), Float.toString(savingsAmount), Float.toString(reduceDebtsAmount));
 
                 if (isMonthSelected) {
 
@@ -569,7 +569,7 @@ public class Home extends Fragment {
                     } else {
 
                         totalOS.setText("$0");
-                        bankBalance.setText(String.format("$%s", Float.parseFloat(startCashBalance.getText().toString().replace("$ ", ""))));
+                        bankBalance.setText(String.format("$%s", Float.parseFloat(startCashBalance.getText().toString().replace("$ ", "").replace(",",""))));
 
                     }
 

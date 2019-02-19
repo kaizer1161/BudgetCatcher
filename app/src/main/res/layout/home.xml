@@ -78,6 +78,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"
+                                    android:gravity="center"
                                     android:padding="@dimen/gap_of_4dp"
                                     android:text="Doesn't match \n the bank?"
                                     android:textColor="@color/black" />
@@ -120,7 +121,7 @@
                                         android:id="@+id/income"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                                         android:textColor="@color/black"
                                         android:textStyle="bold" />
 
@@ -146,7 +147,7 @@
                                         android:id="@+id/expenses"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                                         android:textColor="@color/black"
                                         android:textStyle="bold" />
 
@@ -157,7 +158,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingTop="@dimen/gap_of_8dp"
+                                android:paddingTop="@dimen/gap_of_4dp"
                                 android:text="Cash Excess/ Deficit "
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                                 android:textColor="@color/black"
@@ -304,12 +305,15 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:paddingBottom="@dimen/gap_of_2dp"
+                                android:layout_marginTop="@dimen/gap_of_8dp">
 
                                 <Button
                                     android:id="@+id/projected_balance"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="@dimen/gap_of_32dp"
+                                    android:layout_weight="1"
                                     android:layout_marginRight="@dimen/gap_of_16dp"
                                     android:background="@color/hinoki"
                                     android:padding="@dimen/gap_of_4dp"
@@ -319,8 +323,9 @@
 
                                 <Button
                                     android:id="@+id/save_to_adjust"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="@dimen/gap_of_32dp"
+                                    android:layout_weight="1"
                                     android:background="@color/hinoki"
                                     android:padding="@dimen/gap_of_4dp"
                                     android:text="Save To Adjust"
