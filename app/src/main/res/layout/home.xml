@@ -85,10 +85,10 @@
                             </RelativeLayout>
 
                             <TextView
-                                android:padding="@dimen/gap_of_4dp"
                                 android:id="@+id/outstanding_balance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:padding="@dimen/gap_of_4dp"
                                 android:text="See outstanding checks"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                                 android:textColor="@color/black"
@@ -265,10 +265,10 @@
                                     android:layout_margin="@dimen/gap_of_8dp"
                                     android:layout_weight="50"
                                     android:background="@drawable/white_button_background"
-                                    android:gravity="center"
-                                    android:text="0"
                                     android:enabled="false"
+                                    android:gravity="center"
                                     android:padding="@dimen/gap_of_8dp"
+                                    android:text="0"
                                     android:textColor="@color/black"
                                     android:textStyle="bold" />
 
@@ -300,25 +300,34 @@
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/projected_balance"
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="See projected balances"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                                android:padding="@dimen/gap_of_8dp"
-                                android:textColor="@color/black"
-                                android:textStyle="bold" />
+                                android:gravity="center"
+                                android:orientation="horizontal">
 
-                            <Button
-                                android:id="@+id/save_to_adjust"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/gap_of_32dp"
-                                android:background="@color/hinoki"
-                                android:padding="@dimen/gap_of_4dp"
-                                android:text="Save To Adjust"
-                                android:textAllCaps="false"
-                                android:textColor="@color/black" />
+                                <Button
+                                    android:id="@+id/projected_balance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/gap_of_32dp"
+                                    android:layout_marginRight="@dimen/gap_of_16dp"
+                                    android:background="@color/hinoki"
+                                    android:padding="@dimen/gap_of_4dp"
+                                    android:text="See projected balances"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/black" />
+
+                                <Button
+                                    android:id="@+id/save_to_adjust"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/gap_of_32dp"
+                                    android:background="@color/hinoki"
+                                    android:padding="@dimen/gap_of_4dp"
+                                    android:text="Save To Adjust"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/black" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 

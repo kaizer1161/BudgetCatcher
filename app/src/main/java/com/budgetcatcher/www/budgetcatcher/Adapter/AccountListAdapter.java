@@ -36,8 +36,10 @@ import com.budgetcatcher.www.budgetcatcher.View.Fragment.Manage;
 import com.google.gson.Gson;
 
 import java.net.SocketTimeoutException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -140,6 +142,8 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
         AccountItem accountItem = accountItemArrayList.get(position);
 
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+
         String temp = accountItem.getCol3();
         /*Log.i("temp", temp);*/
         temp = temp.replace("$", "");
@@ -157,13 +161,13 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         if (fragmentTag.equals(Config.TAG_LIST_SPENDING_ALLOWANCE) || fragmentTag.equals(Config.TAG_LIST_OUTSTANDING_CHECKS)) {
 
             holder.col1.setText(accountItem.getCol1());
-            holder.col3.setText("$" + valStr);
+            holder.col3.setText("$" + numberFormat.format(Float.parseFloat(valStr)));
 
         } else {
 
             holder.col1.setText(accountItem.getCol1());
             holder.col2.setText(accountItem.getCol2());
-            holder.col3.setText("$" + valStr);
+            holder.col3.setText("$" + numberFormat.format(Float.parseFloat(valStr)));
 
         }
 

@@ -48,7 +48,9 @@ import com.google.gson.Gson;
 
 import java.net.SocketTimeoutException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -103,6 +105,7 @@ public class Home extends Fragment {
     private String[] weekDate, monthDate;
     private float reduceDebtsAmount = 0, savingsAmount = 0;
     private AlertDialog OCAlert;
+    private NumberFormat numberFormat;
 
     @Nullable
     @Override
@@ -125,6 +128,9 @@ public class Home extends Fragment {
 
             ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior = BottomSheetBehavior.from(projectedBalanceLayoutBottomSheet);
             ((MainActivity) getActivity()).projectedBalanceBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+            numberFormat = NumberFormat.getNumberInstance(Locale.US);
+
 
         } else {
 
@@ -198,9 +204,8 @@ public class Home extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                float savingsAmount = 0;
-                float reduceDebtsAmount = 0;
-                float deficitAmount = Float.parseFloat(deficit.getText().toString().replace("$ ", ""));
+
+                float deficitAmount = Float.parseFloat(deficit.getText().toString().replace("$ ", "").replace(",", ""));
 
                 if (s.toString().equals(".")) {
 
@@ -214,17 +219,17 @@ public class Home extends Fragment {
                     if (s.toString().isEmpty()) {
                         savingsAmount = 0;
                     } else {
-                        savingsAmount = Float.parseFloat(addToSavings.getText().toString());
+                        savingsAmount = Float.parseFloat(addToSavings.getText().toString().replace(",", ""));
                     }
                     if (reduceDebts.getText().toString().isEmpty()) {
                         reduceDebtsAmount = 0;
                     } else {
-                        reduceDebtsAmount = Float.parseFloat(reduceDebts.getText().toString());
+                        reduceDebtsAmount = Float.parseFloat(reduceDebts.getText().toString().replace(",", ""));
                     }
-                    Float sum = deficitAmount - savingsAmount - reduceDebtsAmount;
+                    Float sum = deficitAmount - (savingsAmount + reduceDebtsAmount);
                     addToCash.setText(String.valueOf(sum));
-                    float temp = sum + Float.parseFloat(startCashBalance.getText().toString().replace("$ ", ""));
-                    endingBalance.setText(Float.toString(temp));
+                    float temp = sum + Float.parseFloat(startCashBalance.getText().toString().replace("$ ", "").replace(",", ""));
+                    endingBalance.setText("$ " + numberFormat.format(temp));
 
                 }
 
@@ -246,8 +251,7 @@ public class Home extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String valStr = reduceDebts.getText().toString();
-                float deficitAmount = Float.parseFloat(deficit.getText().toString().replace("$ ", ""));
+                float deficitAmount = Float.parseFloat(deficit.getText().toString().replace("$ ", "").replace(",", ""));
 
                 if (s.toString().equals(".")) {
 
@@ -268,10 +272,10 @@ public class Home extends Fragment {
                     } else {
                         savingsAmount = Float.parseFloat(addToSavings.getText().toString());
                     }
-                    Float sum = deficitAmount - savingsAmount - reduceDebtsAmount;
+                    Float sum = deficitAmount - (savingsAmount + reduceDebtsAmount);
                     addToCash.setText(String.valueOf(sum));
                     float temp = sum + Float.parseFloat(startCashBalance.getText().toString().replace("$ ", ""));
-                    endingBalance.setText(Float.toString(temp));
+                    endingBalance.setText("$ " + numberFormat.format(temp));
 
                 }
 
@@ -548,10 +552,10 @@ public class Home extends Fragment {
                         String valStr = String.format("%.2f", val);
 
                         Float val1 = Float.parseFloat(startCashBalance.getText().toString().replace("$ ", "")) - Float.parseFloat(data.getTotal());
-                        String valStr1 = String.format("%.2f", val);
+                        String valStr1 = String.format("%.2f", val1);
 
-                        totalOS.setText("$" + valStr);
-                        bankBalance.setText(String.format("$%s", valStr1));
+                        totalOS.setText("$ " + numberFormat.format(Float.parseFloat(valStr)));
+                        bankBalance.setText(String.format("$ %s", numberFormat.format(Float.parseFloat(valStr1))));
 
                         for (int i = 0; i < data.getOutstandingChecks().size(); i++) {
 
@@ -997,7 +1001,15 @@ public class Home extends Fragment {
                 income.setText("$ " + decimalFormat.format(Float.parseFloat(home.getIncome())));
                 expenses.setText("($ " + decimalFormat.format(Float.parseFloat(home.getExpense())) + ")");
                 deficit.setText("$ " + decimalFormat.format(Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense())));
-                endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getEndingBalance())));
+                endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getStartingBalance()) + (Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense()))));
+
+                reduceDebts.getText().clear();
+                addToSavings.getText().clear();
+                addToCash.getText().clear();
+
+                reduceDebts.setHint("Enter amount");
+                addToSavings.setHint("Enter amount");
+                addToCash.setText("0");
 
             }
 
@@ -1057,7 +1069,15 @@ public class Home extends Fragment {
                 income.setText("$ " + decimalFormat.format(Float.parseFloat(home.getIncome())));
                 expenses.setText("($ " + decimalFormat.format(Float.parseFloat(home.getExpense())) + ")");
                 deficit.setText("$ " + decimalFormat.format(Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense())));
-                endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getEndingBalance())));
+                endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getStartingBalance()) + (Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense()))));
+
+                reduceDebts.getText().clear();
+                addToSavings.getText().clear();
+                addToCash.getText().clear();
+
+                reduceDebts.setHint("Enter amount");
+                addToSavings.setHint("Enter amount");
+                addToCash.setText("0");
                 /*endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getStartingBalance())));*/
 
                 if (forMonth) {

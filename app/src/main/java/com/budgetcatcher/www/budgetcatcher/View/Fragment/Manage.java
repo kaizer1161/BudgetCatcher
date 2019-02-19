@@ -495,7 +495,7 @@ public class Manage extends Fragment {
 
                 if (hasAtleastOneAllowance && hasAtleastOneBill && hasAtleastOneIncome) {
 
-                    initialText("Set Initial Budget", "You are going to set your current Incomes. Bills and Allowance as your initial Budget. This initial Budget Can't be changed. Do you want to proceed?", true);
+                    initialText("Set Initial Budget", "You are going to set your current Incomes, Bills and Allowance as your initial Budget. This initial Budget Can't be changed. Do you want to proceed?", true);
 
                 } else {
 
