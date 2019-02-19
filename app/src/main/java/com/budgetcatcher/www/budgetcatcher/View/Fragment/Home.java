@@ -1086,7 +1086,7 @@ public class Home extends Fragment {
 
                 reduceDebts.setText(home.getDebts());
                 addToSavings.setText(home.getSavings());
-                addToCash.setText(decimalFormat.format(Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense()) - (Float.parseFloat(home.getSavings() + Float.parseFloat(home.getDebts())))));
+                addToCash.setText(decimalFormat.format(Float.parseFloat(home.getIncome()) - Float.parseFloat(home.getExpense()) - (Float.parseFloat(home.getSavings()) + Float.parseFloat(home.getDebts()))));
 
                 if (home.getDebts().equals("0")) {
                     reduceDebts.getText().clear();
