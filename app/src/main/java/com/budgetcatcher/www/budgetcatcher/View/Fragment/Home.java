@@ -274,11 +274,11 @@ public class Home extends Fragment {
                     }
                     Float sum = deficitAmount - (savingsAmount + reduceDebtsAmount);
                     addToCash.setText(String.valueOf(sum));
-                    float temp = sum + Float.parseFloat(startCashBalance.getText().toString().replace("$ ", ""));
+                    Log.i("startingCash", startCashBalance.getText().toString());
+                    String tempStr = startCashBalance.getText().toString().replace("$ ", "").replace(",", "");
+                    float temp = sum + Float.parseFloat(tempStr);
                     endingBalance.setText("$ " + numberFormat.format(temp));
-
                 }
-
             }
         });
         return rootView;
