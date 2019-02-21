@@ -23,6 +23,9 @@ public class ModifyBillBody {
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("tag")
+    @Expose
+    private String tag;
 
     /**
      * No args constructor for use in serialization
@@ -38,7 +41,7 @@ public class ModifyBillBody {
      * @param categoryId
      * @param dueDate
      */
-    public ModifyBillBody(String categoryId, String billName, String amount, String description, String dueDate, String status) {
+    public ModifyBillBody(String categoryId, String billName, String amount, String description, String dueDate, String status, String tag) {
         super();
         this.categoryId = categoryId;
         this.billName = billName;
@@ -46,6 +49,7 @@ public class ModifyBillBody {
         this.description = description;
         this.dueDate = dueDate;
         this.status = status;
+        this.tag = tag;
     }
 
     public String getCategoryId() {
@@ -96,4 +100,11 @@ public class ModifyBillBody {
         this.status = status;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 }

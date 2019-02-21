@@ -195,9 +195,22 @@ public class Manage extends Fragment {
                 Gson gson = new Gson();
                 BudgetStatusResponseBody budgetStatusResponseBody = gson.fromJson(data, BudgetStatusResponseBody.class);
 
+                if (getActivity() != null) {
+
+                    sharedPreferences = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE);
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putInt(Config.SP_USER_INITIAL_SET, budgetStatusResponseBody.getData().get(0).getBudgetStatus());
+
+                    editor.apply();
+
+                }
+
                 if (budgetStatusResponseBody.getData().get(0).getBudgetStatus() == 0) {
 
                     initialBudgetLayout.setVisibility(View.VISIBLE);
+
 
                 } else {
 

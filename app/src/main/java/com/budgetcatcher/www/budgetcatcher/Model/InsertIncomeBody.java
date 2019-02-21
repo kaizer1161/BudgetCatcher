@@ -23,6 +23,9 @@ public class InsertIncomeBody {
     @SerializedName("provider")
     @Expose
     private String provider;
+    @SerializedName("tag")
+    @Expose
+    private String tag;
 
     /**
      * No args constructor for use in serialization
@@ -37,8 +40,9 @@ public class InsertIncomeBody {
      * @param provider
      * @param frequency
      * @param nextPayDay
+     * @param tag
      */
-    public InsertIncomeBody(String userId, String frequency, String amount, String nextPayDay, String source, String provider) {
+    public InsertIncomeBody(String userId, String frequency, String amount, String nextPayDay, String source, String provider, String tag) {
         super();
         this.userId = userId;
         this.frequency = frequency;
@@ -46,6 +50,7 @@ public class InsertIncomeBody {
         this.nextPayDay = nextPayDay;
         this.source = source;
         this.provider = provider;
+        this.tag = tag;
     }
 
     public String getUserId() {
@@ -96,4 +101,11 @@ public class InsertIncomeBody {
         this.provider = provider;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 }

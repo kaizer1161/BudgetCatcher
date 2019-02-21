@@ -13,6 +13,7 @@ public class Config {
     public static final String SP_MONTH_INFO = "SP_MONTH_INFO";
     public static final String SP_PROFILE_PIC = "SP_PROFILE_PIC";
     public static final String SP_USER_CREATED_LEVEL = "USER_CREATED";
+    public static final String SP_USER_INITIAL_SET = "SP_USER_INITIAL_SET";
     public static final String SP_CURRENT_WEEK_INFO = "SP_CURRENT_WEEK_INFO";
     public static final String SP_CURRENT_MONTH_INFO = "SP_CURRENT_MONTH_INFO";
     public static final int SP_USER_CREATED_LEVEL_SIGN_UP = 100;

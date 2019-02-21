@@ -284,7 +284,17 @@ public class AddBill extends Fragment {
 
             dialog.show();
 
-            InsertBillBody insertBillBody = new InsertBillBody(userID, categoryListId.get(categorySpinner.getSelectedItemPosition()), amount.getText().toString(), description.getText().toString(), date, "null", /*status.get(statusSpinner.getSelectedItemPosition())*/ "null", billName.getText().toString());
+            InsertBillBody insertBillBody;
+
+            if (getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getInt(Config.SP_USER_INITIAL_SET, 0) == 0) {
+
+                insertBillBody = new InsertBillBody(userID, categoryListId.get(categorySpinner.getSelectedItemPosition()), amount.getText().toString(), description.getText().toString(), date, "null", /*status.get(statusSpinner.getSelectedItemPosition())*/ "null", billName.getText().toString(), null);
+
+            } else {
+
+                insertBillBody = new InsertBillBody(userID, categoryListId.get(categorySpinner.getSelectedItemPosition()), amount.getText().toString(), description.getText().toString(), date, "null", /*status.get(statusSpinner.getSelectedItemPosition())*/ "null", billName.getText().toString(), "extra");
+
+            }
 
             BudgetCatcher.apiManager.insertBill(insertBillBody, new QueryCallback<String>() {
                 @Override

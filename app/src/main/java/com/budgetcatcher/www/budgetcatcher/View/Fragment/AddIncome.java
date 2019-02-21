@@ -182,7 +182,17 @@ public class AddIncome extends Fragment {
 
             dialog.show();
 
-            InsertIncomeBody insertIncomeBody = new InsertIncomeBody(userID, payFrequencyList.get(payFrequencySpinner.getSelectedItemPosition()), netPay.getText().toString(), date, "null", "null");
+            InsertIncomeBody insertIncomeBody;
+
+            if (getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getInt(Config.SP_USER_INITIAL_SET, 0) == 0) {
+
+                insertIncomeBody = new InsertIncomeBody(userID, payFrequencyList.get(payFrequencySpinner.getSelectedItemPosition()), netPay.getText().toString(), date, "null", "null", null);
+
+            } else {
+
+                insertIncomeBody = new InsertIncomeBody(userID, payFrequencyList.get(payFrequencySpinner.getSelectedItemPosition()), netPay.getText().toString(), date, "null", "null", "extra");
+
+            }
 
             BudgetCatcher.apiManager.insertIncome(insertIncomeBody, new QueryCallback<String>() {
                 @Override

@@ -289,7 +289,17 @@ public class EditAllowance extends Fragment {
             dialog.show();
             String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-            ModifyAllowanceBody modifyAllowanceBody = new ModifyAllowanceBody(categoryListId.get(categorySpinner.getSelectedItemPosition()), amount.getText().toString(), description.getText().toString(), allowanceName.getText().toString());
+            ModifyAllowanceBody modifyAllowanceBody;
+
+            if (getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getInt(Config.SP_USER_INITIAL_SET, 0) == 0) {
+
+                modifyAllowanceBody = new ModifyAllowanceBody(categoryListId.get(categorySpinner.getSelectedItemPosition()), amount.getText().toString(), description.getText().toString(), allowanceName.getText().toString(), null);
+
+            } else {
+
+                modifyAllowanceBody = new ModifyAllowanceBody(categoryListId.get(categorySpinner.getSelectedItemPosition()), amount.getText().toString(), description.getText().toString(), allowanceName.getText().toString(), "extra");
+
+            }
 
             BudgetCatcher.apiManager.modifyAllowance(userID, allowance.getAllowanceId(), modifyAllowanceBody, new QueryCallback<String>() {
                 @Override

@@ -321,7 +321,17 @@ public class EditBill extends Fragment {
             dialog.show();
             String userID = getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getString(Config.SP_USER_ID, "");
 
-            ModifyBillBody modifyBillBody = new ModifyBillBody(categoryListId.get(categorySpinner.getSelectedItemPosition()), billName.getText().toString(), amount.getText().toString(), description.getText().toString(), date, "null" /*status.get(statusSpinner.getSelectedItemPosition())*/);
+            ModifyBillBody modifyBillBody;
+
+            if (getActivity().getSharedPreferences(Config.SP_APP_NAME, MODE_PRIVATE).getInt(Config.SP_USER_INITIAL_SET, 0) == 0) {
+
+                modifyBillBody = new ModifyBillBody(categoryListId.get(categorySpinner.getSelectedItemPosition()), billName.getText().toString(), amount.getText().toString(), description.getText().toString(), date, "null", null /*status.get(statusSpinner.getSelectedItemPosition())*/);
+
+            } else {
+
+                modifyBillBody = new ModifyBillBody(categoryListId.get(categorySpinner.getSelectedItemPosition()), billName.getText().toString(), amount.getText().toString(), description.getText().toString(), date, "null", "extra" /*status.get(statusSpinner.getSelectedItemPosition())*/);
+
+            }
 
             BudgetCatcher.apiManager.modifyBill(userID, bill.getBillId(), modifyBillBody, new QueryCallback<String>() {
                 @Override

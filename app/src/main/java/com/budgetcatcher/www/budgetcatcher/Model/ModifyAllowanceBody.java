@@ -17,6 +17,9 @@ public class ModifyAllowanceBody {
     @SerializedName("allowanceName")
     @Expose
     private String allowanceName;
+    @SerializedName("tag")
+    @Expose
+    private String tag;
 
     /**
      * No args constructor for use in serialization
@@ -29,13 +32,15 @@ public class ModifyAllowanceBody {
      * @param categoryId
      * @param allowanceAmount
      * @param allowanceName
+     * @param tag
      */
-    public ModifyAllowanceBody(String categoryId, String allowanceAmount, String description, String allowanceName) {
+    public ModifyAllowanceBody(String categoryId, String allowanceAmount, String description, String allowanceName, String tag) {
         super();
         this.categoryId = categoryId;
         this.allowanceAmount = allowanceAmount;
         this.description = description;
         this.allowanceName = allowanceName;
+        this.tag = tag;
     }
 
     public String getCategoryId() {
@@ -70,4 +75,11 @@ public class ModifyAllowanceBody {
         this.allowanceName = allowanceName;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 }

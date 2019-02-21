@@ -14,6 +14,9 @@ public class ModifyIncomeBody {
     @SerializedName("nextPayDay")
     @Expose
     private String nextPayDay;
+    @SerializedName("tag")
+    @Expose
+    private String tag;
     /*@SerializedName("source")
     @Expose
     private String source;
@@ -33,12 +36,14 @@ public class ModifyIncomeBody {
      * @param provider
      * @param frequency
      * @param nextPayDay
+     * @param tag
      */
-    public ModifyIncomeBody(String amount, String frequency, String nextPayDay, String source, String provider) {
+    public ModifyIncomeBody(String amount, String frequency, String nextPayDay, String source, String provider, String tag) {
         super();
         this.amount = amount;
         this.frequency = frequency;
         this.nextPayDay = nextPayDay;
+        this.tag = tag;
         /*this.source = source;
         this.provider = provider;*/
     }
@@ -65,6 +70,14 @@ public class ModifyIncomeBody {
 
     public void setNextPayDay(String nextPayDay) {
         this.nextPayDay = nextPayDay;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     /*public String getSource() {

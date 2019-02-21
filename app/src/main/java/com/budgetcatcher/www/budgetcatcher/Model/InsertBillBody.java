@@ -29,6 +29,9 @@ public class InsertBillBody {
     @SerializedName("billName")
     @Expose
     private String billName;
+    @SerializedName("tag")
+    @Expose
+    private String tag;
 
     /**
      * @param amount
@@ -39,8 +42,9 @@ public class InsertBillBody {
      * @param userId
      * @param notes
      * @param dueDate
+     * @param tag
      */
-    public InsertBillBody(String userId, String categoryId, String amount, String description, String dueDate, String notes, String status, String billName) {
+    public InsertBillBody(String userId, String categoryId, String amount, String description, String dueDate, String notes, String status, String billName, String tag) {
         super();
         this.userId = userId;
         this.categoryId = categoryId;
@@ -50,6 +54,7 @@ public class InsertBillBody {
         this.notes = notes;
         this.status = status;
         this.billName = billName;
+        this.tag = tag;
     }
 
     public String getUserId() {
@@ -116,4 +121,11 @@ public class InsertBillBody {
         this.billName = billName;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 }
