@@ -171,7 +171,7 @@ public class ProfileSetup extends AppCompatActivity {
         skillLevel.add("1 - Not good at numbers!");
         skillLevel.add("2 - I can count to 10!");
         skillLevel.add("3 - I'm as good as the next person");
-        skillLevel.add("4 - I aced collage math");
+        skillLevel.add("4 - I aced college math");
         skillLevel.add("5 - Professional");
 
     }
