@@ -402,6 +402,13 @@ public class Home extends Fragment {
 
             case R.id.save_to_adjust: {
 
+                if (savingsAmount == 0 && reduceDebtsAmount == 0) {
+
+                    Toast.makeText(getActivity(), "Both 'Add to saving' and 'Reduce debts' cannot be zero", Toast.LENGTH_SHORT).show();
+
+                    break;
+
+                }
 
                 ModifyHomeBody modifyHomeBody = new ModifyHomeBody(endingBalance.getText().toString().replace("$ ", "").replace(",",""), Float.toString(savingsAmount), Float.toString(reduceDebtsAmount));
 
@@ -1017,12 +1024,12 @@ public class Home extends Fragment {
                     addToSavings.setHint("Enter amount");
                 }
 
-                if (home.getSavings().equals("0") && home.getDebts().equals("0")) {
+                /*if (home.getSavings().equals("0") && home.getDebts().equals("0")) {
 
                     addToCash.getText().clear();
                     addToCash.setText("0");
 
-                }
+                }*/
 
             }
 
@@ -1098,12 +1105,12 @@ public class Home extends Fragment {
                     addToSavings.setHint("Enter amount");
                 }
 
-                if (home.getSavings().equals("0") && home.getDebts().equals("0")) {
+                /*if (home.getSavings().equals("0") && home.getDebts().equals("0")) {
 
                     addToCash.getText().clear();
                     addToCash.setText("0");
 
-                }
+                }*/
                 /*endingBalance.setText("$ " + decimalFormat.format(Float.parseFloat(home.getStartingBalance())));*/
 
                 if (forMonth) {
