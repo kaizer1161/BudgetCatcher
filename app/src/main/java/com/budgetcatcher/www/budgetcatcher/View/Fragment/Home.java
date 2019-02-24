@@ -551,7 +551,7 @@ public class Home extends Fragment {
                         Float val = Float.parseFloat(data.getTotal());
                         String valStr = String.format("%.2f", val);
 
-                        Float val1 = Float.parseFloat(startCashBalance.getText().toString().replace("$ ", "")) - Float.parseFloat(data.getTotal());
+                        Float val1 = Float.parseFloat(startCashBalance.getText().toString().replace("$ ", "").replace(",", "")) - Float.parseFloat(data.getTotal());
                         String valStr1 = String.format("%.2f", val1);
 
                         totalOS.setText("$ " + numberFormat.format(Float.parseFloat(valStr)));

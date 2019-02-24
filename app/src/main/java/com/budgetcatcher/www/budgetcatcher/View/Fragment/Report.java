@@ -139,7 +139,7 @@ public class Report extends Fragment {
         barChartLegend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         barChartLegend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         barChartLegend.setOrientation(Legend.LegendOrientation.VERTICAL);
-        barChartLegend.setDrawInside(true);
+        barChartLegend.setDrawInside(false);
         barChartLegend.setTextColor(Color.WHITE);
         barChartLegend.setWordWrapEnabled(true);
 
@@ -154,9 +154,9 @@ public class Report extends Fragment {
                 /*float[] valOne = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120};
                 float[] valTwo = {120, 110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10};*/
 
-                final String[] month = {"", "Jan", "Feb", "Mar", "Apr", "May", "June", "july", "Aug", "Sep", "Oct", "Nov", "Dec", ""};
+                String[] month = {"", "Jan", "Feb", "Mar", "Apr", "May", "June", "july", "Aug", "Sep", "Oct", "Nov", "Dec", ""};
 
-                final String[] labels = new String[data.size() + 2];
+                String[] labels = new String[data.size() + 2];
 
                 labels[0] = "";
 
@@ -201,6 +201,7 @@ public class Report extends Fragment {
                 float barSpace = 0f;
                 float barWidth = 0.1f;
                 barChart.setExtraBottomOffset(5f);
+                barChart.setExtraRightOffset(5f);
                 // (barSpace + barWidth) * 5 + groupSpace = 1
                 // multiplied by 5 because there are 5 five bars
                 // labels will be centered as long as the equation is satisfied
